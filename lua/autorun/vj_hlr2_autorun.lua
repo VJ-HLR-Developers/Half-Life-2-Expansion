@@ -49,7 +49,7 @@ if VJExists == true then
 		-- VJ.AddNPC("Overwatch Combot","npc_vj_hlr2b_com_combot",vCat)
 		-- VJ.AddNPC("Overwatch Shield Scanner (Beta)","npc_vj_hlr2b_com_scanner_shield",vCat)
 		-- VJ.AddNPC("Overwatch Wasteland Scanner","npc_vj_hlr2b_com_scanner_waste",vCat)
-		-- VJ.AddNPC("Overwatch Assassin","npc_vj_hlr2b_com_assassin",vCat)
+		VJ.AddNPC("Overwatch Assassin","npc_vj_hlr2b_com_assassin",vCat)
 		VJ.AddNPC("Overwatch Stalker","npc_vj_hlr2_com_stalker",vCat)
 		-- VJ.AddNPC("Overwatch Manhack","npc_vj_hlr2_com_manhack",vCat)
 		-- VJ.AddNPC("Overwatch City Scanner","npc_vj_hlr2_com_scanner_city",vCat)

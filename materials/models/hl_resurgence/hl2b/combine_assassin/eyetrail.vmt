@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "models/hl_resurgence/hl2b/combine_assassin/eyetrail"
+	
+	"$additive" 1
+	"$vertexcolor" 1
+	"$vertexalpha" 1
+}

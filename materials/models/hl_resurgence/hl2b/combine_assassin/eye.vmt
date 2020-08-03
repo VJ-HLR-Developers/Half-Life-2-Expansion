@@ -1,0 +1,9 @@
+//"ModelDiffuseBump"
+"VertexLitGeneric"
+{
+	
+	//"$envmap" "env_cubemap"
+	//"$envmaptint" "[1.0 0.9 0.0]"
+	"$basetexture" "models/hl_resurgence/hl2b/combine_assassin/eye"
+	"$model" 1
+}

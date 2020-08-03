@@ -1,0 +1,7 @@
+//"ModelDiffuseBump"
+"VertexLitGeneric"
+{
+	"$bumpmap" "models/hl_resurgence/hl2b/combine_assassin/arm_normal"
+	//"$envmap" "shadertest/cubemap"
+	"$model" 1
+}
