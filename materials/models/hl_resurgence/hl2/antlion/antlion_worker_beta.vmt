@@ -1,0 +1,27 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\hl_resurgence\hl2\antlion\antlion_worker_beta"
+	"$bumpmap"      "models\hl_resurgence\hl2\antlion\antlion_worker_beta_n"
+	
+	"$phong" "1"
+	"$phongexponent" "500"
+	"$phongboost" "1"
+	"$phongfresnelranges"	"[0.3 0.7 1]"
+
+	$emissiveBlendEnabled 1
+	$emissiveBlendTexture    "dev/null"
+	$emissiveBlendBaseTexture    "models\hl_resurgence\hl2\antlion\antlion_worker_beta"
+	$emissiveBlendFlowTexture    "dev/null"
+	$emissiveBlendTint "[1 1 1]"
+	$emissiveBlendStrength 0.85
+	$emissiveBlendScrollVector "[0 0]"
+
+	"Proxies"
+	{
+		"IsNPC"
+		{
+			"scale" "1"
+			"resultvar" "$emissiveBlendEnabled"
+		}
+	}
+}

@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl_resurgence/hl2b/antlion/antlion_sheet"
+//	"$envmapmask" "models/hl_resurgence/hl2b/antlion/abdomen_m"
+//	"$alphaenvmapmask" 1
+//	"$envmap" "models/hl_resurgence/hl2b/antlion/antlion_env"
+//	"$envmapsphere" 1
+	"$surfaceprop" "flesh"
+}

@@ -1,0 +1,16 @@
+"UnlitGeneric"
+{
+	// Original shader: AddTexture
+	"$basetexture" "models/Shield_Scanner/Scanner_Shield"
+	"$envmap" "models/Shield_Scanner/Scanner_Shield_Mask"
+	"$additive" 1
+	"$model" 1
+	"Proxies"
+	{
+		"Alpha"
+		{
+			// VXP: Pointless and not working, moved at parameters
+		//	"model" 1
+		}
+	}
+}

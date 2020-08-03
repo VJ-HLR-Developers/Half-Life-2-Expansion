@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitMaskedEnvMappedTexture
+	"$basetexture" "models/hl_resurgence/hl2b/zombie/back"
+	"$envmapmask" "models/hl_resurgence/hl2b/zombie/back_mask"
+	"$envmap" "models/hl_resurgence/hl2b/zombie/envmap"
+	"$envmapsphere" 1
+}

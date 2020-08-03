@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/hl_resurgence/hl2b/houndeye/eyelid"
+	"$model" 1
+	"$nocull" 1
+}

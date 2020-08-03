@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitAlphaTestedTexture
+	"$basetexture" "models/hl_resurgence/hl2b/stalker/s_wires"
+	"$alphatest" 1
+}

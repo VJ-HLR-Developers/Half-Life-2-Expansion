@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl_resurgence/hl2b/combine_camo/eyeball_l"
+	"$iris" "models/hl_resurgence/hl2b/combine_camo/pupil_l"
+}

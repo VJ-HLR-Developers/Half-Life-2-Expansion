@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$bumpmap" "models/headcrab_black/rear_legs_normal"
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" 1
+	//"$envmaptint" "[0.5 0.5 0.5]"
+	"$baseTexture" "Models/headcrab_black/rear_legs"
+}

@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/hl_resurgence/hl2b/Zombie_Classic/torso"
+	"$basealphaenvmapmask" 1
+	"$envmaptint" "[0.3 0.3 0.3]"
+	"$envmap" "env_cubemap"
+}

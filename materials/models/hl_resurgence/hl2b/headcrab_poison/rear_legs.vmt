@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/hl_resurgence/hl2b/headcrab_poison/rear_legs"
+	"$bumpmap" "models/hl_resurgence/hl2b/headcrab_poison/rear_legs_normal"
+}

@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitAlphaTestedTexture
+	"$basetexture" "models/hl_resurgence/hl2b/combine_guard/combinegun"
+	"$alphatest" 1
+}

@@ -1,0 +1,15 @@
+"BaseTimesMod2xEnvMap"
+{
+	"$basetexture" "models/hl_resurgence/hl2b/combine_camo/camo8small"
+	"$envmap" "models/hl_resurgence/hl2b/combine_camo/envmap"
+	"$model" 1
+	"Proxies"
+	{
+		"Camo"
+		{
+			"camopatterntexture" "hl2/materials/models/hl_resurgence/hl2b/combine_camo/camo8small.tga"
+			"camoboundingboxmin" "[ 0.00 0.00 0.50 ]"
+			"camoboundingboxmax" "[ 1.00 1.00 1.00 ]"
+		}
+	}
+}

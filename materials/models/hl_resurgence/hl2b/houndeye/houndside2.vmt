@@ -1,0 +1,29 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/hl_resurgence/hl2b/houndeye/houndside2"
+	"$bumpmap" "models/hl_resurgence/hl2b/houndeye/houndside2_normal"
+
+	$emissiveBlendEnabled 1
+	$emissiveBlendTexture    "vj_hl/flowmaps/goo"
+	$emissiveBlendBaseTexture    "models/hl_resurgence/hl2b/houndeye/houndside2_g"
+	$emissiveBlendFlowTexture    "vj_hl/flowmaps/wave"
+	$emissiveBlendTint "[1 1 1]"
+	$emissiveBlendStrength 0.25
+	$emissiveBlendScrollVector "[0 1]"
+
+	"Proxies"
+	{
+		"Sine"
+		{
+			"resultVar"	"$emissiveBlendTint"
+			"sineperiod"	5
+			"sinemin"	2
+			"sinemax"	8
+		}
+		"IsNPC"
+		{
+			"scale" "1"
+			"resultvar" "$emissiveBlendEnabled"
+		}
+	}
+}

@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/hl_resurgence/hl2b/Zombie_Classic/shirt"
+	"$translucent" 1
+	"$nocull" 1
+}

@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitMaskedEnvMappedTexture
+	"$basetexture" "models/hl_resurgence/hl2b/combine_guard/misc"
+	"$envmapmask" "models/hl_resurgence/hl2b/combine_guard/misc_mask"
+	"$envmap" "models/hl_resurgence/hl2b/combine_guard/combineguard_envmap"
+	"$multipass" 1
+}

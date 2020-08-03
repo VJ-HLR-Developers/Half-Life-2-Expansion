@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/hl_resurgence/hl2b/zombie_fast/hands_cl"
+	//"$bumpmap" "models/hl_resurgence/hl2b/zombie_fast/hands_cl_normal"
+	//"$envmap" "env_cubemap"
+	//"$normalmapalphaenvmapmask" 1
+	//"$envmapcontrast" 1
+	//"$envmaptint" "[0.5 0.5 0.5]"
+}

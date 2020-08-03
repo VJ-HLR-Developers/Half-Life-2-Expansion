@@ -1,0 +1,6 @@
+//"ModelDiffuseBump"
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl_resurgence/hl2b/fassassin/pouch"
+	"$model" 1
+}

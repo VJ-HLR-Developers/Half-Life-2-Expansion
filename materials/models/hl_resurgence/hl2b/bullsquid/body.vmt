@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	// Original shader: vertexlittexture
+	"$basetexture" "models/hl_resurgence/hl2b/bullsquid/body"
+}

@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	// Original shader: AddTexture
+	"$basetexture" "models/hl_resurgence/hl2b/combine_police/glint"
+	"$additive" 1
+	"$model" 1
+}

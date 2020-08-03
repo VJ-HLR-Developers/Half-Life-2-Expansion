@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitMaskedEnvMappedTexture
+	"$basetexture" "models/hl_resurgence/hl2b/combine_camo/lensrim_diff"
+	"$envmap" "models/hl_resurgence/hl2b/combine_camo/leatherspec"
+	"$envmapmask" "models/hl_resurgence/hl2b/combine_camo/lensrimmask"
+}

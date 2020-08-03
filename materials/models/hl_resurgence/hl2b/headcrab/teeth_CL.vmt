@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[0.4 0.4 0.4]"
+	"$baseTexture" "models/hl_resurgence/hl2b/headcrab/teeth_CL"
+}

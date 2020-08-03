@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	
+	"$bumpmap" "models/hl_resurgence/hl2b/headcrab_poison/body_normal"
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" 1
+	//"$envmaptint" "[1.0 1.0 1.0]"`
+	//"$envmapcontrast" 1
+	"$baseTexture" "models/hl_resurgence/hl2b/headcrab_poison/body"
+}

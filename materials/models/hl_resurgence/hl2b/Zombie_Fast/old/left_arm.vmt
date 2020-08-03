@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitAlphaTestedTexture
+	"$basetexture" "models/Zombie_Fast/left_arm"
+	"$alphatest" 1
+}

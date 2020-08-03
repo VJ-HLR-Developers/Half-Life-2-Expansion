@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models/hl_resurgence/hl2/advisor_ep2/Combine_Advisor_mechanics_albedo"
+	"$bumpmap" "models/hl_resurgence/hl2/advisor_ep2/Combine_Advisor_mechanics_Normal"
+	"$surfaceprop"	"metal"
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" 1
+	"$envmaptint" "[ .1 .1 .1 ]"
+//	"$envmapconstrast" "1"
+	"$selfillum" "1"
+	//phong properties
+	"$phong"	"1"
+	"$phongboost"	"8"
+	"$phongexponent"	"10"
+	"$phongfresnelranges"	"[.3 .5 1]"
+	"$phongwarptexture"  "models/hl_resurgence/hl2/advisor_ep2/advisor_phongwarp"
+}

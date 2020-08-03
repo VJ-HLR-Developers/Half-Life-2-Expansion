@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitAlphaTestedTexture
+	"$basetexture" "models/hl_resurgence/hl2b/headcrab_fast/M0CL2"
+	"$alphatest" 1
+}

@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitMaskedEnvMappedTexture
+	"$basetexture" "models/Zombie_Poison/headcrab"
+	"$envmapmask" "models/Zombie_Poison/headcrab_envmask"
+	"$envmap" "models/Zombie_Poison/envmap"
+	"$envmapsphere" 1
+}

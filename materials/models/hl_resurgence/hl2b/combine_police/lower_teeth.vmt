@@ -1,0 +1,6 @@
+"Teeth"
+{
+	"$basetexture" "models/hl_resurgence/hl2b/combine_police/lower_teeth"
+	"$model" 1
+	"$clientshader" "MouthShader"
+}

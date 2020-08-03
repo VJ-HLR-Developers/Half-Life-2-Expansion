@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/Police/metrocop_sheet"
+	"$envmap" "env_cubemap"
+	"$basealphaenvmapmask" 1
+//	"$envmap" "models/hl_resurgence/hl2b/combine_police/envmap"
+//	"$envmapsphere" 1
+}

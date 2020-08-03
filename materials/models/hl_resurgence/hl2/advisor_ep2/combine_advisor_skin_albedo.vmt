@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$basetexture"	"models/hl_resurgence/hl2/advisor_ep2/Combine_Advisor_skin_albedo"
+	"$bumpmap" "models/hl_resurgence/hl2/advisor_ep2/Combine_Advisor_skin_Normal"
+	"$surfaceprop"	"alienflesh"
+//	"$selfillum" "1"
+	//phong properties
+	"$phong"	"1"
+	"$phongboost"	"3"
+	"$phongexponent"	"12"
+	"$phongfresnelranges"	"[.1 .5 1]"
+	"$lightwarptexture"	"models/hl_resurgence/hl2/advisor_ep2/Combine_Advisor_skin_warp"
+}

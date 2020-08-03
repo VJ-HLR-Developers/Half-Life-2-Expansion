@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitMaskedEnvMappedTexture
+	"$basetexture" "models/hl_resurgence/hl2b/antlion/abdomen"
+	"$envmapmask" "models/hl_resurgence/hl2b/antlion/abdomen_m"
+	"$envmap" "models/hl_resurgence/hl2b/antlion/antlion_env"
+	"$envmapsphere" 1
+	"$surfaceprop" "flesh"
+}

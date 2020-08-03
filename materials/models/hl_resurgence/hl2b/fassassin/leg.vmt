@@ -1,0 +1,10 @@
+//"ModelDiffuseBump"
+"VertexLitGeneric"
+{
+	"$bumpmap" "models/hl_resurgence/hl2b/fassassin/leg_normal"
+	"$envmap" "models/hl_resurgence/hl2b/fassassin/cubemap"
+	//"$envmaptint" "[0.4 0.4 0.6]"
+	"$normalmapalphaenvmapmask" 1
+	"$basetexture" "models/hl_resurgence/hl2b/fassassin/leg"
+	"$model" 1
+}

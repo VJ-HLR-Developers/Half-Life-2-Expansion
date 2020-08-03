@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitMaskedEnvMappedTexture
+	"$basetexture" "models/hl_resurgence/hl2b/stalker/s_lowerlegfrontdull"
+	"$envmap" "models/hl_resurgence/hl2b/stalker/stalkerspec"
+	"$envmapmask" "models/hl_resurgence/hl2b/stalker/s_lowerlegfrontmask"
+	"$envmapsphere" 1
+}

@@ -1,0 +1,19 @@
+"UnlitGeneric"
+{
+	"$translucent" "1"
+	"$ignorez" "1"
+	"$vertexalpha" "1"
+	"$color" "1"
+	"$vertexcolor" "1"
+	"$additive" "1"
+	"$basetexture" "vj_hl/hl2/overlay/advisorblast"
+	"Proxies"
+	{
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" "$basetexture"
+			"animatedtextureframenumvar" "$frame"
+			"animatedtextureframerate" 30
+		}
+	}
+}

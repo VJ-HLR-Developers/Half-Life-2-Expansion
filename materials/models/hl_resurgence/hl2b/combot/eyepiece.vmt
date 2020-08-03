@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitMaskedEnvMappedTexture
+	"$basetexture" "models/hl_resurgence/hl2b/combot/eyepiece"
+	"$envmapmask" "models/hl_resurgence/hl2b/combot/eyepiecemask"
+	"$envmap" "models/hl_resurgence/hl2b/combot/eyepieceenvmap"
+	"$envmapsphere" 1
+}

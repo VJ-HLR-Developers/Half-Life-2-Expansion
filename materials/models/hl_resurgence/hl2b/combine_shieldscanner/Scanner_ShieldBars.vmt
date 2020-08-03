@@ -1,0 +1,21 @@
+"UnlitGeneric"
+{
+	// Original shader: AddTexture
+	"$basetexture" "models/Shield_Scanner/Scanner_ShieldBars"
+	"$envmap" "models/Shield_Scanner/Scanner_ShieldBars_Mask"
+	"$additive" 1
+	"$model" 1
+	"$translucency" 1
+	"Proxies"
+	{
+		"Shield"
+		{
+			"texturescrollvar" "$baseTextureTransform"
+			"texturescrollrate" -1.30
+			"texturescrollangle" 20.00
+
+			// VXP: Pointless and not working
+		//	"model" 1
+		}
+	}
+}

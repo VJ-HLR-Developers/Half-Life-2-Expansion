@@ -1,0 +1,5 @@
+"eyes"
+{
+	"$basetexture" "models/hl_resurgence/hl2b/combine_police/eyeball"
+	"$iris" "models/hl_resurgence/hl2b/combine_police/pupil_l"
+}
