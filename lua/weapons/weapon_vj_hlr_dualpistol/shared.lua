@@ -12,17 +12,16 @@ SWEP.HoldType 							= "pistol"
 SWEP.Spawnable							= false
 SWEP.AdminSpawnable						= false
 
-SWEP.NPC_NextPrimaryFire 				= 0.1
+SWEP.NPC_NextPrimaryFire 				= 0.08
 SWEP.NPC_TimeUntilFire 					= 0
 SWEP.NPC_TimeUntilFireExtraTimers 		= {}
 
 SWEP.WorldModel_Invisible 				= true
 
-SWEP.Primary.Sound						= {"vj_hlr/hl2_weapon/mp5k/smg1_fire2.wav"}
+SWEP.Primary.Sound						= {"Weapon_Pistol.Single"}
 SWEP.Primary.DistantSound				= {"Weapon_Pistol.NPC_Single"}
-SWEP.Primary.Damage						= 8
+SWEP.Primary.Damage						= 6
 SWEP.Primary.ClipSize					= 999
-SWEP.Primary.TracerType					= "AR2Tracer"
 
 SWEP.PrimaryEffects_MuzzleFlash 		= false
 SWEP.PrimaryEffects_SpawnShells 		= false
@@ -31,10 +30,15 @@ SWEP.Primary.Force						= 5
 SWEP.Primary.Ammo						= "Pistol"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnPrimaryAttackEffects()
-	ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self:GetOwner(),self.CurrentMuzzle == "left" && 1 or 2)
+	ParticleEffectAttach("vj_rifle_full",PATTACH_POINT_FOLLOW,self:GetOwner(),self.CurrentMuzzle == "left" && 1 or 2)
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnFireAnimationEvent(pos,ang,event,options)
 	if event == 5001 then return true end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:CustomBulletSpawnPosition()
+	local att = self.CurrentMuzzle == "left" && 1 or 2
+	return self:GetOwner():GetAttachment(att).Pos
 end
