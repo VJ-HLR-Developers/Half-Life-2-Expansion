@@ -1,0 +1,13 @@
+"vertexlitgeneric"
+{
+	"$additive" 1
+	"$baseTexture" "models\lazlo\gordon\ochki_steklo_dif"
+	"$alphatest" "1"
+	"$nocull" "1"
+	"$envmap" "env_cubemap"
+	"$envmapcontrast" ".8"
+	"$envmapsaturation" ".3"
+	"$halflambert" "0"		
+	"$ambientocclusion" "0"
+	
+}

@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models\hl_resurgence\hl2\freeman\lazlo\gordon\citizen_sheet"
+	"$halflambert" 1
+	"$bumpmap" "models\hl_resurgence\hl2\freeman\lazlo\gordon\citizen_sheet_normal"
+	"$phongexponent"			5
+	"$bumpmapalphaphongmask"	1
+	"$phongboost"				1.0
+	"$phongfresnelranges"		"[0 0.5 1]"
+}

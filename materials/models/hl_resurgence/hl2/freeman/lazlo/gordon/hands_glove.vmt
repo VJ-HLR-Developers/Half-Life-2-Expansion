@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\hl_resurgence\hl2\freeman\lazlo\gordon\hands_glove"
+	"$bumpmap"     "models\hl_resurgence\hl2\freeman\lazlo\gordon\hands_glove_n"
+
+	"$phong" "1"
+	"$phongboost" "1.0"
+	"$phongexponent" "8"
+	"$phongfresnelranges"	"[.1 .5 1]"
+
+	"$phongtint" "[0.8 0.6 0.4]"
+	
+	"$rimlight" "1"
+	"$rimlightboost" "0.2"
+	"$rimlightexponent" "4"
+}

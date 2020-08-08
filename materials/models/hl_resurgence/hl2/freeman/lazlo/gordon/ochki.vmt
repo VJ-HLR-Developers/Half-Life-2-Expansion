@@ -1,0 +1,17 @@
+"vertexlitgeneric"
+{
+	"$baseTexture" "models\lazlo\gordon\ochki_dif"
+	
+	"$bumpmap" "models\lazlo\gordon\ochki_normal"
+	
+	"$halflambert" "0"
+
+	"$ambientocclusion" "1"
+	
+	"$phong" "1"
+	"$phongboost" "6"
+	"$phongexponent" 20
+	"$phongfresnelranges" "[.3 4 12]"
+	"$PhongAlbedoTint" "0"
+	"$phongtint" "[.6 1 .8]"
+}

@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models\hl_resurgence\hl2\freeman\lazlo\gordon\hands_w"
+	"$bumpmap"     "models\hl_resurgence\hl2\freeman\lazlo\gordon\hands_n"
+$phong 1
+$phongboost "0.45"
+$phongexponent 10
+$phongtint "[.85 .85 1]"
+$phongfresnelranges "[1 1 5]"
+$nodecal 1
+$ambientocclusion 1
+$PhongAlbedoTint "1"
+
+$detail "models\hl_resurgence\hl2\freeman\lazlo\gordon\skindetail"
+	$detailscale 16
+	$detailblendfactor	1.7
+	$detailblendmode	0
+}

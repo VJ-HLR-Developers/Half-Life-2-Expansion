@@ -1,0 +1,21 @@
+"vertexlitgeneric"
+{
+	"$baseTexture" "models\hl_resurgence\hl2\freeman\lenoax\Gordon\illum_back"
+	
+	"$bumpmap" "models\hl_resurgence\hl2\freeman\lenoax\Gordon\illum_back_normal"
+	
+	"$selfillum" "1"
+	"$selfillummask" "models\hl_resurgence\hl2\freeman\lenoax\Gordon\illum_back_illum"
+	
+	"$halflambert" "0"
+	
+	"$ambientocclusion" "1"
+	
+	"$phong" "1"
+	"$phongboost" "6"
+	"$phongexponent" "6"
+	//"$PhongExponentTexture" "models\hevsuit\hevsuit_body_exponent"
+	"$phongfresnelranges" "[.5 2 8]"
+	"$PhongAlbedoTint" "1"
+	"$phongtint" "[.6 .7 .65]"
+}

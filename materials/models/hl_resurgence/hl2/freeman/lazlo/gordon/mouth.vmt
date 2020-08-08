@@ -1,0 +1,11 @@
+VertexLitGeneric
+{
+	$baseTexture "models\lazlo\Gordon\mouth"
+	$surfaceprop flesh
+	$nodecal 1
+	$bumpmap "models\lazlo\Gordon\mouth_n"
+	$phong 1
+	$phongboost .5
+	$phongexponent 100
+	$phongfresnelranges [1 1 .8]
+}

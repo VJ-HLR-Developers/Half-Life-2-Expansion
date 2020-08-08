@@ -68,6 +68,7 @@ if VJExists == true then
 
 		-- Resistance
 		-- VJ.AddNPC("Vortigaunt","npc_vj_hlr2_vort",vCat)
+		VJ.AddNPC_HUMAN("Gordon Freeman","npc_vj_hlr2_freeman",{"weapon_vj_smg1","weapon_vj_ar2","weapon_vj_spas12"},vCat)
 		VJ.AddNPC("Lamarr","npc_vj_hlr2_lamarr",vCat)
 
 		-- Xen Creatures

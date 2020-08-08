@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTranslucentTexture
+	"$translucent" 1
+	"$basetexture" "models\Characters\bastards\Gordon\hairbits"
+	"$halflambert" 1
+	"$nodecal" "1"
+	"$nocull" "1"
+}
