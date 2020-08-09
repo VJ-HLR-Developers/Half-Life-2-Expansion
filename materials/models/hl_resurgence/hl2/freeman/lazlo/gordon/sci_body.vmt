@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "models\lazlo/gordon/sci_body"
-	"$bumpmap" "models\lazlo/gordon/sci_body_normal"
+	"$baseTexture" "models\hl_resurgence\hl2\freeman\lazlo\gordon\sci_body"
+	"$bumpmap" "models\hl_resurgence\hl2\freeman\lazlo\gordon\sci_body_normal"
 	"$model" "1"
 	"$surfaceprop" "flesh"
 	"$nocull" 1

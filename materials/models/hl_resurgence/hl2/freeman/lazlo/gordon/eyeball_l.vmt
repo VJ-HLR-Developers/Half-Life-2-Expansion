@@ -1,7 +1,7 @@
 EyeRefract
 {
-$Iris "models\lazlo\Gordon\eyeball" 
-$AmbientOcclTexture "models\lazlo\Gordon\eye_ao" 
+$Iris "models\hl_resurgence\hl2\freeman\lazlo\gordon\eyeball" 
+$AmbientOcclTexture "models\hl_resurgence\hl2\freeman\lazlo\gordon\eye_ao" 
 $Envmap "Engine/eye-reflection-cubemap-" 
 $CorneaTexture "Engine/eye-cornea" 
 $EyeballRadius "0.5" 

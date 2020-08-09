@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture"	"Models/Lazlo/Gordon/magnusson_body"
+	"$basetexture"	"models\hl_resurgence\hl2\freeman\lazlo\gordon\magnusson_body"
 	"$surfaceprop"	"default"
 	"$halflambert"	1
 	"$model" 1

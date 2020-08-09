@@ -1,8 +1,8 @@
 "vertexlitgeneric"
 {
-	"$baseTexture" "models\lazlo\gordon\ochki_dif"
+	"$baseTexture" "models\hl_resurgence\hl2\freeman\lazlo\gordon\ochki_dif"
 	
-	"$bumpmap" "models\lazlo\gordon\ochki_normal"
+	"$bumpmap" "models\hl_resurgence\hl2\freeman\lazlo\gordon\ochki_normal"
 	
 	"$halflambert" "0"
 

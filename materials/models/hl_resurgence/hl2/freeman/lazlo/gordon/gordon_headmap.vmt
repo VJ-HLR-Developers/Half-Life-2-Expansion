@@ -1,7 +1,7 @@
 VertexLitGeneric
 {
-	$basetexture "models\lazlo\Gordon\facemap_sheet"
-	"$bumpmap" "models\lazlo\Gordon\facemap_sheet_n"
+	$basetexture "models\hl_resurgence\hl2\freeman\lazlo\gordon\facemap_sheet"
+	"$bumpmap" "models\hl_resurgence\hl2\freeman\lazlo\gordon\facemap_sheet_n"
 
 $phong 1
 $phongboost "0.45"

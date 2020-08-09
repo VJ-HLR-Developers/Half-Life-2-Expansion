@@ -1,9 +1,9 @@
 VertexLitGeneric
 {
-	$basetexture models\Lazlo/Gordon\frame_mat
+	$basetexture models\hl_resurgence\hl2\freeman\lazlo\gordon\frame_mat
 	"$surfaceprop" "flesh"
 	"$model" 1
-	"$bumpmap" models\Lazlo/Gordon\frame_mat_n
+	"$bumpmap" models\hl_resurgence\hl2\freeman\lazlo\gordon\frame_mat_n
 	"$nocull" 1
  	"$phong" "1"
 	"$phongexponent" "25"

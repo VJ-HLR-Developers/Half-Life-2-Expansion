@@ -1,8 +1,8 @@
 "vertexlitgeneric"
 {
-	"$baseTexture" "models\lazlo\gordon\hevsuit_body_diff"
+	"$baseTexture" "models\hl_resurgence\hl2\freeman\lazlo\gordon\hevsuit_body_diff"
 	
-	"$bumpmap" "models\lazlo\gordon\hevsuit_body_normal"
+	"$bumpmap" "models\hl_resurgence\hl2\freeman\lazlo\gordon\hevsuit_body_normal"
 	
 	"$halflambert" "0"
 	
@@ -10,7 +10,7 @@
 	
 	"$phong" "1"
 	"$phongboost" "6"
-	"$PhongExponentTexture" "models\lazlo\gordon\hevsuit_body_exponent"
+	"$PhongExponentTexture" "models\hl_resurgence\hl2\freeman\lazlo\gordon\hevsuit_body_exponent"
 	"$phongfresnelranges" "[.5 2 8]"
 	"$PhongAlbedoTint" "1"
 	"$phongtint" "[.6 .7 .65]"
