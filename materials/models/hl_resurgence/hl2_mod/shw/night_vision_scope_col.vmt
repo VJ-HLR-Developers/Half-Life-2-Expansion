@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 	"models/hl_resurgence/hl2_mod/shw/night_vision_scope_col"
+	"$bumpmap"	"models/hl_resurgence/hl2_mod/shw/night_vision_scope_col_n"
+	"$selfillum" 1
+ 	"$phong" "1"
+	"$phongexponent" "94.8"
+	"$phongboost"	"0.35"
+	"$phongfresnelranges"	"[.1 .1 1]"
+}

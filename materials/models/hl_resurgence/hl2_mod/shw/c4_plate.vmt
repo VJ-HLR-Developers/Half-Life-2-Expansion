@@ -1,0 +1,7 @@
+VertexLitGeneric
+{
+	"$basetexture"	"models/hl_resurgence/hl2_mod/shw/c4_plate"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "models/hl_resurgence/hl2_mod/shw/panels_ref"
+}
+

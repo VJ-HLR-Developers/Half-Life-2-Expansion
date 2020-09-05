@@ -39,6 +39,7 @@ if VJExists == true then
 		VJ.AddNPC("Antlion Guardian","npc_vj_hlr2_antlion_guardian",vCat)
 
 		-- Combine
+		VJ.AddNPC_HUMAN("Overwatch Soldier (Seven Hour War)","npc_vj_hlr2_com_soldier_shw",{"weapon_vj_hlr2_mod_irifle","weapon_vj_hlr2_mod_ishotgun","weapon_vj_hlr2_mod_ismg"},vCat)
 
 		VJ.AddNPC_HUMAN("Overwatch Soldier (Beta)","npc_vj_hlr2b_com_soldier",{"weapon_vj_hlr2b_oicw"},vCat)
 		-- VJ.AddNPC_HUMAN("Overwatch Elite (Beta)","npc_vj_hlr2b_com_elite",{"weapon_vj_smg1","weapon_vj_smg1","weapon_vj_smg1","weapon_vj_ar2","weapon_vj_ar2"},vCat)

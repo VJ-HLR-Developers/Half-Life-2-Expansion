@@ -1,0 +1,20 @@
+"vertexlitgeneric"
+{
+	"$baseTexture" "models/hl_resurgence/hl2_mod/shw/botas"
+  	"$bumpmap" "models/hl_resurgence/hl2_mod/shw/botas_norm"
+	"$envmap" "env_cubemap"
+	"$envmaptint" "[ .2 .2 .2 ]"
+	"$envmapconstrast" "1"
+	"$phong" "1"
+	"$phongboost"   "10"
+	"$phongfresnelranges" "[0.2 .5 10]"
+	"$phongexponenttexture"	"models/hl_resurgence/hl2_mod/shw/botas_exp"
+	"$phongalbedotint" "1"
+	"$model" "1"
+	"$normalmapalphaenvmapmask" "1"
+
+// Rim lighting parameters
+	"$rimlight" "1"												// To enable rim lighting (requires phong)
+	"$rimlightexponent" "5"										// Exponent for phong component of rim lighting	
+	"$rimlightboost" "2"										// Boost for ambient cube component of rim lighting
+}

@@ -1,0 +1,13 @@
+"vertexlitgeneric"
+{
+
+	"$baseTexture" "models/hl_resurgence/hl2_mod/shw/combine_hand"
+        	"$bumpmap" "models/hl_resurgence/hl2_mod/shw/ct_urban_normal"
+	"$phong" "1"
+	"$phongexponent" 	"0"
+	"$phongboost"	"5"
+	"$phongfresnelranges"	"[0 0.2 1]"
+
+	
+}
+

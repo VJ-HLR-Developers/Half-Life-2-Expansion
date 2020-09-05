@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 	"models/hl_resurgence/hl2_mod/shw/Mithrilsoldiersheet"
+      "$bumpmap"        "models/hl_resurgence/hl2_mod/shw/Mithrilsoldiersheet_normal"
+	"$envmap" "env_cubemap"	
+	"$envmapmask" "models/hl_resurgence/hl2_mod/shw/Mithrilsoldiersheet_mask"
+	"$envmapcontrast" 1
+	"$surfaceprop" "flesh"
+	"$selfillum" 1
+	"$model" 1
+}
+
+
+
