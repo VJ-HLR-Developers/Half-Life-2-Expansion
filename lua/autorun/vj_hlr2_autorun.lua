@@ -112,7 +112,6 @@ if VJExists == true then
 	VJ.AddParticle("particles/aurora.pcf",{})
 	VJ.AddParticle("particles/advisor.pcf",{})
 	VJ.AddParticle("particles/advisor_fx.pcf",{})
-	VJ.AddParticle("particles/electrical_fx.pcf",{}) -- Reager
 	VJ.AddParticle("particles/hunter_flechette.pcf",{})
 	VJ.AddParticle("particles/hunter_projectile.pcf",{})
 	VJ.AddParticle("particles/hunter_shield_impact.pcf",{})
