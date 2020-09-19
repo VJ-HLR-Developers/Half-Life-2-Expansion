@@ -49,6 +49,13 @@ ENT.ConstantlyFaceEnemy_IfAttacking = false -- Should it face the enemy when att
 ENT.ConstantlyFaceEnemy_Postures = "Both" -- "Both" = Moving or standing | "Moving" = Only when moving | "Standing" = Only when standing
 ENT.ConstantlyFaceEnemyDistance = 5000 -- How close does it have to be until it starts to face the enemy?
 
+ENT.VJC_Data = {
+    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
+    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
+    FirstP_Bone = "Combine_Strider.Neck_Bone", -- If left empty, the base will attempt to calculate a position for first person
+    FirstP_Offset = Vector(8, 0, -60), -- The offset for the controller when the camera is in first person
+}
+
 ENT.CanFlinch = 2 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
 ENT.FlinchDamageTypes = {DMG_BLAST} -- If it uses damage-based flinching, which types of damages should it flinch from?
 ENT.FlinchChance = 1

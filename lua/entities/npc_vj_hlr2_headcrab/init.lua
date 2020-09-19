@@ -31,6 +31,13 @@ ENT.FootStepTimeRun = 0.2 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.2 -- Next foot step sound when it is walking
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
 ENT.GeneralSoundPitch1 = 100
+
+ENT.VJC_Data = {
+    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
+    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
+    FirstP_Bone = "HeadcrabClassic.SpineControl", -- If left empty, the base will attempt to calculate a position for first person
+    FirstP_Offset = Vector(3, 0, -1), -- The offset for the controller when the camera is in first person
+}
 	-- ====== Flinching Code ====== --
 ENT.CanFlinch = 0 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
 ENT.AnimTbl_Flinch = {ACT_FLINCH_PHYSICS} -- If it uses normal based animation, use this

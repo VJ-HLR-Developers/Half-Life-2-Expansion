@@ -51,6 +51,13 @@ ENT.SoundTbl_Death = {
 	"npc/antlion/pain2.wav",
 }
 
+ENT.VJC_Data = {
+    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
+    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
+    FirstP_Bone = "Antlion.Head_Bone", -- If left empty, the base will attempt to calculate a position for first person
+    FirstP_Offset = Vector(15, 0, 2), -- The offset for the controller when the camera is in first person
+}
+
 ENT.MaxJumpLegalDistance = VJ_Set(1000,1500)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:IsDirt(pos)

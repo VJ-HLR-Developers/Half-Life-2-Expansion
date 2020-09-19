@@ -35,6 +35,13 @@ ENT.SoundTbl_Death = {"npc/antlion_guard/antlion_guard_die1.wav","npc/antlion_gu
 ENT.SoundTbl_BeforeMeleeAttack = {"npc/antlion_guard/angry1.wav"}
 ENT.SoundTbl_MeleeAttackExtra = {"npc/antlion_guard/shove1.wav"}
 
+ENT.VJC_Data = {
+    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
+    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
+    FirstP_Bone = "Antlion_Guard.head", -- If left empty, the base will attempt to calculate a position for first person
+    FirstP_Offset = Vector(5, 0, 3), -- The offset for the controller when the camera is in first person
+}
+
 ENT.IsGuardian = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
