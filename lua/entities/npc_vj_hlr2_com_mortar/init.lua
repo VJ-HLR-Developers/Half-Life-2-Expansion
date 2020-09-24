@@ -58,7 +58,7 @@ function ENT:RangeAttackCode_GetShootPos(TheProjectile)
 	return self:CalculateProjectile("Curve", self:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 850)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key,activator,caller,data)
+function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	-- if key == "range" then
 		-- self:RangeAttackCode()
 	-- end

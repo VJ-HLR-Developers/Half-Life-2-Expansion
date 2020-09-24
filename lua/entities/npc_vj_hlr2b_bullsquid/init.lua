@@ -102,7 +102,7 @@ function ENT:CustomOnInitialize()
 	self:ManipulateBoneJiggle(21,1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key,activator,caller,data)
+function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "step" then
 		self:FootStepSoundCode()
 	end

@@ -134,7 +134,7 @@ function ENT:CustomOnAlert(argent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key,activator,caller,data)
+function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "melee" then
 		self.MeleeAttackDamage = self.DefaultDamage
 		self:MeleeAttackCode()

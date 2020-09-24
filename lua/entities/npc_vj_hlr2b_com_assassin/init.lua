@@ -84,7 +84,7 @@ function ENT:OnPlayCreateSound(SoundData,SoundFile)
 	timer.Simple(SoundDuration(SoundFile), function() if IsValid(self) && SoundData:IsPlaying() then VJ_EmitSound(self,"npc/combine_soldier/vo/off"..math.random(1,3)..".wav") end end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key,activator,caller,data)
+function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "Foot" then
 		VJ_EmitSound(self,"npc/footsteps/hardboot_generic2.wav",72,100)
 		VJ_EmitSound(self,{"npc/stalker/stalker_footstep_left1.wav","npc/stalker/stalker_footstep_left2.wav","npc/stalker/stalker_footstep_right1.wav","npc/stalker/stalker_footstep_right2.wav"},75)

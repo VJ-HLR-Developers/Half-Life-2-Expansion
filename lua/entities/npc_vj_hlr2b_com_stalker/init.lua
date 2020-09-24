@@ -94,7 +94,7 @@ function ENT:CustomOnInitialize()
 	self.NextRunAwayT = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key,activator,caller,data)
+function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "step" then
 		self:FootStepSoundCode()
 	end

@@ -181,7 +181,7 @@ function ENT:BarrageFire()
 	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key,activator,caller,data)
+function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "explosion" then
 		local pos,ang = self:GetBonePosition(0)
 		VJ_EmitSound(self,"vj_mili_tank/tank_death2.wav",100,100)

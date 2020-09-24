@@ -66,7 +66,7 @@ function ENT:CustomOnInitialize()
 	if self.ZInit then self:ZInit() end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key,activator,caller,data)
+function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "step" then
 		self:FootStepSoundCode()
 	end
