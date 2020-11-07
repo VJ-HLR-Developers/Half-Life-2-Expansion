@@ -45,7 +45,7 @@ ENT.RangeAttackExtraTimers = {1}
 ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
 ENT.AnimTbl_Death = {ACT_DIESIMPLE} -- Death Animations
 ENT.DeathAnimationTime = false -- Time until the SNPC spawns its corpse and gets removed
-ENT.DeathCorpseAlwaysCollide = true
+ENT.DeathCorpseCollisionType = COLLISION_GROUP_NONE -- Collision type for the corpse | SNPC Options Menu can only override this value if it's set to COLLISION_GROUP_DEBRIS!
 
 ENT.VJC_Data = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
