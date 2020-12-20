@@ -22,7 +22,7 @@ if VJExists == true then
 	end
 	
 	-- Source Engine -------------------------------------------------------
-	local vCat = "Half-Life Resurgence: HL2"
+	local vCat = "HL Resurgence: Source"
 		
 		-- Misc.
 		VJ.AddNPC("Mounted Turret","sent_vj_hlr2_mountedturret",vCat)
