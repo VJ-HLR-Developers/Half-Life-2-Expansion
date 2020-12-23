@@ -106,7 +106,7 @@ function ENT:CustomOnAlert(argent)
 	if self.CanAlertCrab != true then return end
 	VJ_STOPSOUND(self.CurrentIdleSound)
 	self.NextIdleSoundT = self.NextIdleSoundT + 2
-	self.CurrentAlertSound = VJ_CreateSound(self,VJ_PICK(self.SoundTbl_AlertAnim),self.AlertSoundLevel,self:VJ_DecideSoundPitch(self.AlertSoundPitch1,self.AlertSoundPitch2))
+	self.CurrentAlertSound = VJ_CreateSound(self,VJ_PICK(self.SoundTbl_AlertAnim),self.AlertSoundLevel,self:VJ_DecideSoundPitch(self.AlertSoundPitch.a,self.AlertSoundPitch.b))
 	self:VJ_ACT_PLAYACTIVITY("Threatdisplay",true,VJ_GetSequenceDuration(self,"Threatdisplay"),false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

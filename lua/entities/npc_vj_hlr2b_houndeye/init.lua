@@ -74,8 +74,7 @@ ENT.SoundTbl_Death = {
 }
 
 ENT.FootStepSoundLevel = 80
-ENT.FootStepPitch1 = 110
-ENT.FootStepPitch2 = 115
+ENT.FootStepPitch = VJ_Set(110, 115)
 ENT.GeneralSoundPitch1 = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
