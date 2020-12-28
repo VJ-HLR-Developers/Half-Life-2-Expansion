@@ -64,7 +64,7 @@ if VJExists == true then
 		VJ.AddCeilingNPC("Overwatch Ceiling Turret","npc_vj_hlr2_com_ceilingturret",vCat)
 		VJ.AddNPC("Overwatch Ion Cannon Turret","npc_vj_hlr2_com_ionturret",vCat)
 		VJ.AddNPC("Overwatch Hunter Chopper","npc_vj_hlr2_com_chopper",vCat)
-		-- VJ.AddNPC("Overwatch Gunship Synth","npc_vj_hlr2_com_gunship",vCat)
+		VJ.AddNPC("Overwatch Gunship Synth","npc_vj_hlr2_com_gunship",vCat)
 		-- VJ.AddNPC("Overwatch Dropship Synth","npc_vj_hlr2_com_dropship",vCat)
 
 		-- Resistance

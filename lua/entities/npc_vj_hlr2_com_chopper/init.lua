@@ -33,7 +33,7 @@ ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
 
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.DisableRangeAttackAnimation = true
-ENT.RangeAttackEntityToSpawn = "obj_vj_hl2_rocket" -- The entity that is spawned when range attacking
+ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_rocket" -- The entity that is spawned when range attacking
 ENT.TimeUntilRangeAttackProjectileRelease = 0
 ENT.NextRangeAttackTime = 5 -- How much time until it can use a range attack?
 ENT.NextRangeAttackTime_DoRand = 10 -- How much time until it can use a range attack?
@@ -132,8 +132,10 @@ function ENT:CustomOnInitialize()
 	self:DeleteOnRemove(spotlight)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomRangeAttackCode_AfterProjectileSpawn(TheProjectile)
+function ENT:CustomRangeAttackCode_AfterProjectileSpawn(ent)
 	self.RangeUseAttachmentForPosID = self.RangeUseAttachmentForPosID == "Damage0" && "Damage3" or "Damage0"
+	VJ_CreateSound(ent,"weapons/rpg/rocketfire1.wav",80)
+	VJ_CreateSound(ent,"vj_weapons/rpg/rpg_fire_far.wav",120)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:BarrageFire()
