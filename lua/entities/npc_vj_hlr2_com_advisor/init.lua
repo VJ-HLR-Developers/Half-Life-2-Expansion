@@ -7,7 +7,7 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/vj_hlr/hl2/advisor_ep2.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
-ENT.StartHealth = 1000
+ENT.StartHealth = 500
 ENT.HullType = HULL_TINY
 ENT.VJ_IsHugeMonster = true -- Is this a huge monster?
 ENT.MovementType = VJ_MOVETYPE_AERIAL -- How does the SNPC move?
@@ -25,6 +25,17 @@ ENT.MeleeAttackDistance = 120 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 170 -- How far does the damage go?
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 55
+
+ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
+ENT.AnimTbl_RangeAttack = {ACT_MELEE_ATTACK1} -- Range Attack Animations
+ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar" -- The entity that is spawned when range attacking
+ENT.TimeUntilRangeAttackProjectileRelease = 0.7
+ENT.NextRangeAttackTime = 10 -- How much time until it can use a range attack?
+ENT.RangeDistance = 5000 -- This is how far away it can shoot
+ENT.RangeToMeleeDistance = 400 -- How close does it have to be until it uses melee?
+ENT.RangeUseAttachmentForPos = false -- Should the projectile spawn on a attachment?
+ENT.RangeAttackPos_Up = 35
+ENT.RangeAttackPos_Forward = 70
 
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
 
@@ -64,11 +75,17 @@ ENT.Spawnables = {
 	{ent="npc_vj_hlr2_com_hunter",offset=0,weapons=nil},
 	{ent="npc_vj_hlr2_com_soldier",offset=0,weapons={"weapon_vj_smg1","weapon_vj_smg1","weapon_vj_smg1","weapon_vj_ar2","weapon_vj_ar2"}},
 	{ent="npc_vj_hlr2_com_shotgunner",offset=0,weapons={"weapon_vj_spas12"}},
-	{ent="npc_vj_hlr2_com_elite",offset=0,weapons={"weapon_vj_ar2"}},
-	{ent="npc_vj_hlr2_com_engineer",offset=0,weapons={"weapon_vj_hlr2_reager"}},
+	{ent="npc_vj_hlr2_com_elite",offset=0,weapons={"weapon_vj_ar2","weapon_vj_ar2","weapon_vj_hlr2_reager"}},
+	-- {ent="npc_vj_hlr2_com_engineer",offset=0,weapons={"weapon_vj_hlr2_reager"}},
 }
 
 util.AddNetworkString("VJ_HLR_AdvisorScreenFX")
+
+ENT.PsionicAttacking = false
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackCode_GetShootPos(TheProjectile)
+	return self:CalculateProjectile("Curve", self:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), self:GetPos():Distance(self:GetEnemy():GetPos()))
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(38,38,30), Vector(-38,-38,-30))
@@ -77,8 +94,10 @@ function ENT:CustomOnInitialize()
 	self.NextSearchForEntitiesT = 0
 	self.tbl_HeldEntities = {}
 	self.NextSpawnT = CurTime()
+	self.NextPsionicAttackT = CurTime() +math.Rand(2,4)
 	
 	self:ShieldCode(true)
+	self:SetNW2Bool("PsionicEffect", false)
 
 	local cont = true
 	local EntsTbl = ents.GetAll()
@@ -99,16 +118,48 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:ResetPsionicAttack()
+	self.PsionicAttacking = false
+	self.NextPsionicAttackT = CurTime() + math.Rand(4,7)
+	self:SetState()
+	self:SetNW2Bool("PsionicEffect", false)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomAttackCheck_MeleeAttack() return self.PsionicAttacking != true end -- Not returning true will not let the melee attack code run!
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomAttackCheck_RangeAttack() return self.PsionicAttacking != true end -- Not returning true will not let the melee attack code run!
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ShieldCode(bEnable)
 	self.HasShield = bEnable
 	if bEnable then
 		ParticleEffectAttach("advisor_psychic_shield_idle",PATTACH_ABSORIGIN_FOLLOW,self,0)
-		self.ShieldHealth = 300
+		self.ShieldHealth = 1500
 		self.CustomBlood_Particle = {"hunter_shield_impact"}
 		return
 	end
-	self.CustomBlood_Particle = {nil}
+	self.CustomBlood_Particle = {"vj_impact1_yellow"}
 	self:StopParticles()
+	ParticleEffect("aurora_shockwave",self:GetPos() +self:OBBCenter(),Angle(0,0,0),nil)
+	ParticleEffect("electrical_arc_01_system",self:GetPos() +self:OBBCenter(),Angle(0,0,0),nil)
+	VJ_CreateSound(self,"ambient/energy/whiteflash.wav",120)
+	for _, v in ipairs(ents.FindInSphere(self:GetPos(),8000)) do
+		if VJ_IsProp(v) && self:Visible(v) then
+			local phys = v:GetPhysicsObject()
+			if IsValid(phys) && phys:GetMass() <= 6000 then
+				constraint.RemoveConstraints(v, "Weld")
+				phys:EnableMotion(true)
+				phys:Wake()
+				phys:EnableGravity(true)
+				phys:EnableDrag(true)
+				phys:ApplyForceCenter((v:GetPos() -self:GetPos()) *phys:GetMass())
+			end
+		end
+	end
+	timer.Simple(20,function()
+		if IsValid(self) then
+			self:ShieldCode(true)
+		end
+	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)
@@ -129,10 +180,68 @@ function ENT:GrabEntity(ent)
 	ent:GetPhysicsObject():ApplyForceCenter(ent:GetPos() +Vector(0,0,ent:GetPhysicsObject():GetMass() *1.5))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomAttack()
+	if CurTime() > self.NextPsionicAttackT && self.LatestEnemyDistance <= 8500 && !self:BusyWithActivity() && self.PsionicAttacking == false && self:Visible(self:GetEnemy()) then
+		//print("SEARCH ----")
+		local pTbl = {} -- Table of props that it found
+		for _, v in ipairs(ents.FindInSphere(self:GetEnemy():GetPos(), 2000)) do
+			if VJ_IsProp(v) && self:Visible(v) && self:GetEnemy():Visible(v) then
+				local phys = v:GetPhysicsObject()
+				if IsValid(phys) && phys:GetMass() <= 4000 && v.BeingControlledByAdvisor != true then
+					//print("Prop -", v)
+					pTbl[#pTbl + 1] = v
+				end
+			end
+		end
+		//print(pTbl)
+		if #pTbl > 0 then -- If greater then 1, then we found an object!
+			self:SetNW2Bool("PsionicEffect", true)
+			VJ_EmitSound(self,"vj_hlr/hl2_npc/advisor/advisorattack03.wav", 95)
+			self.PsionicAttacking = true
+			self:SetState(VJ_STATE_ONLY_ANIMATION)
+			for _, v in ipairs(pTbl) do
+				local phys = v:GetPhysicsObject()
+				if IsValid(phys) then
+					v.BeingControlledByAdvisor = true
+					v:SetNW2Bool("BeingControlledByAdvisor", true)
+					constraint.RemoveConstraints(v, "Weld")
+					phys:EnableMotion(true)
+					phys:Wake()
+					phys:EnableGravity(false)
+					phys:EnableDrag(false)
+					phys:ApplyForceCenter(v:GetUp() *phys:GetMass())
+					phys:AddAngleVelocity(v:GetForward() *600 + v:GetRight() *600)
+				end
+			end
+			timer.Simple(3.42225, function()
+				local selfValid = IsValid(self)
+				for _, v in ipairs(pTbl) do
+					if IsValid(v) then
+						local phys = v:GetPhysicsObject()
+						if IsValid(phys) then
+							VJ_EmitSound(self,"vj_hlr/hl2_npc/advisor/advisorattack02.wav", 95)
+							v.BeingControlledByAdvisor = false
+							v:SetNW2Bool("BeingControlledByAdvisor", false)
+							phys:EnableGravity(true)
+							phys:EnableDrag(true)
+							if selfValid && IsValid(self:GetEnemy()) then -- We check self here, in case self is removed, we will reset the props at least
+								local force = phys:GetMass() *math.random(3,8)
+								phys:SetVelocity(self:CalculateProjectile("Line", v:GetPos(), self:GetEnemy():GetPos(), math.Clamp(force,3000,force)))
+								-- self:VJ_ACT_PLAYACTIVITY(ACT_MELEE_ATTACK1, true, false, false)
+							end
+						end
+					end
+				end
+				if selfValid then self:ResetPsionicAttack() end -- Here so in case the prop is deleted, we make sure to still reset
+			end)
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	if self.AA_MoveTimeCur > CurTime() then
 		local remaining = self.AA_MoveTimeCur -CurTime()
-		if remaining < 1.75 then
+		if remaining < 2 then
 			self:AAMove_Stop()
 		end
 	end
@@ -146,25 +255,6 @@ function ENT:CustomOnThink()
 		end
 		self.NextScreenBlastT = CurTime() +math.Rand(5,12)
 	end
-	-- if IsValid(self:GetEnemy()) then
-		if CurTime() > self.NextSearchForEntitiesT then
-			for _,v in ipairs(ents.FindInSphere(self:GetPos(),750)) do
-				if v:GetClass() == "prop_physics" && !VJ_HasValue(self.tbl_HeldEntities,v) then
-					if IsValid(v:GetPhysicsObject()) && v:GetPhysicsObject():GetMass() <= 1500 && v:Visible(self) then
-						self:GrabEntity(v)
-					end
-				end
-			end
-		end
-		if #self.tbl_HeldEntities > 0 then
-			for _,v in ipairs(self.tbl_HeldEntities) do
-				v:GetPhysicsObject():EnableGravity(false)
-				-- if v:GetPos():Distance(self:GetPos()) > 750 then
-					-- v:GetPhysicsObject():ApplyForceCenter((self:GetPos() -v:GetPos()):GetNormal() *v:GetPhysicsObject():GetMass())
-				-- end -- Crashes
-			end
-		end
-	-- end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SpawnAlly()
@@ -215,19 +305,22 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink_AIEnabled()
 	if self.Dead == true then return end
+	for _,v in pairs(ents.FindInSphere(self:GetPos(),300)) do
+		if string.find(v:GetClass(),"rocket") or string.find(v:GetClass(),"missile") then
+			ParticleEffect("aurora_shockwave",v:GetPos(),Angle(0,0,0),nil)
+			ParticleEffect("electrical_arc_01_system",v:GetPos(),Angle(0,0,0),nil)
+			VJ_EmitSound(v,"ambient/energy/whiteflash.wav",90)
+			-- if v.SetDeathVariablesTrue then v:SetDeathVariablesTrue({HitPos=v:GetPos()},nil,true) end
+			-- v:Fire("Kill")
+			SafeRemoveEntity(v)
+		end
+	end
 	if IsValid(self:GetEnemy()) && CurTime() > self.NextSpawnT && ((self.VJ_IsBeingControlled == false) or (self.VJ_IsBeingControlled == true && self.VJ_TheController:KeyDown(IN_JUMP))) then
 		self.NextSpawnT = CurTime() +self:SpawnAlly()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
-	if #self.tbl_HeldEntities > 0 then
-		for _,v in ipairs(self.tbl_HeldEntities) do
-			if IsValid(v) then
-				v:GetPhysicsObject():EnableGravity(true)
-			end
-		end
-	end
 	local cont = true
 	local EntsTbl = ents.GetAll()
 	for x = 1,#EntsTbl do
