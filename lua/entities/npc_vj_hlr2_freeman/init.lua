@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -89,25 +89,25 @@ function ENT:CustomOnAlert(argent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnGrenadeAttack_OnThrow(GrenadeEntity)
+function ENT:CustomOnGrenadeAttack_OnThrow(grenEnt)
 	-- Custom grenade model and sounds
-	GrenadeEntity.SoundTbl_Idle = {"weapons/grenade/tick1.wav"}
-	GrenadeEntity.IdleSoundPitch1 = 100
+	grenEnt.SoundTbl_Idle = {"weapons/grenade/tick1.wav"}
+	grenEnt.IdleSoundPitch1 = 100
 	local redglow = ents.Create("env_sprite")
 	redglow:SetKeyValue("model", "vj_base/sprites/vj_glow1.vmt")
 	redglow:SetKeyValue("scale", "0.07")
 	redglow:SetKeyValue("rendermode", "5")
 	redglow:SetKeyValue("rendercolor", "150 0 0")
 	redglow:SetKeyValue("spawnflags", "1") -- If animated
-	redglow:SetParent(GrenadeEntity)
+	redglow:SetParent(grenEnt)
 	redglow:Fire("SetParentAttachment", "fuse", 0)
 	redglow:Spawn()
 	redglow:Activate()
-	GrenadeEntity:DeleteOnRemove(redglow)
-	util.SpriteTrail(GrenadeEntity, 1, Color(200,0,0), true, 15, 15, 0.35, 1/(6+6)*0.5, "VJ_Base/sprites/vj_trial1.vmt")
+	grenEnt:DeleteOnRemove(redglow)
+	util.SpriteTrail(grenEnt, 1, Color(200,0,0), true, 15, 15, 0.35, 1/(6+6)*0.5, "VJ_Base/sprites/vj_trial1.vmt")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	-- Absorb bullet damage
 	if dmginfo:IsBulletDamage() then
 		if self.HasSounds == true && self.HasImpactSounds == true then VJ_EmitSound(self, "vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav", 70) end
@@ -130,7 +130,7 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnKilled(dmginfo,hitgroup)
+function ENT:CustomOnKilled(dmginfo, hitgroup)
 	for _,v in pairs(self.WeaponInventory.Total) do
 		if IsValid(v) && v != self:GetActiveWeapon() then
 			local e = ents.Create(v:GetClass())
@@ -164,7 +164,7 @@ function ENT:CustomOnKilled(dmginfo,hitgroup)
 	end
 end
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/

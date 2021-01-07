@@ -2,7 +2,7 @@ AddCSLuaFile("shared.lua")
 include("movetype_aa.lua")
 include("shared.lua")
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -74,7 +74,7 @@ ENT.AlertSoundLevel = 150
 ENT.PainSoundLevel = 150
 ENT.DeathSoundLevel = 150
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackCode_GetShootPos(TheProjectile)
+function ENT:RangeAttackCode_GetShootPos(projectile)
 	return self:CalculateProjectile("Line",self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos,self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -302,7 +302,7 @@ function ENT:CustomOnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnPriorToKilled(dmginfo,hitgroup)
+function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 	ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,self,8)
 	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,4)
 	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,6)
@@ -331,37 +331,37 @@ function ENT:CustomOnPriorToKilled(dmginfo,hitgroup)
 	-- end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
+function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	local pos,ang = self:GetBonePosition(0)
-	GetCorpse:SetPos(pos)
-	GetCorpse:GetPhysicsObject():SetVelocity(((self:GetPos() +self:GetRight() *-700 +self:GetForward() *-300 +self:GetUp() *-200) -self:GetPos()))
-	util.BlastDamage(self, self, GetCorpse:GetPos(), 400, 40)
-	util.ScreenShake(GetCorpse:GetPos(), 100, 200, 1, 2500)
+	corpseEnt:SetPos(pos)
+	corpseEnt:GetPhysicsObject():SetVelocity(((self:GetPos() +self:GetRight() *-700 +self:GetForward() *-300 +self:GetUp() *-200) -self:GetPos()))
+	util.BlastDamage(self, self, corpseEnt:GetPos(), 400, 40)
+	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
 
 	VJ_EmitSound(self,"vj_mili_tank/tank_death2.wav",100,100)
 	VJ_EmitSound(self,"vj_mili_tank/tank_death3.wav",100,100)
-	util.BlastDamage(self,self,GetCorpse:GetPos(),200,40)
-	util.ScreenShake(GetCorpse:GetPos(), 100, 200, 1, 2500)
-	if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",GetCorpse:GetPos(),Angle(0,0,0),nil) end
+	util.BlastDamage(self,self,corpseEnt:GetPos(),200,40)
+	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
+	if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",corpseEnt:GetPos(),Angle(0,0,0),nil) end
 
 	if math.random(1,3) == 1 then
-		self:CreateExtraDeathCorpse("prop_ragdoll","models/combine_soldier.mdl",{Pos=GetCorpse:GetPos()+GetCorpse:GetUp()*90+GetCorpse:GetRight()*-30,Vel=Vector(math.Rand(-600,600), math.Rand(-600,600),500)},function(extraent) extraent:Ignite(math.Rand(8,10),0); extraent:SetColor(Color(90,90,90)) end)
+		self:CreateExtraDeathCorpse("prop_ragdoll","models/combine_soldier.mdl",{Pos=corpseEnt:GetPos()+corpseEnt:GetUp()*90+corpseEnt:GetRight()*-30,Vel=Vector(math.Rand(-600,600), math.Rand(-600,600),500)},function(extraent) extraent:Ignite(math.Rand(8,10),0); extraent:SetColor(Color(90,90,90)) end)
 	end
 
 	if self.HasGibDeathParticles == true then
-		ParticleEffect("vj_explosion3",GetCorpse:GetPos(),Angle(0,0,0),nil)
-		ParticleEffect("vj_explosion2",GetCorpse:GetPos() +GetCorpse:GetForward()*-130,Angle(0,0,0),nil)
-		ParticleEffect("vj_explosion2",GetCorpse:GetPos() +GetCorpse:GetForward()*130,Angle(0,0,0),nil)
-		ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,GetCorpse,8)
-		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,GetCorpse,1)
+		ParticleEffect("vj_explosion3",corpseEnt:GetPos(),Angle(0,0,0),nil)
+		ParticleEffect("vj_explosion2",corpseEnt:GetPos() +corpseEnt:GetForward()*-130,Angle(0,0,0),nil)
+		ParticleEffect("vj_explosion2",corpseEnt:GetPos() +corpseEnt:GetForward()*130,Angle(0,0,0),nil)
+		ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,corpseEnt,8)
+		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,1)
 		
 		local explosioneffect = EffectData()
-		explosioneffect:SetOrigin(GetCorpse:GetPos())
+		explosioneffect:SetOrigin(corpseEnt:GetPos())
 		util.Effect("VJ_Medium_Explosion1",explosioneffect)
 		util.Effect("Explosion", explosioneffect)
 		
 		local dusteffect = EffectData()
-		dusteffect:SetOrigin(GetCorpse:GetPos())
+		dusteffect:SetOrigin(corpseEnt:GetPos())
 		dusteffect:SetScale(800)
 		util.Effect("ThumperDust",dusteffect)
 	end
@@ -373,7 +373,7 @@ function ENT:CustomOnRemove()
 	timer.Remove("vj_timer_fire_" .. self:EntIndex())
 end
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/

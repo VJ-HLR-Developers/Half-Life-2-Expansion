@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -191,42 +191,42 @@ function ENT:CustomOnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnPriorToKilled(dmginfo,hitgroup)
+function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
-	local phys = GetCorpse:GetPhysicsObject()
+function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
+	local phys = corpseEnt:GetPhysicsObject()
 	phys:AddVelocity(self:GetPos() +self:GetForward() *math.random(1500,8000))
 
-	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,GetCorpse,2)
-	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,GetCorpse,4)
-	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,GetCorpse,5)
-	local function Explode(GetCorpse)
-		local pos = GetCorpse:GetPos() +GetCorpse:OBBCenter()
-		VJ_EmitSound(GetCorpse,"vj_mili_tank/tank_death2.wav",100,100)
-		util.BlastDamage(GetCorpse,GetCorpse,pos,200,40)
+	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,2)
+	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,4)
+	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,5)
+	local function Explode(corpseEnt)
+		local pos = corpseEnt:GetPos() +corpseEnt:OBBCenter()
+		VJ_EmitSound(corpseEnt,"vj_mili_tank/tank_death2.wav",100,100)
+		util.BlastDamage(corpseEnt,corpseEnt,pos,200,40)
 		util.ScreenShake(pos, 100, 200, 1, 2500)
 		ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil)
-		if math.random(1,4) == 1 then VJ_CreateSound(GetCorpse,"npc/combine_gunship/gunship_pain.wav",90,math.random(95,110)) end
+		if math.random(1,4) == 1 then VJ_CreateSound(corpseEnt,"npc/combine_gunship/gunship_pain.wav",90,math.random(95,110)) end
 	end
-	timer.Simple(0.35,function() if IsValid(GetCorpse) then Explode(GetCorpse) end end)
-	timer.Simple(0.65,function() if IsValid(GetCorpse) then Explode(GetCorpse) end end)
-	timer.Simple(1,function() if IsValid(GetCorpse) then Explode(GetCorpse) end end)
-	timer.Simple(1.6,function() if IsValid(GetCorpse) then Explode(GetCorpse) end end)
-	timer.Simple(2,function() if IsValid(GetCorpse) then Explode(GetCorpse) end end)
-	timer.Simple(2.5,function() if IsValid(GetCorpse) then Explode(GetCorpse) ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,GetCorpse,2) end end)
-	timer.Simple(3,function() if IsValid(GetCorpse) then Explode(GetCorpse) end end)
+	timer.Simple(0.35,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
+	timer.Simple(0.65,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
+	timer.Simple(1,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
+	timer.Simple(1.6,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
+	timer.Simple(2,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
+	timer.Simple(2.5,function() if IsValid(corpseEnt) then Explode(corpseEnt) ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,corpseEnt,2) end end)
+	timer.Simple(3,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
 	timer.Simple(120,function()
-		if IsValid(GetCorpse) then
-			GetCorpse:StopParticles()
-			ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,GetCorpse,2)
-			ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,GetCorpse,5)
+		if IsValid(corpseEnt) then
+			corpseEnt:StopParticles()
+			ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,2)
+			ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,5)
 		end
 	end)
 	timer.Simple(360,function()
-		if IsValid(GetCorpse) then
-			GetCorpse:StopParticles()
+		if IsValid(corpseEnt) then
+			corpseEnt:StopParticles()
 		end
 	end)
 end
@@ -344,7 +344,7 @@ function ENT:CustomOnRemove()
 	timer.Remove("vj_timer_fire_" .. self:EntIndex())
 end
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/

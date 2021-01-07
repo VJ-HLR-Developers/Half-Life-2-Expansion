@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -48,7 +48,7 @@ ENT.Assassin_OffGround = false
 ENT.Assassin_CloakLevel = 1
 ENT.Assassin_NextDodgeT = CurTime()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
+function ENT:CustomOnSetupWeaponHoldTypeAnims(hType)
 	self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= ACT_RANGE_ATTACK1
 	self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= ACT_RANGE_ATTACK1
 	self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= ACT_RANGE_ATTACK1
@@ -78,10 +78,10 @@ function ENT:CustomOnInitialize()
 	self:Give("weapon_vj_hlr_dualpistol")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnPlayCreateSound(SoundData,SoundFile)
-	if VJ_HasValue(self.SoundTbl_BeforeMeleeAttack,SoundFile) then return end
+function ENT:OnPlayCreateSound(sdData, sdFile)
+	if VJ_HasValue(self.SoundTbl_BeforeMeleeAttack,sdFile) then return end
 	VJ_EmitSound(self, "npc/combine_soldier/vo/on"..math.random(1,2)..".wav")
-	timer.Simple(SoundDuration(SoundFile), function() if IsValid(self) && SoundData:IsPlaying() then VJ_EmitSound(self,"npc/combine_soldier/vo/off"..math.random(1,3)..".wav") end end)
+	timer.Simple(SoundDuration(sdFile), function() if IsValid(self) && sdData:IsPlaying() then VJ_EmitSound(self,"npc/combine_soldier/vo/off"..math.random(1,3)..".wav") end end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
@@ -163,7 +163,7 @@ function ENT:Dodge()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnFireBullet(ent,data)
+function ENT:OnFireBullet(ent, data)
 	self.Assassin_CloakLevel = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -172,16 +172,16 @@ function ENT:CustomOnIsAbleToShootWeapon()
 	return true
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
+function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
 	self:Dodge()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo,hitgroup)
+function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
 	self:SetBodygroup(1,1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDropWeapon_AfterWeaponSpawned(dmginfo,hitgroup,GetWeapon)
-	GetWeapon:Remove()
+function ENT:CustomOnDropWeapon_AfterWeaponSpawned(dmginfo, hitgroup, wepEnt)
+	wepEnt:Remove()
 	for i = 1,2 do
 		local att = self:GetAttachment(2 +i)
 		local pistol = ents.Create("weapon_vj_9mmpistol")
@@ -191,7 +191,7 @@ function ENT:CustomOnDropWeapon_AfterWeaponSpawned(dmginfo,hitgroup,GetWeapon)
 	end
 end
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/

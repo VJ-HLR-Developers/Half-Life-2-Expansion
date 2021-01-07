@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -53,8 +53,8 @@ ENT.SoundTbl_Death = {
 }
 ENT.GrenadeTime = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnPlayCreateSound(SoundData,SoundFile)
-	if VJ_HasValue(self.SoundTbl_Pain,SoundFile) or VJ_HasValue(self.DefaultSoundTbl_MeleeAttack,SoundFile) then return end
+function ENT:OnPlayCreateSound(sdData, sdFile)
+	if VJ_HasValue(self.SoundTbl_Pain,sdFile) or VJ_HasValue(self.DefaultSoundTbl_MeleeAttack,sdFile) then return end
 	VJ_EmitSound(self,"npc/combine_soldier/vo/on" .. math.random(1,2) .. ".wav")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ function ENT:CustomOnAlert(argent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
+function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
 	if self.IsSlumped then
 		self:UnSlump()
 	end
@@ -206,7 +206,7 @@ function ENT:CustomOnThink_AIEnabled()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
+function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	if self:GetBodygroup(1) == 0 then return false end
 	local randcrab = math.random(1,3)
 	local dmgtype = dmginfo:GetDamageType()
@@ -250,7 +250,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:SpawnBloodParticles(dmginfo,hitgroup)
+function ENT:SpawnBloodParticles(dmginfo, hitgroup)
 	if hitgroup == HITGROUP_HEAD then
 		local p_name = VJ_PICK(self.CustomBlood_Particle)
 		if p_name == false then return end
@@ -268,7 +268,7 @@ function ENT:SpawnBloodParticles(dmginfo,hitgroup)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if hitgroup == HITGROUP_HEAD then return end
 	if (dmginfo:IsBulletDamage()) then
 		local attacker = dmginfo:GetAttacker()
@@ -289,7 +289,7 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)
 	dmginfo:ScaleDamage(0.50)
 end
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/

@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -104,7 +104,7 @@ function ENT:CustomOnAlert(argent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_OnBleed(dmginfo,hitgroup)
+function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
 	if self.IsSlumped then
 		self:UnSlump()
 	end
@@ -120,7 +120,7 @@ function ENT:ResetSlump()
 	self.HasLeapAttack = true
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnMeleeAttack_AfterChecks(TheHitEntity)
+function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt)
 	if CurTime() > self.LastHitT then self.TotalHits = 0 end
 	self.TotalHits = self.TotalHits +1
 	self.LastHitT = CurTime() +0.6
@@ -135,7 +135,7 @@ function ENT:CustomOnLeapAttackVelocityCode()
 	VJ_CreateSound(self,"npc/fast_zombie/fz_scream1.wav",85)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
+function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	if self:GetBodygroup(1) == 0 then return false end
 	local randcrab = math.random(1,3)
 	local dmgtype = dmginfo:GetDamageType()
@@ -168,7 +168,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
 	end
 end
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2020 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
