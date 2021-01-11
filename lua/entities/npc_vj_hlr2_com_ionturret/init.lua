@@ -68,7 +68,7 @@ function ENT:CustomRangeAttackCode()
 	self:DeleteOnRemove(FireLight1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(argent)
+function ENT:CustomOnAlert(ent)
 	self.HasPoseParameterLooking = false -- Make it not aim at the enemy right away!
 	timer.Simple(0.6, function()
 		if IsValid(self) then

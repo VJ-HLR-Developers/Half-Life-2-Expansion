@@ -447,28 +447,28 @@ function ENT:CustomOnThink_AIEnabled()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(argent)
-	if string.find(argent:GetClass(),"antlion") then
+function ENT:CustomOnAlert(ent)
+	if string.find(ent:GetClass(),"antlion") then
 		self:PlaySoundSystem("Alert",self.SoundTbl_Alert_Antlions)
 		self.NextAlertSoundT = CurTime() +math.Rand(self.NextSoundTime_Alert1,self.NextSoundTime_Alert2)
-	elseif string.find(argent:GetClass(),"headcrab") then
+	elseif string.find(ent:GetClass(),"headcrab") then
 		self:PlaySoundSystem("Alert",self.SoundTbl_Alert_Headcrabs)
 		self.NextAlertSoundT = CurTime() +math.Rand(self.NextSoundTime_Alert1,self.NextSoundTime_Alert2)
-	elseif string.find(argent:GetClass(),"zombie") then
+	elseif string.find(ent:GetClass(),"zombie") then
 		self:PlaySoundSystem("Alert",self.SoundTbl_Alert_Zombies)
 		self.NextAlertSoundT = CurTime() +math.Rand(self.NextSoundTime_Alert1,self.NextSoundTime_Alert2)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDoKilledEnemy(argent, attacker, inflictor)
-	if !IsValid(argent) then return end
-	if string.find(argent:GetClass(),"antlion") then
+function ENT:CustomOnDoKilledEnemy(ent, attacker, inflictor)
+	if !IsValid(ent) then return end
+	if string.find(ent:GetClass(),"antlion") then
 		self:PlaySoundSystem("OnKilledEnemy",self.SoundTbl_OnKilledEnemy_Antlions)
-	elseif string.find(argent:GetClass(),"headcrab") then
+	elseif string.find(ent:GetClass(),"headcrab") then
 		self:PlaySoundSystem("OnKilledEnemy",self.SoundTbl_OnKilledEnemy_Headcrabs)
-	elseif string.find(argent:GetClass(),"zombie") then
+	elseif string.find(ent:GetClass(),"zombie") then
 		self:PlaySoundSystem("OnKilledEnemy",self.SoundTbl_OnKilledEnemy_Zombies)
-	elseif argent:IsPlayer() then
+	elseif ent:IsPlayer() then
 		self:PlaySoundSystem("OnKilledEnemy",self.SoundTbl_OnKilledEnemy_Player)
 	end
 end

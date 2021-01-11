@@ -77,9 +77,9 @@ function ENT:CustomOnWeaponReload()
 	-- end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(argent)
+function ENT:CustomOnAlert(ent)
 	if math.random(1,2) == 1 then
-		if argent:IsNPC() && argent.HLR_Type == "Headcrab" or argent:GetClass() == "npc_headcrab" or argent:GetClass() == "npc_headcrab_black" or argent:GetClass() == "npc_headcrab_fast" then
+		if ent:IsNPC() && ent.HLR_Type == "Headcrab" or ent:GetClass() == "npc_headcrab" or ent:GetClass() == "npc_headcrab_black" or ent:GetClass() == "npc_headcrab_fast" then
 			self:DoChangeWeapon("weapon_vj_crowbar",true)
 			return
 		else

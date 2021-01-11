@@ -34,7 +34,7 @@ function SWEP:CustomOnPrimaryAttackEffects()
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnFireAnimationEvent(pos,ang,event,options)
+function SWEP:CustomOnFireAnimationEvent(pos, ang, event, options)
 	if event == 5001 then return true end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

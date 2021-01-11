@@ -147,7 +147,7 @@ function ENT:BarrageFire()
 				bullet.Num = 1
 				bullet.Src = att.Pos
 				bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() -att.Pos):Angle():Forward()
-				bullet.Callback = function(attacker,tr,dmginfo)
+				bullet.Callback = function(attacker, tr, dmginfo)
 					local laserhit = EffectData()
 					laserhit:SetOrigin(tr.HitPos)
 					laserhit:SetNormal(tr.HitNormal)

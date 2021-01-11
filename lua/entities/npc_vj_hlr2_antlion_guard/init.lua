@@ -194,7 +194,7 @@ function ENT:IsDirt(pos)
 	return tr.HitWorld && (mat == MAT_SAND || mat == MAT_DIRT || mat == MAT_FOLIAGE || mat == MAT_SLOSH || mat == 85)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(argent)
+function ENT:CustomOnAlert(ent)
 	if self.IsDiging == true then return end
 	if math.random(1,3) == 1 then
 		local tbl = VJ_PICK({"bark","roar"})

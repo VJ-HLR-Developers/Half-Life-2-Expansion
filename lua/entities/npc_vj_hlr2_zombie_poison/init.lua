@@ -90,7 +90,7 @@ function ENT:UnSlump()
 	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(argent)
+function ENT:CustomOnAlert(ent)
 	if self.IsSlumped then
 		self:UnSlump()
 	end

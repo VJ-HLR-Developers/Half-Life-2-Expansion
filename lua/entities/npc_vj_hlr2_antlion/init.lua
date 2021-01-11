@@ -126,7 +126,7 @@ function ENT:CustomOnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(argent)
+function ENT:CustomOnAlert(ent)
 	if self.IsDiging == true then return end
 	if math.random(1,6) == 1 then
 		local tbl = VJ_PICK({"distract","roar"})

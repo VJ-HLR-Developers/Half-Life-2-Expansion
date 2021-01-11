@@ -102,7 +102,7 @@ function ENT:RangeAttackCode_GetShootPos(projectile)
 	return self:CalculateProjectile("Curve", self:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 1200)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(argent)
+function ENT:CustomOnAlert(ent)
 	if self.CanAlertCrab != true then return end
 	VJ_STOPSOUND(self.CurrentIdleSound)
 	self.NextIdleSoundT = self.NextIdleSoundT + 2

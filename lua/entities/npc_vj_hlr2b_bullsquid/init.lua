@@ -137,9 +137,9 @@ function ENT:RangeAttackCode_GetShootPos(projectile)
 	return self:CalculateProjectile("Curve", self:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter() +VectorRand() *self.Accuracy, 1500)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(argent)
+function ENT:CustomOnAlert(ent)
 	if self:WaterLevel() < 2 then
-		if VJ_HasValue(self.tbl_Headcrabs,argent:GetClass()) && math.random(1,2) == 1 then
+		if VJ_HasValue(self.tbl_Headcrabs,ent:GetClass()) && math.random(1,2) == 1 then
 			self:VJ_ACT_PLAYACTIVITY("hc_spot",true,false,true)
 		else
 			if math.random(1,3) == 1 then

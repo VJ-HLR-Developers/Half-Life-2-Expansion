@@ -264,9 +264,9 @@ if (SERVER) then
 		end
 	end
 
-	function ENT:DoPoseParameterLooking(ResetPoses)
+	function ENT:DoPoseParameterLooking(resetPoses)
 		if !IsValid(self.Operator) then return end
-		ResetPoses = ResetPoses or false
+		resetPoses = resetPoses or false
 		//self:VJ_GetAllPoseParameters(true)
 		local ent = NULL
 		if self.Operator.VJ_IsBeingControlled == true then ent = self.Operator.VJ_TheController else ent = self.Operator:GetEnemy() end
@@ -275,7 +275,7 @@ if (SERVER) then
 		local r_enemy = 0 -- Roll
 		local ang_dif = math.AngleDifference
 		local ang_app = math.ApproachAngle
-		if IsValid(ent) && ResetPoses == false then
+		if IsValid(ent) && resetPoses == false then
 			local self_pos = self.Emplacement:GetPos() + self.Emplacement:OBBCenter()
 			local enemy_pos = false //Vector(0,0,0)
 			if self.Operator.VJ_IsBeingControlled == true then enemy_pos = self.Operator.VJ_TheController:GetEyeTrace().HitPos else enemy_pos = ent:GetPos() + ent:OBBCenter() end
