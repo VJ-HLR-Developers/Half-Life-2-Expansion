@@ -57,10 +57,6 @@ ENT.SoundTbl_IdleDialogueAnswer = {"npc/headcrab/alert1.wav","npc/headcrab/idle1
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(8,10,15), Vector(-8,-10,0))
 end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnLeapAttackVelocityCode()
-	self:SetGroundEntity(NULL)
-end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,

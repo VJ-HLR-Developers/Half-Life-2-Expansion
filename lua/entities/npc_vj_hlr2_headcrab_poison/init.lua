@@ -27,7 +27,6 @@ ENT.LeapAttackDamageType = DMG_POISON
 ENT.LeapAttackExtraTimers = {1.6,1.8,2} -- Extra leap attack timers | it will run the damage code after the given amount of seconds
 ENT.StopLeapAttackAfterFirstHit = true
 ENT.LeapAttackDamageDistance = 40 -- How far does the damage go?
-ENT.LeapAttackAnimationFaceEnemy = true
 ENT.FootStepTimeRun = 0.5 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.5 -- Next foot step sound when it is walking
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
@@ -194,10 +193,6 @@ function ENT:CustomOnThink()
 			self.PThrown = false
 		end
 	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnLeapAttackVelocityCode()
-	self:SetGroundEntity(NULL)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:FootStepSoundCode(CustomTbl)
