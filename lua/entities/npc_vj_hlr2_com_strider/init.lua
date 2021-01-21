@@ -407,7 +407,7 @@ function ENT:CustomAttack()
 					self:StartWarpCannon()
 				end
 			elseif !enemy:Visible(self) && cos then
-				if CurTime() > self.NextWarpT && math.random(1,20) == 1 && (self:GetEnemyLastKnownPos() != vec_worigin) then
+				if CurTime() > self.NextWarpT && math.random(1,20) == 1 && (self:GetEnemyLastKnownPos() != defPos) then
 					self:StartWarpCannon(true)
 				end
 			end

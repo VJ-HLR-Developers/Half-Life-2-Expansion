@@ -267,7 +267,7 @@ if (SERVER) then
 	function ENT:DoPoseParameterLooking(resetPoses)
 		if !IsValid(self.Operator) then return end
 		resetPoses = resetPoses or false
-		//self:VJ_GetAllPoseParameters(true)
+		//self:GetPoseParameters(true)
 		local ent = NULL
 		if self.Operator.VJ_IsBeingControlled == true then ent = self.Operator.VJ_TheController else ent = self.Operator:GetEnemy() end
 		local p_enemy = 0 -- Pitch

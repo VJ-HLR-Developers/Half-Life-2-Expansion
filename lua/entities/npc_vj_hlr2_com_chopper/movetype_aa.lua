@@ -19,7 +19,7 @@ ENT.AA_MoveTimeCur = 0
 ENT.FlySpeed = 425
 ENT.Acceleration = 85 -- Obsolete
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:AAMove_Animation()
+function ENT:AA_MoveAnimation()
 	if self:GetSequence() != self.CurrentAnim_AAMovement && self:BusyWithActivity() == false /*&& self:GetActivity() == ACT_IDLE*/ && CurTime() > self.AA_NextMovementAnimation then
 		local animtbl = {}
 		if self.AA_CurrentMoveAnimationType == "Calm" then
@@ -45,7 +45,7 @@ function ENT:AAMove_Animation()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:AAMove_Stop()
+function ENT:AA_StopMoving()
 	if self:GetVelocity():Length() > 0 then
 		self:SetLocalVelocity(LerpVector(0.1,self:GetVelocity(),Vector(0,0,0)))
 		self:SetPoseParameter("move_yaw",Lerp(0.2,self:GetPoseParameter("move_yaw"),0))
@@ -82,7 +82,7 @@ function ENT:DecideYaw(pos)
 	self:SetPoseParameter("move_yaw",Lerp(0.5,self:GetPoseParameter("move_yaw"),y))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:AAMove_Wander()
+function ENT:AA_IdleWander()
 	local rand = 2500
 	local randZMin = 800
 	local randZMax = 1250
@@ -111,7 +111,7 @@ function ENT:AAMove_FlyToPosition(Pos,isWander,ovSpeed)
 	local GoToPos = (Pos -self:GetPos()):GetNormal() *speed
 
 	-- if vel_stop == false then
-		self.AA_CurrentTurnAng = self:VJ_ReturnAngle(self:VJ_ReturnAngle((Pos):Angle()))
+		self.AA_CurrentTurnAng = self:GetFaceAngle(self:GetFaceAngle((Pos):Angle()))
 		self:SetLocalVelocity(GoToPos)
 		-- self:SetLocalVelocity(LerpVector(0.1,self:GetVelocity(),GoToPos))
 		-- self:AddVelocity(GoToPos)
@@ -134,17 +134,17 @@ function ENT:AAMove_FlyToPosition(Pos,isWander,ovSpeed)
 		end
 		return self.AA_MoveTime
 	-- else
-		-- self:AAMove_Stop()
+		-- self:AA_StopMoving()
 	-- end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:AAMove_MoveToPos(Ent)
+function ENT:AA_MoveTo(Ent)
 	if !IsValid(Ent) then return end
 	if self.CarpetBombing then return end
 	self:AAMove_FlyToPosition(Ent:GetPos())
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:AAMove_ChaseEnemy()
+function ENT:AA_ChaseEnemy()
 	if self.Dead == true or (self.NextChaseTime > CurTime()) or !IsValid(self:GetEnemy()) then return end
 	if self.CarpetBombing then
 		return

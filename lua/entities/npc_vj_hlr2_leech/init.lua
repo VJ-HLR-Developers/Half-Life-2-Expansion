@@ -35,17 +35,13 @@ ENT.SoundTbl_Idle = {"vj_hlr/hl1_npc/leech/leech_alert1.wav","vj_hlr/hl1_npc/lee
 ENT.SoundTbl_MeleeAttack = {"vj_hlr/hl1_npc/leech/leech_bite1.wav","vj_hlr/hl1_npc/leech/leech_bite2.wav","vj_hlr/hl1_npc/leech/leech_bite3.wav"}
 
 -- Custom
-ENT.Leech_PosForward = 0
-ENT.Leech_PosUp = 0
-ENT.Leech_PosRight = 0
+ENT.Leech_FollowOffsetPos = 0
 
 Leech_Leader = NULL
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(4,4,3),Vector(-4,-4,-2))
-	self.Leech_PosForward = math.random(-50,50)
-	self.Leech_PosUp = math.random(-150,150)
-	self.Leech_PosRight = math.random(-120,120)
+	self.Leech_FollowOffsetPos = Vector(math.random(-50, 50), math.random(-120, 120), math.random(-150, 150))
 	if !IsValid(Leech_Leader) then
 		Leech_Leader = self
 	end
@@ -66,7 +62,7 @@ function ENT:CustomOnThink()
 			self.DisableWandering = true
 			self.AA_ConstantlyMove = false
 			if !IsValid(self:GetEnemy()) then
-				self:AAMove_MoveToPos(Leech_Leader,true,{PosForward=self.Leech_PosForward,PosUp=self.Leech_PosUp,PosRight=self.Leech_PosRight}) -- Medzavorin haladz e (Kharen deghme)
+				self:AA_MoveTo(Leech_Leader, true, "Calm", {AddPos=self.Leech_FollowOffsetPos}) -- Medzavorin haladz e (Kharen deghme)
 			end
 		end
 	else

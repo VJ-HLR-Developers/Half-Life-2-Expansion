@@ -168,7 +168,7 @@ function ENT:CustomOnThink()
 			self.PP_Vert = 0
 			self.PP_Horz = 0
 			self.PP_Accel = 0
-			self:AAMove_Stop()
+			self:AA_StopMoving()
 			return
 		end
 		self.PP_Vert = self:MovingUp() && 35 or self:MovingDown() && -35 or self.PP_Vert +math.Rand(-5,5)

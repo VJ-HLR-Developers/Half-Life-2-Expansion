@@ -122,7 +122,7 @@ function ENT:CustomOnThink()
 		self.HasMeleeAttack = false
 		self.HasRangeAttack = false
 		if IsValid(self:GetEnemy()) && self:GetEnemy():WaterLevel() < 3 then
-			self:AAMove_MoveToPos(self:GetEnemy(),true)
+			self:AA_MoveTo(self:GetEnemy(),true)
 		end
 	else
 		if self.MovementType != VJ_MOVETYPE_GROUND then
@@ -151,7 +151,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MultipleMeleeAttacks() end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:AAMove_MoveToPos(Ent,ShouldPlayAnim,vAdditionalFeatures)
+function ENT:AA_MoveTo(Ent,ShouldPlayAnim,vAdditionalFeatures)
 	if !IsValid(Ent) then return end
 	vAd_AdditionalFeatures = vAdditionalFeatures or {}
 	vAd_PosForward = vAd_AdditionalFeatures.PosForward or 1 -- This will add the given value to the set position's forward
@@ -164,7 +164,7 @@ function ENT:AAMove_MoveToPos(Ent,ShouldPlayAnim,vAdditionalFeatures)
 			print("ME WL: "..self:WaterLevel())
 			print("Move To Pos WL: "..Ent:WaterLevel())
 		end
-		if self:WaterLevel() <= 1 && self:GetVelocity():Length() > 0 then self:AAMove_Wander(true,true) return end
+		if self:WaterLevel() <= 1 && self:GetVelocity():Length() > 0 then self:AA_IdleWander(true,true) return end
 		if Ent:WaterLevel() <= 1 then -- Yete 0-en ver e, ere vor nayi yete gerna teshanmi-in gerna hasnil
 			local trene = util.TraceLine({
 				start = Ent:GetPos() + self:OBBCenter(),
@@ -228,7 +228,7 @@ function ENT:AAMove_MoveToPos(Ent,ShouldPlayAnim,vAdditionalFeatures)
 	end
 	if vel_stop == false then
 		local vel_set = ((enepos) - (self:GetPos() + self:OBBCenter())):GetNormal()*MoveSpeed + self:GetUp()*vel_up + self:GetForward()*vel_for
-		self.AA_CurrentTurnAng = self:VJ_ReturnAngle(self:VJ_ReturnAngle((vel_set):Angle()))
+		self.AA_CurrentTurnAng = self:GetFaceAngle(self:GetFaceAngle((vel_set):Angle()))
 		self:SetLocalVelocity(vel_set)
 		local vel_len = CurTime() + (tr.HitPos:Distance(startpos) / vel_set:Length())
 		self.AA_MoveLength_Wander = 0
@@ -238,7 +238,7 @@ function ENT:AAMove_MoveToPos(Ent,ShouldPlayAnim,vAdditionalFeatures)
 		end
 		if Debug == true then ParticleEffect("vj_impact1_centaurspit", enepos, Angle(0,0,0), self) end
 	else
-		self:AAMove_Stop()
+		self:AA_StopMoving()
 	end
 end
 /*-----------------------------------------------

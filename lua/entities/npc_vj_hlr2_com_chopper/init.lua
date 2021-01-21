@@ -291,7 +291,7 @@ function ENT:CustomOnThink()
 	if self.AA_MoveTimeCur > CurTime() then
 		local remaining = self.AA_MoveTimeCur -CurTime()
 		if remaining < 1.75 then
-			self:AAMove_Stop()
+			self:AA_StopMoving()
 		end
 	end
 	
