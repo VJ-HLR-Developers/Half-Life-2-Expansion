@@ -4,7 +4,6 @@
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 --------------------------------------------------*/
 AddCSLuaFile()
-if (!file.Exists("autorun/vj_base_autorun.lua","LUA")) then return end
 
 ENT.Type 			= "anim"
 ENT.Base 			= "obj_vj_projectile_base"
@@ -51,7 +50,6 @@ ENT.RadiusDamageForce = 90 -- Put the force amount it should apply | false = Don
 ENT.ShakeWorldOnDeath = true -- Should the world shake when the projectile hits something?
 ENT.ShakeWorldOnDeathAmplitude = 16 -- How much the screen will shake | From 1 to 16, 1 = really low 16 = really high
 ENT.ShakeWorldOnDeathRadius = 3000 -- How far the screen shake goes, in world units
-ENT.ShakeWorldOnDeathtDuration = 1 -- How long the screen shake will last, in seconds
 ENT.ShakeWorldOnDeathFrequency = 200 -- The frequency
 ENT.DecalTbl_DeathDecals = {"Scorch"}
 ENT.SoundTbl_Idle = {"weapons/rpg/rocket1.wav"}

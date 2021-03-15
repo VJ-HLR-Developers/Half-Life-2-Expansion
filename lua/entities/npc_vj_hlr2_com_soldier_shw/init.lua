@@ -450,13 +450,13 @@ end
 function ENT:CustomOnAlert(ent)
 	if string.find(ent:GetClass(),"antlion") then
 		self:PlaySoundSystem("Alert",self.SoundTbl_Alert_Antlions)
-		self.NextAlertSoundT = CurTime() +math.Rand(self.NextSoundTime_Alert1,self.NextSoundTime_Alert2)
+		self.NextAlertSoundT = CurTime() +math.Rand(self.NextSoundTime_Alert.a, self.NextSoundTime_Alert.b)
 	elseif string.find(ent:GetClass(),"headcrab") then
 		self:PlaySoundSystem("Alert",self.SoundTbl_Alert_Headcrabs)
-		self.NextAlertSoundT = CurTime() +math.Rand(self.NextSoundTime_Alert1,self.NextSoundTime_Alert2)
+		self.NextAlertSoundT = CurTime() +math.Rand(self.NextSoundTime_Alert.a, self.NextSoundTime_Alert.b)
 	elseif string.find(ent:GetClass(),"zombie") then
 		self:PlaySoundSystem("Alert",self.SoundTbl_Alert_Zombies)
-		self.NextAlertSoundT = CurTime() +math.Rand(self.NextSoundTime_Alert1,self.NextSoundTime_Alert2)
+		self.NextAlertSoundT = CurTime() +math.Rand(self.NextSoundTime_Alert.a, self.NextSoundTime_Alert.b)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

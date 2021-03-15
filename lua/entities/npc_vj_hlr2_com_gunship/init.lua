@@ -7,7 +7,7 @@ include("shared.lua")
 -----------------------------------------------*/
 ENT.Model = {"models/vj_hlr/hl2/combine_gunship.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 1000
-ENT.Aerial_FlyingSpeed_Calm = 520 -- The speed it should fly with, when it"s wandering, moving slowly, etc. | Basically walking campared to ground SNPCs
+ENT.Aerial_FlyingSpeed_Calm = 520 -- The speed it should fly with, when it"s wandering, moving slowly, etc. | Basically walking compared to ground SNPCs
 ENT.Aerial_FlyingSpeed_Alerted = 600
 ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it"s wandering around while idle
 ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE} -- Animations it plays when it"s moving while alerted

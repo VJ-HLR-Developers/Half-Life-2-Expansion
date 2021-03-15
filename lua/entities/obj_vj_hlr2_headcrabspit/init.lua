@@ -22,8 +22,8 @@ function ENT:CustomPhysicsObjectOnInitialize(phys)
 	ParticleEffectAttach("antlion_spit_trail",PATTACH_ABSORIGIN_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDoDamage(data,phys,hitent)
-	for _,v in pairs(hitent) do
+function ENT:CustomOnDoDamage(data,phys,hitEnt)
+	for _,v in pairs(hitEnt) do
 		if v:IsNPC() or v:IsPlayer() then
 			local dmginfo = DamageInfo()
 			dmginfo:SetDamage(v:Health() -1)

@@ -11,7 +11,7 @@ ENT.StartHealth = 500
 ENT.HullType = HULL_TINY
 ENT.VJ_IsHugeMonster = true -- Is this a huge monster?
 ENT.MovementType = VJ_MOVETYPE_AERIAL -- How does the SNPC move?
-ENT.Aerial_FlyingSpeed_Calm = 200 -- The speed it should fly with, when it's wandering, moving slowly, etc. | Basically walking campared to ground SNPCs
+ENT.Aerial_FlyingSpeed_Calm = 200 -- The speed it should fly with, when it's wandering, moving slowly, etc. | Basically walking compared to ground SNPCs
 ENT.Aerial_FlyingSpeed_Alerted = 325
 ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it's wandering around while idle
 ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE_ANGRY} -- Animations it plays when it's moving while alerted
@@ -246,7 +246,7 @@ function ENT:CustomOnThink()
 		end
 	end
 
-	if CurTime() > self.NextScreenBlastT && math.random(1,20) == 1 && GetConVarNumber("ai_ignoreplayers") == 0 then
+	if CurTime() > self.NextScreenBlastT && math.random(1,20) == 1 && GetConVar("ai_ignoreplayers"):GetInt() == 0 then
 		for _,v in pairs(player.GetAll()) do
 			net.Start("VJ_HLR_AdvisorScreenFX")
 				net.WriteEntity(v)

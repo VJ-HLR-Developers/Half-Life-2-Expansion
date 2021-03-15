@@ -31,8 +31,8 @@ function ENT:CustomOnInitialize()
 	-- ParticleEffectAttach("electrical_arc_01_system",PATTACH_POINT_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDoDamage(data,phys,hitent)
-	for _,v in pairs(hitent) do
+function ENT:CustomOnDoDamage(data,phys,hitEnt)
+	for _,v in pairs(hitEnt) do
 		v:EmitSound("ambient/energy/weld"..math.random(1,2)..".wav",60,100)
 		if IsValid(v) then
 			local zapEnt = v
