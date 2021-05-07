@@ -14,7 +14,7 @@ ENT.AA_MoveLength_Wander = 0
 ENT.AA_MoveLength_Chase = 0
 ENT.AA_MoveTime = 0
 ENT.AA_MoveTimeCur = 0
-//ENT.AA_TargetPos = Vector(0,0,0)
+//ENT.AA_TargetPos = Vector(0, 0, 0)
 
 ENT.FlySpeed = 300
 ENT.Acceleration = 85 -- Obsolete
@@ -47,7 +47,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AA_StopMoving()
 	if self:GetVelocity():Length() > 0 then
-		self:SetLocalVelocity(LerpVector(0.1,self:GetVelocity(),Vector(0,0,0)))
+		self:SetLocalVelocity(LerpVector(0.1,self:GetVelocity(),Vector(0, 0, 0)))
 		self:SetPoseParameter("move_yaw",Lerp(0.2,self:GetPoseParameter("move_yaw"),0))
 	end
 end

@@ -256,7 +256,7 @@ function ENT:SpawnBloodParticles(dmginfo, hitgroup)
 		if p_name == false then return end
 		
 		local dmg_pos = dmginfo:GetDamagePosition()
-		if dmg_pos == Vector(0,0,0) then dmg_pos = self:GetPos() + self:OBBCenter() end
+		if dmg_pos == Vector(0, 0, 0) then dmg_pos = self:GetPos() + self:OBBCenter() end
 		
 		local spawnparticle = ents.Create("info_particle_system")
 		spawnparticle:SetKeyValue("effect_name",p_name)

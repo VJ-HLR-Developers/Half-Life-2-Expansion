@@ -139,8 +139,8 @@ function ENT:ShieldCode(bEnable)
 	end
 	self.CustomBlood_Particle = {"vj_impact1_yellow"}
 	self:StopParticles()
-	ParticleEffect("aurora_shockwave",self:GetPos() +self:OBBCenter(),Angle(0,0,0),nil)
-	ParticleEffect("electrical_arc_01_system",self:GetPos() +self:OBBCenter(),Angle(0,0,0),nil)
+	ParticleEffect("aurora_shockwave",self:GetPos() + self:OBBCenter(),Angle(0,0,0),nil)
+	ParticleEffect("electrical_arc_01_system",self:GetPos() + self:OBBCenter(),Angle(0,0,0),nil)
 	VJ_CreateSound(self,"ambient/energy/whiteflash.wav",120)
 	for _, v in ipairs(ents.FindInSphere(self:GetPos(),8000)) do
 		if VJ_IsProp(v) && self:Visible(v) then

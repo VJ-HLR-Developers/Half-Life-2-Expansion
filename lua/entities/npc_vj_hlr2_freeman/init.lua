@@ -134,7 +134,7 @@ function ENT:CustomOnKilled(dmginfo, hitgroup)
 	for _,v in pairs(self.WeaponInventory.Total) do
 		if IsValid(v) && v != self:GetActiveWeapon() then
 			local e = ents.Create(v:GetClass())
-			e:SetPos(self:GetPos() +self:OBBCenter())
+			e:SetPos(self:GetPos() + self:OBBCenter())
 			e:SetAngles(self:GetAngles())
 			e:Spawn()
 			local phys = e:GetPhysicsObject()
@@ -145,7 +145,7 @@ function ENT:CustomOnKilled(dmginfo, hitgroup)
 		end
 	end
 	local e = ents.Create(self.WeaponInventory.AntiArmor:GetClass())
-	e:SetPos(self:GetPos() +self:OBBCenter())
+	e:SetPos(self:GetPos() + self:OBBCenter())
 	e:SetAngles(self:GetAngles())
 	e:Spawn()
 	local phys = e:GetPhysicsObject()
@@ -154,7 +154,7 @@ function ENT:CustomOnKilled(dmginfo, hitgroup)
 		phys:ApplyForceCenter(dmginfo:GetDamageForce())
 	end
 	local e = ents.Create(self.WeaponInventory.Melee:GetClass())
-	e:SetPos(self:GetPos() +self:OBBCenter())
+	e:SetPos(self:GetPos() + self:OBBCenter())
 	e:SetAngles(self:GetAngles())
 	e:Spawn()
 	local phys = e:GetPhysicsObject()

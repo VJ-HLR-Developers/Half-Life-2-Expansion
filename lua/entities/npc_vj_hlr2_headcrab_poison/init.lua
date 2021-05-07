@@ -151,7 +151,7 @@ function ENT:OnThrown(enemy,owner)
 	end
 	self:FaceCertainEntity(enemy,true)
 	self:SetGroundEntity(NULL)
-	local jumpcode = ((enemy:GetPos() +self:OBBCenter()) -(self:GetPos() +self:OBBCenter())):GetNormal() *400 +self:GetForward() *500 +self:GetUp() *200
+	local jumpcode = ((enemy:GetPos() +self:OBBCenter()) -(self:GetPos() + self:OBBCenter())):GetNormal() *400 +self:GetForward() *500 +self:GetUp() *200
 	self:SetLocalVelocity(jumpcode)
 	self:VJ_ACT_PLAYACTIVITY("Drown",true,VJ_GetSequenceDuration(self,"Drown"),false)
 	timer.Simple(VJ_GetSequenceDuration(self,"Drown"),function()
@@ -265,7 +265,7 @@ function ENT:LeapDamageCode()
 		self:PlaySoundSystem("LeapAttackDamageMiss", nil, VJ_EmitSound)
 	else
 		self:PlaySoundSystem("LeapAttackDamage")
-		if self.StopLeapAttackAfterFirstHit == true then self.AlreadyDoneLeapAttackFirstHit = true /*self:SetLocalVelocity(Vector(0,0,0))*/ end
+		if self.StopLeapAttackAfterFirstHit == true then self.AlreadyDoneLeapAttackFirstHit = true /*self:SetLocalVelocity(Vector(0, 0, 0))*/ end
 	end
 	if self.AlreadyDoneFirstLeapAttack == false && self.TimeUntilLeapAttackDamage != false then
 		self:LeapAttackCode_DoFinishTimers()

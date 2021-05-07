@@ -277,7 +277,7 @@ if SERVER then
 		local ang_app = math.ApproachAngle
 		if IsValid(ent) && resetPoses == false then
 			local self_pos = self.Emplacement:GetPos() + self.Emplacement:OBBCenter()
-			local enemy_pos = false //Vector(0,0,0)
+			local enemy_pos = false //Vector(0, 0, 0)
 			if self.Operator.VJ_IsBeingControlled == true then enemy_pos = self.Operator.VJ_TheController:GetEyeTrace().HitPos else enemy_pos = ent:GetPos() + ent:OBBCenter() end
 			if enemy_pos == false then return end
 			local self_ang = self.Emplacement:GetAngles()

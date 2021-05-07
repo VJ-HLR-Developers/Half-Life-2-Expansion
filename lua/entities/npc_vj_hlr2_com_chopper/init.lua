@@ -96,7 +96,7 @@ function ENT:CustomOnInitialize()
 	self.NextFireT = 0
 	self.NextBombT = 0
 	self.CarpetBombing = false
-	self.CarpetBombPos = Vector(0,0,0)
+	self.CarpetBombPos = Vector(0, 0, 0)
 	self.NextCarpetBombT = 0
 	self.NextDropCarpetT = 0
 	
@@ -115,7 +115,7 @@ function ENT:CustomOnInitialize()
 	self:DeleteOnRemove(eyeglow)
 
 	local spotlight = ents.Create("env_projectedtexture")
-	spotlight:SetPos( self:GetPos() + Vector(0,0,0) )
+	spotlight:SetPos( self:GetPos() + Vector(0, 0, 0) )
 	spotlight:SetAngles( self:GetAngles() + Angle(0,0,0) )
 	spotlight:SetKeyValue("lightcolor", "225 225 225 255")
 	spotlight:SetKeyValue("lightfov", "75")
@@ -252,10 +252,10 @@ function ENT:CustomAttack()
 					local bomb = ents.Create("grenade_helicopter")
 					bomb:SetPos(pos[i])
 					bomb:Spawn()
-					local offset = i > 1 && (tr.Entity:GetRight() *math.Rand(-400,400)) or Vector(0,0,0)
+					local offset = i > 1 && (tr.Entity:GetRight() *math.Rand(-400,400)) or Vector(0, 0, 0)
 					local phys = bomb:GetPhysicsObject()
 					if IsValid(phys) then
-						phys:SetVelocity(((tr.Entity:GetPos() +offset) -bomb:LocalToWorld(Vector(0,0,0))))
+						phys:SetVelocity(((tr.Entity:GetPos() +offset) -bomb:LocalToWorld(Vector(0, 0, 0))))
 					end
 					constraint.NoCollide(bomb,self,0,0)
 				end
