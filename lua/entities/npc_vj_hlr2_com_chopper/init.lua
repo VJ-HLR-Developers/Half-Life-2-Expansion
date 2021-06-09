@@ -82,7 +82,7 @@ function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(140,140,100),Vector(-140,-140,-75))
 	self:SetPos(self:GetPos() +Vector(0,0,400))
 	
-	self.IdleLP = CreateSound(self,"npc/attack_helicopter/aheli_rotor_loop1.wav")
+	self.IdleLP = CreateSound(self,"^npc/attack_helicopter/aheli_rotor_loop1.wav")
 	self.IdleLP:SetSoundLevel(105)
 	self.IdleLP:Play()
 	self.IdleLP:ChangeVolume(1)
