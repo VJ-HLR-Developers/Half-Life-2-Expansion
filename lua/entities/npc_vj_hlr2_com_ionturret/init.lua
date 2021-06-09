@@ -10,9 +10,9 @@ ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied 
 ENT.Turret_HasAlarm = false
 ENT.Turret_BulletAttachment = "muzzle"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.001 -- How much time until the projectile code is ran?
-ENT.NextRangeAttackTime = 1.8 -- How much time until it can use a range attack?
-ENT.NextAnyAttackTime_Range = 1.8 -- How much time until it can use any attack again? | Counted in Seconds
-ENT.Turret_FireSound = {"vj_hlr/hl2_npc/ioncannon/ion_cannon_shot1.wav","vj_hlr/hl2_npc/ioncannon/ion_cannon_shot2.wav","vj_hlr/hl2_npc/ioncannon/ion_cannon_shot3.wav"}
+ENT.NextRangeAttackTime = 0.6 -- How much time until it can use a range attack?
+ENT.NextAnyAttackTime_Range = 0.6 -- How much time until it can use any attack again? | Counted in Seconds
+ENT.Turret_FireSound = {"^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot1.wav","^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot2.wav","^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot3.wav"}
 
 ENT.VJC_Data = {
     FirstP_Bone = "polySurface167", -- If left empty, the base will attempt to calculate a position for first person
