@@ -22,7 +22,7 @@ function ENT:CustomPhysicsObjectOnInitialize(phys)
 	ParticleEffectAttach("antlion_spit_trail",PATTACH_ABSORIGIN_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDoDamage(data,phys,hitEnt)
+function ENT:CustomOnDoDamage(data, phys, hitEnt)
 	for _,v in pairs(hitEnt) do
 		if v:IsNPC() or v:IsPlayer() then
 			local dmginfo = DamageInfo()
@@ -36,7 +36,7 @@ function ENT:CustomOnDoDamage(data,phys,hitEnt)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:DeathEffects(data,phys)
+function ENT:DeathEffects(data, phys)
 	ParticleEffect("vj_impact1_yellow",data.HitPos,Angle(0,0,0),nil)
 	local tr = util.TraceLine({
 		start = data.HitPos,

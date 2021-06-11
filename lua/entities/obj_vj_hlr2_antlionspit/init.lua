@@ -29,7 +29,7 @@ function ENT:CustomOnInitialize()
 	ParticleEffectAttach("antlion_spit_trail",PATTACH_ABSORIGIN_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:DeathEffects(data,phys)
+function ENT:DeathEffects(data, phys)
 	ParticleEffect("antlion_gib_01",data.HitPos,Angle(0,0,0),nil)
 end
 /*-----------------------------------------------

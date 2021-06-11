@@ -31,7 +31,7 @@ function ENT:CustomOnInitialize()
 	-- ParticleEffectAttach("electrical_arc_01_system",PATTACH_POINT_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDoDamage(data,phys,hitEnt)
+function ENT:CustomOnDoDamage(data, phys, hitEnt)
 	for _,v in pairs(hitEnt) do
 		v:EmitSound("ambient/energy/weld"..math.random(1,2)..".wav",60,100)
 		if IsValid(v) then
@@ -89,7 +89,7 @@ function ENT:CustomOnDoDamage(data,phys,hitEnt)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:DeathEffects(data,phys)
+function ENT:DeathEffects(data, phys)
 	for i = 1,5 do
 		ParticleEffect("aurora_shockwave",self:GetPos(),Angle(0,0,0),nil)
 		ParticleEffect("electrical_arc_01_system",self:GetPos(),Angle(0,0,0),nil)
