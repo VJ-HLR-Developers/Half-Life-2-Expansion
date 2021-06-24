@@ -139,50 +139,72 @@ end
 function ENT:CustomOnThink()
 	self.ConstantlyFaceEnemy = true
 	
+	if self.CarpetBombing && CurTime() > self.NextBombT then
+		if !IsValid(self:GetEnemy()) then
+			self.CarpetBombing = false
+			return
+		end
+		local dest = self:GetEnemy():GetPos() +Vector(0,0,1200)
+		-- if CurTime() > self.AA_CurrentMoveTime then
+			self:AA_MoveTo(dest,true,"Calm",{FaceDest=true,IgnoreGround=true})
+		-- end
+		if self:GetPos():Distance(dest) <= 100 then
+			self:BellyCannon()
+			self.NextBombT = CurTime() +math.Rand(10,15)
+		end
+		return
+	end
+	
 	if !IsValid(self:GetEnemy()) then
 		local gesture = self:AddGestureSequence(self:LookupSequence("scanning"))
 		self:SetLayerPriority(gesture,1)
 		self:SetLayerPlaybackRate(gesture,0.5)
 	elseif IsValid(self:GetEnemy()) then
 		if CurTime() > self.NextBombT && !self.CarpetBombing then
-			local tr = util.TraceHull({
-				start = self:GetPos(),
-				endpos = (self:GetPos() +self:GetUp() *-15000),
-				mins = self:OBBMins(),
-				maxs = self:OBBMaxs(),
-				filter = {self}
-			})
-			if IsValid(tr.Entity) && self:Disposition(tr.Entity) == D_HT then
+			-- local tr = util.TraceHull({
+				-- start = self:GetPos(),
+				-- endpos = (self:GetPos() +self:GetUp() *-15000),
+				-- mins = self:OBBMins(),
+				-- maxs = self:OBBMaxs(),
+				-- filter = {self}
+			-- })
+			-- if IsValid(tr.Entity) && self:Disposition(tr.Entity) == D_HT then
+			if math.random(1,80) == 1 then
 				self.CarpetBombing = true
-				self:BellyCannon()
 			end
-			self.NextBombT = CurTime() +math.Rand(7,12)
+				-- self:BellyCannon()
+			-- end
+			-- self.NextBombT = CurTime() +math.Rand(7,12)
 		end
 	end
 
 	local speed = 3
-	if self.AA_MoveTimeCur > CurTime() then
-		local remaining = self.AA_MoveTimeCur -CurTime()
-		speed = math.Clamp(remaining,0,6)
-		if remaining < 2.65 then
-			self.PP_Vert = 0
-			self.PP_Horz = 0
-			self.PP_Accel = 0
-			self:AA_StopMoving()
-			return
-		end
-		self.PP_Vert = self:MovingUp() && 35 or self:MovingDown() && -35 or self.PP_Vert +math.Rand(-5,5)
-		self.PP_Horz = self:MovingLeft() && -35 or self:MovingRight() && 35 or self.PP_Horz +math.Rand(-5,5)
-		self.PP_Accel = self:MovingForward() && 1 or self:MovingBackward() && -1 or self.PP_Accel +math.Rand(-0.1,0.1)
-	else
-		self.PP_Vert = math.Clamp(self.PP_Vert +math.Rand(-5,5),-12,12)
-		self.PP_Horz = math.Clamp(self.PP_Horz +math.Rand(-5,5),-12,12)
-		self.PP_Accel = self.PP_Accel +math.Rand(-0.1,0.1)
-	end
+	-- if self.AA_CurrentMoveTime > CurTime() then
+		-- local remaining = self.AA_CurrentMoveTime -CurTime()
+		-- speed = math.Clamp(remaining,0,6)
+		-- if remaining < 2.65 then
+			-- self.PP_Vert = 0
+			-- self.PP_Horz = 0
+			-- self.PP_Accel = 0
+			-- return
+		-- end
+		-- self.PP_Vert = self:MovingUp() && 35 or self:MovingDown() && -35 or self.PP_Vert +math.Rand(-5,5)
+		-- self.PP_Horz = self:MovingLeft() && -35 or self:MovingRight() && 35 or self.PP_Horz +math.Rand(-5,5)
+		-- self.PP_Accel = self:MovingForward() && 1 or self:MovingBackward() && -1 or self.PP_Accel +math.Rand(-0.1,0.1)
+	-- else
+		-- self.PP_Vert = math.Clamp(self.PP_Vert +math.Rand(-5,5),-12,12)
+		-- self.PP_Horz = math.Clamp(self.PP_Horz +math.Rand(-5,5),-12,12)
+		-- self.PP_Accel = self.PP_Accel +math.Rand(-0.1,0.1)
+	-- end
 
-	self:SetPoseParameter("flex_vert",Lerp(FrameTime() *speed,self:GetPoseParameter("flex_vert"),self.PP_Vert))
-	self:SetPoseParameter("flex_horz",Lerp(FrameTime() *speed,self:GetPoseParameter("flex_horz"),self.PP_Horz))
-	self:SetPoseParameter("fin_accel",Lerp(FrameTime() *speed,self:GetPoseParameter("fin_accel"),self.PP_Accel))
+	-- self:SetPoseParameter("flex_vert",Lerp(FrameTime() *speed,self:GetPoseParameter("flex_vert"),self.PP_Vert))
+	-- self:SetPoseParameter("flex_horz",Lerp(FrameTime() *speed,self:GetPoseParameter("flex_horz"),self.PP_Horz))
+	-- self:SetPoseParameter("fin_accel",Lerp(FrameTime() *speed,self:GetPoseParameter("fin_accel"),self.PP_Accel))
+
+	local x,y,z = self:GetVelocity():GetNormal().x *35,self:GetVelocity():GetNormal().y *35,self:GetVelocity():GetNormal().z *35
+	self:SetPoseParameter("flex_vert",Lerp(FrameTime() *speed,self:GetPoseParameter("flex_vert"),x))
+	self:SetPoseParameter("flex_horz",Lerp(FrameTime() *speed,self:GetPoseParameter("flex_horz"),y))
+	self:SetPoseParameter("fin_accel",Lerp(FrameTime() *speed,self:GetPoseParameter("fin_accel"),z))
 
 	if timer.Exists("vj_timer_fire_" .. self:EntIndex()) then
 		self.FireLP:Play()
@@ -271,6 +293,7 @@ function ENT:WarpCannon()
 	timer.Simple(0.5,function()
 		if IsValid(self) then
 			VJ_EmitSound(self,"npc/strider/fire.wav",130,self:VJ_DecideSoundPitch(100,110))
+			self.CarpetBombing = false
 
 			ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,2)
 			timer.Simple(0.2,function() if IsValid(self) then self:StopParticles() end end)

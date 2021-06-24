@@ -1,5 +1,4 @@
 AddCSLuaFile("shared.lua")
-include("movetype_aa.lua")
 include("shared.lua")
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
@@ -10,11 +9,18 @@ ENT.VJ_IsHugeMonster = true -- Is this a huge monster?
 ENT.Model = {"models/vj_hlr/hl2/combine_helicopter.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 2000
 ENT.HullType = HULL_LARGE
+ENT.SightAngle = 180 -- The sight angle | Example: 180 would make the it see all around it | Measured in degrees and then converted to radians
+ENT.TurningSpeed = 2 -- How fast it can turn
+
 ENT.MovementType = VJ_MOVETYPE_AERIAL -- How does the SNPC move?
-ENT.Aerial_FlyingSpeed_Calm = 200 -- The speed it should fly with, when it"s wandering, moving slowly, etc. | Basically walking compared to ground SNPCs
-ENT.Aerial_FlyingSpeed_Alerted = 200
-ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it"s wandering around while idle
-ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE} -- Animations it plays when it"s moving while alerted
+ENT.Aerial_FlyingSpeed_Alerted = 450 -- The speed it should fly with, when it's chasing an enemy, moving away quickly, etc. | Basically running compared to ground SNPCs
+ENT.Aerial_FlyingSpeed_Calm = 400 -- The speed it should fly with, when it's wandering, moving slowly, etc. | Basically walking compared to ground SNPCs
+ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it's wandering around while idle
+ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE} -- Animations it plays when it's moving while alerted
+ENT.AA_GroundLimit = 1200 -- If the NPC's distance from itself to the ground is less than this, it will attempt to move up
+ENT.AA_MinWanderDist = 1000 -- Minimum distance that the NPC should go to when wandering
+ENT.AA_MoveAccelerate = 8 -- The NPC will gradually speed up to the max movement speed as it moves towards its destination | Calculation = FrameTime * x
+ENT.AA_MoveDecelerate = 4 -- The NPC will slow down as it approaches its destination | Calculation = MaxSpeed / x
 
 ENT.PoseParameterLooking_InvertPitch = true -- Inverts the pitch poseparameters (X)
 ENT.PoseParameterLooking_InvertYaw = true -- Inverts the yaw poseparameters (Y)
@@ -139,8 +145,10 @@ function ENT:CustomRangeAttackCode_AfterProjectileSpawn(ent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:BarrageFire()
+	local bomb = self.CarpetBombing
 	timer.Create("vj_timer_fire_" .. self:EntIndex(),0.1,50,function()
-		if IsValid(self:GetEnemy()) && !self.Dead && !self.CarpetBombing then
+		if IsValid(self:GetEnemy()) && !self.Dead then
+			if bomb then timer.Remove("vj_timer_fire_" .. self:EntIndex()) return end
 			for i = 1,3 do
 				local att = self:GetAttachment(2)
 				local bullet = {}
@@ -194,6 +202,10 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttack()
+	if self.CarpetBombing then
+		self.NextChaseTime = CurTime() +1
+	end
+	self.HasRangeAttack = !self.CarpetBombing
 	if IsValid(self:GetEnemy()) then
 		local dist = self.NearestPointToEnemyDistance
 		if self:Health() <= self:GetMaxHealth() *0.5 then
@@ -201,8 +213,10 @@ function ENT:CustomAttack()
 				self.CarpetBombing = true
 				self.CarpetBombPos = self:GetEnemy():GetPos() +self:GetEnemy():GetForward() *-6000
 
-				local t = self:AAMove_FlyToPosition(self.CarpetBombPos,false,700)
+				self:AA_MoveTo(self.CarpetBombPos,false,"Alert",{FaceDest=true,IgnoreGround=true})
+				local t = self.AA_CurrentMoveTime -CurTime() or 10
 
+				self.NextFireT = CurTime() +t
 				timer.Simple(t,function()
 					if IsValid(self) then
 						self.CarpetBombing = false
@@ -211,6 +225,7 @@ function ENT:CustomAttack()
 				self.NextCarpetBombT = CurTime() +math.Rand(20,30) +t
 			end
 			if self.CarpetBombing then
+				self:SetEnemy(NULL)
 				self:FaceCertainPosition(self.CarpetBombPos)
 				if CurTime() > self.NextDropCarpetT then
 					local pos = {
@@ -233,6 +248,7 @@ function ENT:CustomAttack()
 				end
 			end
 		end
+		if self.CarpetBombing then return end
 		if CurTime() > self.NextBombT then
 			local tr = util.TraceHull({
 				start = self:GetPos(),
@@ -287,13 +303,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	self.ConstantlyFaceEnemy = !self.CarpetBombing
-
-	if self.AA_MoveTimeCur > CurTime() then
-		local remaining = self.AA_MoveTimeCur -CurTime()
-		if remaining < 1.75 then
-			self:AA_StopMoving()
-		end
-	end
+	self:SetPoseParameter("move_yaw", Lerp(FrameTime()*4, self:GetPoseParameter("move_yaw"), self:GetVelocity():GetNormal().y))
 	
 	if timer.Exists("vj_timer_fire_" .. self:EntIndex()) then
 		self.FireLP:Play()

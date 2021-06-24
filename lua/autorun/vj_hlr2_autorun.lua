@@ -39,8 +39,6 @@ if VJExists == true then
 		VJ.AddNPC("Antlion Guardian","npc_vj_hlr2_antlion_guardian",vCat)
 
 		-- Combine
-		VJ.AddNPC_HUMAN("Overwatch Soldier (Seven Hour War)","npc_vj_hlr2_com_soldier_shw",{"weapon_vj_hlr2_mod_irifle","weapon_vj_hlr2_mod_ishotgun","weapon_vj_hlr2_mod_ismg"},vCat)
-
 		VJ.AddNPC_HUMAN("Overwatch Soldier (Beta)","npc_vj_hlr2b_com_soldier",{"weapon_vj_hlr2b_oicw"},vCat)
 		-- VJ.AddNPC_HUMAN("Overwatch Elite (Beta)","npc_vj_hlr2b_com_elite",{"weapon_vj_smg1","weapon_vj_smg1","weapon_vj_smg1","weapon_vj_ar2","weapon_vj_ar2"},vCat)
 		-- VJ.AddNPC_HUMAN("Civil Protection (Beta)","npc_vj_hlr2b_com_civilp",{"weapon_vj_9mmpistol","weapon_vj_smg1"},vCat)
@@ -56,7 +54,7 @@ if VJExists == true then
 		-- VJ.AddNPC("Overwatch City Scanner","npc_vj_hlr2_com_scanner_city",vCat)
 		-- VJ.AddNPC("Overwatch Shield Scanner","npc_vj_hlr2_com_scanner_shield",vCat)
 		VJ.AddNPC("Overwatch Hunter Synth","npc_vj_hlr2_com_hunter",vCat)
-		-- VJ.AddNPC("Overwatch APC","npc_vj_hlr2_com_apc",vCat)
+		VJ.AddNPC("Overwatch APC","npc_vj_hlr2_com_apc",vCat)
 		VJ.AddNPC("Overwatch Strider Synth","npc_vj_hlr2_com_strider",vCat)
 		VJ.AddNPC("Overwatch Advisor","npc_vj_hlr2_com_advisor",vCat)
 		VJ.AddNPC("Overwatch Mortar Synth","npc_vj_hlr2_com_mortar",vCat)
@@ -64,8 +62,12 @@ if VJExists == true then
 		VJ.AddCeilingNPC("Overwatch Ceiling Turret","npc_vj_hlr2_com_ceilingturret",vCat)
 		VJ.AddNPC("Overwatch Ion Cannon Turret","npc_vj_hlr2_com_ionturret",vCat)
 		VJ.AddNPC("Overwatch Hunter Chopper","npc_vj_hlr2_com_chopper",vCat)
+		VJ.AddNPC("Overwatch Heavy Chopper","npc_vj_hlr2_com_chopper_heavy",vCat)
 		VJ.AddNPC("Overwatch Gunship Synth","npc_vj_hlr2_com_gunship",vCat)
 		-- VJ.AddNPC("Overwatch Dropship Synth","npc_vj_hlr2_com_dropship",vCat)
+		
+		-- Unknown
+		VJ.AddNPC("G-Man","npc_vj_hlr2_gman",vCat)
 
 		-- Resistance
 		-- VJ.AddNPC("Vortigaunt","npc_vj_hlr2_vort",vCat)

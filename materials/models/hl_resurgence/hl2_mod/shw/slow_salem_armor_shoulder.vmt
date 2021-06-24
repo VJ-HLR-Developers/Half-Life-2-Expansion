@@ -1,9 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/hl_resurgence/hl2_mod/shw/slow_salem_armor_shoulder"
-	"$bumpmap" "models/hl_resurgence/hl2_mod/shw/slow_salem_armor_shoulder_bump"
- 	"$phong" "1"
-	"$phongexponent" "94.8"
-	"$phongboost"	"0.35"
-	"$phongfresnelranges"	"[.1 .1 1]"
-}
