@@ -59,7 +59,7 @@ function ENT:CustomOnInitialize()
 	self.SlumpRise = "slumprise_a"
 	if self.Slump then
 		self.IsSlumped = true
-		self.VJ_NoTarget = true
+		self:AddFlags(FL_NOTARGET)
 		self.SoundTbl_Breath = {}
 		self.SoundTbl_Idle = {}
 		self.AnimTbl_IdleStand = {self.SlumpAnimation}
@@ -79,7 +79,7 @@ function ENT:UnSlump()
 	self.AnimTbl_IdleStand = {ACT_IDLE}
 	self:VJ_ACT_PLAYACTIVITY("vjseq_" .. self.SlumpRise,true,false,false)
 	local animtime = self:SequenceDuration(self:LookupSequence(self.SlumpRise))
-	self.VJ_NoTarget = false
+	self:RemoveFlags(FL_NOTARGET)
 	self:SetArrivalActivity(ACT_IDLE)
 	self.SoundTbl_Breath = {"npc/zombie_poison/pz_breathe_loop1.wav","npc/zombie_poison/pz_breathe_loop2.wav"}
 	self.SoundTbl_Idle = {"npc/zombie_poison/pz_idle2.wav","npc/zombie_poison/pz_idle3.wav","npc/zombie_poison/pz_idle4.wav"}

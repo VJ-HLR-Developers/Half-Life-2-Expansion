@@ -72,7 +72,7 @@ function ENT:CustomOnInitialize()
 	self.SlumpRise = (self.SlumpAnimation == "slump_a" && VJ_PICK({"slumprise_a","slumprise_a2","slumprise_a_attack"})) or "slumprise_b"
 	if self.Slump then
 		self.IsSlumped = true
-		self.VJ_NoTarget = true
+		self:AddFlags(FL_NOTARGET)
 		self.SoundTbl_Idle = {}
 		self.AnimTbl_IdleStand = {self.SlumpAnimation}
 		self.AnimTbl_MeleeAttack = {self.SlumpRise}
@@ -101,7 +101,7 @@ function ENT:UnSlump()
 	self.AnimTbl_IdleStand = {ACT_IDLE}
 	self:VJ_ACT_PLAYACTIVITY("vjseq_" .. self.SlumpRise,true,false,false)
 	local animtime = self:SequenceDuration(self:LookupSequence(self.SlumpRise))
-	self.VJ_NoTarget = false
+	self:RemoveFlags(FL_NOTARGET)
 	self:SetArrivalActivity(ACT_IDLE)
 	self.SoundTbl_Idle = {"npc/zombine/zombine_idle1.wav","npc/zombine/zombine_idle2.wav","npc/zombine/zombine_idle3.wav","npc/zombine/zombine_idle4.wav","npc/zombine/zombine_alert1.wav","npc/zombine/zombine_alert2.wav","npc/zombine/zombine_alert3.wav","npc/zombine/zombine_alert4.wav","npc/zombine/zombine_alert7.wav"}
 	timer.Simple(animtime,function()

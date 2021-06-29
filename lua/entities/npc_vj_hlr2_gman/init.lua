@@ -32,7 +32,7 @@ ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time
 ENT.GeneralSoundPitch1 = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
-	self.VJ_NoTarget = true
+	self:AddFlags(FL_NOTARGET)
 	self.AnimTbl_Run = {ACT_WALK}
 	
 	self.NextDialogueTreeT = CurTime()

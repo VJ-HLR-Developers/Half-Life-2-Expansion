@@ -69,7 +69,7 @@ function ENT:CustomOnInitialize()
 	self.SlumpRise = (self.SlumpAnimation == "slump_a" && VJ_PICK({"slumprise_a","slumprise_c"})) or "slumprise_b"
 	if self.Slump then
 		self.IsSlumped = true
-		self.VJ_NoTarget = true
+		self:AddFlags(FL_NOTARGET)
 		self.SoundTbl_Breath = {}
 		self.AnimTbl_IdleStand = {self.SlumpAnimation}
 		self.SightDistance = 140
@@ -88,7 +88,7 @@ function ENT:UnSlump()
 	self.AnimTbl_IdleStand = {ACT_IDLE}
 	self:VJ_ACT_PLAYACTIVITY("vjseq_" .. self.SlumpRise,true,false,false)
 	local animtime = self:SequenceDuration(self:LookupSequence(self.SlumpRise))
-	self.VJ_NoTarget = false
+	self:RemoveFlags(FL_NOTARGET)
 	self:SetArrivalActivity(ACT_IDLE)
 	self.SoundTbl_Breath = {"npc/fast_zombie/breathe_loop1.wav"}
 	timer.Simple(animtime,function()
