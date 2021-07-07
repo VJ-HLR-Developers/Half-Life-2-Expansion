@@ -68,8 +68,3 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 	ParticleEffect("explosion_turret_break",self:GetPos(),Angle(0,0,0),nil)
 	util.BlastDamage(self,self,self:GetPos(),80,20)
 end
-/*-----------------------------------------------
-	*** Copyright (c) 2012-2021 by DrVrej, All rights reserved. ***
-	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
-	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
------------------------------------------------*/
