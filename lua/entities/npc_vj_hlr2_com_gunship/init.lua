@@ -19,6 +19,7 @@ ENT.PoseParameterLooking_Names = {pitch={"flex_vert"},yaw={"flex_herz"},roll={"f
 ENT.HasRangeAttack = false -- Should the SNPC have a range attack?
 
 ENT.HasDeathAnimation = false -- Does it play an animation when it dies?
+ENT.HasDeathRagdoll = false
 
 ENT.VJC_Data = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
@@ -213,44 +214,123 @@ function ENT:CustomOnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
+function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
+	local deathCorpse = ents.Create("prop_vj_animatable")
+	deathCorpse:SetModel(self:GetModel())
+	deathCorpse:SetPos(self:GetPos())
+	deathCorpse:SetAngles(self:GetAngles())
+	deathCorpse:SetSkin(self:GetModel() == "models/vj_hlr/hl1/osprey_blkops.mdl" and 1 or 0)
+	function deathCorpse:Initialize()
+		self:PhysicsInit(SOLID_VPHYSICS)
+		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetMoveCollide(MOVECOLLIDE_FLY_BOUNCE)
+		self:SetCollisionGroup(COLLISION_GROUP_NONE)
+		self:SetSolid(SOLID_CUSTOM)
+		local phys = self:GetPhysicsObject()
+		if IsValid(phys) then
+			phys:Wake()
+			phys:EnableGravity(true)
+			phys:SetBuoyancyRatio(0)
+			phys:SetVelocity(self:GetVelocity())
+		end
+	end
+	deathCorpse.NextExpT = 0
+	deathCorpse:Spawn()
+	deathCorpse:Activate()
+	local phys = deathCorpse:GetPhysicsObject()
+	phys:SetVelocity(self:GetVelocity() +self:GetForward() *math.random(900,1500))
+	
+	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,deathCorpse,5)
 
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
-	local phys = corpseEnt:GetPhysicsObject()
-	phys:AddVelocity(self:GetPos() +self:GetForward() *math.random(1500,8000))
-
-	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,2)
-	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,4)
-	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,5)
-	local function Explode(corpseEnt)
-		local pos = corpseEnt:GetPos() +corpseEnt:OBBCenter()
-		VJ_EmitSound(corpseEnt,"vj_mili_tank/tank_death2.wav",100,100)
-		util.BlastDamage(corpseEnt,corpseEnt,pos,200,40)
+	local function Explode(ent,pos)
+		VJ_EmitSound(ent,"vj_mili_tank/tank_death2.wav",100,100)
+		util.BlastDamage(ent,ent,pos,200,40)
 		util.ScreenShake(pos, 100, 200, 1, 2500)
 		ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil)
-		if math.random(1,4) == 1 then VJ_CreateSound(corpseEnt,"npc/combine_gunship/gunship_pain.wav",90,math.random(95,110)) end
+		if math.random(1,4) == 1 && ent:GetClass() != "prop_ragdoll" then VJ_CreateSound(ent,"npc/combine_gunship/gunship_pain.wav",90,math.random(95,110)) end
 	end
-	timer.Simple(0.35,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
-	timer.Simple(0.65,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
-	timer.Simple(1,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
-	timer.Simple(1.6,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
-	timer.Simple(2,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
-	timer.Simple(2.5,function() if IsValid(corpseEnt) then Explode(corpseEnt) ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,corpseEnt,2) end end)
-	timer.Simple(3,function() if IsValid(corpseEnt) then Explode(corpseEnt) end end)
-	timer.Simple(120,function()
-		if IsValid(corpseEnt) then
-			corpseEnt:StopParticles()
-			ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,2)
-			ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,5)
+
+	function deathCorpse:Think()
+		if CurTime() > self.NextExpT && math.random(1,3) == 1 then
+			self.NextExpT = CurTime() + math.Rand(0.2,0.5)
+			local expPos = self:GetPos() + Vector(math.Rand(-150, 150), math.Rand(-150, 150), math.Rand(-150, -50))
+			Explode(deathCorpse,expPos)
 		end
-	end)
-	timer.Simple(360,function()
-		if IsValid(corpseEnt) then
-			corpseEnt:StopParticles()
+	
+		self:NextThink(CurTime())
+		return true
+	end
+	
+	function deathCorpse:PhysicsCollide(data, phys)
+		if self.Dead then return end
+		if data.HitEntity.IsVJBase_Gib then return end
+		self.Dead = true
+
+		util.BlastDamage(self, self, self:GetPos() +self:OBBCenter(), 600, 200)
+
+		self.Corpse = ents.Create("prop_ragdoll")
+		self.Corpse:SetModel(self:GetModel())
+		self.Corpse:SetPos(self:GetPos())
+		self.Corpse:SetAngles(self:GetAngles())
+		self.Corpse:Spawn()
+		self.Corpse:Activate()
+		self.Corpse:SetColor(self:GetColor())
+		self.Corpse:SetMaterial(self:GetMaterial())
+		self.Corpse:SetSkin(1)
+		if self.DeathCorpseSubMaterials != nil then
+			for _, x in ipairs(self.DeathCorpseSubMaterials) do
+				if self:GetSubMaterial(x) != "" then
+					self.Corpse:SetSubMaterial(x, self:GetSubMaterial(x))
+				end
+			end
 		end
-	end)
+		self.Corpse.IsVJBaseCorpse = true
+		self.Corpse.ExtraCorpsesToRemove = self.ExtraCorpsesToRemove_Transition
+		if GetConVar("ai_serverragdolls"):GetInt() == 1 then
+			undo.ReplaceEntity(self, self.Corpse)
+		else
+			hook.Call("VJ_CreateSNPCCorpse", nil, self.Corpse, self)
+			if GetConVar("vj_npc_undocorpse"):GetInt() == 1 then undo.ReplaceEntity(self, self.Corpse) end -- Undoable
+		end
+		cleanup.ReplaceEntity(self, self.Corpse)
+		for boneLimit = 0, self.Corpse:GetPhysicsObjectCount() - 1 do -- 128 = Bone Limit
+			local childphys = self.Corpse:GetPhysicsObjectNum(boneLimit)
+			if IsValid(childphys) then
+				local childphys_bonepos, childphys_boneang = self:GetBonePosition(self.Corpse:TranslatePhysBoneToBone(boneLimit))
+				if (childphys_bonepos) then
+					childphys:SetAngles(childphys_boneang)
+					childphys:SetPos(childphys_bonepos)
+				end
+			end
+		end
+		self.Corpse:Fire("FadeAndRemove","",360)
+		self.Corpse:CallOnRemove("vj_"..self.Corpse:EntIndex(),function(ent,exttbl)
+			if !exttbl then return end
+			for _,v in ipairs(exttbl) do
+				if IsValid(v) then
+					if v:GetClass() == "prop_ragdoll" then v:Fire("FadeAndRemove","",0) else v:Fire("kill","",0) end
+				end
+			end
+		end,self.Corpse.ExtraCorpsesToRemove)
+		hook.Call("CreateEntityRagdoll", nil, self, self.Corpse)
+		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self.Corpse,2)
+		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self.Corpse,4)
+
+		local phys = self.Corpse:GetPhysicsObject()
+		phys:SetVelocity(self:GetVelocity() +self:GetForward() *math.random(1400,1750))
+		
+		local corpse = self.Corpse
+		for i = 1,6 do
+			timer.Simple(i *math.Rand(0.25,0.45),function()
+				if IsValid(corpse) && math.random(1,2) == 1 then
+					local expPos = corpse:GetPos() + Vector(math.Rand(-150, 150), math.Rand(-150, 150), math.Rand(-150, -50))
+					Explode(corpse,expPos)
+				end
+			end)
+		end
+
+		self:Remove()
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DoTrace()

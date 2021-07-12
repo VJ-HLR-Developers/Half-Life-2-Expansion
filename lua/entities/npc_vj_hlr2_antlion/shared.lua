@@ -7,6 +7,8 @@ ENT.Purpose 		= "Spawn it and fight with it!"
 ENT.Instructions 	= "Click on the spawnicon to spawn it."
 ENT.Category		= "Half-Life 2"
 
+ENT.VJ_HLR_Antlion = true
+
 if (CLIENT) then
 local Name = "Antlion"
 local LangName = "npc_vj_hlr2_antlion"
