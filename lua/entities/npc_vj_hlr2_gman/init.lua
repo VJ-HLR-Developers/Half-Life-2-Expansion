@@ -105,13 +105,17 @@ function ENT:CustomOnThink()
 	if CurTime() > self.NextTeleportT && IsValid(self.Freeman) then
 		if game.GetGlobalState("gordon_precriminal") == 1 then return end
 		local tpPos = self:FindTeleport()
+		local canTP = true
 		for _,v in ipairs(ents.GetAll()) do
 			if (v:IsNPC() && v != self or (v:IsPlayer() && GetConVarNumber("ai_ignoreplayers") == 0)) && !v:IsFlagSet(FL_NOTARGET) then
-				if v:Visible(self) || v:VisibleVec(tpPos) then
-					return
+				-- print(v:Visible(self),v:VisibleVec(tpPos))
+				if v:Visible(self) or v:VisibleVec(tpPos) then
+					canTP = false
+					break
 				end
 			end
 		end
+		if !canTP then return end
 		self:ClearGoal()
 		self:ClearSchedule()
 		self:SetPos(tpPos)

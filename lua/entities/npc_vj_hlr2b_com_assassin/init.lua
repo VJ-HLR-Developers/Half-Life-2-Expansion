@@ -20,6 +20,7 @@ ENT.MeleeAttackDistance = 55 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 90 -- How far does the damage go?
 ENT.TimeUntilMeleeAttackDamage = false
 
+ENT.CombatFaceEnemy = false -- If enemy is exists and is visible
 ENT.Weapon_NoSpawnMenu = true -- If set to true, the NPC weapon setting in the spawnmenu will not be applied for this SNPC
 ENT.DisableWeaponFiringGesture = true -- If set to true, it will disable the weapon firing gestures
 ENT.MoveRandomlyWhenShooting = false -- Should it move randomly when shooting?
@@ -106,38 +107,48 @@ function ENT:CustomOnThink()
 	end
 
 	if self.Dead == true then return end
-	-- local cloaklvl = math.Clamp(self.Assassin_CloakLevel *255,40,255)
-	-- self:SetColor(Color(255,255,255,math.Clamp(self.Assassin_CloakLevel * 255, 40, 255)))
-	-- self.Assassin_CloakLevel = math.Clamp(self.Assassin_CloakLevel + 0.05, 0, 1)
-	-- if cloaklvl <= 220 then -- Yete asorme tsadz e, ere vor mouys NPC-nere chi desnen iren!
-		-- self:AddFlags(FL_NOTARGET)
-		-- self:DrawShadow(false)
-	-- else
-		-- self:DrawShadow(true)
-		-- self:RemoveFlags(FL_NOTARGET)
-	-- end
+	local cloaklvl = math.Clamp(self.Assassin_CloakLevel *255,40,255)
+	self:SetColor(Color(255,255,255,math.Clamp(self.Assassin_CloakLevel * 255, 40, 255)))
+	self.Assassin_CloakLevel = math.Clamp(self.Assassin_CloakLevel + 0.05, 0, 1)
+	if cloaklvl <= 220 then -- Yete asorme tsadz e, ere vor mouys NPC-nere chi desnen iren!
+		self:AddFlags(FL_NOTARGET)
+		self:DrawShadow(false)
+	else
+		self:DrawShadow(true)
+		self:RemoveFlags(FL_NOTARGET)
+	end
 
-	-- if self.Assassin_OffGround == true && self:GetVelocity().z == 0 then
-		-- self.Assassin_OffGround = false
-		-- self:VJ_ACT_PLAYACTIVITY(ACT_LAND,true,false,false)
-	-- end
-	if IsValid(self:GetEnemy()) && self.VJ_IsBeingControlled == false && CurTime() > self.Assassin_NextDodgeT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 2200 then
+	if self.Assassin_OffGround == true then
+		if self:GetVelocity().z == 0 then
+			self.Assassin_OffGround = false
+			self:ClearSchedule()
+			self:StopMoving()
+			self:VJ_ACT_PLAYACTIVITY(ACT_LAND,true,false,false)
+			self.AnimTbl_IdleStand = {ACT_IDLE}
+		else
+			if self:GetActivity() != ACT_GLIDE then
+				self:VJ_ACT_PLAYACTIVITY(ACT_GLIDE,true,false,false)
+			end
+		end
+	end
+	if IsValid(self:GetEnemy()) && self.VJ_IsBeingControlled == false && self:IsOnGround() && CurTime() > self.Assassin_NextDodgeT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 2200 then
 		self:Dodge()
 	end
-	-- if IsValid(self:GetEnemy()) && self.DoingWeaponAttack_Standing == true && self.VJ_IsBeingControlled == false && CurTime() > self.Assassin_NextJumpT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 1400 then
-		-- self:StopMoving()
-		-- self:SetGroundEntity(NULL)
-		-- if math.random(1,2) == 1 then
-			-- self:SetLocalVelocity(((self:GetPos() + self:GetRight()*100) - (self:GetPos() + self:OBBCenter())):GetNormal()*200 +self:GetForward()*1 +self:GetUp()*600 + self:GetRight()*1)
-		-- else
-			-- self:SetLocalVelocity(((self:GetPos() + self:GetRight()*-100) - (self:GetPos() + self:OBBCenter())):GetNormal()*200 +self:GetForward()*1 +self:GetUp()*600 + self:GetRight()*1)
-		-- end
-		-- self:VJ_ACT_PLAYACTIVITY(ACT_JUMP,true,false,true,0,{},function(vsched)
-			-- self.Assassin_OffGround = true
-			-- self:VJ_ACT_PLAYACTIVITY(ACT_GLIDE,true,false,true)
-		-- end)
-		-- self.Assassin_NextJumpT = CurTime() + 8
-	-- end
+	if IsValid(self:GetEnemy()) && self.DoingWeaponAttack_Standing == true && self.VJ_IsBeingControlled == false && CurTime() > self.Assassin_NextJumpT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 1400 then
+		self:StopMoving()
+		self:SetGroundEntity(NULL)
+		if math.random(1,2) == 1 then
+			self:SetLocalVelocity(((self:GetPos() + self:GetRight()*100) - (self:GetPos() + self:OBBCenter())):GetNormal()*200 +self:GetForward()*1 +self:GetUp()*600 + self:GetRight()*1)
+		else
+			self:SetLocalVelocity(((self:GetPos() + self:GetRight()*-100) - (self:GetPos() + self:OBBCenter())):GetNormal()*200 +self:GetForward()*1 +self:GetUp()*600 + self:GetRight()*1)
+		end
+		self.AnimTbl_IdleStand = {ACT_GLIDE}
+		self:VJ_ACT_PLAYACTIVITY(ACT_JUMP,true,false,true,0,{},function(vsched)
+			self.Assassin_OffGround = true
+			self:VJ_ACT_PLAYACTIVITY(ACT_GLIDE,true,false,false)
+		end)
+		self.Assassin_NextJumpT = CurTime() + 8
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Dodge()
