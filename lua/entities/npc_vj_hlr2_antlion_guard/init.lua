@@ -48,6 +48,11 @@ ENT.BreathSoundLevel = 70
 ENT.IsGuardian = false
 ENT.ChargePercentage = 0.65
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:Controller_IntMsg(ply, controlEnt)
+	ply:ChatPrint("MOUSE2: Charge Attack")
+	ply:ChatPrint("RELOAD: Summon Antlions (Only works on weak surfaces [Grass, Snow, Sand, etc])")
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(40,40,80),Vector(-40,-40,0))
 	self.IsDiging = false
@@ -277,6 +282,7 @@ end
 function ENT:CustomOnThink_AIEnabled()
 	local ent = self:GetEnemy()
 	local hasEnemy = IsValid(ent)
+	local controlled = IsValid(self.VJ_TheController)
 	if self.Charging then
 		local tPos = hasEnemy && ent:GetPos() or self:GetPos() +self:GetForward() *500
 		local setangs = self:GetFaceAngle((tPos -self:GetPos()):Angle())
@@ -293,7 +299,7 @@ function ENT:CustomOnThink_AIEnabled()
 		})
 		local hitEnt = NULL
 		for _,v in pairs(ents.FindInSphere(self:GetPos() +self:GetForward(),135)) do
-			if IsValid(v) && v != self then
+			if IsValid(v) && v != self && (v != self.VJ_TheController && v != self.VJ_TheControllerBullseye) then
 				-- print(v,self:DoRelationshipCheck(v))
 				if self:DoRelationshipCheck(v) then
 					hitEnt = v
@@ -322,10 +328,10 @@ function ENT:CustomOnThink_AIEnabled()
 	self.Breath:ChangePitch(self.BreathPitch)
 	self.ChargeBreath:ChangePitch(self.BreathPitch)
 	if hasEnemy then
-		if math.random(1,75) == 1 && CurTime() > self.NextSummonT then
+		if ((controlled && self.VJ_TheController:KeyDown(IN_RELOAD)) or !controlled && math.random(1,75) == 1) && CurTime() > self.NextSummonT then
 			self:SummonAllies()
 		end
-		if ((IsValid(self.VJ_TheController) && self.VJ_TheController:KeyDown(IN_ATTACK2)) or ent:GetPos():Distance(self:GetPos()) <= 2500) && !self:BusyWithActivity() && CurTime() > self.NextChargeT && !self.Charging && ent:Visible(self) && self:GetSequenceName(self:GetSequence()) != "charge_startfast" then
+		if ((controlled && self.VJ_TheController:KeyDown(IN_ATTACK2)) or !controlled) && ent:GetPos():Distance(self:GetPos()) <= 2500 && !self:BusyWithActivity() && CurTime() > self.NextChargeT && !self.Charging && ent:Visible(self) && self:GetSequenceName(self:GetSequence()) != "charge_startfast" then
 			self:VJ_ACT_PLAYACTIVITY("charge_startfast",true,false,true)
 			VJ_CreateSound(self,{"npc/antlion_guard/angry1.wav","npc/antlion_guard/angry2.wav","npc/antlion_guard/angry3.wav"},72)
 			self.ChargeBreath:Play()

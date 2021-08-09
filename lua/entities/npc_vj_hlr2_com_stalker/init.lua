@@ -101,11 +101,19 @@ function ENT:LaserReset()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
+	self.DisableChasingEnemy = self.IsLaserAttacking
 	if self.IsLaserAttacking then
-		if CurTime() > self.NextLAnimT then
-			self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,true)
-			self.NextLAnimT = CurTime() +self:SequenceDuration(self:LookupSequence("rangeattack")) -0.1
+		-- if CurTime() > self.NextLAnimT then
+			-- self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,true)
+			-- self.NextLAnimT = CurTime() +self:SequenceDuration(self:LookupSequence("rangeattack")) -0.1
+		-- end
+		local moveCheck = VJ_PICK(self:VJ_CheckAllFourSides(math.random(150,400),true,"0111"))
+		if moveCheck && math.random(1,50) == 1 then
+			self:StopMoving()
+			self:SetLastPosition(moveCheck)
+			self:VJ_TASK_GOTO_LASTPOS(VJ_PICK({"TASK_RUN_PATH", "TASK_WALK_PATH"}), function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.ConstantlyFaceEnemy = true end)
 		end
+		self:FaceCertainEntity(self:GetEnemy(),true)
 		self:FireLaser()
 		if !self.Laser:IsPlaying() then
 			self.Laser:Play()
