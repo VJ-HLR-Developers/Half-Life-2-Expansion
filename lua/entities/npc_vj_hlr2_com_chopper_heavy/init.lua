@@ -136,12 +136,15 @@ function ENT:FireBullet()
 		bullet.Damage = self:VJ_GetDifficultyValue(7)
 		bullet.AmmoType = "AR2"
 		bullet.IgnoreEntity = ent
+		bullet.Attacker = self
 		bullet.Callback = function(attacker, tr, dmginfo)
 			local laserhit = EffectData()
 			laserhit:SetOrigin(tr.HitPos)
 			laserhit:SetNormal(tr.HitNormal)
 			laserhit:SetScale(25)
 			util.Effect("AR2Impact",laserhit)
+			dmginfo:SetAttacker(self)
+			dmginfo:SetInflictor(self)
 			dmginfo:SetDamageType(bit.bor(2,4098,2147483648))
 			
 			util.ScreenShake(tr.HitPos,16,100,0.5,175)
@@ -169,6 +172,7 @@ function ENT:FireBullet()
 		bullet.Damage = self:VJ_GetDifficultyValue(7)
 		bullet.AmmoType = "AR2"
 		bullet.IgnoreEntity = ent
+		bullet.Attacker = self
 		bullet.Callback = function(attacker, tr, dmginfo)
 			local laserhit = EffectData()
 			laserhit:SetOrigin(tr.HitPos)
@@ -176,6 +180,8 @@ function ENT:FireBullet()
 			laserhit:SetScale(25)
 			util.Effect("AR2Impact",laserhit)
 			dmginfo:SetDamageType(bit.bor(2,4098,2147483648))
+			dmginfo:SetAttacker(self)
+			dmginfo:SetInflictor(self)
 			
 			util.ScreenShake(tr.HitPos,16,100,0.5,175)
 			sound.Play("weapons/fx/nearmiss/bulletltor0" .. math.random(3,9) .. ".wav",tr.HitPos +tr.HitNormal *60,60,100,1)

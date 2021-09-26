@@ -12,8 +12,8 @@ ENT.RadiusDamage = 40 -- How much damage should it deal? Remember this is a radi
 ENT.RadiusDamageUseRealisticRadius = true -- Should the damage decrease the farther away the enemy is from the position that the projectile hit?
 ENT.RadiusDamageType = DMG_DISSOLVE -- Damage type
 ENT.DecalTbl_DeathDecals = {"Scorch"}
-ENT.SoundTbl_Idle = {"ambient/energy/force_field_loop1.wav"}
-ENT.SoundTbl_OnCollide = {"npc/scanner/cbot_energyexplosion1.wav"}
+ENT.SoundTbl_Idle = {"vj_hlr/hl2_npc/combot/cbot_energyball_loop1.wav"}
+ENT.SoundTbl_OnCollide = {"vj_hlr/hl2_npc/mortarsynth/grenade_fire.wav"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomPhysicsObjectOnInitialize(phys)
 	phys:Wake()

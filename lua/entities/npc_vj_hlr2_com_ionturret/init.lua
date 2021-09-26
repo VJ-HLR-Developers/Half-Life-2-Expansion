@@ -6,44 +6,188 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/vj_hlr/hl2/combine_cannon_gun.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.StartHealth = 500
+ENT.Immune_Bullet = true
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
 ENT.Turret_HasAlarm = false
 ENT.Turret_BulletAttachment = "muzzle"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.001 -- How much time until the projectile code is ran?
-ENT.NextRangeAttackTime = 1.8 -- How much time until it can use a range attack?
-ENT.NextAnyAttackTime_Range = 1.8 -- How much time until it can use any attack again? | Counted in Seconds
-ENT.Turret_FireSound = {"vj_hlr/hl2_npc/ioncannon/ion_cannon_shot1.wav","vj_hlr/hl2_npc/ioncannon/ion_cannon_shot2.wav","vj_hlr/hl2_npc/ioncannon/ion_cannon_shot3.wav"}
+ENT.NextRangeAttackTime = 1.2 -- How much time until it can use a range attack?
+ENT.NextAnyAttackTime_Range = 1.2 -- How much time until it can use any attack again? | Counted in Seconds
+ENT.Turret_FireSound = {"^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot1.wav","^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot2.wav","^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot3.wav"}
+
+ENT.GibOnDeathDamagesTable = {"All"}
+ENT.GeneratorHealth = 100
 
 ENT.VJC_Data = {
     FirstP_Bone = "polySurface167", -- If left empty, the base will attempt to calculate a position for first person
     FirstP_Offset = Vector(-5, 1, 20), -- The offset for the controller when the camera is in first person
 	FirstP_ShrinkBone = false, -- Should the bone shrink? Useful if the bone is obscuring the player's view
 }
+
+local doorSound = !IsMounted("ep2")
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
+	self.SightDistance = 5000
 	self:SetCollisionBounds(Vector(8, 12, 22), Vector(-8, -12, 0))
 	self.RangeDistance = self.SightDistance
 	self.RangeAttackAngleRadius = 75
 	self.SightAngle = 70
+
+	if self.SideTurret then return end
+
+	local prop = ents.Create("prop_vj_animatable")
+	prop:SetModel("models/vj_hlr/hl2/combine_cannon_stand.mdl")
+	prop:SetPos(self:GetPos())
+	prop:SetAngles(self:GetAngles())
+	prop:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
+	prop:Spawn()
+	self:DeleteOnRemove(prop)
+	self.MainStand = prop
+
+	local prop1 = ents.Create("prop_vj_animatable")
+	prop1:SetModel("models/vj_hlr/hl2/combine_cannon_stand02.mdl")
+	prop1:SetPos(self:GetPos())
+	prop1:SetAngles(self:GetAngles())
+	-- prop1:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
+	prop1:Spawn()
+	self:DeleteOnRemove(prop1)
+	self.SmallStand = prop1
+
+	local prop2 = ents.Create("prop_vj_animatable")
+	prop2:SetModel("models/vj_hlr/hl2/combine_cannon_powergen.mdl")
+	prop2:SetPos(self:GetPos() +self:GetRight() *-170 +self:GetForward() *-60.5 +self:GetUp() *-0.25)
+	prop2:SetAngles(self:GetAngles() +Angle(0,90,0))
+	prop2:Spawn()
+	prop2:AddFlags(bit.bor(FL_NPC,FL_OBJECT))
+	prop2:SetCollisionGroup(COLLISION_GROUP_NPC)
+	prop2:SetHealth(self.GeneratorHealth)
+	prop2:SetMaxHealth(self.GeneratorHealth)
+	prop2.VJ_NPC_Class = self.VJ_NPC_Class
+	prop2.Dead = false
+	prop2.DoorState = 0
+	prop2.OnTakeDamage = function(self,dmginfo)
+		if dmginfo:GetDamageType() == DMG_BLAST && self:GetSequenceName(self:GetSequence()) == "open" then
+			self:SetHealth(self:Health() -dmginfo:GetDamage())
+		end
+		if self:Health() <= 0 && !self.Dead then
+			if IsValid(self:GetParent()) then
+				dmginfo:SetDamage(999999999)
+				self:GetParent():TakeDamageInfo(dmginfo)
+			end
+		end
+	end
+	self:DeleteOnRemove(prop2)
+	self.Generator = prop2
+	self.Bullseye = prop2
+
+	-- local propbullseye = ents.Create("obj_vj_bullseye")
+	-- propbullseye:SetModel("models/hunter/plates/plate.mdl")
+	-- propbullseye:SetPos(prop2:GetBonePosition(0) +Vector(0,0,35) +self:GetRight() *35)
+	-- propbullseye:SetAngles(prop2:GetAngles())
+	-- propbullseye:SetParent(propbullseye)
+	-- propbullseye.VJ_NPC_Class = self.VJ_NPC_Class
+	-- propbullseye:Spawn()
+	-- propbullseye:SetColor(Color(0,255,0))
+	-- propbullseye:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
+	-- propbullseye:SetNoDraw(false)
+	-- propbullseye:DrawShadow(false)
+	-- self:DeleteOnRemove(propbullseye)
+	-- self.Bullseye = propbullseye
+
+	-- local prop2 = ents.Create("obj_vj_bullseye")
+	-- prop2:SetModel("models/vj_hlr/hl2/combine_cannon_powergen.mdl")
+	-- prop2:SetPos(self:GetPos() +self:GetRight() *-170 +self:GetForward() *-60.5 +self:GetUp() *-0.25)
+	-- prop2:SetAngles(self:GetAngles() +Angle(0,90,0))
+	-- prop2:SetParent(prop2)
+	-- prop2.VJ_NPC_Class = self.VJ_NPC_Class
+	-- prop2:Spawn()
+	-- prop2:SetCollisionGroup(COLLISION_GROUP_NPC)
+	-- prop2:SetHealth(self.GeneratorHealth)
+	-- prop2:SetMaxHealth(self.GeneratorHealth)
+	-- prop2:SetCollisionBounds(Vector(20,20,70),Vector(-20,-20,0))
+	-- prop2.Dead = false
+	-- prop2.DoorState = 0
+	-- prop2.OnTakeDamage = function(self,dmginfo)
+	-- 	if dmginfo:GetDamageType() == DMG_BLAST && self:GetSequenceName(self:GetSequence()) == "open" then
+	-- 		self:SetHealth(self:Health() -dmginfo:GetDamage())
+	-- 	end
+	-- 	if self:Health() <= 0 && !self.Dead then
+	-- 		if IsValid(self:GetParent()) then
+	-- 			dmginfo:SetDamage(999999999)
+	-- 			self:GetParent():TakeDamageInfo(dmginfo)
+	-- 		end
+	-- 	end
+	-- end
+	-- self:DeleteOnRemove(prop2)
+	-- self.Generator = prop2
+	-- self.Bullseye = prop2
+
+	-- local bullseye = ents.Create("obj_vj_bullseye")
+	-- bullseye:SetModel("models/hunter/plates/plate.mdl")
+	-- bullseye:SetPos(prop2:GetBonePosition(0) +Vector(0,0,60) +self:GetRight() *25)
+	-- bullseye:SetParent(prop2)
+	-- bullseye.VJ_NPC_Class = self.VJ_NPC_Class
+	-- bullseye:Spawn()
+	-- bullseye:SetNoDraw(true)
+	-- bullseye:DrawShadow(false)
+	-- self:DeleteOnRemove(bullseye)
+	-- self.Bullseye = bullseye
+
+	self:SetPos(self:GetPos() +self:GetUp() *54 +self:GetForward() *18)
+
+	prop:SetParent(self)
+	prop1:SetParent(self)
+	prop2:SetParent(self)
+
+	timer.Simple(0,function()
+		self:SetPos(self:GetPos() +self:GetUp() *54)
+		for i = 1,2 do
+			local t = ents.Create("npc_vj_hlr2_com_ionturret")
+			t:SetPos(self:GetPos() +self:GetRight() *(i == 1 && -24 or 24) +self:GetForward() *4 +Vector(0,0,1))
+			t:SetAngles(self:GetAngles() +Angle(0,i == 1 && 40 or -40,0))
+			t.SideTurret = true
+			t:Spawn()
+			t:SetParent(self)
+			if i == 1 then self.Turret1 = t else self.Turret2 = t end
+			self:DeleteOnRemove(t)
+		end
+		self.Obstacles = {self.Generator,self.MainStand,self.SmallStand,self.Turret1,self.Turret2}
+		self.Turret1.Obstacles = {self.Generator,self.MainStand,self.SmallStand,self,self.Turret2}
+		self.Turret2.Obstacles = {self.Generator,self.MainStand,self.SmallStand,self,self.Turret1}
+
+		self:SetCollisionBounds(Vector(8, 12, 22), Vector(-8, -12, -54))
+
+		local hookName = "VJ_HLR_CombineCannon_" .. self:EntIndex()
+		hook.Add("PhysgunPickup","",function(ply,ent)
+			if !IsValid(self) then
+				hook.Remove("PhysgunPickup",hookName)
+			end
+			if ent == self.Generator or ent == self.MainStand or ent == self.SmallStand or ent == self.Turret1 or ent == self.Turret2 then
+				return false
+			end
+		end)
+	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DoTrace()
+	-- if IsValid(self:GetEnemy()) then return end
 	local tracedata = {}
-	tracedata.start = self:GetAttachment(self:LookupAttachment("muzzle")).Pos
-	tracedata.endpos = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() +Vector(math.Rand(-60,60),math.Rand(-60,60),0)
-	tracedata.filter = {self}
+	tracedata.start = self:GetAttachment(1).Pos
+	tracedata.endpos = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() +VectorRand() *60
+	tracedata.filter = self.Obstacles
 	return util.TraceLine(tracedata).HitPos
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomRangeAttackCode()
 	local attackpos = self:DoTrace()
-	util.ParticleTracerEx("Weapon_Combine_Ion_Cannon_Beam",self:GetPos(),attackpos,false,self:EntIndex(),1)
+	util.ParticleTracerEx("weapon_combine_ion_cannon",self:GetPos(),attackpos,false,self:EntIndex(),1)
 	ParticleEffect("aurora_shockwave",attackpos,Angle(math.random(0,360),math.random(0,360),math.random(0,360)),nil)
-	ParticleEffect("Weapon_Combine_Ion_Cannon_Exlposion_c",attackpos,Angle(math.random(0,360),math.random(0,360),math.random(0,360)),nil)
+	ParticleEffect("Weapon_Combine_Ion_Cannon_Exlposion_c",attackpos +Vector(0,0,-35),Angle(math.random(0,360),math.random(0,360),math.random(0,360)),nil)
 	util.ScreenShake(attackpos, 16, 200, 2, 1500)
 	util.ScreenShake(self:GetPos(),12,100,0.4,800)
 	sound.Play("weapons/mortar/mortar_explode3.wav",attackpos,80,100)
-	util.VJ_SphereDamage(self,self,attackpos,80,40,DMG_DISSOLVE,true,false,{Force = 150})
+	util.VJ_SphereDamage(self,self,attackpos,80,50,bit.bor(DMG_BLAST,DMG_BURN,DMG_DISSOLVE,DMG_AIRBOAT),true,false,{Force = 150})
 	
 	VJ_EmitSound(self,self.Turret_FireSound,120,self:VJ_DecideSoundPitch(100,110))
 	self:VJ_ACT_PLAYACTIVITY("vjseq_fire",true,0.15)
@@ -52,7 +196,6 @@ function ENT:CustomRangeAttackCode()
 	self:SetLayerPlaybackRate(gest,0.5)
 	
 	ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,1)
-	timer.Simple(0.2,function() if IsValid(self) then self:StopParticles() end end)
 	
 	local FireLight1 = ents.Create("light_dynamic")
 	FireLight1:SetKeyValue("brightness", "4")
@@ -90,6 +233,21 @@ function ENT:CustomOnThink()
 		VJ_STOPSOUND(self.turret_turningsd)
 	end
 	self.Turret_CurrentParameter = parameter
+
+	local gen = self.Generator
+	if IsValid(gen) then
+		if !self.Turret_StandDown && gen.DoorState != 2 then
+			gen.DoorState = 2
+			gen:ResetSequence(gen:LookupSequence("close"))
+			self.Bullseye:AddFlags(FL_NOTARGET)
+			if doorSound then VJ_CreateSound(gen,"vj_hlr/hl2_npc/ioncannon/ol09_gungrate_open.wav",80) end
+		elseif self.Turret_StandDown && gen.DoorState != 1 then
+			gen.DoorState = 1
+			gen:ResetSequence(gen:LookupSequence("open"))
+			self.Bullseye:RemoveFlags(FL_NOTARGET)
+			if doorSound then VJ_CreateSound(gen,"vj_hlr/hl2_npc/ioncannon/ol09_gungrate_open.wav",80) end
+		end
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOn_PoseParameterLookingCode(pitch, yaw, roll)
@@ -155,4 +313,50 @@ function ENT:CustomOnThink_AIEnabled()
 			self.AnimTbl_IdleStand = {ACT_IDLE}
 		end
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local defAng = Angle(0, 0, 0)
+--
+function ENT:CustomOnKilled(dmginfo, hitgroup)
+	VJ_EmitSound(self,"vj_hlr/hl2_npc/ioncannon/ol09_biggundestroy.wav",110)
+	local function explode(ent)
+		ent = ent or self
+		if !IsValid(ent) then return end
+		local startPos = ent:GetPos() + ent:OBBCenter()
+		ParticleEffect("explosion_turret_break_fire", startPos, defAng, NULL)
+		ParticleEffect("explosion_turret_break_flash", startPos, defAng, NULL)
+		ParticleEffect("explosion_turret_break_pre_smoke Version #2", startPos, defAng, NULL)
+		ParticleEffect("explosion_turret_break_sparks", startPos, defAng, NULL)
+		ParticleEffect("vj_explosion1", startPos, defAng, NULL)
+	end
+	explode(self)
+	explode(self.MainStand)
+	explode(self.SmallStand)
+	explode(self.Generator)
+	explode(self.Turret1)
+	explode(self.Turret2)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local sdGibCollide = {"physics/metal/metal_box_impact_hard1.wav", "physics/metal/metal_box_impact_hard2.wav", "physics/metal/metal_box_impact_hard3.wav"}
+--
+function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
+	self.HasDeathSounds = false
+	local function gibs(ent)
+		ent = ent or self
+		if !IsValid(ent) then return end
+		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib1.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,40)), CollideSound=sdGibCollide})
+		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib2.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,20)), CollideSound=sdGibCollide})
+		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib3.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,30)), CollideSound=sdGibCollide})
+		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib4.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,35)), CollideSound=sdGibCollide})
+		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib5.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,35)), CollideSound=sdGibCollide})
+	end
+
+	gibs(self)
+	gibs(self.MainStand)
+	gibs(self.SmallStand)
+	gibs(self.Generator)
+	gibs(self.Turret1)
+	gibs(self.Turret2)
+
+	return true -- Return to true if it gibbed!
 end

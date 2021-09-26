@@ -1,0 +1,6 @@
+"JellyFish"
+{
+	"$basetexture" "models/hl_resurgence/hl2b/hydra/gut"
+	"$gradienttexture" "models/hl_resurgence/hl2b/hydra/gutgradient"
+	"$model" 1
+}

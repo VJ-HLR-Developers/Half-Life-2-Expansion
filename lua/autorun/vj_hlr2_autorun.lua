@@ -15,6 +15,12 @@ local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 if VJExists == true then
 	include('autorun/vj_controls.lua')
 
+	/*
+		Credits:
+
+		- Sabrean = Custom Zombie Models
+	*/
+
 	VJ.AddCeilingNPC = function(nName,nClass,vCat)
 		local NPC = {Name = nName, Class = nClass, Category = vCat, OnCeiling = true}
 		list.Set( "NPC", NPC.Class, NPC ) //NPC //VJBASE_SPAWNABLE_NPC
@@ -98,16 +104,14 @@ if VJExists == true then
 			VJ.AddNPC("Fast Headcrab (Beta)","npc_vj_hlr2b_headcrab_fast",vCat)
 			VJ.AddNPC("Poison Headcrab (Beta)","npc_vj_hlr2b_headcrab_poison",vCat)
 		
-		-- Wild Life
-		VJ.AddNPC("Leech","npc_vj_hlr2_leech",vCat)
-		VJ.AddNPC("Hydra","npc_vj_hlr2b_hydra",vCat)
-		VJ.AddNPC("Bullsquid","npc_vj_hlr2b_bullsquid",vCat)
-		VJ.AddNPC("Houndeye","npc_vj_hlr2b_houndeye",vCat)
-		-- VJ.AddCeilingNPC("Barnacle","npc_vj_hlr2_barnacle",vCat)
-		-- VJ.AddNPC("Sand Barnacle","npc_vj_hlr2b_barnacle_sand",vCat)
-		
-		-- Weapons
-		
+			-- Wild Life
+			-- VJ.AddNPC("Blob","npc_vj_hlr2_blob",vCat) -- Probably won't keep
+			VJ.AddNPC("Leech","npc_vj_hlr2_leech",vCat)
+			VJ.AddNPC("Hydra","npc_vj_hlr2b_hydra",vCat)
+			VJ.AddNPC("Bullsquid","npc_vj_hlr2b_bullsquid",vCat)
+			VJ.AddNPC("Houndeye","npc_vj_hlr2b_houndeye",vCat)
+			-- VJ.AddCeilingNPC("Barnacle","npc_vj_hlr2_barnacle",vCat)
+			-- VJ.AddNPC("Sand Barnacle","npc_vj_hlr2b_barnacle_sand",vCat)
 	
 	-- ConVars --
 	VJ.AddParticle("particles/advisor.pcf",{})

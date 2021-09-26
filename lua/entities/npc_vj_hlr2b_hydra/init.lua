@@ -5,17 +5,20 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hydra.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = {"models/vj_hlr/hl2b/hydra.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 500
 ENT.HullType = HULL_HUMAN
 ENT.MovementType = VJ_MOVETYPE_STATIONARY -- How does the SNPC move?
+ENT.TurningSpeed = 2
+
+ENT.VJ_NPC_Class = {"CLASS_HYDRA"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.BloodColor = "Blue" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1,ACT_MELEE_ATTACK2,"strikedown45deg"} -- Melee Attack Animations
+ENT.AnimTbl_MeleeAttack = {"vjges_strike"} -- Melee Attack Animations
 ENT.MeleeAttackDistance = 180 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 210 -- How far does the damage go?
-ENT.TimeUntilMeleeAttackDamage = 0.5 -- This counted in seconds | This calculates the time until it hits something
+ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 60
 ENT.HasDeathRagdoll = false -- If set to false, it will not spawn the regular ragdoll of the SNPC
 
@@ -60,8 +63,8 @@ ENT.SoundTbl_Pain = {
 }
 
 	-- Enumerations --
-CHAIN_LINKS = 32
-BONE_COUNT = 47
+-- CHAIN_LINKS = 32
+-- BONE_COUNT = 47
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(20, 20, 250), Vector(-20, -20, 0))
@@ -69,25 +72,25 @@ function ENT:CustomOnInitialize()
 	self.HeartBeat = CreateSound(self,self.HeartBeatSnd)
 	self.HeartBeat:SetSoundLevel(70)
 	self.NextHeartBeatT = CurTime()
-	self.NextRefreshRate = 0
-	self.tbl_HydraBones = {}
-	for i = 0,BONE_COUNT do
-		print("Added bone " .. i)
-		local pos,ang = self:GetBonePosition(i)
-		local add = i +1
-		if i == 47 then
-			add = i
-		end
-		local posB,angB = self:GetBonePosition(add)
-		self.tbl_HydraBones[i] = {
-			Length = self:BoneLength(i),
-			Pos = pos,
-			Ang = ang,
-			Stretch = (posB -pos):Length(),
-			MaxStretch = (posB -pos):Length() +(posB -pos):Length()
-		}
-	end
-	self:CalcChain(self:GetPos(),self.tbl_HydraBones)
+	-- self.NextRefreshRate = 0
+	-- self.tbl_HydraBones = {}
+	-- for i = 0,BONE_COUNT do
+	-- 	print("Added bone " .. i)
+	-- 	local pos,ang = self:GetBonePosition(i)
+	-- 	local add = i +1
+	-- 	if i == 47 then
+	-- 		add = i
+	-- 	end
+	-- 	local posB,angB = self:GetBonePosition(add)
+	-- 	self.tbl_HydraBones[i] = {
+	-- 		Length = self:BoneLength(i),
+	-- 		Pos = pos,
+	-- 		Ang = ang,
+	-- 		Stretch = (posB -pos):Length(),
+	-- 		MaxStretch = (posB -pos):Length() +(posB -pos):Length()
+	-- 	}
+	-- end
+	-- self:CalcChain(self:GetPos(),self.tbl_HydraBones)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CalcChain(pos,bones)
@@ -167,13 +170,33 @@ function ENT:MoveHead(pos,rate,bones)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnAcceptInput(key)
+	if key == "melee" then
+		self:MeleeAttackCode()
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	if CurTime() > self.NextHeartBeatT then
 		self.HeartBeat:Stop()
 		self.HeartBeat:Play()
 		self.NextHeartBeatT = CurTime() +SoundDuration(self.HeartBeatSnd)
 	end
-	self:CalcChain(nil,self.tbl_HydraBones)
+	
+	self.IdleLength = self.IdleLength or 0
+	local toMax = (self:GetPoseParameter("idle_length") /90)
+	local ent = self:GetEnemy()
+	if IsValid(ent) then
+		local dist = self.NearestPointToEnemyDistance or 0
+		self.IdleLength = math.Clamp((dist /460) *90,0,90)
+		self.MeleeAttackDistance = 500 *toMax
+		self.MeleeAttackDamageDistance = 550 *toMax
+	else
+		self.IdleLength = 0
+	end
+	self:SetPoseParameter("idle_length",Lerp(FrameTime() *10,self:GetPoseParameter("idle_length"),self.IdleLength))
+
+	-- self:CalcChain(nil,self.tbl_HydraBones)
 	-- if IsValid(self:GetEnemy()) then
 		-- self.AnimTbl_IdleStand = {ACT_IDLE_ANGRY}
 		-- self:MoveHead(self:GetEnemy():GetPos(),1,self.tbl_HydraBones)

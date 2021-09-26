@@ -1,19 +1,19 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/hydra/bodysplit"
+	"$basetexture" "models/hl_resurgence/hl2b/hydra/bodysplit"
 	"$additive" "1"
-	"$bumpmap" 	"models/hydra/bodysplit_n"
+	"$bumpmap" 	"models/hl_resurgence/hl2b/hydra/bodysplit_n"
 
 	"$emissiveBlendEnabled" "1"
-	"$emissiveBlendTexture" "models/hydra/detail"
-	"$emissiveBlendBaseTexture" "models/hydra/emissive"
-	"$emissiveBlendFlowTexture" "models/hydra/goo"
+	"$emissiveBlendTexture" "models/hl_resurgence/hl2b/hydra/detail"
+	"$emissiveBlendBaseTexture" "models/hl_resurgence/hl2b/hydra/emissive"
+	"$emissiveBlendFlowTexture" "models/hl_resurgence/hl2b/hydra/goo"
 	"$emissiveBlendTint" "[0 0.5 0.7]"
 	"$emissiveBlendStrength" "1"
 	"$emissiveBlendScrollVector" "[-0.15 -0.01]"
 
 	"$selfillum" 1
-	"$selfillummask" "models/hydra/bodysplit_g"
+	"$selfillummask" "models/hl_resurgence/hl2b/hydra/bodysplit_g"
 
 	"Proxies"
 	{

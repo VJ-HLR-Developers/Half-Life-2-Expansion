@@ -1,10 +1,10 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "models/hydra/mainline"
+	"$basetexture" "models/hl_resurgence/hl2b/hydra/brain"
 	"$additive" 1
 	$emissiveBlendEnabled 1
     $emissiveBlendTexture    "dev/null"
-    $emissiveBlendBaseTexture    "models/hydra/mainline"
+    $emissiveBlendBaseTexture    "models/hl_resurgence/hl2b/hydra/brain"
     $emissiveBlendFlowTexture    "dev/null"
     $emissiveBlendTint "[0 0.7 0.15]"
     $emissiveBlendStrength 1
