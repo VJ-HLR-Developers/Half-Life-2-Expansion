@@ -252,7 +252,7 @@ if SERVER then
 		end
 		ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self.Emplacement,1)
 		self.Emplacement:ResetSequence("fire")
-		sound.Play("weapons/ar1/ar1_dist2.wav",self.Emplacement:GetPos(),90,100 +(self.Overheat /4) *GetConVarNumber("host_timescale"))
+		sound.Play("^weapons/ar1/ar1_dist2.wav",self.Emplacement:GetPos(),90,100 +(self.Overheat /4) *GetConVarNumber("host_timescale"))
 	end
 
 	function ENT:OnRemove()

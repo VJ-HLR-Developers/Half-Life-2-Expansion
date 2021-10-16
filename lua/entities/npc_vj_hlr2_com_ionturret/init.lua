@@ -158,6 +158,8 @@ function ENT:CustomOnInitialize()
 
 		self:SetCollisionBounds(Vector(8, 12, 22), Vector(-8, -12, -54))
 
+		self:SetAngles(Angle(0,self:GetAngles().y +180,0))
+
 		local hookName = "VJ_HLR_CombineCannon_" .. self:EntIndex()
 		hook.Add("PhysgunPickup","",function(ply,ent)
 			if !IsValid(self) then
