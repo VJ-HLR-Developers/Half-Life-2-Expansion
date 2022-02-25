@@ -22,7 +22,8 @@ ENT.RangeDistance = 2000 -- This is how far away it can shoot
 ENT.RangeToMeleeDistance = 400 -- How close does it have to be until it uses melee?
 ENT.RangeUseAttachmentForPos = false -- Should the projectile spawn on a attachment?
 ENT.RangeAttackPos_Up = 20
-ENT.RangeAttackPos_Forward = 20
+ENT.RangeAttackPos_Forward = 30
+
 ENT.NoChaseAfterCertainRange = true -- Should the SNPC not be able to chase when it's between number x and y?
 ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance" -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
 ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance" -- How near until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
@@ -32,7 +33,3 @@ ENT.SoundTbl_Death = {
 	"npc/antlion/antlion_preburst_scream1.wav",
 	"npc/antlion/antlion_preburst_scream2.wav",
 }
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackCode_GetShootPos(projectile)
-	return self:CalculateProjectile("Curve", self:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 1200)
-end

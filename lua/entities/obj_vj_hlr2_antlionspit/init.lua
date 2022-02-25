@@ -21,14 +21,12 @@ function ENT:CustomPhysicsObjectOnInitialize(phys)
 	phys:EnableDrag(false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
-	ParticleEffectAttach("antlion_spit",PATTACH_ABSORIGIN_FOLLOW,self,0)
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	ParticleEffectAttach("antlion_spit_trail",PATTACH_ABSORIGIN_FOLLOW,self,0)
+	ParticleEffect("antlion_spit",self:GetPos(),Angle(0,0,0),nil)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DeathEffects(data, phys)
+	ParticleEffect("antlion_spit",data.HitPos,Angle(0,0,0),nil)
 	ParticleEffect("antlion_gib_01",data.HitPos,Angle(0,0,0),nil)
 end

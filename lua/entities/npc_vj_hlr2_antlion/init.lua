@@ -10,22 +10,32 @@ ENT.StartHealth = 30
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_ANTLION"} -- NPCs with the same class with be allied to each other
+
 ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
+
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1,"pounce","pounce2"} -- Melee Attack Animations
 ENT.MeleeAttackDistance = 50 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 85 -- How far does the damage go?
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 10
+
+ENT.HasLeapAttack = true
+ENT.LeapAttackDamage = 0
+ENT.AnimTbl_LeapAttack = {} -- Melee Attack Animations
+ENT.LeapDistance = 1000 -- The distance of the leap, for example if it is set to 500, when the SNPC is 500 Unit away, it will jump
+ENT.LeapToMeleeDistance = 0 -- How close does it have to be until it uses melee?
+ENT.DisableLeapAttackAnimation = true -- if true, it will disable the animation code
+
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
 ENT.GeneralSoundPitch1 = 100
+
 ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
 ENT.ConstantlyFaceEnemy_Postures = "Moving" -- "Both" = Moving or standing | "Moving" = Only when moving | "Standing" = Only when standing
 ENT.ConstantlyFaceEnemyDistance = 500 -- How close does it have to be until it starts to face the enemy?
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
+
 ENT.SoundTbl_FootStep = {"npc/antlion/foot1.wav","npc/antlion/foot2.wav","npc/antlion/foot3.wav","npc/antlion/foot4.wav"}
 ENT.SoundTbl_Idle = {
 	"npc/antlion/idle1.wav",
@@ -59,6 +69,30 @@ ENT.VJC_Data = {
 }
 
 ENT.MaxJumpLegalDistance = VJ_Set(1000,1500)
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnLeapAttackVelocityCode()
+	self:SetGroundEntity(NULL)
+	self:ForceMoveJump(self:CalculateProjectile("Curve", self:GetPos(), self:GetEnemy():GetPos(),math.Clamp(self:GetEnemy():GetPos():Distance(self:GetPos()),600,1100)))
+	return true
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackCode_GetShootPos(projectile)
+	local enemy = self:GetEnemy()
+	local tr = util.TraceLine({
+		start = enemy:GetPos(),
+		endpos = enemy:GetPos() +Vector(0,0,800),
+		filter = enemy
+	})
+	local offset = VectorRand() *25
+	if tr.Hit then -- Try to aim forward if the enemy has some sort of cover over their head
+		return self:CalculateProjectile("Curve", projectile:GetPos(), enemy:GetPos() +enemy:OBBCenter() +offset, 1400)
+	end
+	local rangeAdjustment = math.Clamp(self.NearestPointToEnemyDistance *0.75,750,1100) -- Dynamic high-curving projectiles
+	if rangeAdjustment <= 900 then -- Too close, just fire straight
+		return self:CalculateProjectile("Curve", projectile:GetPos(), enemy:GetPos() +enemy:OBBCenter() +offset, 1400)
+	end
+	return self:CalculateProjectile("Curve", projectile:GetPos() +Vector(0,0,-100), enemy:GetPos() +offset, rangeAdjustment)
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:IsDirt(pos)
 	local tr = util.TraceLine({
@@ -117,6 +151,7 @@ function ENT:CustomOnInitialize()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
+	self.HasLeapAttack = IsValid(self.VJ_TheController)
 	if self.FlyLoop:IsPlaying() then
 		if self:GetSequenceActivity(self:GetSequence()) == 27 or self:GetSequenceActivity(self:GetSequence()) == 30 then
 			return
@@ -153,7 +188,9 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 		VJ_EmitSound(self,"npc/antlion/antlion_burst" .. math.random(1,2) .. ".wav",75,100)
 	end
 	if key == "range" then
-		self:RangeAttackCode()
+		for i = 1,math.random(2,4) do
+			self:RangeAttackCode()
+		end
 	end
 	if key == "step_heavy" then
 		VJ_EmitSound(self,"npc/antlion/shell_impact" .. math.random(1,4) .. ".wav",75,100)
