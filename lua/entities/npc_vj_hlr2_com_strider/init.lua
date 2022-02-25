@@ -340,7 +340,7 @@ function ENT:CustomAttack()
 	local controlled = self.VJ_IsBeingControlled
 	local enemy = self:GetEnemy()
 	if IsValid(enemy) then
-		local dist = self:VJ_GetNearestPointToEntityDistance(enemy)
+		local dist = self.NearestPointToEnemyDistance
 		local cos = (self:GetForward():Dot((enemy:GetPos() +enemy:OBBCenter() -self:GetPos() + self:OBBCenter()):GetNormalized()) > math.cos(math.rad(80)))
 		if controlled then
 			self:ControllAI(enemy,dist,cos)
