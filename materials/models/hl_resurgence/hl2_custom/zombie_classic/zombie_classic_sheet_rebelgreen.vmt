@@ -1,0 +1,24 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/hl_resurgence/hl2_custom/zombie_classic/Zombie_Classic_sheet_rebelgreen"
+	"$bumpmap" "models/hl_resurgence/hl2_custom/zombie_classic/zombie_classic_sheet_rebelgreen_normal"
+	"$model" "1"
+	"$alphatest" "1"
+	"$phong" "1"
+	"$phongboost" "5"
+//	"$halflambert" "1"
+//	"$phongexponenttexture" "models/hl_resurgence/hl2_custom/zombie_classic/zombie_classic_variant_phong"
+//	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[0.1 .5  1]"
+	"$phongexponent" 30
+	"$nocull" "1"
+	
+//
+
+//rimlight disabled for now, sunlight areas wreaking havoc
+	//rimlight parameters
+	//"$rimlight" "1"
+	//"$rimlightexponent" "24"
+	//"$rimlightboost" "1"
+
+}

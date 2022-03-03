@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/hl_resurgence/hl2_custom/zombie_classic/soldier_stripped_zombie"
+	"$bumpmap" "models/hl_resurgence/hl2_custom/zombie_classic/soldier_stripped_zombie_normal"
+	"$model" "1"
+	"$phong" "1"
+	"$phongboost" "5"
+	"$halflambert" "1"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5  1]"
+}

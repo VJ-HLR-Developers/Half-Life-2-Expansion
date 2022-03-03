@@ -135,27 +135,23 @@ function ENT:CustomOnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnThrown(enemy,owner)
+function ENT:OnThrown(enemy,owner,pos)
 	self:SetOwner(owner)
+	VJ_CreateSound(self,self.SoundTbl_LeapAttackJump,75)
 	timer.Simple(0.05,function()
-		if self:IsValid() then
+		if IsValid(self) then
 			self.CanAlertCrab = false
 			self.PThrown = true
 		end
 	end)
-	if owner.VJ_IsBeingControlled == false then
-		enemy = enemy
-		self:SetEnemy(enemy)
-	else
-		enemy = owner.VJ_TheControllerBullseye
-	end
+	self:SetEnemy(enemy)
 	self:FaceCertainEntity(enemy,true)
 	self:SetGroundEntity(NULL)
-	local jumpcode = ((enemy:GetPos() +self:OBBCenter()) -(self:GetPos() + self:OBBCenter())):GetNormal() *400 +self:GetForward() *500 +self:GetUp() *200
+	local jumpcode = self:CalculateProjectile("Curve", self:GetPos(), pos, 850)
 	self:SetLocalVelocity(jumpcode)
-	self:VJ_ACT_PLAYACTIVITY("Drown",true,VJ_GetSequenceDuration(self,"Drown"),false)
+	self:VJ_ACT_PLAYACTIVITY("Drown",true,false,false)
 	timer.Simple(VJ_GetSequenceDuration(self,"Drown"),function()
-		if self:IsValid() then
+		if IsValid(self) then
 			self.CanAlertCrab = true
 		end
 	end)

@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$model" "1"
+	"$alphatest" "1"
+	"$baseTexture" 	"models/hl_resurgence/hl2_custom/zombie_classic/blank"
+	"$nodecal" "1" 
+}
+
+
+

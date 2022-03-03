@@ -5,119 +5,107 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/zombie_fast.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
-ENT.StartHealth = 60
+ENT.Model = {"models/vj_hlr/hl2/zombie_fast.mdl"}
+ENT.StartHealth = 50
 ENT.HullType = HULL_HUMAN
----------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.CustomBlood_Particle = {"blood_impact_green_01"}
-ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
-ENT.MeleeAttackDistance = 40 -- How close does it have to be until it attacks?
-ENT.MeleeAttackDamageDistance = 85 -- How far does the damage go?
-ENT.TimeUntilMeleeAttackDamage = 0.2 -- This counted in seconds | This calculates the time until it hits something
-ENT.NextAnyAttackTime_Melee = 0.2 -- How much time until it can use any attack again? | Counted in Seconds
-ENT.MeleeAttackExtraTimers = {0.4}
-ENT.MeleeAttackDamage = 6
-ENT.HasLeapAttack = true -- Should the SNPC have a leap attack?
-ENT.AnimTbl_LeapAttack = {"leapstrike"} -- Melee Attack Animations
-ENT.LeapDistance = 600 -- The distance of the leap, for example if it is set to 500, when the SNPC is 500 Unit away, it will jump
-ENT.LeapToMeleeDistance = 150 -- How close does it have to be until it uses melee?
-ENT.TimeUntilLeapAttackDamage = 0.2 -- How much time until it runs the leap damage code?
-ENT.NextLeapAttackTime = 3 -- How much time until it can use a leap attack?
-ENT.NextAnyAttackTime_Leap = 0.4 -- How much time until it can use any attack again? | Counted in Seconds
-ENT.LeapAttackExtraTimers = {0.4,0.6,0.8,1} -- Extra leap attack timers | it will run the damage code after the given amount of seconds
-ENT.TimeUntilLeapAttackVelocity = 0.2 -- How much time until it runs the velocity code?
-ENT.LeapAttackVelocityForward = 500 -- How much forward force should it apply?
-ENT.LeapAttackVelocityUp = 200 -- How much upward force should it apply?
-ENT.LeapAttackDamage = 10
-ENT.LeapAttackDamageDistance = 100 -- How far does the damage go?
-ENT.FootStepTimeRun = 0.21 -- Next foot step sound when it is running
-ENT.FootStepTimeWalk = 0.3 -- Next foot step sound when it is walking
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
-ENT.GeneralSoundPitch1 = 100
-	-- ====== Flinching Code ====== --
-ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
-ENT.AnimTbl_Flinch = {ACT_FLINCH_PHYSICS} -- If it uses normal based animation, use this
 
-ENT.VJC_Data = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "ValveBiped.HC_BodyCube", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(1, 0, 0), -- The offset for the controller when the camera is in first person
-}
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
+ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
+
+ENT.BloodColor = "Yellow"
+ENT.CustomBlood_Particle = {"blood_impact_green_01"}
+
+ENT.MeleeAttackDamage = 6
+ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1}
+ENT.MeleeAttackDistance = 35
+ENT.MeleeAttackDamageDistance = 75
+ENT.TimeUntilMeleeAttackDamage = false
+
+ENT.HasLeapAttack = true
+ENT.AnimTbl_LeapAttack = {"leapstrike"}
+ENT.LeapDistance = 600
+ENT.LeapToMeleeDistance = 150
+ENT.TimeUntilLeapAttackDamage = 0.2
+ENT.NextLeapAttackTime = 3
+ENT.NextAnyAttackTime_Leap = 0.4
+ENT.LeapAttackExtraTimers = {0.4,0.6,0.8,1}
+ENT.TimeUntilLeapAttackVelocity = 0.2
+ENT.LeapAttackVelocityForward = 500
+ENT.LeapAttackVelocityUp = 200
+ENT.LeapAttackDamage = 10
+ENT.LeapAttackDamageDistance = 65
+
+ENT.DisableFootStepSoundTimer = true
+ENT.HasExtraMeleeAttackSounds = true
+ENT.GeneralSoundPitch1 = 100
+ENT.GeneralSoundPitch2 = 100
+
 ENT.SoundTbl_FootStep = {"npc/fast_zombie/foot1.wav","npc/fast_zombie/foot2.wav","npc/fast_zombie/foot3.wav","npc/fast_zombie/foot4.wav"}
-ENT.SoundTbl_Breath = {"npc/fast_zombie/breathe_loop1.wav","npc/fast_zombie/gurgle_loop1.wav"}
+ENT.SoundTbl_DefBreath = {"npc/fast_zombie/breathe_loop1.wav","npc/fast_zombie/gurgle_loop1.wav"}
 ENT.SoundTbl_Alert = {"npc/fast_zombie/fz_alert_far1.wav","npc/fast_zombie/fz_alert_close1.wav"}
 ENT.SoundTbl_BeforeMeleeAttack = {"npc/fast_zombie/leap1.wav"}
+ENT.SoundTbl_LeapAttackJump = {"npc/fast_zombie/fz_scream1.wav"}
+ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_strike2.wav","npc/zombie/claw_strike3.wav"}
+ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav","npc/zombie/claw_miss2.wav"}
 ENT.SoundTbl_Pain = {"npc/fast_zombie/wake1.wav"}
+ENT.SoundTbl_DeathFollow = {"npc/fast_zombie/wake1.wav"}
+
+ENT.Zombie_AnimationSet = 0 -- 0 = Default, 1 = Fire
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomInitialize()
-	self.TotalHits = 0
-	self.LastHitT = 0
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
-	self:SetSkin(0)
-	self:SetBodygroup(1,1)
-	self:SetCollisionBounds(Vector(13,13,50), Vector(-13,-13,0))
-	self.IsSlumped = false
-	self.SlumpAnimation = VJ_PICK({"slump_a","slump_b"})
-	self.SlumpRise = (self.SlumpAnimation == "slump_a" && VJ_PICK({"slumprise_a","slumprise_c"})) or "slumprise_b"
-	if self.Slump then
-		self.IsSlumped = true
-		self:AddFlags(FL_NOTARGET)
-		self.SoundTbl_Breath = {}
-		self.AnimTbl_IdleStand = {self.SlumpAnimation}
-		self.SightDistance = 140
+function ENT:SetSlump(doSlump)
+	if doSlump then
+		self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
+		self.NextIdleStandTime = 0
+		self.SlumpSet = math.random(1,2) == 1 && "a" or "b"
+		self.AnimTbl_IdleStand = {VJ_SequenceToActivity(self,"slump_" .. self.SlumpSet)}
+		self.SightDistance = 150
 		self.SightAngle = 180
-		self.MovementType = VJ_MOVETYPE_STATIONARY
-		self.CanTurnWhileStationary = false
-		self.HasMeleeAttack = false
-		self.HasRangeAttack = false
-		self.HasLeapAttack = false
-		self.CanFlinch = 0
+		self:AddFlags(FL_NOTARGET)
+	else
+		self.NextIdleStandTime = 0
+		self.AnimTbl_IdleStand = {ACT_IDLE}
+		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. (self.SlumpSet == "a" && VJ_PICK({"a","c"}) or self.SlumpSet), true, false, false, 0, {OnFinish=function(interrupted, anim)
+			self:SetState()
+		end})
+		self.SightDistance = 10000
+		self.SightAngle = 80
+		self:RemoveFlags(FL_NOTARGET)
+		self.SoundTbl_Breath = self.SoundTbl_DefBreath
 	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:UnSlump()
-	self.IsSlumped = false
-	self.AnimTbl_IdleStand = {ACT_IDLE}
-	self:VJ_ACT_PLAYACTIVITY("vjseq_" .. self.SlumpRise,true,false,false)
-	local animtime = self:SequenceDuration(self:LookupSequence(self.SlumpRise))
-	self:RemoveFlags(FL_NOTARGET)
-	self:SetArrivalActivity(ACT_IDLE)
-	self.SoundTbl_Breath = {"npc/fast_zombie/breathe_loop1.wav"}
-	timer.Simple(animtime,function()
-		if IsValid(self) then
-			self:ResetSlump()
-		end
-	end)
+	self.IsSlumped = doSlump
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAlert(ent)
 	if self.IsSlumped then
-		self:UnSlump()
+		self:SetSlump(false)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
-	if self.IsSlumped then
-		self:UnSlump()
+function ENT:CustomOnInitialize()
+	if self.OnInit then
+		self:OnInit()
 	end
+
+	if self.Slump then
+		self:SetSlump(true)
+	else
+		self.SoundTbl_Breath = self.SoundTbl_DefBreath
+	end
+
+	self:SetBodygroup(1,1)
+
+	self.IsLeaping = false
+	self.LeapDelay = 0
+	self.LeapLoop = VJ_SequenceToActivity(self,"leapstrike")
+	self.TotalHits = 0
+	self.LastHitT = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:ResetSlump()
-	self.CanFlinch = 1
-	self.SightDistance = 10000
-	self.SightAngle = 80
-	self.MovementType = VJ_MOVETYPE_GROUND
-	self.HasMeleeAttack = true
-	self.HasRangeAttack = false
-	self.HasLeapAttack = true
+function ENT:CustomOnAcceptInput(key, activator, caller, data)
+	if key == "step" then
+		VJ_EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
+	elseif key == "melee" then
+		self:MeleeAttackCode()
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt)
@@ -126,44 +114,86 @@ function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt)
 	self.LastHitT = CurTime() +0.6
 	if self.TotalHits >= 8 then
 		VJ_CreateSound(self,"npc/fast_zombie/fz_frenzy1.wav",80)
-		self:VJ_ACT_PLAYACTIVITY("BR2_Roar",true,false,false)
+		self:VJ_ACT_PLAYACTIVITY("BR2_Roar",true,false,true)
 	end
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnLeapAttackVelocityCode()
-	VJ_CreateSound(self,"npc/fast_zombie/fz_scream1.wav",85)
+function ENT:CustomOnLeapAttack_AfterStartTimer(seed)
+	self.IsLeaping = true
+	self.LeapDelay = CurTime() +0.25
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
-	if self:GetBodygroup(1) == 0 then return false end
-	local randcrab = math.random(1,3)
-	local dmgtype = dmginfo:GetDamageType()
-	if hitgroup == HITGROUP_HEAD then randcrab = math.random(1,2) end
-	if dmgtype == DMG_CLUB or dmgtype == DMG_SLASH then randcrab = 1 end
-	if randcrab == 1 then
-		self:SetBodygroup(1,1)
-	end
-	if randcrab == 2 then
-		self:CreateExtraDeathCorpse("prop_ragdoll","models/headcrab.mdl",{Pos=self:GetAttachment(self:LookupAttachment("headcrab")).Pos})
-		self.Corpse:SetBodygroup(1,0)
-	end
-	if randcrab == 3 then
-		self.Corpse:SetBodygroup(1,0)
-		local spawncrab = ents.Create("npc_vj_hlr2_headcrab_fast")
-		local enemy = self:GetEnemy()
-		local pos = self:GetAttachment(self:LookupAttachment("headcrab")).Pos
-		spawncrab:SetPos(pos)
-		spawncrab:SetAngles(self:GetAngles())
-		spawncrab:SetVelocity(dmginfo:GetDamageForce()/58)
-		spawncrab:Spawn()
-		spawncrab:Activate()
-		if self.Corpse:IsOnFire() then spawncrab:Ignite(math.Rand(8,10),0) end
-		timer.Simple(0.05,function()
-			if spawncrab != nil then
-				spawncrab:SetPos(pos)
-				if IsValid(enemy) then spawncrab:SetEnemy(enemy) spawncrab:SetSchedule(SCHED_CHASE_ENEMY) end
+function ENT:CustomOnThink_AIEnabled()
+	local slump = self.IsSlumped
+	local set = self.Zombie_AnimationSet
+
+	if !slump then
+		if self:IsOnFire() && set == 0 && !self.IsBeta then
+			self.Zombie_AnimationSet = 1
+			self.AnimTbl_IdleStand = {ACT_IDLE_ON_FIRE}
+		elseif !self:IsOnFire() && set == 1 && !self.IsBeta then
+			self.Zombie_AnimationSet = 0
+			self.AnimTbl_IdleStand = {ACT_IDLE}
+		end
+		if self.IsLeaping then
+			if self:IsOnGround() && CurTime() > self.LeapDelay then
+				self.IsLeaping = false
+				self:StopAttacks(true)
+			else
+				self:SetIdealActivity(self.LeapLoop)
 			end
-		end)
+		end
+	else
+		self.NextIdleSoundT_RegularChange = CurTime() +math.random(4,8)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
+	local nonGes = (hitgroup == HITGROUP_LEFTLEG or hitgroup == HITGROUP_RIGHTLEG)
+	self.FlinchChance = nonGes && 8 or 2
+	self.NextFlinchTime = nonGes && 5 or 2
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
+	if self.IsSlumped then
+		self:SetSlump(false)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
+	if self:GetBodygroup(1) == 0 then
+		return false
+	end
+
+	VJ_CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
+	local dmgtype = dmginfo:GetDamageType()
+	if hitgroup == HITGROUP_HEAD then
+		ent:SetBodygroup(1,0)
+		self:CreateExtraDeathCorpse(
+			"prop_ragdoll",
+			"models/headcrab.mdl",
+			{Pos=self:GetAttachment(self:LookupAttachment("headcrab")).Pos or self:EyePos()},
+			function(crab)
+				if self.HeadcrabClass == "npc_vj_hlr2b_headcrab_fast" then
+					crab:SetMaterial("models/hl_resurgence/hl2b/headcrab_fast/allinonebacup2")
+				end
+			end
+		)
+	else
+		if math.random(1,(dmgtype == DMG_CLUB or dmgtype == DMG_SLASH or DMG_BLAST) && 1 or 3) == 1 then
+			ent:SetBodygroup(1,0)
+			local crab = ents.Create(self.HeadcrabClass or "npc_vj_hlr2_headcrab_fast")
+			local enemy = self:GetEnemy()
+			crab:SetPos(self:GetAttachment(self:LookupAttachment("headcrab")).Pos or self:EyePos())
+			crab:SetAngles(self:GetAngles())
+			crab:Spawn()
+			crab:SetGroundEntity(NULL) -- This fixes that issue where they snap to the ground when spawned
+			crab:SetLocalVelocity(self:GetVelocity() *dmginfo:GetDamageForce():Length())
+			if ent:IsOnFire() then
+				crab:Ignite(math.random(8,10))
+			end
+			undo.ReplaceEntity(self,crab)
+		end
 	end
 end
