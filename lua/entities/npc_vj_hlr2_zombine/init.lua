@@ -47,7 +47,6 @@ ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav","npc/zombie/claw_mis
 ENT.SoundTbl_Pain = {"vj_hlr/hl2_npc/zombine/zombine_pain1.wav","vj_hlr/hl2_npc/zombine/zombine_pain2.wav","vj_hlr/hl2_npc/zombine/zombine_pain3.wav","vj_hlr/hl2_npc/zombine/zombine_pain4.wav"}
 ENT.SoundTbl_DeathFollow = {"vj_hlr/hl2_npc/zombine/zombine_die1.wav","vj_hlr/hl2_npc/zombine/zombine_die2.wav"}
 
-ENT.GrenadeTime = 0
 ENT.Zombie_AnimationSet = 0 -- 0 = Default, 1 = Run
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetSlump(doSlump)
@@ -132,7 +131,12 @@ function ENT:CustomOnThink_AIEnabled()
 	if !slump then
 		local ent = self:GetEnemy()
 		local dist = self.NearestPointToEnemyDistance
-		if grenPulled then return end
+		if grenPulled then
+			if !IsValid(self.GrenadeEntity) && self.GrenadeTime != nil && CurTime() > self.GrenadeTime then
+				self:TakeDamage(999999999,self,self)
+			end
+			return
+		end
 		if self.VJ_IsBeingControlled == false then
 			if IsValid(self:GetEnemy()) && math.random(1,(self:Health() < self:GetMaxHealth() *0.25) && 15 or 150) == 1 && dist < 300 then
 				self:GrenadeCode()
