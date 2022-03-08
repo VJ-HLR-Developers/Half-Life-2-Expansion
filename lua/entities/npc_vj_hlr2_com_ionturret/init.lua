@@ -220,7 +220,7 @@ function ENT:CustomOnAlert(ent)
 			self.HasPoseParameterLooking = true
 		end
 	end)
-	self.NextResetEnemyT = CurTime() + 1 -- Make sure it doesn't reset the enemy right away
+	//self.NextResetEnemyT = CurTime() + 1 -- Make sure it doesn't reset the enemy right away
 	self:VJ_ACT_PLAYACTIVITY({"deploy"}, true, false)
 	VJ_EmitSound(self,{"npc/turret_floor/click1.wav"}, 70, 100)
 end
@@ -306,7 +306,7 @@ function ENT:CustomOnThink_AIEnabled()
 		end
 	else
 		-- Play the retracting sequence and sound
-		if CurTime() > self.NextResetEnemyT && self.Alerted == false && self.Turret_StandDown == false then
+		if self.Alerted == false && self.Turret_StandDown == false then
 			self.Turret_StandDown = true
 			self:VJ_ACT_PLAYACTIVITY({"retire"}, true, 1)
 			VJ_EmitSound(self,{"npc/turret_floor/retract.wav"}, 70, 100)

@@ -82,7 +82,7 @@ function ENT:CustomOnThink_AIEnabled()
 		end
 	else
 		-- Play the retracting sequence and sound
-		if CurTime() > self.NextResetEnemyT && self.Alerted == false && self.Turret_StandDown == false then
+		if self.Alerted == false && self.Turret_StandDown == false then
 			self.Turret_Sprite:Fire("Color","0 150 0") -- Green
 			self.Turret_Sprite:Fire("ShowSprite")
 			self.Turret_StandDown = true
