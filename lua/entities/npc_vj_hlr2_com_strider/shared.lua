@@ -9,6 +9,6 @@ ENT.Category		= "Half-Life 2"
 
 if CLIENT then
     function ENT:Initialize()
-        self:SetIK(false)
+       // self:SetIK(false)
     end
 end
