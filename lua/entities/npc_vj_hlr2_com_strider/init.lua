@@ -107,6 +107,7 @@ ENT.MinigunSpread = 15
 function ENT:CustomOnInitialize()
 	-- self:SetCollisionBounds(Vector(35,35,42),Vector(-35,-35,-500)) // For default strider model
 	self:SetCollisionBounds(Vector(35,35,500),Vector(-35,-35,0))
+	VJ_CreateBoneFollower(self)
 
 	self.NextFireT = 0
 	self.NextWarpT = 0
