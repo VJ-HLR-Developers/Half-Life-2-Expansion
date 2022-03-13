@@ -124,9 +124,17 @@ function ENT:ThrowHeadcrab(pos)
 	local att = self:GetAttachment(self:LookupAttachment("headcrab" .. 1 +current))
 	local p = ents.Create(self.HeadcrabClass)
 	p:SetPos(att.Pos)
-	p:SetAngles(Angle(0,(p:GetPos() -pos):Angle().y,0))
+	p:SetAngles(Angle(0,(pos -p:GetPos()):Angle().y,0))
 	p:Spawn()
 	p:OnThrown(self:GetEnemy(),self,pos)
+
+	-- local ply = self:GetCreator()
+	-- if IsValid(ply) then -- Kind of silly, as you can remove them as they are thrown. Leaving for future use if wanted
+	-- 	undo.Create(self:GetName() .. "'s " .. p:GetName())
+	-- 		undo.AddEntity(p)
+	-- 		undo.SetPlayer(ply)
+	-- 	undo.Finish()
+	-- end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
