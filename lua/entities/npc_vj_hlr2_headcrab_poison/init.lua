@@ -52,6 +52,7 @@ ENT.LeapAttackExtraTimers = {1.7,1.9,2.1,2.3}
 ENT.StopLeapAttackAfterFirstHit = true
 ENT.LeapAttackDamageDistance = 40
 ENT.LeapAttackDamage = 0
+ENT.DisableDefaultLeapAttackDamageCode = true
 
 ENT.CanFlinch = 1
 ENT.AnimTbl_Flinch = {ACT_SMALL_FLINCH}
@@ -233,34 +234,6 @@ function ENT:DoPoisonHeadcrabDamage(v)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-local IsProp = VJ_IsProp
---
-function ENT:LeapDamageCode() -- Had to do this, :flushed: if only we had a variable JUST LIKE EVERY OTHER ATTACK to disable the default damage
-	if self.Dead == true or self.vACT_StopAttacks == true or self.Flinching == true or (self.StopLeapAttackAfterFirstHit && self.AttackStatus == VJ_ATTACK_STATUS_EXECUTED_HIT) then return end
-	self:CustomOnLeapAttack_BeforeChecks()
-	local hitRegistered = false
-	local FindEnts = ents.FindInSphere(self:GetPos(),self.LeapAttackDamageDistance)
-	if FindEnts != nil then
-		for _,v in pairs(FindEnts) do
-			if (self.VJ_IsBeingControlled == true && self.VJ_TheControllerBullseye == v) or (v:IsPlayer() && v.IsControlingNPC == true) then continue end
-			if (v:IsNPC() or (v:IsPlayer() && v:Alive()) && GetConVar("ai_ignoreplayers"):GetInt() == 0) && (self:Disposition(v) != D_LI) && (v != self) && (v:GetClass() != self:GetClass()) or IsProp(v) == true or v:GetClass() == "func_breakable_surf" or v:GetClass() == "func_breakable" then
-				self:CustomOnLeapAttack_AfterChecks(v)
-				self:DoPoisonHeadcrabDamage(v)
-				hitRegistered = true
-			end
-		end
-	end
-	if self.AttackStatus < VJ_ATTACK_STATUS_EXECUTED then
-		self.AttackStatus = VJ_ATTACK_STATUS_EXECUTED
-		if self.TimeUntilLeapAttackDamage != false then
-			self:LeapAttackCode_DoFinishTimers()
-		end
-	end
-	if hitRegistered == true then
-		self:PlaySoundSystem("LeapAttackDamage")
-		self.AttackStatus = VJ_ATTACK_STATUS_EXECUTED_HIT
-	else
-		self:CustomOnLeapAttack_Miss()
-		self:PlaySoundSystem("LeapAttackDamageMiss", nil, VJ_EmitSound)
-	end
+function ENT:CustomOnLeapAttack_AfterChecks(v)
+	self:DoPoisonHeadcrabDamage(v)
 end

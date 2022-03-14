@@ -5,26 +5,11 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/zombie_assassin.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
-ENT.StartHealth = 150
+ENT.Model = {"models/vj_hlr/hl2b/zombie_assassin.mdl"}
+ENT.StartHealth = 75
 ENT.HullType = HULL_HUMAN
----------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"} -- NPCs with the same class with be allied to each other
 
-ENT.BloodColor = "Yellow"
-ENT.CustomBlood_Particle = {"vj_hl_blood_yellow"}
-
-ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
-ENT.MeleeAttackDistance = 65 -- How close does it have to be until it attacks?
-ENT.MeleeAttackDamageDistance = 90 -- How far does the damage go?
-ENT.MeleeAttackDamage = 15
-ENT.MeleeAttackExtraTimers = {0.65}
-ENT.TimeUntilMeleeAttackDamage = 0.35
-ENT.FootStepTimeRun = 0.2 -- Next foot step sound when it is running
-ENT.FootStepTimeWalk = 1.55 -- Next foot step sound when it is walking
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
-ENT.GeneralSoundPitch1 = 88
+ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
 ENT.VJC_Data = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
@@ -32,8 +17,16 @@ ENT.VJC_Data = {
     FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
     FirstP_Offset = Vector(3, 0, 0), -- The offset for the controller when the camera is in first person
 }
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
+
+ENT.BloodColor = "Yellow"
+ENT.CustomBlood_Particle = {"blood_impact_green_01"}
+
+ENT.MeleeAttackDamage = 15
+ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1}
+ENT.MeleeAttackDistance = 35
+ENT.MeleeAttackDamageDistance = 75
+ENT.TimeUntilMeleeAttackDamage = false
+
 ENT.SoundTbl_FootStep = {
 	"physics/flesh/flesh_impact_hard1.wav",
 	"physics/flesh/flesh_impact_hard2.wav",
@@ -42,38 +35,88 @@ ENT.SoundTbl_FootStep = {
 	"physics/flesh/flesh_impact_hard5.wav",
 	"physics/flesh/flesh_impact_hard6.wav",
 }
-ENT.SoundTbl_Breath = {"npc/stalker/breathing3.wav"}
+ENT.SoundTbl_FootStep_Run = {"physics/flesh/flesh_strider_impact_bullet1.wav","physics/flesh/flesh_strider_impact_bullet2.wav"}
+ENT.SoundTbl_Breath = {"npc/zombie_poison/pz_breathe_loop1.wav"}
 ENT.SoundTbl_BeforeMeleeAttack = {"npc/zombie_poison/pz_warn1.wav","npc/zombie_poison/pz_warn2.wav"}
 ENT.SoundTbl_Pain = {"npc/barnacle/barnacle_pull1.wav","npc/barnacle/barnacle_pull2.wav","npc/barnacle/barnacle_pull3.wav","npc/barnacle/barnacle_pull4.wav"}
 ENT.SoundTbl_Death = {"npc/zombie_poison/pz_die2.wav"}
+ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_strike2.wav","npc/zombie/claw_strike3.wav"}
+ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav","npc/zombie/claw_miss2.wav"}
+
+ENT.DisableFootStepSoundTimer = true
+ENT.HasExtraMeleeAttackSounds = true
+ENT.BreathSoundLevel = 45
+ENT.GeneralSoundPitch1 = 130
+ENT.GeneralSoundPitch2 = 150
+
+ENT.AnimationSet = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
-	-- self:SetCollisionBounds(Vector(13,13,60), Vector(-13,-13,0))
+function ENT:CustomOnAcceptInput(key, activator, caller, data)
+	if key == "step" then
+		VJ_EmitSound(self,self.SoundTbl_FootStep,60)
+	elseif key == "step_run" then
+		VJ_EmitSound(self,self.SoundTbl_FootStep_Run,68)
+	elseif key == "melee" then
+		self:MeleeAttackCode()
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink_AIEnabled()
-	if self:GetMovementActivity() == ACT_RUN then
-		self.SoundTbl_FootStep = {"physics/flesh/flesh_strider_impact_bullet1.wav","physics/flesh/flesh_strider_impact_bullet2.wav"}
-	else
-		self.SoundTbl_FootStep = {
-			"physics/flesh/flesh_impact_hard1.wav",
-			"physics/flesh/flesh_impact_hard2.wav",
-			"physics/flesh/flesh_impact_hard3.wav",
-			"physics/flesh/flesh_impact_hard4.wav",
-			"physics/flesh/flesh_impact_hard5.wav",
-			"physics/flesh/flesh_impact_hard6.wav",
-		}
-	end
 	local controlled = self.VJ_IsBeingControlled
-	if IsValid(self:GetEnemy()) && !controlled then
-		local dist = self:VJ_GetNearestPointToEntityDistance(self:GetEnemy())
-		if !(self:GetEnemy():GetForward():Dot((self:GetPos() -self:GetEnemy():GetPos()):GetNormalized()) > math.cos(math.rad(60))) && dist > 600 then
-			// Stalk the player
-			self.AnimTbl_Run = {ACT_WALK}
+	local set = self.AnimationSet
+	local enemy = self:GetEnemy()
+	if IsValid(enemy) && !controlled then
+		local dist = self.NearestPointToEnemyDistance
+		if !(enemy:GetForward():Dot((self:GetPos() -enemy:GetPos()):GetNormalized()) > math.cos(math.rad(60))) && dist > 600 then
+			if set != 1 then
+				self.AnimTbl_Run = {ACT_WALK}
+				self.AnimationSet = 1
+			end
 		else
-			self.AnimTbl_Run = {ACT_RUN}
+			if set != 0 then
+				self.AnimTbl_Run = {ACT_RUN}
+				self.AnimationSet = 0
+			end
 		end
 	else
-		self.AnimTbl_Run = {ACT_RUN}
+		if set != 0 then
+			self.AnimTbl_Run = {ACT_RUN}
+			self.AnimationSet = 0
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
+	if self:GetBodygroup(0) == 1 then
+		return false
+	end
+
+	VJ_CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
+	local dmgtype = dmginfo:GetDamageType()
+	if hitgroup == HITGROUP_HEAD then
+		ent:SetBodygroup(0,1)
+		self:CreateExtraDeathCorpse(
+			"prop_ragdoll",
+			"models/headcrabclassic.mdl",
+			{Pos=self:EyePos()},
+			function(crab)
+				crab:SetMaterial("models/hl_resurgence/hl2b/headcrab/headcrabsheet")
+			end
+		)
+	else
+		if math.random(1,(dmgtype == DMG_CLUB or dmgtype == DMG_SLASH or DMG_BLAST) && 1 or 3) == 1 then
+			ent:SetBodygroup(0,1)
+			local crab = ents.Create("npc_vj_hlr2b_headcrab")
+			local enemy = self:GetEnemy()
+			crab:SetPos(self:EyePos())
+			crab:SetAngles(self:GetAngles())
+			crab:Spawn()
+			crab:SetGroundEntity(NULL) -- This fixes that issue where they snap to the ground when spawned
+			crab:SetLocalVelocity(self:GetVelocity() *dmginfo:GetDamageForce():Length())
+			if ent:IsOnFire() then
+				crab:Ignite(math.random(8,10))
+			end
+			undo.ReplaceEntity(self,crab)
+		end
 	end
 end

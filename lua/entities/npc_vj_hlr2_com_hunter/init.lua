@@ -159,16 +159,24 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:FireFlechette()
 	if self.Shots < 12 then
-		local proj = ents.Create("hunter_flechette")
+		local proj = ents.Create("obj_vj_hlr2_flechette")
 		proj:SetPos(self:GetAttachment(self.CurrentEye).Pos)
 		proj:SetAngles((self.LastSawEnemyPosition -self:GetAttachment(self.CurrentEye).Pos):Angle())
 		proj:Spawn()
 		proj:Activate()
 		proj:SetOwner(self)
 		proj:SetPhysicsAttacker(self)
-		proj:SetVelocity(self:RangeAttackCode_GetShootPos(proj))
+		local phys = proj:GetPhysicsObject()
+		if IsValid(phys) then
+			local vel = self:RangeAttackCode_GetShootPos(proj)
+			phys:Wake()
+			phys:SetVelocity(vel)
+			proj:SetAngles(vel:GetNormal():Angle())
+		end
+
 		VJ_EmitSound(self,"npc/ministrider/ministrider_fire1.wav",105,100)
 		ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,self.CurrentEye)
+	
 		local FireLight1 = ents.Create("light_dynamic")
 		FireLight1:SetKeyValue("brightness", "4")
 		FireLight1:SetKeyValue("distance", "120")
@@ -181,16 +189,13 @@ function ENT:FireFlechette()
 		FireLight1:Fire("TurnOn","",0)
 		FireLight1:Fire("Kill","",0.07)
 		self:DeleteOnRemove(FireLight1)
-		self:SetEye()
+
+		if self.CurrentEye == 4 then
+			self.CurrentEye = 5
+		else
+			self.CurrentEye = 4
+		end
 		self.Shots = self.Shots +1
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:SetEye()
-	if self.CurrentEye == 4 then
-		self.CurrentEye = 5
-	else
-		self.CurrentEye = 4
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -230,22 +235,23 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	self.HasMeleeAttack = !self.DoRangeAttack
+	local enemy = self:GetEnemy()
 	if !self.VJ_IsBeingControlled then
 		if CurTime() > self.NextRangeT && !self.DoRangeAttack then
-			if IsValid(self:GetEnemy()) then
-				if self:GetEnemy():Visible(self) then
-					self.LastSawEnemy = self:GetEnemy()
+			if IsValid(enemy) then
+				if enemy:Visible(self) then
+					self.LastSawEnemy = enemy
 				end
-				local dist = self:GetEnemy():GetPos():Distance(self:GetPos())
-				if dist <= 3000 && dist > 175 && self.LastSawEnemy == self:GetEnemy() && self.LastSawEnemyPosition != nil && self:VisibleVec(self.LastSawEnemyPosition)/*self:GetEnemy():Visible(self)*/ then
+				local dist = enemy:GetPos():Distance(self:GetPos())
+				if dist <= 3000 && dist > 175 && self.LastSawEnemy == enemy && self.LastSawEnemyPosition != nil && self:VisibleVec(self.LastSawEnemyPosition)/*enemy:Visible(self)*/ then
 					self.Shots = 0
 					self.DoRangeAttack = true
 				end
 			end
 		end
-		if IsValid(self:GetEnemy()) && self:GetEnemy():Visible(self) then
-			self.LastSawEnemyPosition = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()
-			local dist = self:GetEnemy():GetPos():Distance(self:GetPos())
+		if IsValid(enemy) && enemy:Visible(self) then
+			self.LastSawEnemyPosition = enemy:GetPos() +enemy:OBBCenter()
+			local dist = enemy:GetPos():Distance(self:GetPos())
 			self.DisableChasingEnemy = dist < 3000 && dist > 400
 			if CurTime() > self.NextRandMoveT && !self.DoRangeAttack && self.DisableChasingEnemy == true then
 				local checkdist = self:VJ_CheckAllFourSides(400)
@@ -266,9 +272,9 @@ function ENT:CustomOnThink()
 			self.DisableChasingEnemy = false
 		end
 	else
-		if IsValid(self:GetEnemy()) then
-			self.LastSawEnemy = self:GetEnemy()
-			self.LastSawEnemyPosition = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()
+		if IsValid(enemy) then
+			self.LastSawEnemy = enemy
+			self.LastSawEnemyPosition = enemy:GetPos() +enemy:OBBCenter()
 		end
 		if self.VJ_TheController:KeyDown(IN_ATTACK2) then
 			if CurTime() > self.NextRangeT && !self.DoRangeAttack then
@@ -283,16 +289,28 @@ function ENT:CustomOnThink()
 			self.NextRangeT = CurTime() +math.Rand(3,6)
 			self.DoRangeAttack = false
 			self.IsPlanted = false
+			self.AnimTbl_IdleStand = {ACT_IDLE}
+			self.NextIdleStandTime = 0
+			self:VJ_TASK_IDLE_STAND()
+			self:SetState()
 			return
 		end
-		if !self.IsPlanted && self:GetSequenceName(self:GetSequence()) != "plant" then
-			self:VJ_ACT_PLAYACTIVITY("vjseq_plant",true,false,true)
-			timer.Simple(self:SequenceDuration(self:LookupSequence("plant")),function() if IsValid(self) then self.IsPlanted = true end end)
+		if !self.IsPlanted && !self:IsBusy() then
+			self:VJ_ACT_PLAYACTIVITY("vjseq_plant",true,false,true, 0, {OnFinish=function(interrupted, anim)
+				if interrupted then
+					return
+				end
+				self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
+				self.AnimTbl_IdleStand = {ACT_RANGE_ATTACK2}
+				self.NextIdleStandTime = 0
+				self:VJ_TASK_IDLE_STAND()
+				self.IsPlanted = true
+			end})
 		end
-		if self.IsPlanted && CurTime() > self.NextShootAnimT then
-			self:VJ_ACT_PLAYACTIVITY(ACT_GESTURE_RANGE_ATTACK2,true,false,true)
-			self.NextShootAnimT = CurTime() +self:SequenceDuration(self:LookupSequence("shoot_unplanted")) -0.1
-		end
+		-- if self.IsPlanted && CurTime() > self.NextShootAnimT then
+		-- 	self:VJ_ACT_PLAYACTIVITY(ACT_GESTURE_RANGE_ATTACK2,true,false,true)
+		-- 	self.NextShootAnimT = CurTime() +self:SequenceDuration(self:LookupSequence("shoot_unplanted")) -0.1
+		-- end
 		if self.IsPlanted && CurTime() > self.NextShootT then
 			self:FireFlechette()
 			self.NextShootT = CurTime() +0.08

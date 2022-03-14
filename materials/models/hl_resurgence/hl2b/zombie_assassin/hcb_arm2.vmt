@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl_resurgence/hl2b/zombie_assassin/hcb_arm2"
+	"$bumpmap" "models/hl_resurgence/hl2b/zombie_assassin/hcb_arm_normal"
+//	//"$envmap" "environment maps/specular"
+	//"$envmap" "env_cubemap"
+	//"$envmaptint" "[.9 .9 .9]"
+	//"$envmapsaturation" .75
+	//"$envmapcontrast" 1
+}

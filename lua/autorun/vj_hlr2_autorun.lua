@@ -57,8 +57,8 @@ if VJExists == true then
 		VJ.AddNPC("Overwatch Assassin","npc_vj_hlr2b_com_assassin",vCat)
 		VJ.AddNPC("Overwatch Stalker","npc_vj_hlr2_com_stalker",vCat)
 		-- VJ.AddNPC("Overwatch Manhack","npc_vj_hlr2_com_manhack",vCat)
-		-- VJ.AddNPC("Overwatch City Scanner","npc_vj_hlr2_com_scanner_city",vCat)
-		-- VJ.AddNPC("Overwatch Shield Scanner","npc_vj_hlr2_com_scanner_shield",vCat)
+		VJ.AddNPC("Overwatch City Scanner","npc_vj_hlr2_com_scanner_city",vCat)
+		VJ.AddNPC("Overwatch Shield Scanner","npc_vj_hlr2_com_scanner_shield",vCat)
 		VJ.AddNPC("Overwatch Hunter Synth","npc_vj_hlr2_com_hunter",vCat)
 		VJ.AddNPC("Overwatch APC","npc_vj_hlr2_com_apc",vCat)
 		VJ.AddNPC("Overwatch Strider Synth","npc_vj_hlr2_com_strider",vCat)
@@ -110,6 +110,7 @@ if VJExists == true then
 			VJ.AddNPC("Hydra","npc_vj_hlr2b_hydra",vCat)
 			VJ.AddNPC("Bullsquid","npc_vj_hlr2b_bullsquid",vCat)
 			VJ.AddNPC("Houndeye","npc_vj_hlr2b_houndeye",vCat)
+			VJ.AddNPC("Ichthyosaur","npc_vj_hlr2_ichthyosaur",vCat)
 			-- VJ.AddCeilingNPC("Barnacle","npc_vj_hlr2_barnacle",vCat)
 			-- VJ.AddNPC("Sand Barnacle","npc_vj_hlr2b_barnacle_sand",vCat)
 	
@@ -118,9 +119,9 @@ if VJExists == true then
 	VJ.AddParticle("particles/aurora.pcf",{})
 	VJ.AddParticle("particles/advisor.pcf",{})
 	VJ.AddParticle("particles/advisor_fx.pcf",{})
-	VJ.AddParticle("particles/hunter_flechette.pcf",{})
-	VJ.AddParticle("particles/hunter_projectile.pcf",{})
-	VJ.AddParticle("particles/hunter_shield_impact.pcf",{})
+	VJ.AddParticle("particles/vj_hlr_flechette.pcf",{})
+	VJ.AddParticle("particles/vj_hlr_flechette_projectile.pcf",{"hunter_flechette_trail","hunter_projectile_explosion_1"})
+	VJ.AddParticle("particles/vj_hlr_hunter_shield.pcf",{"vj_hlr_huntershield_impact1"})
 	VJ.AddParticle("particles/warpshield.pcf",{})
 	
 -- !!!!!! DON'T TOUCH ANYTHING BELOW THIS !!!!!! -------------------------------------------------------------------------------------------------------------------------
