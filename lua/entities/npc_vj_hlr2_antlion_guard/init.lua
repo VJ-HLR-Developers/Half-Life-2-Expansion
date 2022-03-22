@@ -19,10 +19,6 @@ ENT.MeleeAttackDamageDistance = 150 -- How far does the damage go?
 ENT.MeleeAttackDamage = 15
 ENT.MeleeAttackDamageType = DMG_CRUSH
 ENT.HasMeleeAttackKnockBack = true -- If true, it will cause a knockback to its enemy
-ENT.MeleeAttackKnockBack_Forward1 = 400 -- How far it will push you forward | First in math.random
-ENT.MeleeAttackKnockBack_Forward2 = 500 -- How far it will push you forward | Second in math.random
-ENT.MeleeAttackKnockBack_Up1 = 300 -- How far it will push you up | First in math.random
-ENT.MeleeAttackKnockBack_Up2 = 300 -- How far it will push you up | Second in math.random
 ENT.Immune_Physics = true
 ENT.FootStepTimeRun = 0.21 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.3 -- Next foot step sound when it is walking
@@ -273,6 +269,10 @@ function ENT:CreateAntlion(pos)
 	ParticleEffect("strider_impale_ground",antlion:GetPos(),antlion:GetAngles(),antlion)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:MeleeAttackKnockbackVelocity(hitEnt)
+	return self:GetForward()*math.random(400, 500) + self:GetUp()*300
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if dmginfo:IsBulletDamage() then
 		dmginfo:SetDamage(math.random(1,2))
@@ -311,7 +311,7 @@ function ENT:CustomOnThink_AIEnabled()
 					dmginfo:SetInflictor(self)
 					v:TakeDamageInfo(dmginfo,self,self)
 					v:SetGroundEntity(NULL)
-					v:SetVelocity(self:GetForward() *math.random(self.MeleeAttackKnockBack_Forward1, self.MeleeAttackKnockBack_Forward2) *2 + self:GetUp()*math.random(self.MeleeAttackKnockBack_Up1, self.MeleeAttackKnockBack_Up2) *2 + self:GetRight()*math.random(self.MeleeAttackKnockBack_Right1, self.MeleeAttackKnockBack_Right2) *2)
+					v:SetVelocity(self:GetForward() *math.random(400, 500) *2)
 
 					local gesture = self:AddGestureSequence(self:LookupSequence("charge_hit"))
 					self:SetLayerPriority(gesture,1)

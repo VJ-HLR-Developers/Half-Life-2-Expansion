@@ -21,10 +21,6 @@ ENT.TimeUntilMeleeAttackDamage = 0.1 -- This counted in seconds | This calculate
 ENT.MeleeAttackDistance = 75 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 170 -- How far does the damage go?
 ENT.HasMeleeAttackKnockBack = true
-ENT.MeleeAttackKnockBack_Forward1 = 800 -- How far it will push you forward | First in math.random
-ENT.MeleeAttackKnockBack_Forward2 = 800 -- How far it will push you forward | Second in math.random
-ENT.MeleeAttackKnockBack_Up1 = 150 -- How far it will push you up | First in math.random
-ENT.MeleeAttackKnockBack_Up2 = 150 -- How far it will push you up | Second in math.random
 ENT.MeleeAttackBleedEnemy = true
 ENT.MeleeAttackBleedEnemyChance = 1
 ENT.MeleeAttackBleedEnemyDamage = 3
@@ -89,6 +85,10 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(projectile)
 	return self:CalculateProjectile("Line",self:GetPos(),self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),self.RPG_Speed)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:MeleeAttackKnockbackVelocity(hitEnt)
+	return self:GetForward()*800 + self:GetUp()*150
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomRangeAttackCode()
@@ -166,8 +166,4 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 			dmginfo:SetDamage(1)
 		end
 	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
-
 end
