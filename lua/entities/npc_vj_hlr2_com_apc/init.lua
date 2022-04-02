@@ -94,7 +94,6 @@ ENT.SoundTbl_OnPlayerSight = {
 	"npc/overwatch/radiovoice/fugitive17f.wav",
 	"npc/overwatch/radiovoice/highpriorityregion.wav",
 }
-ENT.SoundTbl_OnGrenadeSight = {}
 ENT.SoundTbl_OnKilledEnemy = {
 	"npc/overwatch/radiovoice/finalverdictadministered.wav",
 	"npc/overwatch/radiovoice/sociostabilizationrestored.wav",
