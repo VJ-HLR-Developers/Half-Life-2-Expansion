@@ -133,7 +133,6 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	local animSet = self.AnimationSet
-	local follow = self.FollowingPlayer
 	if self.WasThrown then
 		if self:IsOnGround() then
 			self.WasThrown = false
@@ -145,7 +144,7 @@ function ENT:CustomOnThink()
 		end
 	end
 	if self.VJ_IsBeingControlled == false then
-		if !follow then
+		if !self.IsFollowing then
 			if animSet != 0 then
 				self.AnimTbl_Run = {ACT_RUN}
 				self.AnimTbl_Walk = {ACT_RUN}
