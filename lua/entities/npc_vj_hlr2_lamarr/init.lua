@@ -45,7 +45,7 @@ function ENT:CustomOnThink_AIEnabled()
 		elseif CurTime() > self.Headcrab_WakeUpT then
 			self.Headcrab_Sleeping = false
 			self.Headcrab_NextSleepT = CurTime() + math.Rand(15, 45)
-			self.SightDistance = 10000
+			self:SetSightDistance(10000)
 			self.SightAngle = 80
 		end
 		return
@@ -58,7 +58,7 @@ function ENT:CustomOnThink_AIEnabled()
 		self.Headcrab_Sleeping = true
 		self.Headcrab_WakeUpT = CurTime() +math.Rand(15, 30)
 		self:SetState(VJ_STATE_ONLY_ANIMATION)
-		self.SightDistance = 325
+		self:SetSightDistance(325)
 		self.SightAngle = 180
 	end
 end

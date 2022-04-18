@@ -62,7 +62,7 @@ function ENT:SetSlump(doSlump)
 		})
 		self.SlumpSet = tr.Hit && "a" or "b"
 		self.AnimTbl_IdleStand = {VJ_SequenceToActivity(self,"slump_" .. self.SlumpSet)}
-		self.SightDistance = 150
+		self:SetSightDistance(150)
 		self.SightAngle = 180
 		self:AddFlags(FL_NOTARGET)
 	else
@@ -71,7 +71,7 @@ function ENT:SetSlump(doSlump)
 		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. self.SlumpSet, true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
-		self.SightDistance = 10000
+		self:SetSightDistance(10000)
 		self.SightAngle = 80
 		self:RemoveFlags(FL_NOTARGET)
 	end

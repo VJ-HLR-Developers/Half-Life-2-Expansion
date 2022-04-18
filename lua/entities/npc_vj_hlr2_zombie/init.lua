@@ -49,6 +49,11 @@ ENT.SoundTbl_Pain = {"npc/zombie/zombie_pain1.wav","npc/zombie/zombie_pain2.wav"
 ENT.SoundTbl_DeathFollow = {"npc/zombie/zombie_die1.wav","npc/zombie/zombie_die2.wav","npc/zombie/zombie_die3.wav"}
 
 ENT.Zombie_AnimationSet = 0 -- 0 = Default, 1 = Fire
+local sdInterests = bit.bor(SOUND_COMBAT, SOUND_DANGER, SOUND_BULLET_IMPACT, SOUND_PHYSICS_DANGER, SOUND_MOVE_AWAY)
+function ENT:GetSoundInterests()
+	return sdInterests
+end
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetSlump(doSlump)
 	if doSlump then
@@ -63,7 +68,7 @@ function ENT:SetSlump(doSlump)
 		})
 		self.SlumpSet = tr.Hit && "a" or "b"
 		self.AnimTbl_IdleStand = {VJ_SequenceToActivity(self,"slump_" .. self.SlumpSet)}
-		self.SightDistance = 150
+		self:SetSightDistance(150)
 		self.SightAngle = 180
 		self:AddFlags(FL_NOTARGET)
 	else
@@ -72,7 +77,7 @@ function ENT:SetSlump(doSlump)
 		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. self.SlumpSet, true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
-		self.SightDistance = 10000
+		self:SetSightDistance(10000)
 		self.SightAngle = 80
 		self:RemoveFlags(FL_NOTARGET)
 	end
