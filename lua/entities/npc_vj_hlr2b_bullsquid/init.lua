@@ -8,7 +8,7 @@ include('shared.lua')
 ENT.Model = {"models/vj_hlr/hl2b/bullsquid.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.VJ_NPC_Class = {"CLASS_XEN"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.CustomBlood_Particle = {"vj_hl_blood_yellow"}
+ENT.CustomBlood_Particle = {"vj_hlr_blood_yellow"}
 ENT.MeleeAttackDamage = 20
 ENT.TimeUntilRangeAttackProjectileRelease = 0.8
 ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_antlionspit" -- The entity that is spawned when range attacking
