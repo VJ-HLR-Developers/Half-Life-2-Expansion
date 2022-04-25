@@ -150,13 +150,6 @@ function ENT:CustomOnInitialize()
 	self.NextRandMoveT = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_BeforeImmuneChecks(dmginfo, hitgroup)
-	local a = dmginfo:GetAttacker()
-	if IsValid(a) && a:GetClass() == self:GetClass() then
-		dmginfo:SetDamage(0)
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:FireFlechette()
 	if self.Shots < 12 then
 		local proj = ents.Create("obj_vj_hlr2_flechette")

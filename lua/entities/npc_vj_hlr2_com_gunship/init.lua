@@ -289,7 +289,8 @@ function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
 		if GetConVar("ai_serverragdolls"):GetInt() == 1 then
 			undo.ReplaceEntity(self, self.Corpse)
 		else
-			hook.Call("VJ_CreateSNPCCorpse", nil, self.Corpse, self)
+			VJ_AddCorpse(self.Corpse)
+			//hook.Call("VJ_CreateSNPCCorpse", nil, self.Corpse, self)
 			if GetConVar("vj_npc_undocorpse"):GetInt() == 1 then undo.ReplaceEntity(self, self.Corpse) end -- Undoable
 		end
 		cleanup.ReplaceEntity(self, self.Corpse)
