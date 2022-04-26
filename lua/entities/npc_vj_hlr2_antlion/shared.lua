@@ -8,12 +8,3 @@ ENT.Instructions 	= "Click on the spawnicon to spawn it."
 ENT.Category		= "Half-Life 2"
 
 ENT.VJ_HLR_Antlion = true
-
-if (CLIENT) then
-local Name = "Antlion"
-local LangName = "npc_vj_hlr2_antlion"
-language.Add(LangName, Name)
-killicon.Add(LangName,"HUD/killicons/default",Color(255,80,0,255))
-language.Add("#"..LangName, Name)
-killicon.Add("#"..LangName,"HUD/killicons/default",Color(255,80,0,255))
-end
