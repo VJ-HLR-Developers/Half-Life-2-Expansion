@@ -95,7 +95,7 @@ function ENT:CustomOnThink()
 		else
 			self:SetState()
 			self:SetTarget(freeman)
-			self:VJ_TASK_GOTO_TARGET("TASK_WALK_PATH", function(y) y.ConstantlyFaceEnemy = true end) 
+			self:VJ_TASK_GOTO_TARGET("TASK_WALK_PATH", function(y) y.ConstantlyFaceEnemy = true end)
 		end
 	else
 		if self:GetState() == VJ_STATE_ONLY_ANIMATION then
