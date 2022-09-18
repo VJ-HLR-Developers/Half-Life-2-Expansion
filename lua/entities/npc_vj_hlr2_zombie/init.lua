@@ -49,11 +49,6 @@ ENT.SoundTbl_Pain = {"npc/zombie/zombie_pain1.wav","npc/zombie/zombie_pain2.wav"
 ENT.SoundTbl_DeathFollow = {"npc/zombie/zombie_die1.wav","npc/zombie/zombie_die2.wav","npc/zombie/zombie_die3.wav"}
 
 ENT.Zombie_AnimationSet = 0 -- 0 = Default, 1 = Fire
-local sdInterests = bit.bor(SOUND_COMBAT, SOUND_DANGER, SOUND_BULLET_IMPACT, SOUND_PHYSICS_DANGER, SOUND_MOVE_AWAY)
-function ENT:GetSoundInterests()
-	return sdInterests
-end
-
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetSlump(doSlump)
 	if doSlump then
