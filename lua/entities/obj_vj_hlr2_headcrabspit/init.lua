@@ -22,6 +22,10 @@ function ENT:CustomPhysicsObjectOnInitialize(phys)
 	ParticleEffectAttach("antlion_spit_trail",PATTACH_ABSORIGIN_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnThink()
+	sound.EmitHint(SOUND_DANGER, self:GetPos() +self:GetVelocity(), self.RadiusDamageRadius, 1, self)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDoDamage(data, phys, hitEnt)
 	for _,v in pairs(hitEnt) do
 		if v:IsNPC() or v:IsPlayer() then

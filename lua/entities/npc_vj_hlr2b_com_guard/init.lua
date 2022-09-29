@@ -273,6 +273,16 @@ function ENT:StartWarpCannon(doLastPos)
 	pinch:Activate()
 	pinch:Fire("Kill","",SoundDuration("npc/strider/charging.wav") +1)
 
+	local target = self:GetEnemy()
+	local targetPos = self:GetPos() +self:GetForward() *800
+	if IsValid(target) then
+		targetPos = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()
+	end
+	if doLastPos then
+		targetPos = self.LastSawEnemyPosition != nil && self.LastSawEnemyPosition or self:GetPos() +self:GetForward() *800
+	end
+	sound.EmitHint(SOUND_DANGER, targetPos, 500, 1, self)
+
 	timer.Simple(0.5,function()
 		if IsValid(self) then
 			local target = self:GetEnemy()

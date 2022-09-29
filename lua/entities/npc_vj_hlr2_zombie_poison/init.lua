@@ -121,6 +121,8 @@ function ENT:ThrowHeadcrab(pos)
 	self:SetBodygroup(1 +current,0)
 	self.Headcrabs = current -1
 
+	sound.EmitHint(SOUND_DANGER, pos, 250, 1, self)
+
 	local att = self:GetAttachment(self:LookupAttachment("headcrab" .. 1 +current))
 	local p = ents.Create(self.HeadcrabClass)
 	p:SetPos(att.Pos)
@@ -177,6 +179,7 @@ function ENT:CustomAttack()
 			self:VJ_ACT_PLAYACTIVITY("headcrab2Leap",true,false,true)
 		else
 			VJ_CreateSound(self,self.SoundTbl_Warn,80)
+			sound.EmitHint(SOUND_DANGER, ent:GetPos(), 250, 1, self)
 			self:VJ_ACT_PLAYACTIVITY("ThrowWarning",true,false,true, 0, {OnFinish=function(interrupted, anim)
 				if interrupted then
 					return

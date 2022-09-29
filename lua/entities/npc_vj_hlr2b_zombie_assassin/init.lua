@@ -28,28 +28,44 @@ ENT.MeleeAttackDamageDistance = 75
 ENT.TimeUntilMeleeAttackDamage = false
 
 ENT.SoundTbl_FootStep = {
-	"physics/flesh/flesh_impact_hard1.wav",
-	"physics/flesh/flesh_impact_hard2.wav",
-	"physics/flesh/flesh_impact_hard3.wav",
-	"physics/flesh/flesh_impact_hard4.wav",
-	"physics/flesh/flesh_impact_hard5.wav",
-	"physics/flesh/flesh_impact_hard6.wav",
+	"physics/flesh/flesh_squishy_impact_hard1.wav",
+	"physics/flesh/flesh_squishy_impact_hard2.wav",
+	"physics/flesh/flesh_squishy_impact_hard3.wav",
+	"physics/flesh/flesh_squishy_impact_hard4.wav",
 }
 ENT.SoundTbl_FootStep_Run = {"physics/flesh/flesh_strider_impact_bullet1.wav","physics/flesh/flesh_strider_impact_bullet2.wav"}
 ENT.SoundTbl_Breath = {"npc/zombie_poison/pz_breathe_loop1.wav"}
+ENT.SoundTbl_Idle = {"npc/barnacle/barnacle_gulp1.wav","npc/barnacle/barnacle_gulp2.wav","^ambient/creatures/town_moan1.wav"}
+ENT.SoundTbl_Alert = {"npc/barnacle/barnacle_pull1.wav","npc/barnacle/barnacle_pull2.wav","npc/barnacle/barnacle_pull3.wav","npc/barnacle/barnacle_pull4.wav"}
 ENT.SoundTbl_BeforeMeleeAttack = {"npc/zombie_poison/pz_warn1.wav","npc/zombie_poison/pz_warn2.wav"}
-ENT.SoundTbl_Pain = {"npc/barnacle/barnacle_pull1.wav","npc/barnacle/barnacle_pull2.wav","npc/barnacle/barnacle_pull3.wav","npc/barnacle/barnacle_pull4.wav"}
-ENT.SoundTbl_Death = {"npc/zombie_poison/pz_die2.wav"}
+ENT.SoundTbl_Pain = {"npc/zombie/zombie_pain1.wav","npc/zombie/zombie_pain2.wav","npc/zombie/zombie_pain3.wav","npc/zombie/zombie_pain4.wav","npc/zombie/zombie_pain5.wav","npc/zombie/zombie_pain6.wav"}
+ENT.SoundTbl_Death = {"npc/zombie/zombie_die1.wav","npc/zombie/zombie_die2.wav","npc/zombie/zombie_die3.wav"}
 ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_strike2.wav","npc/zombie/claw_strike3.wav"}
 ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav","npc/zombie/claw_miss2.wav"}
+ENT.SoundTbl_Investigate = {
+	"ambient/voices/citizen_beaten3.wav",
+	"ambient/voices/citizen_beaten4.wav",
+	"ambient/voices/m_scream1.wav",
+	"vo/npc/male01/help01.wav",
+	"vo/npc/male01/moan01.wav",
+	"vo/npc/male01/moan03.wav",
+	"vo/npc/male01/overhere01.wav",
+	"vo/npc/male01/gordead_ans06.wav",
+	"vo/npc/male01/gordead_ans19.wav",
+}
 
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 ENT.BreathSoundLevel = 45
-ENT.GeneralSoundPitch1 = 130
-ENT.GeneralSoundPitch2 = 150
+ENT.GeneralSoundPitch1 = 75
+ENT.GeneralSoundPitch2 = 85
+ENT.InvestigateSoundPitch = VJ_Set(75, 80)
 
 ENT.AnimationSet = 0
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnInitialize()
+	self.NextScreamT = 0
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "step" then
@@ -67,6 +83,21 @@ function ENT:CustomOnThink_AIEnabled()
 	local enemy = self:GetEnemy()
 	if IsValid(enemy) && !controlled then
 		local dist = self.NearestPointToEnemyDistance
+		if CurTime() > self.NextScreamT && math.random(1,15) == 1 && dist < 200 then
+			VJ_CreateSound(self,"^npc/stalker/go_alert2a.wav",100,65)
+			util.ScreenShake(self:GetPos(), 10, 120, 2, 400)
+			sound.EmitHint(SOUND_DANGER, self:GetPos(), 400, 1.5, self)
+			for _,v in pairs(ents.FindInSphere(self:GetPos(), 400)) do
+				if v:IsPlayer() && self:DoRelationshipCheck(v) == true then
+					local time = ((400 /self:GetPos():Distance(v:GetPos())) -1) *1.5
+					self:VJ_DoSlowPlayer(v,70,90,time)
+					net.Start("VJ_HLR2_ZombieAssassinScream")
+						net.WriteEntity(v)
+					net.Send(v)
+				end
+			end
+			self.NextScreamT = CurTime() +math.Rand(10,25)
+		end
 		if !(enemy:GetForward():Dot((self:GetPos() -enemy:GetPos()):GetNormalized()) > math.cos(math.rad(60))) && dist > 600 then
 			if set != 1 then
 				self.AnimTbl_Run = {ACT_WALK}

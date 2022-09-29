@@ -149,6 +149,7 @@ function ENT:BarrageFire()
 	timer.Create("vj_timer_fire_" .. self:EntIndex(),0.1,50,function()
 		if IsValid(self:GetEnemy()) && !self.Dead then
 			if bomb then timer.Remove("vj_timer_fire_" .. self:EntIndex()) return end
+			sound.EmitHint(SOUND_DANGER, self:GetEnemy():GetPos(), 250, 0.25, self)
 			for i = 1,3 do
 				local att = self:GetAttachment(2)
 				local bullet = {}

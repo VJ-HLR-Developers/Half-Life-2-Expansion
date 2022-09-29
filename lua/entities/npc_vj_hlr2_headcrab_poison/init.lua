@@ -233,6 +233,14 @@ function ENT:DoPoisonHeadcrabDamage(v)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnLeapAttack_AfterStartTimer(seed)
+	local pos = self:GetPos()
+	if IsValid(self:GetEnemy()) then
+		pos = self:GetEnemy():GetPos()
+	end
+	sound.EmitHint(SOUND_DANGER, pos, 250, 1, self)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnLeapAttack_AfterChecks(v)
 	self:DoPoisonHeadcrabDamage(v)
 end

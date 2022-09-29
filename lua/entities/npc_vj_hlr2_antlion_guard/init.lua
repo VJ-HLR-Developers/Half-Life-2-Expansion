@@ -264,6 +264,7 @@ function ENT:CreateAntlion(pos)
 	antlion:SetAngles(self:GetAngles())
 	antlion:Spawn()
 	antlion:Activate()
+	antlion.VJ_NPC_Class = self.VJ_NPC_Class
 	antlion:Dig(true)
 	ParticleEffect("advisor_plat_break",antlion:GetPos(),antlion:GetAngles(),antlion)
 	ParticleEffect("strider_impale_ground",antlion:GetPos(),antlion:GetAngles(),antlion)

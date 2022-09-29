@@ -75,6 +75,7 @@ function ENT:BarrageFire()
 		if IsValid(self:GetEnemy()) && !self.Dead then
 			i = i +1
 			local att = self:GetAttachment(1)
+			sound.EmitHint(SOUND_DANGER, self:GetEnemy():GetPos(), 250, 0.25, self)
 			local bullet = {}
 			bullet.Num = 1
 			bullet.Src = att.Pos

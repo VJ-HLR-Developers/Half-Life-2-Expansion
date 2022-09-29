@@ -39,42 +39,32 @@ ENT.SoundTbl_Pain = {"player/pl_pain5.wav","player/pl_pain6.wav","player/pl_pain
 
 ENT.GeneralSoundPitch1 = 100
 ENT.BreathSoundLevel = 40
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
-	local tbl = {
-		"weapon_vj_ar2",
-		"weapon_vj_crossbow",
-		"weapon_vj_9mmpistol",
+
+ENT.WeaponsList = {
+	["Close"] = {
 		"weapon_vj_spas12",
+		"weapon_vj_9mmpistol",
+	},
+	["Normal"] = {
 		"weapon_vj_357",
 		"weapon_vj_smg1",
-	}
-	self.WeaponInventory.Total = {}
-	if self.DisableWeapons == false then
-		timer.Simple(0.1,function()
-			if IsValid(self) then
-				local wep = self:GetActiveWeapon()
-				if IsValid(wep) then
-					for ind,v in ipairs(tbl) do
-						local wep = self:Give(v)
-						table.insert(self.WeaponInventory.Total,wep)
-					end
-				end
-			end
-		end)
-	end
-end
+		"weapon_vj_ar2",
+	},
+	["Far"] = {
+		"weapon_vj_crossbow",
+	},
+}
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnWaitForEnemyToComeOut()
-	if math.random(1,5) == 1 then
-		self:DoChangeWeapon(VJ_PICK(self.WeaponInventory.Total),true)
+function ENT:CustomOnInitialize()
+	self.NextWeaponSwitchT = CurTime() + math.Rand(2,4)
+
+	for _,category in pairs(self.WeaponsList) do
+		for _,wep in pairs(category) do
+			self:Give(wep)
+		end
 	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnWeaponReload()
-	-- if math.random(1,2) == 1 then
-		-- self:DoChangeWeapon(VJ_PICK(self.WeaponInventory.Total),true)
-	-- end
+
+	self:DoChangeWeapon(VJ_PICK(self.WeaponsList["Normal"]),true)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAlert(ent)
@@ -82,9 +72,28 @@ function ENT:CustomOnAlert(ent)
 		if ent:IsNPC() && (ent.VJTags[VJ_TAG_HEADCRAB] or ent:GetClass() == "npc_headcrab" or ent:GetClass() == "npc_headcrab_black" or ent:GetClass() == "npc_headcrab_fast") then
 			self:DoChangeWeapon("weapon_vj_crowbar",true)
 			return
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnThink_AIEnabled()
+	local ent = self:GetEnemy()
+	local dist = self.NearestPointToEnemyDistance
+	if IsValid(ent) then
+		local wep = self:GetActiveWeapon()
+		local selectType = false
+		if dist > 2200 then
+			selectType = "Far"
+		elseif dist <= 2200 && dist > 650 then
+			selectType = "Normal"
 		else
-			self:DoChangeWeapon(VJ_PICK(self.WeaponInventory.Total),true)
-			return
+			selectType = "Close"
+		end
+
+		if selectType != false && !self:IsBusy() && CurTime() > self.NextWeaponSwitchT && math.random(1,wep:Clip1() > 0 && (wep:Clip1() <= wep:GetMaxClip1() *0.35) && 1 or (selectType == "Close" && 20 or 150)) == 1 then
+			self:DoChangeWeapon(VJ_PICK(self.WeaponsList[selectType]),true)
+			wep = self:GetActiveWeapon()
+			self.NextWeaponSwitchT = CurTime() + math.Rand(6,math.Round(math.Clamp(wep:Clip1() *0.5,1,wep:Clip1())))
 		end
 	end
 end
@@ -131,10 +140,10 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnKilled(dmginfo, hitgroup)
-	for _,v in pairs(self.WeaponInventory.Total) do
-		if IsValid(v) && v != self:GetActiveWeapon() then
-			local e = ents.Create(v:GetClass())
-			e:SetPos(self:GetPos() + self:OBBCenter())
+	for _,category in pairs(self.WeaponsList) do
+		for _,wep in pairs(category) do
+			local e = ents.Create(wep)
+			e:SetPos(self:GetPos() + self:OBBCenter() +VectorRand(-30,30))
 			e:SetAngles(self:GetAngles())
 			e:Spawn()
 			local phys = e:GetPhysicsObject()

@@ -119,6 +119,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:FireBullet()
 	local spread = 60
+	sound.EmitHint(SOUND_DANGER, self:GetEnemy():GetPos(), 250, 0.25, self)
 	for i = 1,3 do
 		local ent = self:CreateFakeBullet("Muzzle1")
 		VJ_EmitSound(ent,{"weapons/airboat/airboat_gun_energy1.wav","weapons/airboat/airboat_gun_energy2.wav"},95)

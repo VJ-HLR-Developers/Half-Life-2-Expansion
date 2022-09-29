@@ -26,6 +26,10 @@ function ENT:CustomOnInitialize()
 	ParticleEffect("antlion_spit",self:GetPos(),Angle(0,0,0),nil)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnThink()
+	sound.EmitHint(SOUND_DANGER, self:GetPos() +self:GetVelocity(), self.RadiusDamageRadius, 1, self)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DeathEffects(data, phys)
 	ParticleEffect("antlion_spit",data.HitPos,Angle(0,0,0),nil)
 	ParticleEffect("antlion_gib_01",data.HitPos,Angle(0,0,0),nil)
