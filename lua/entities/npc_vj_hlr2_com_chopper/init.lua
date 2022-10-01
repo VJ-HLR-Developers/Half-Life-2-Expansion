@@ -74,14 +74,14 @@ ENT.NoChaseAfterCertainRange_Type = "Regular" -- "Regular" = Default behavior | 
 -- Leave blank if you don"t want any sounds to play
 ENT.SoundTbl_Alert = {"npc/attack_helicopter/aheli_megabomb_siren1.wav"}
 ENT.SoundTbl_Pain = {"npc/attack_helicopter/aheli_damaged_alarm1.wav"}
-ENT.SoundTbl_Death = {"npc/attack_helicopter/aheli_crash_alert2.wav"}
+-- ENT.SoundTbl_Death = {"npc/attack_helicopter/aheli_crash_alert2.wav"}
 
 ENT.AlertSoundLevel = 150
 ENT.PainSoundLevel = 150
 ENT.DeathSoundLevel = 150
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(projectile)
-	return self:CalculateProjectile("Line",self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos,self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),0)
+	return self:CalculateProjectile("Line",self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos,self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),500)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
