@@ -193,7 +193,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDropWeapon_AfterWeaponSpawned(dmginfo, hitgroup, wepEnt)
 	wepEnt:Remove()
-	for i = 1,2 do
+	for i = 1, 2 do
 		local att = self:GetAttachment(2 +i)
 		local pistol = ents.Create("weapon_vj_9mmpistol")
 		pistol:SetPos(att.Pos)

@@ -142,7 +142,7 @@ function ENT:CustomOnInitialize()
 
 	timer.Simple(0,function()
 		self:SetPos(self:GetPos() +self:GetUp() *54)
-		for i = 1,2 do
+		for i = 1, 2 do
 			local t = ents.Create("npc_vj_hlr2_com_ionturret")
 			t:SetPos(self:GetPos() +self:GetRight() *(i == 1 && -24 or 24) +self:GetForward() *4 +Vector(0,0,1))
 			t:SetAngles(self:GetAngles() +Angle(0,i == 1 && 40 or -40,0))

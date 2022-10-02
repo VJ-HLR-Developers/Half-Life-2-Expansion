@@ -14,7 +14,7 @@ if CLIENT then
     function ENT:CustomOnDraw()
 
         render.SetMaterial(mat)
-        for i = 1,2 do
+        for i = 1, 2 do
             local att = self:GetAttachment(self:LookupAttachment(i == 2 && "bottom_eye" or "top_eye"))
             local glowOrigin = att.Pos +att.Ang:Forward() *-5
             render.DrawSprite(glowOrigin, size, size, col)
