@@ -207,27 +207,35 @@ function ENT:CustomAttack()
 		self.NextChaseTime = CurTime() +1
 	end
 	self.HasRangeAttack = !self.CarpetBombing
-	if IsValid(self:GetEnemy()) then
+	local ent = self:GetEnemy()
+	if IsValid(ent) then
 		local dist = self.NearestPointToEnemyDistance
 		if self:Health() <= self:GetMaxHealth() *0.5 then
 			if !self.CarpetBombing && CurTime() > self.NextCarpetBombT then
 				self.CarpetBombing = true
-				self.CarpetBombPos = self:GetEnemy():GetPos() +self:GetEnemy():GetForward() *-6000
-
-				self:AA_MoveTo(self.CarpetBombPos,false,"Alert",{FaceDest=true,IgnoreGround=true})
-				local t = self.AA_CurrentMoveTime -CurTime() or 10
-
-				self.NextFireT = CurTime() +t
-				timer.Simple(t,function()
-					if IsValid(self) then
-						self.CarpetBombing = false
-					end
-				end)
-				self.NextCarpetBombT = CurTime() +math.Rand(20,30) +t
+				local entPos = ent:GetPos()
+				entPos.z = self:GetPos().z
+				local tr = util.TraceHull({
+					start = self:GetPos(),
+					endpos = self:GetPos() +(entPos - self:GetPos()):GetNormalized() *7500,
+					filter = self,
+					mins = self:OBBMins(),
+					maxs = self:OBBMaxs(),
+				})
+				self.CarpetBombPos = tr.HitPos +tr.HitNormal *100
+				self.NextCarpetBombT = CurTime() +9999
 			end
 			if self.CarpetBombing then
+				self:AA_MoveTo(self.CarpetBombPos, false, "Alert", {FaceDest=true, FaceDestTarget=false, IgnoreGround=true})
+				local resMe, resPos = self:VJ_GetNearestPointToVector(self.CarpetBombPos, true)
+				if resMe:Distance(resPos) <= 100 then
+					self:AA_StopMoving()
+					self.CarpetBombing = false
+					self.NextCarpetBombT = CurTime() +math.Rand(30,60)
+					return
+				end
 				self:SetEnemy(NULL)
-				self:FaceCertainPosition(self.CarpetBombPos)
+				-- self:FaceCertainPosition(self.CarpetBombPos)
 				if CurTime() > self.NextDropCarpetT then
 					local pos = {
 						[1] = {SpawnPos=self:GetAttachment(3).Pos,Right=0},
