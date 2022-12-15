@@ -244,7 +244,7 @@ function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
 	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,deathCorpse,5)
 
 	local function Explode(ent,pos)
-		VJ_EmitSound(ent,"vj_mili_tank/tank_death2.wav",100,100)
+		VJ_EmitSound(ent,"vj_fire/explosion2.wav",100,100)
 		util.BlastDamage(ent,ent,pos,200,40)
 		util.ScreenShake(pos, 100, 200, 1, 2500)
 		ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil)

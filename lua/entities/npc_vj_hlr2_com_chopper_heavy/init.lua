@@ -316,8 +316,8 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	util.BlastDamage(self, self, corpseEnt:GetPos(), 400, 40)
 	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
 
-	VJ_EmitSound(self,"vj_mili_tank/tank_death2.wav",100,100)
-	VJ_EmitSound(self,"vj_mili_tank/tank_death3.wav",100,100)
+	VJ_EmitSound(self,"vj_fire/explosion2.wav",100,100)
+	VJ_EmitSound(self,"vj_fire/explosion3.wav",100,100)
 	util.BlastDamage(self,self,corpseEnt:GetPos(),200,40)
 	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
 	if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",corpseEnt:GetPos(),Angle(0,0,0),nil) end
