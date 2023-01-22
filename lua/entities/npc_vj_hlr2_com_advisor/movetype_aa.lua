@@ -143,7 +143,7 @@ function ENT:AA_MoveTo(Ent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AA_ChaseEnemy()
-	if self.Dead == true or (self.NextChaseTime > CurTime()) or !IsValid(self:GetEnemy()) then return end
+	if self.Dead or (self.NextChaseTime > CurTime()) or !IsValid(self:GetEnemy()) then return end
 	
 	-- self:FaceCertainEntity(self:GetEnemy(),true)
 	self:FaceCertainPosition(self:GetEnemy():GetPos())

@@ -310,7 +310,7 @@ function ENT:Tank_CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
-	if self.Dead == false then
+	if !self.Dead then
 		for _, v in pairs(self.APC_DeployedUnits) do
 			if IsValid(v) then v:Remove() end
 		end

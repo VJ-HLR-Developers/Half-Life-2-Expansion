@@ -107,7 +107,7 @@ function ENT:CustomOnThink()
 		local tpPos = self:FindTeleport()
 		local canTP = true
 		for _,v in ipairs(ents.GetAll()) do
-			if (v:IsNPC() && v != self or (v:IsPlayer() && GetConVarNumber("ai_ignoreplayers") == 0)) && !v:IsFlagSet(FL_NOTARGET) then
+			if (v:IsNPC() && v != self or (v:IsPlayer() && !VJ_CVAR_IGNOREPLAYERS)) && !v:IsFlagSet(FL_NOTARGET) then
 				-- print(v:Visible(self),v:VisibleVec(tpPos))
 				if v:Visible(self) or v:VisibleVec(tpPos) then
 					canTP = false

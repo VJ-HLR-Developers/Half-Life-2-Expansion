@@ -246,7 +246,7 @@ function ENT:CustomOnThink()
 		end
 	end
 
-	if CurTime() > self.NextScreenBlastT && math.random(1,20) == 1 && GetConVar("ai_ignoreplayers"):GetInt() == 0 then
+	if CurTime() > self.NextScreenBlastT && math.random(1,20) == 1 && !VJ_CVAR_IGNOREPLAYERS then
 		for _,v in pairs(player.GetAll()) do
 			net.Start("VJ_HLR_AdvisorScreenFX")
 				net.WriteEntity(v)
@@ -304,7 +304,7 @@ function ENT:CreateAlly()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink_AIEnabled()
-	if self.Dead == true then return end
+	if self.Dead then return end
 	for _,v in pairs(ents.FindInSphere(self:GetPos(),300)) do
 		if string.find(v:GetClass(),"rocket") or string.find(v:GetClass(),"missile") then
 			ParticleEffect("aurora_shockwave",v:GetPos(),Angle(0,0,0),nil)
@@ -315,7 +315,7 @@ function ENT:CustomOnThink_AIEnabled()
 			SafeRemoveEntity(v)
 		end
 	end
-	if IsValid(self:GetEnemy()) && CurTime() > self.NextSpawnT && ((self.VJ_IsBeingControlled == false) or (self.VJ_IsBeingControlled == true && self.VJ_TheController:KeyDown(IN_JUMP))) then
+	if IsValid(self:GetEnemy()) && CurTime() > self.NextSpawnT && ((self.VJ_IsBeingControlled == false) or (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP))) then
 		self.NextSpawnT = CurTime() +self:SpawnAlly()
 	end
 end

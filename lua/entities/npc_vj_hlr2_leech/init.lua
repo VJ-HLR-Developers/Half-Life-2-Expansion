@@ -54,7 +54,7 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
-	if self.Dead == false && self:WaterLevel() == 0 then
+	if !self.Dead && self:WaterLevel() == 0 then
 		self:TakeDamage(1,self,self)
 	end
 	if IsValid(Leech_Leader) then

@@ -45,7 +45,7 @@ function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
 			ParticleEffect("antlion_gib_02",self:GetPos(),Angle(0,0,0),nil)
 			local find = ents.FindInSphere(self:GetPos(),200)
 			for index,ent in pairs(find) do
-				if (ent:IsNPC() && ent != self && !VJ_HasValue(ent.VJ_NPC_Class,"CLASS_ANTLION")) || (ent:IsPlayer() && GetConVar("ai_ignoreplayers"):GetInt() == 0) then
+				if (ent:IsNPC() && ent != self && !VJ_HasValue(ent.VJ_NPC_Class,"CLASS_ANTLION")) || (ent:IsPlayer() && !VJ_CVAR_IGNOREPLAYERS) then
 					local dmginfo = DamageInfo()
 					dmginfo:SetDamage(55)
 					dmginfo:SetDamageType(DMG_ACID)

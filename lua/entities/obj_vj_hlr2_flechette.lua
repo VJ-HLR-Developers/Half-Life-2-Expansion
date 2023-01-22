@@ -65,7 +65,7 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
 		}
 		hitEnt = data.HitEntity
 		if IsValid(owner) then
-			if (VJ_IsProp(hitEnt)) or (hitEnt:IsNPC() && (hitEnt:Disposition(owner) == D_HT or hitEnt:Disposition(owner) == D_FR) && hitEnt:Health() > 0 && (hitEnt != owner) && (hitEnt:GetClass() != owner:GetClass())) or (hitEnt:IsPlayer() && GetConVar("ai_ignoreplayers"):GetInt() == 0 && hitEnt:Alive() && hitEnt:Health() > 0) then
+			if (VJ_IsProp(hitEnt)) or (hitEnt:IsNPC() && (hitEnt:Disposition(owner) == D_HT or hitEnt:Disposition(owner) == D_FR) && hitEnt:Health() > 0 && (hitEnt != owner) && (hitEnt:GetClass() != owner:GetClass())) or (hitEnt:IsPlayer() && !VJ_CVAR_IGNOREPLAYERS && hitEnt:Alive() && hitEnt:Health() > 0) then
 				local damagecode = DamageInfo()
 				damagecode:SetDamage(4)
 				damagecode:SetDamageType(DMG_SLASH)

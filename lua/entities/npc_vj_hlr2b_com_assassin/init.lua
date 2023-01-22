@@ -106,7 +106,7 @@ function ENT:CustomOnThink()
 		self:GetActiveWeapon():SetClip1(999)
 	end
 
-	if self.Dead == true then return end
+	if self.Dead then return end
 	local cloaklvl = math.Clamp(self.Assassin_CloakLevel *255,40,255)
 	self:SetColor(Color(255,255,255,math.Clamp(self.Assassin_CloakLevel * 255, 40, 255)))
 	self.Assassin_CloakLevel = math.Clamp(self.Assassin_CloakLevel + 0.05, 0, 1)
