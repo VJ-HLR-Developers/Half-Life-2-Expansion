@@ -88,7 +88,7 @@ function ENT:CustomOnThink_AIEnabled()
 			util.ScreenShake(self:GetPos(), 10, 120, 2, 400)
 			sound.EmitHint(SOUND_DANGER, self:GetPos(), 400, 1.5, self)
 			for _,v in pairs(ents.FindInSphere(self:GetPos(), 400)) do
-				if v:IsPlayer() && self:DoRelationshipCheck(v) == true then
+				if v:IsPlayer() && self:CheckRelationship(v) == D_HT then
 					local time = ((400 /self:GetPos():Distance(v:GetPos())) -1) *1.5
 					self:VJ_DoSlowPlayer(v,70,90,time)
 					net.Start("VJ_HLR2_ZombieAssassinScream")

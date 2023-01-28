@@ -301,8 +301,8 @@ function ENT:CustomOnThink_AIEnabled()
 		local hitEnt = NULL
 		for _,v in pairs(ents.FindInSphere(self:GetPos() +self:GetForward(),135)) do
 			if IsValid(v) && v != self && (v != self.VJ_TheController && v != self.VJ_TheControllerBullseye) then
-				-- print(v,self:DoRelationshipCheck(v))
-				if self:DoRelationshipCheck(v) then
+				-- print(v,self:CheckRelationship(v))
+				if self:CheckRelationship(v) == D_HT then
 					hitEnt = v
 					local dmginfo = DamageInfo()
 					dmginfo:SetDamage(35)
