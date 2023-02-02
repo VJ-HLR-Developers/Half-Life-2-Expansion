@@ -140,10 +140,11 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnKilled(dmginfo, hitgroup)
+	local myCenterPos = self:GetPos() + self:OBBCenter()
 	for _,category in pairs(self.WeaponsList) do
 		for _,wep in pairs(category) do
 			local e = ents.Create(wep)
-			e:SetPos(self:GetPos() + self:OBBCenter() +VectorRand(-30,30))
+			e:SetPos(myCenterPos +VectorRand(-30,30))
 			e:SetAngles(self:GetAngles())
 			e:Spawn()
 			local phys = e:GetPhysicsObject()
@@ -154,7 +155,7 @@ function ENT:CustomOnKilled(dmginfo, hitgroup)
 		end
 	end
 	local e = ents.Create(self.WeaponInventory.AntiArmor:GetClass())
-	e:SetPos(self:GetPos() + self:OBBCenter())
+	e:SetPos(myCenterPos)
 	e:SetAngles(self:GetAngles())
 	e:Spawn()
 	local phys = e:GetPhysicsObject()
@@ -163,7 +164,7 @@ function ENT:CustomOnKilled(dmginfo, hitgroup)
 		phys:ApplyForceCenter(dmginfo:GetDamageForce())
 	end
 	local e = ents.Create(self.WeaponInventory.Melee:GetClass())
-	e:SetPos(self:GetPos() + self:OBBCenter())
+	e:SetPos(myCenterPos)
 	e:SetAngles(self:GetAngles())
 	e:Spawn()
 	local phys = e:GetPhysicsObject()
