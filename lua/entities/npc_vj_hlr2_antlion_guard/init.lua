@@ -19,7 +19,6 @@ ENT.MeleeAttackDamageDistance = 150 -- How far does the damage go?
 ENT.MeleeAttackDamage = 15
 ENT.MeleeAttackDamageType = DMG_CRUSH
 ENT.HasMeleeAttackKnockBack = true -- If true, it will cause a knockback to its enemy
-ENT.Immune_Physics = true
 ENT.FootStepTimeRun = 0.21 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.3 -- Next foot step sound when it is walking
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds

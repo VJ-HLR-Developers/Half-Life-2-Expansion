@@ -21,7 +21,6 @@ ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 
 ENT.Bleeds = false
 ENT.Immune_AcidPoisonRadiation = true
-ENT.Immune_Physics = true
 ENT.Immune_Dissolve = true
 
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1}
