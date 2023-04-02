@@ -124,7 +124,7 @@ if SERVER then
 		self.Operator.NoWeapon_UseScaredBehavior = false
 		self.Operator.HasMeleeAttack = false
 		self.Operator.HasGrenadeAttack = false
-		self.Operator:StartEngineTask(GetTaskList("TASK_PLAY_SEQUENCE"),ACT_IDLE_MANNEDGUN)
+		self.Operator:StartEngineTask(ai.GetTaskID("TASK_PLAY_SEQUENCE"), ACT_IDLE_MANNEDGUN)
 		self.VJ_GoingToManGun = false
 		self.VJ_ManningGun = true
 		self.PullingOperator = NULL
