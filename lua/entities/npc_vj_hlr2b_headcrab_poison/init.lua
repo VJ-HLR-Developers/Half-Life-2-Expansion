@@ -8,5 +8,4 @@ include('shared.lua')
 function ENT:CustomOnInitialize()
 	self:SetModel("models/vj_hlr/hl2b/headcrab_poison.mdl")
 	self:SetCollisionBounds(Vector(14,14,15), Vector(-14,-14,0))
-	self.CustomRunActivites = {VJ_SequenceToActivity(self,"Scurry")}
 end
