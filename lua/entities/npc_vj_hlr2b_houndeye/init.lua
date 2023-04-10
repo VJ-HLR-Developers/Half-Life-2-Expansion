@@ -108,7 +108,6 @@ function ENT:CustomOnMeleeAttack_BeforeChecks()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnFlinch_BeforeFlinch(dmginfo, hitgroup)
-	if self.PlayingAttackAnimation == true then
-		return false
-	end
+	-- Houndeye shouldn't have its sonic attack interrupted by a flinch animation!
+	return self.CurAttackAnimTime < CurTime()
 end
