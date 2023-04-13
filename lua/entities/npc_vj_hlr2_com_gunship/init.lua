@@ -286,7 +286,7 @@ function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
 			end
 		end
 		self.Corpse.IsVJBaseCorpse = true
-		self.Corpse.ExtraCorpsesToRemove = self.ExtraCorpsesToRemove_Transition
+		self.Corpse.ChildEnts = self.DeathCorpse_ChildEnts or {}
 		if GetConVar("ai_serverragdolls"):GetInt() == 1 then
 			undo.ReplaceEntity(self, self.Corpse)
 		else
@@ -313,7 +313,7 @@ function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
 					if v:GetClass() == "prop_ragdoll" then v:Fire("FadeAndRemove","",0) else v:Fire("kill","",0) end
 				end
 			end
-		end,self.Corpse.ExtraCorpsesToRemove)
+		end,self.Corpse.ChildEnts)
 		hook.Call("CreateEntityRagdoll", nil, self, self.Corpse)
 		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self.Corpse,2)
 		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self.Corpse,4)
