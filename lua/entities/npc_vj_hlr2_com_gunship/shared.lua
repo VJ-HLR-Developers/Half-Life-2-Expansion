@@ -9,8 +9,9 @@ ENT.Category		= "Half-Life Resurgence"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then
 	ENT.Rotor = 0
-	function ENT:CustomOnDraw()
-		self.Rotor = self.Rotor +1
-		self:ManipulateBoneAngles(19,Angle(self.Rotor,0,0))
+	function ENT:Draw()
+		self:DrawModel()
+		self.Rotor = self.Rotor + 1
+		self:ManipulateBoneAngles(19, Angle(self.Rotor, 0, 0))
 	end
 end
