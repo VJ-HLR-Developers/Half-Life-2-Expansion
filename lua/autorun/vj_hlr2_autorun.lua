@@ -126,7 +126,7 @@ if VJExists == true then
 	
 -- !!!!!! DON'T TOUCH ANYTHING BELOW THIS !!!!!! -------------------------------------------------------------------------------------------------------------------------
 	AddCSLuaFile(AutorunFile)
-	VJ.AddAddonProperty(AddonName,AddonType)
+	VJ.AddAddonProperty(AddonName, AddonType)
 else
 	if CLIENT then
 		chat.AddText(Color(0, 200, 200), PublicAddonName,
