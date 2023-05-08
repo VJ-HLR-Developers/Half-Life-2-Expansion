@@ -153,10 +153,10 @@ function ENT:MultipleMeleeAttacks() end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AA_MoveTo(Ent,ShouldPlayAnim,vAdditionalFeatures)
 	if !IsValid(Ent) then return end
-	vAd_AdditionalFeatures = vAdditionalFeatures or {}
-	vAd_PosForward = vAd_AdditionalFeatures.PosForward or 1 -- This will add the given value to the set position's forward
-	vAd_PosUp = vAd_AdditionalFeatures.PosUp or 1 -- This will add the given value to the set position's up
-	vAd_PosRight = vAd_AdditionalFeatures.PosRight or 1 -- This will add the given value to the set position's right
+	local vAd_AdditionalFeatures = vAdditionalFeatures or {}
+	local vAd_PosForward = vAd_AdditionalFeatures.PosForward or 1 -- This will add the given value to the set position's forward
+	local vAd_PosUp = vAd_AdditionalFeatures.PosUp or 1 -- This will add the given value to the set position's up
+	local vAd_PosRight = vAd_AdditionalFeatures.PosRight or 1 -- This will add the given value to the set position's right
 	local MoveSpeed = self.Aerial_FlyingSpeed_Calm
 	if self.MovementType == VJ_MOVETYPE_AQUATIC then
 		if Debug == true then

@@ -105,7 +105,7 @@ end
 function ENT:CreateFakeBullet(att)
 	local startPos = self:GetAttachment(self:LookupAttachment(att)).Pos
 
-	FakeSpawn = ents.Create("prop_vj_animatable")
+	local FakeSpawn = ents.Create("prop_vj_animatable")
 	FakeSpawn:SetPos(startPos)
 	FakeSpawn:SetParent(self)
 	FakeSpawn:Spawn()

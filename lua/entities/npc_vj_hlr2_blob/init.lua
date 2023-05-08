@@ -204,7 +204,7 @@ function ENT:DoBlobBatchedAI(iStart,iEnd)
 				if metaball.OnWall then
 					continue
 				end
-				otherBall = tbl[j]
+				local otherBall = tbl[j]
 				if IsValid(otherBall) && metaball != otherBall then -- We are not the metaball in question...
 					local vecThatElementOrigin = otherBall:GetPos()
 					local distSqr = vecThisElementOrigin:DistToSqr(vecThatElementOrigin)
