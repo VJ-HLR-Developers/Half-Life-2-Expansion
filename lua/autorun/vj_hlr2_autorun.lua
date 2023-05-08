@@ -11,7 +11,7 @@ local AddonType = "SNPC"
 local AutorunFile = "autorun/vj_hlr2_autorun.lua"
 -------------------------------------------------------
 
-local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
+local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua", "GAME")
 if VJExists == true then
 	include('autorun/vj_controls.lua')
 
