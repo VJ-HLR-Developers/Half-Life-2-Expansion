@@ -264,7 +264,7 @@ function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
 	
 	function deathCorpse:PhysicsCollide(data, phys)
 		if self.Dead then return end
-		if data.HitEntity.IsVJBase_Gib then return end
+		if data.HitEntity.IsVJBaseCorpse_Gib then return end
 		self.Dead = true
 
 		util.BlastDamage(self, self, self:GetPos() +self:OBBCenter(), 600, 200)
