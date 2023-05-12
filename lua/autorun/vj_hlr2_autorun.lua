@@ -5,10 +5,8 @@
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 --------------------------------------------------*/
 ------------------ Addon Information ------------------
-local PublicAddonName = "Half-Life Resurgence: Half Life 2"
 local AddonName = "Half-Life Resurgence: Half Life 2"
-local AddonType = "SNPC"
-local AutorunFile = "autorun/vj_hlr2_autorun.lua"
+local AddonType = "NPC"
 -------------------------------------------------------
 
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua", "GAME")
@@ -125,11 +123,11 @@ if VJExists == true then
 	VJ.AddParticle("particles/warpshield.pcf",{})
 	
 -- !!!!!! DON'T TOUCH ANYTHING BELOW THIS !!!!!! -------------------------------------------------------------------------------------------------------------------------
-	AddCSLuaFile(AutorunFile)
+	AddCSLuaFile()
 	VJ.AddAddonProperty(AddonName, AddonType)
 else
 	if CLIENT then
-		chat.AddText(Color(0, 200, 200), PublicAddonName,
+		chat.AddText(Color(0, 200, 200), AddonName,
 		Color(0, 255, 0), " was unable to install, you are missing ",
 		Color(255, 100, 0), "VJ Base!")
 	end
