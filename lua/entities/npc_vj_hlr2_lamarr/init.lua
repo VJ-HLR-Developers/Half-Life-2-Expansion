@@ -54,7 +54,6 @@ function ENT:CustomOnThink_AIEnabled()
 	if self.VJ_IsBeingControlled then return end
 	
 	if !self.Alerted && !IsValid(self:GetEnemy()) && !self:IsMoving() && CurTime() > self.Headcrab_NextSleepT && !self.Headcrab_Sleeping && !self:IsBusy() then
-		local sleept = math.Rand(15, 30)
 		self.Headcrab_Sleeping = true
 		self.Headcrab_WakeUpT = CurTime() +math.Rand(15, 30)
 		self:SetState(VJ_STATE_ONLY_ANIMATION)
