@@ -47,7 +47,7 @@ function ENT:SetSlump(doSlump)
 		self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
 		self.NextIdleStandTime = 0
 		self.AnimTbl_IdleStand = {VJ_SequenceToActivity(self,"slump_a")}
-		self:SetSightDistance(150)
+		self:SetMaxLookDistance(150)
 		self.SightAngle = 180
 		self:AddFlags(FL_NOTARGET)
 	else
@@ -56,7 +56,7 @@ function ENT:SetSlump(doSlump)
 		self:VJ_ACT_PLAYACTIVITY("slumprise_a", true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
-		self:SetSightDistance(10000)
+		self:SetMaxLookDistance(10000)
 		self.SightAngle = 80
 		self:RemoveFlags(FL_NOTARGET)
 		self.SoundTbl_Breath = self.SoundTbl_DefBreath
