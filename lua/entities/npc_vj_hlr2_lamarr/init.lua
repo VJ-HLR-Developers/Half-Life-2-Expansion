@@ -40,7 +40,7 @@ function ENT:CustomOnThink_AIEnabled()
 	if self.Headcrab_Sleeping then
 		if CurTime() > self.Headcrab_SleepAnimT then
 			self:VJ_ACT_PLAYACTIVITY("SleepLoop",true,false,false)
-			VJ_EmitSound(self,"npc/headcrab/idle2.wav",65,100)
+			VJ.EmitSound(self,"npc/headcrab/idle2.wav",65,100)
 			self.Headcrab_SleepAnimT = CurTime() +self:SequenceDuration("SleepLoop")
 		elseif CurTime() > self.Headcrab_WakeUpT then
 			self.Headcrab_Sleeping = false

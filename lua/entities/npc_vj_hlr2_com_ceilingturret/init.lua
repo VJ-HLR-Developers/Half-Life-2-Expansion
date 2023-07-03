@@ -60,7 +60,7 @@ function ENT:CustomOnThink_AIEnabled()
 		if !IsValid(self:GetEnemy()) or scan == true then
 			-- Playing a beeping noise
 			if self.Turret_NextScanBeepT < CurTime() then
-				VJ_EmitSound(self, {"npc/turret_floor/ping.wav"}, 75, 100)
+				VJ.EmitSound(self, {"npc/turret_floor/ping.wav"}, 75, 100)
 				self.Turret_NextScanBeepT = CurTime() + 1
 			end
 			-- LEFT TO RIGHT
@@ -87,7 +87,7 @@ function ENT:CustomOnThink_AIEnabled()
 			self.Turret_Sprite:Fire("ShowSprite")
 			self.Turret_StandDown = true
 			self:VJ_ACT_PLAYACTIVITY({"retract"}, true, false)
-			VJ_EmitSound(self,{"npc/turret_floor/retract.wav"}, 70, 100)
+			VJ.EmitSound(self,{"npc/turret_floor/retract.wav"}, 70, 100)
 		end
 		if self.Turret_StandDown == true then
 			if self:GetPoseParameter("aim_yaw") == 0 then -- Hide the green light once it fully rests

@@ -86,7 +86,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnMeleeAttack_Miss()
 	self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK2_LOW,true,false,false)
-	VJ_CreateSound(self,"npc/ichthyosaur/snap_miss.wav",75)
+	VJ.CreateSound(self,"npc/ichthyosaur/snap_miss.wav",75)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink_AIEnabled()

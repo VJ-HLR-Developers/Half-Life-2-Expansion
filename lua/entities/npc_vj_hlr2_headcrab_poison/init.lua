@@ -105,8 +105,8 @@ ENT.AnimationSet = 0 -- 0 = Default, 1 = Scurry, 2 = Custom
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(14,14,15), Vector(-14,-14,0))
 
-	self.ScurryAnimation = VJ_SequenceToActivity(self,"Scurry")
-	self.FlyAnimation = VJ_SequenceToActivity(self,"Drown")
+	self.ScurryAnimation = VJ.SequenceToActivity(self,"Scurry")
+	self.FlyAnimation = VJ.SequenceToActivity(self,"Drown")
 
 	self.WasThrown = false
 	self.HasRanThrownDamage = false
@@ -117,7 +117,7 @@ function ENT:RangeAttackCode_GetShootPos(projectile)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnFlinch_BeforeFlinch(dmginfo, hitgroup)
-	if self.AttackStatus == VJ_ATTACK_STATUS_STARTED then -- Since for some reason StopAttacks() doesn't stop the velocity code from running
+	if self.AttackState == VJ.ATTACK_STATE_STARTED then -- Since for some reason StopAttacks() doesn't stop the velocity code from running
 		return false
 	end
 end
@@ -125,10 +125,10 @@ end
 function ENT:CustomOnAlert(ent)
 	if self.CanAlertCrab != true then return end
 
-	VJ_STOPSOUND(self.CurrentIdleSound)
+	VJ.STOPSOUND(self.CurrentIdleSound)
 	self.NextIdleSoundT = self.NextIdleSoundT + 2
-	self.CurrentAlertSound = VJ_CreateSound(self,VJ_PICK(self.SoundTbl_AlertAnim),self.AlertSoundLevel,self:VJ_DecideSoundPitch(self.AlertSoundPitch.a,self.AlertSoundPitch.b))
-	self:VJ_ACT_PLAYACTIVITY("Threatdisplay",true,VJ_GetSequenceDuration(self,"Threatdisplay"),false)
+	self.CurrentAlertSound = VJ.CreateSound(self,VJ.PICK(self.SoundTbl_AlertAnim),self.AlertSoundLevel,self:VJ_DecideSoundPitch(self.AlertSoundPitch.a,self.AlertSoundPitch.b))
+	self:VJ_ACT_PLAYACTIVITY("Threatdisplay",true,VJ.AnimDuration(self,"Threatdisplay"),false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
@@ -178,7 +178,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThrown(enemy,owner,pos)
 	self:SetOwner(owner)
-	VJ_CreateSound(self,self.SoundTbl_LeapAttackJump,75)
+	VJ.CreateSound(self,self.SoundTbl_LeapAttackJump,75)
 	timer.Simple(0.05,function()
 		if IsValid(self) then
 			self.CanAlertCrab = false
@@ -208,7 +208,7 @@ end
 function ENT:DoPoisonHeadcrabDamage(v)
 	if !IsValid(v) then return end
 
-	VJ_EmitSound(self,self.SoundTbl_LeapAttackDamage,75)
+	VJ.EmitSound(self,self.SoundTbl_LeapAttackDamage,75)
 
 	if v:Health() > 1 then
 		local poisonDMG = DamageInfo()

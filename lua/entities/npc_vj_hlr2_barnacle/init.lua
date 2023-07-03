@@ -135,7 +135,7 @@ function ENT:Barnacle_CalculateTongue()
 			trent:SetPos(setpos) -- Set the position for the enemy
 			-- Play the pulling sound
 			if CurTime() > self.Barnacle_NextPullSoundT then
-				VJ_EmitSound(self, "vj_hlr/hl1_npc/barnacle/bcl_alert2.wav")
+				VJ.EmitSound(self, "vj_hlr/hl1_npc/barnacle/bcl_alert2.wav")
 				self.Barnacle_NextPullSoundT = CurTime() + SoundDuration("vj_hlr/hl1_npc/barnacle/bcl_alert2.wav")
 			end
 		end
@@ -184,7 +184,7 @@ end
 end*/
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDoKilledEnemy(ent, attacker, inflictor)
-	VJ_EmitSound(self, "vj_hlr/hl1_npc/barnacle/bcl_bite3.wav")
+	VJ.EmitSound(self, "vj_hlr/hl1_npc/barnacle/bcl_bite3.wav")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
@@ -200,7 +200,7 @@ function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
 	if self.HasGibDeathParticles == true then
 		local bloodeffect = EffectData()
 		bloodeffect:SetOrigin(self:GetPos() + self:OBBCenter())
-		bloodeffect:SetColor(VJ_Color2Byte(Color(130,19,10)))
+		bloodeffect:SetColor(VJ.Color2Byte(Color(130,19,10)))
 		bloodeffect:SetScale(120)
 		util.Effect("VJ_Blood1",bloodeffect)
 		
@@ -229,7 +229,7 @@ function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomGibOnDeathSounds(dmginfo, hitgroup)
-	VJ_EmitSound(self, "vj_gib/default_gib_splat.wav", 90, 100)
+	VJ.EmitSound(self, "vj_gib/default_gib_splat.wav", 90, 100)
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

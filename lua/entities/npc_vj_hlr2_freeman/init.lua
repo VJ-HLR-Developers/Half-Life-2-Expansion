@@ -9,7 +9,7 @@ ENT.Model = {"models/vj_hlr/hl2/gordon_freeman.mdl"} -- The game will pick a ran
 ENT.StartHealth = 100
 ENT.HasHealthRegeneration = true -- Can the SNPC regenerate its health?
 ENT.HealthRegenerationAmount = 2 -- How much should the health increase after every delay?
-ENT.HealthRegenerationDelay = VJ_Set(0.1,0.1) -- How much time until the health increases
+ENT.HealthRegenerationDelay = VJ.SET(0.1,0.1) -- How much time until the health increases
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"} -- NPCs with the same class with be allied to each other
@@ -64,7 +64,7 @@ function ENT:CustomOnInitialize()
 		end
 	end
 
-	self:DoChangeWeapon(VJ_PICK(self.WeaponsList["Normal"]),true)
+	self:DoChangeWeapon(VJ.PICK(self.WeaponsList["Normal"]),true)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAlert(ent)
@@ -91,7 +91,7 @@ function ENT:CustomOnThink_AIEnabled()
 		end
 
 		if selectType != false && !self:IsBusy() && CurTime() > self.NextWeaponSwitchT && math.random(1,wep:Clip1() > 0 && (wep:Clip1() <= wep:GetMaxClip1() *0.35) && 1 or (selectType == "Close" && 20 or 150)) == 1 then
-			self:DoChangeWeapon(VJ_PICK(self.WeaponsList[selectType]),true)
+			self:DoChangeWeapon(VJ.PICK(self.WeaponsList[selectType]),true)
 			wep = self:GetActiveWeapon()
 			self.NextWeaponSwitchT = CurTime() + math.Rand(6,math.Round(math.Clamp(wep:Clip1() *0.5,1,wep:Clip1())))
 		end
@@ -101,7 +101,7 @@ end
 function ENT:CustomOnGrenadeAttack_OnThrow(grenEnt)
 	-- Custom grenade model and sounds
 	grenEnt.SoundTbl_Idle = {"weapons/grenade/tick1.wav"}
-	grenEnt.IdleSoundPitch = VJ_Set(100, 100)
+	grenEnt.IdleSoundPitch = VJ.SET(100, 100)
 	local redglow = ents.Create("env_sprite")
 	redglow:SetKeyValue("model", "vj_base/sprites/vj_glow1.vmt")
 	redglow:SetKeyValue("scale", "0.07")
@@ -119,7 +119,7 @@ end
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	-- Absorb bullet damage
 	if dmginfo:IsBulletDamage() then
-		if self.HasSounds == true && self.HasImpactSounds == true then VJ_EmitSound(self, "vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav", 70) end
+		if self.HasSounds == true && self.HasImpactSounds == true then VJ.EmitSound(self, "vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav", 70) end
 		if math.random(1,3) == 1 then
 			dmginfo:ScaleDamage(0.50)
 			local spark = ents.Create("env_spark")

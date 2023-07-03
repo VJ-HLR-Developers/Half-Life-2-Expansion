@@ -76,7 +76,7 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 		self:FootStepSoundCode()
 	end
 	if key == "step_heavy" then
-		VJ_EmitSound(self,self.SoundTbl_FootStepHeavy,88)
+		VJ.EmitSound(self,self.SoundTbl_FootStepHeavy,88)
 	end
 	if key == "melee" then
 		self:MeleeAttackCode()
@@ -105,12 +105,12 @@ function ENT:CustomRangeAttackCode()
 			phys:Wake()
 			phys:SetVelocity(self:RangeAttackCode_GetShootPos(proj))
 		end
-		VJ_EmitSound(self,"weapons/stinger_fire1.wav",105,100)
+		VJ.EmitSound(self,"weapons/stinger_fire1.wav",105,100)
 		ParticleEffectAttach("vj_rifle_full",PATTACH_POINT_FOLLOW,self,2)
 		ParticleEffectAttach("smoke_exhaust_01a",PATTACH_POINT_FOLLOW,self,2)
 		timer.Simple(self.RPG_ReloadTime -SoundDuration("npc/combine_gunship/attack_start2.wav"),function()
 			if IsValid(self) then
-				VJ_EmitSound(self,"vnpc/combine_gunship/attack_start2.wav",85,100)
+				VJ.EmitSound(self,"vnpc/combine_gunship/attack_start2.wav",85,100)
 			end
 		end)
 		self.NextRocketT = CurTime() +self.RPG_ReloadTime
@@ -127,7 +127,7 @@ function ENT:CustomRangeAttackCode()
 	bullet.AmmoType = "AR2"
 	self:FireBullets(bullet)
 	
-	VJ_EmitSound(self,"weapons/airboat/airboat_gun_energy"..math.random(1,2)..".wav",100,100)
+	VJ.EmitSound(self,"weapons/airboat/airboat_gun_energy"..math.random(1,2)..".wav",100,100)
 	
 	ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,1)
 	timer.Simple(0.2,function() if IsValid(self) then self:StopParticles() end end)
@@ -149,7 +149,7 @@ end
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if hitgroup == 15 then
 		dmginfo:SetDamage(dmginfo:GetDamage() *4.5)
-		VJ_EmitSound(self,"ambient/energy/zap"..math.random(1,9)..".wav",70)
+		VJ.EmitSound(self,"ambient/energy/zap"..math.random(1,9)..".wav",70)
 		self.DamageSpark1 = ents.Create("env_spark")
 		self.DamageSpark1:SetKeyValue("Magnitude","1")
 		self.DamageSpark1:SetKeyValue("Spark Trail Length","1")

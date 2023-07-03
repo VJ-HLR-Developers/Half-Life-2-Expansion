@@ -68,7 +68,7 @@ ENT.VJC_Data = {
     FirstP_Offset = Vector(15, 0, 2), -- The offset for the controller when the camera is in first person
 }
 
-ENT.MaxJumpLegalDistance = VJ_Set(1000,1500)
+ENT.MaxJumpLegalDistance = VJ.SET(1000,1500)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnLeapAttackVelocityCode()
 	self:SetGroundEntity(NULL)
@@ -112,13 +112,13 @@ function ENT:Dig(forceRemove)
 		timer.Simple(0.02,function()
 			if IsValid(self) then
 				self:EmitSound("physics/concrete/concrete_break2.wav",80,100)
-				VJ_EmitSound(self,"npc/antlion/digup1.wav",75,100)
+				VJ.EmitSound(self,"npc/antlion/digup1.wav",75,100)
 				ParticleEffect("advisor_plat_break",self:GetPos(),self:GetAngles(),self)
 				ParticleEffect("strider_impale_ground",self:GetPos(),self:GetAngles(),self)
-				self:VJ_ACT_PLAYACTIVITY("digout",true,VJ_GetSequenceDuration(self,"digout"),false)
+				self:VJ_ACT_PLAYACTIVITY("digout",true,VJ.AnimDuration(self,"digout"),false)
 				self.HasMeleeAttack = false
 				timer.Simple(0.15,function() if IsValid(self) then self:SetNoDraw(false) end end)
-				timer.Simple(VJ_GetSequenceDuration(self,"digout"),function() if IsValid(self) then self.HasMeleeAttack = true self.IsDigging = false end end)
+				timer.Simple(VJ.AnimDuration(self,"digout"),function() if IsValid(self) then self.HasMeleeAttack = true self.IsDigging = false end end)
 			end
 		end)
 	else
@@ -164,8 +164,8 @@ end
 function ENT:CustomOnAlert(ent)
 	if self.IsDiging == true then return end
 	if math.random(1,6) == 1 then
-		local tbl = VJ_PICK({"distract","roar"})
-		self:VJ_ACT_PLAYACTIVITY(tbl,true,VJ_GetSequenceDuration(self,tbl),false)
+		local tbl = VJ.PICK({"distract","roar"})
+		self:VJ_ACT_PLAYACTIVITY(tbl,true,VJ.AnimDuration(self,tbl),false)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -182,10 +182,10 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 		self:FootStepSoundCode()
 	end
 	if key == "scream" then
-		VJ_EmitSound(self,"npc/antlion/antlion_preburst_scream" .. math.random(1,2) .. ".wav",75,100)
+		VJ.EmitSound(self,"npc/antlion/antlion_preburst_scream" .. math.random(1,2) .. ".wav",75,100)
 	end
 	if key == "explode" then
-		VJ_EmitSound(self,"npc/antlion/antlion_burst" .. math.random(1,2) .. ".wav",75,100)
+		VJ.EmitSound(self,"npc/antlion/antlion_burst" .. math.random(1,2) .. ".wav",75,100)
 	end
 	if key == "range" then
 		for i = 1,math.random(2,4) do
@@ -193,10 +193,10 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 		end
 	end
 	if key == "step_heavy" then
-		VJ_EmitSound(self,"npc/antlion/shell_impact" .. math.random(1,4) .. ".wav",75,100)
+		VJ.EmitSound(self,"npc/antlion/shell_impact" .. math.random(1,4) .. ".wav",75,100)
 	end
 	if key == 78 then
-		VJ_EmitSound(self,"npc/antlion/attack_double" .. math.random(1,3) .. ".wav",75,100)
+		VJ.EmitSound(self,"npc/antlion/attack_double" .. math.random(1,3) .. ".wav",75,100)
 	end
 	if key == "on" then
 		self:SetBodygroup(1,1)
@@ -205,7 +205,7 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "off" then
 		self:SetBodygroup(1,0)
 		self.FlyLoop:Stop()
-		VJ_EmitSound(self,"npc/antlion/land1.wav",75,100)
+		VJ.EmitSound(self,"npc/antlion/land1.wav",75,100)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

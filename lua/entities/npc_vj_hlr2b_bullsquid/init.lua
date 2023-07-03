@@ -139,7 +139,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAlert(ent)
 	if self:WaterLevel() < 2 then
-		if VJ_HasValue(self.tbl_Headcrabs,ent:GetClass()) && math.random(1,2) == 1 then
+		if VJ.HasValue(self.tbl_Headcrabs,ent:GetClass()) && math.random(1,2) == 1 then
 			self:VJ_ACT_PLAYACTIVITY("hc_spot",true,false,true)
 		else
 			if math.random(1,3) == 1 then
@@ -178,9 +178,8 @@ function ENT:AA_MoveTo(Ent,ShouldPlayAnim,vAdditionalFeatures)
 		MoveSpeed = self.Aquatic_SwimmingSpeed_Alerted
 	end
 	
-	local Debug = self.AA_EnableDebug
 	ShouldPlayAnim = ShouldPlayAnim or false
-	NoFace = NoFace or false
+	local NoFace = NoFace or false
 
 	if ShouldPlayAnim == true then
 		self.AA_CanPlayMoveAnimation = true

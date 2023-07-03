@@ -74,7 +74,7 @@ ENT.SoundTbl_Death = {
 }
 
 ENT.FootStepSoundLevel = 80
-ENT.FootStepPitch = VJ_Set(110, 115)
+ENT.FootStepPitch = VJ.SET(110, 115)
 ENT.GeneralSoundPitch1 = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
@@ -86,7 +86,7 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 		self:FootStepSoundCode()
 	end
 	if key == "hunt" then
-		VJ_EmitSound(self,"vj_hlr/hl2_npc/houndeye/he_hunt"..math.random(1,4)..".wav")
+		VJ.EmitSound(self,"vj_hlr/hl2_npc/houndeye/he_hunt"..math.random(1,4)..".wav")
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -101,10 +101,10 @@ function ENT:CustomOnMeleeAttack_BeforeChecks()
 	effects.BeamRingPoint(self:GetPos() +Vector(0,0,5),0.3,2,200,16,0,Color(248,0,35),{material="vj_hl/sprites/shockwave",framerate=20,flags=0})
 
 	if self.HasSounds == true && GetConVarNumber("vj_npc_sd_meleeattack") == 0 then
-		VJ_EmitSound(self,"vj_hlr/hl2_npc/houndeye/he_blast"..math.random(1,3)..".wav",100,math.random(80,100))
+		VJ.EmitSound(self,"vj_hlr/hl2_npc/houndeye/he_blast"..math.random(1,3)..".wav",100,math.random(80,100))
 	end
 
-	util.VJ_SphereDamage(self,self,self:GetPos(),400,self.MeleeAttackDamage,self.MeleeAttackDamageType,true,true,{DisableVisibilityCheck=true,Force=80})
+	VJ.ApplyRadiusDamage(self,self,self:GetPos(),400,self.MeleeAttackDamage,self.MeleeAttackDamageType,true,true,{DisableVisibilityCheck=true,Force=80})
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnFlinch_BeforeFlinch(dmginfo, hitgroup)

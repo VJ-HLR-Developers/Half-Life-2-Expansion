@@ -62,7 +62,7 @@ function ENT:SetSlump(doSlump)
 			filter = self
 		})
 		self.SlumpSet = tr.Hit && "a" or "b"
-		self.AnimTbl_IdleStand = {VJ_SequenceToActivity(self,"slump_" .. self.SlumpSet)}
+		self.AnimTbl_IdleStand = {VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)}
 		self:SetMaxLookDistance(150)
 		self.SightAngle = 180
 		self:AddFlags(FL_NOTARGET)
@@ -125,13 +125,13 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "step" then
-		VJ_EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
+		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
 	elseif key == "scuff" then
-		VJ_EmitSound(self,"npc/zombie/foot_slide" .. math.random(1,3) .. ".wav",self.FootStepSoundLevel)
+		VJ.EmitSound(self,"npc/zombie/foot_slide" .. math.random(1,3) .. ".wav",self.FootStepSoundLevel)
 	elseif key == "melee" or key == "swat" then
 		self:MeleeAttackCode()
 		if key == "swat" then
-			VJ_EmitSound(self,"npc/zombie/zombie_hit.wav",75)
+			VJ.EmitSound(self,"npc/zombie/zombie_hit.wav",75)
 		end
 	end
 end
@@ -174,7 +174,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 		return false
 	end
 
-	VJ_CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
+	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
 	local dmgtype = dmginfo:GetDamageType()
 	if hitgroup == HITGROUP_HEAD then
 		ent:SetBodygroup(1,0)

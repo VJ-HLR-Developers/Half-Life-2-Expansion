@@ -47,19 +47,19 @@ local dur4 = SoundDuration("vo/gman_misc/gman_04.wav")
 function ENT:FreemanSpeech(ent)
 	if CurTime() > self.NextDialogueTreeT then
 		self.Freeman = ent
-		self.Dialogue1 = VJ_CreateSound(self,"vo/gman_misc/gman_riseshine.wav",75)
+		self.Dialogue1 = VJ.CreateSound(self,"vo/gman_misc/gman_riseshine.wav",75)
 		self:VJ_ACT_PLAYACTIVITY({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
 		timer.Simple(dur1,function()
 			if IsValid(self) && IsValid(ent) then
-				self.Dialogue2 = VJ_CreateSound(self,"vo/gman_misc/gman_02.wav",75)
+				self.Dialogue2 = VJ.CreateSound(self,"vo/gman_misc/gman_02.wav",75)
 				self:VJ_ACT_PLAYACTIVITY({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
 				timer.Simple(dur2,function()
 					if IsValid(self) && IsValid(ent) then
-						self.Dialogue3 = VJ_CreateSound(self,"vo/gman_misc/gman_03.wav",75)
+						self.Dialogue3 = VJ.CreateSound(self,"vo/gman_misc/gman_03.wav",75)
 						self:VJ_ACT_PLAYACTIVITY({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
 						timer.Simple(dur3,function()
 							if IsValid(self) && IsValid(ent) then
-								self.Dialogue4 = VJ_CreateSound(self,"vo/gman_misc/gman_04.wav",75)
+								self.Dialogue4 = VJ.CreateSound(self,"vo/gman_misc/gman_04.wav",75)
 								self:VJ_ACT_PLAYACTIVITY({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
 								timer.Simple(dur4,function()
 									if IsValid(self) && IsValid(ent) then
@@ -178,8 +178,8 @@ function ENT:FindSpawnPos(pos)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
-	VJ_STOPSOUND(self.Dialogue1)
-	VJ_STOPSOUND(self.Dialogue2)
-	VJ_STOPSOUND(self.Dialogue3)
-	VJ_STOPSOUND(self.Dialogue4)
+	VJ.STOPSOUND(self.Dialogue1)
+	VJ.STOPSOUND(self.Dialogue2)
+	VJ.STOPSOUND(self.Dialogue3)
+	VJ.STOPSOUND(self.Dialogue4)
 end

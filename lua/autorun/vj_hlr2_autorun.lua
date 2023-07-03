@@ -19,98 +19,98 @@ if VJExists == true then
 		- Sabrean = Custom Zombie Models
 	*/
 
-	VJ.AddCeilingNPC = function(nName,nClass,vCat)
-		local NPC = {Name = nName, Class = nClass, Category = vCat, OnCeiling = true}
+	VJ.AddCeilingNPC = function(nName,nClass,spawnCategory)
+		local NPC = {Name = nName, Class = nClass, Category = spawnCategory, OnCeiling = true}
 		list.Set( "NPC", NPC.Class, NPC ) //NPC //VJBASE_SPAWNABLE_NPC
 		list.Set( "VJBASE_SPAWNABLE_NPC", NPC.Class, NPC )
 	end
 	
 	-- Source Engine -------------------------------------------------------
-	local vCat = "HL Resurgence: Source"
+	local spawnCategory = "HL Resurgence: Source"
 		
 		-- Misc.
-		VJ.AddNPC("Mounted Turret","sent_vj_hlr2_mountedturret",vCat)
-		-- VJ.AddNPC("Suppression Device","sent_vj_hlr2_mortarturret",vCat)
+		VJ.AddNPC("Mounted Turret","sent_vj_hlr2_mountedturret",spawnCategory)
+		-- VJ.AddNPC("Suppression Device","sent_vj_hlr2_mortarturret",spawnCategory)
 
 		-- Antlions
-		-- VJ.AddNPC("Antlion (Beta)","npc_vj_hlr2b_antlion",vCat)
+		-- VJ.AddNPC("Antlion (Beta)","npc_vj_hlr2b_antlion",spawnCategory)
 
-		VJ.AddNPC("Antlion Worker (EP2 Beta)","npc_vj_hlr2b_antlion_worker",vCat)
+		VJ.AddNPC("Antlion Worker (EP2 Beta)","npc_vj_hlr2b_antlion_worker",spawnCategory)
 
-		VJ.AddNPC("Antlion","npc_vj_hlr2_antlion",vCat)
-		VJ.AddNPC("Antlion Worker","npc_vj_hlr2_antlion_worker",vCat)
-		VJ.AddNPC("Antlion Guard","npc_vj_hlr2_antlion_guard",vCat)
-		VJ.AddNPC("Antlion Guardian","npc_vj_hlr2_antlion_guardian",vCat)
+		VJ.AddNPC("Antlion","npc_vj_hlr2_antlion",spawnCategory)
+		VJ.AddNPC("Antlion Worker","npc_vj_hlr2_antlion_worker",spawnCategory)
+		VJ.AddNPC("Antlion Guard","npc_vj_hlr2_antlion_guard",spawnCategory)
+		VJ.AddNPC("Antlion Guardian","npc_vj_hlr2_antlion_guardian",spawnCategory)
 
 		-- Combine
-		VJ.AddNPC_HUMAN("Overwatch Soldier (Beta)","npc_vj_hlr2b_com_soldier",{"weapon_vj_hlr2b_oicw"},vCat)
-		-- VJ.AddNPC_HUMAN("Overwatch Elite (Beta)","npc_vj_hlr2b_com_elite",{"weapon_vj_smg1","weapon_vj_smg1","weapon_vj_smg1","weapon_vj_ar2","weapon_vj_ar2"},vCat)
-		-- VJ.AddNPC_HUMAN("Civil Protection (Beta)","npc_vj_hlr2b_com_civilp",{"weapon_vj_9mmpistol","weapon_vj_smg1"},vCat)
-		VJ.AddNPC("Overwatch Guard","npc_vj_hlr2b_com_guard",vCat)
-		VJ.AddNPC("Overwatch Stalker (Beta)","npc_vj_hlr2b_com_stalker",vCat)
-		-- VJ.AddNPC("Overwatch Alien Assassin","npc_vj_hlr2b_com_alienassassin",vCat)
-		-- VJ.AddNPC("Overwatch Combot","npc_vj_hlr2b_com_combot",vCat)
-		-- VJ.AddNPC("Overwatch Shield Scanner (Beta)","npc_vj_hlr2b_com_scanner_shield",vCat)
-		-- VJ.AddNPC("Overwatch Wasteland Scanner","npc_vj_hlr2b_com_scanner_waste",vCat)
-		VJ.AddNPC("Overwatch Assassin","npc_vj_hlr2b_com_assassin",vCat)
-		VJ.AddNPC("Overwatch Stalker","npc_vj_hlr2_com_stalker",vCat)
-		-- VJ.AddNPC("Overwatch Manhack","npc_vj_hlr2_com_manhack",vCat)
-		VJ.AddNPC("Overwatch City Scanner","npc_vj_hlr2_com_scanner_city",vCat)
-		VJ.AddNPC("Overwatch Shield Scanner","npc_vj_hlr2_com_scanner_shield",vCat)
-		VJ.AddNPC("Overwatch Hunter Synth","npc_vj_hlr2_com_hunter",vCat)
-		VJ.AddNPC("Overwatch APC","npc_vj_hlr2_com_apc",vCat)
-		VJ.AddNPC("Overwatch Strider Synth","npc_vj_hlr2_com_strider",vCat)
-		VJ.AddNPC("Overwatch Advisor","npc_vj_hlr2_com_advisor",vCat)
-		VJ.AddNPC("Overwatch Mortar Synth","npc_vj_hlr2_com_mortar",vCat)
-		VJ.AddNPC("Overwatch Crab Synth","npc_vj_hlr2_com_crab",vCat)
-		VJ.AddCeilingNPC("Overwatch Ceiling Turret","npc_vj_hlr2_com_ceilingturret",vCat)
-		VJ.AddNPC("Overwatch Ion Cannon Turret","npc_vj_hlr2_com_ionturret",vCat)
-		VJ.AddNPC("Overwatch Hunter Chopper","npc_vj_hlr2_com_chopper",vCat)
-		VJ.AddNPC("Overwatch Heavy Chopper","npc_vj_hlr2_com_chopper_heavy",vCat)
-		VJ.AddNPC("Overwatch Gunship Synth","npc_vj_hlr2_com_gunship",vCat)
-		-- VJ.AddNPC("Overwatch Dropship Synth","npc_vj_hlr2_com_dropship",vCat)
+		VJ.AddNPC_HUMAN("Overwatch Soldier (Beta)","npc_vj_hlr2b_com_soldier",{"weapon_vj_hlr2b_oicw"},spawnCategory)
+		-- VJ.AddNPC_HUMAN("Overwatch Elite (Beta)","npc_vj_hlr2b_com_elite",{"weapon_vj_smg1","weapon_vj_smg1","weapon_vj_smg1","weapon_vj_ar2","weapon_vj_ar2"},spawnCategory)
+		-- VJ.AddNPC_HUMAN("Civil Protection (Beta)","npc_vj_hlr2b_com_civilp",{"weapon_vj_9mmpistol","weapon_vj_smg1"},spawnCategory)
+		VJ.AddNPC("Overwatch Guard","npc_vj_hlr2b_com_guard",spawnCategory)
+		VJ.AddNPC("Overwatch Stalker (Beta)","npc_vj_hlr2b_com_stalker",spawnCategory)
+		-- VJ.AddNPC("Overwatch Alien Assassin","npc_vj_hlr2b_com_alienassassin",spawnCategory)
+		-- VJ.AddNPC("Overwatch Combot","npc_vj_hlr2b_com_combot",spawnCategory)
+		-- VJ.AddNPC("Overwatch Shield Scanner (Beta)","npc_vj_hlr2b_com_scanner_shield",spawnCategory)
+		-- VJ.AddNPC("Overwatch Wasteland Scanner","npc_vj_hlr2b_com_scanner_waste",spawnCategory)
+		VJ.AddNPC("Overwatch Assassin","npc_vj_hlr2b_com_assassin",spawnCategory)
+		VJ.AddNPC("Overwatch Stalker","npc_vj_hlr2_com_stalker",spawnCategory)
+		-- VJ.AddNPC("Overwatch Manhack","npc_vj_hlr2_com_manhack",spawnCategory)
+		VJ.AddNPC("Overwatch City Scanner","npc_vj_hlr2_com_scanner_city",spawnCategory)
+		VJ.AddNPC("Overwatch Shield Scanner","npc_vj_hlr2_com_scanner_shield",spawnCategory)
+		VJ.AddNPC("Overwatch Hunter Synth","npc_vj_hlr2_com_hunter",spawnCategory)
+		VJ.AddNPC("Overwatch APC","npc_vj_hlr2_com_apc",spawnCategory)
+		VJ.AddNPC("Overwatch Strider Synth","npc_vj_hlr2_com_strider",spawnCategory)
+		VJ.AddNPC("Overwatch Advisor","npc_vj_hlr2_com_advisor",spawnCategory)
+		VJ.AddNPC("Overwatch Mortar Synth","npc_vj_hlr2_com_mortar",spawnCategory)
+		VJ.AddNPC("Overwatch Crab Synth","npc_vj_hlr2_com_crab",spawnCategory)
+		VJ.AddCeilingNPC("Overwatch Ceiling Turret","npc_vj_hlr2_com_ceilingturret",spawnCategory)
+		VJ.AddNPC("Overwatch Ion Cannon Turret","npc_vj_hlr2_com_ionturret",spawnCategory)
+		VJ.AddNPC("Overwatch Hunter Chopper","npc_vj_hlr2_com_chopper",spawnCategory)
+		VJ.AddNPC("Overwatch Heavy Chopper","npc_vj_hlr2_com_chopper_heavy",spawnCategory)
+		VJ.AddNPC("Overwatch Gunship Synth","npc_vj_hlr2_com_gunship",spawnCategory)
+		-- VJ.AddNPC("Overwatch Dropship Synth","npc_vj_hlr2_com_dropship",spawnCategory)
 		
 		-- Unknown
-		VJ.AddNPC("G-Man","npc_vj_hlr2_gman",vCat)
+		VJ.AddNPC("G-Man","npc_vj_hlr2_gman",spawnCategory)
 
 		-- Resistance
-		-- VJ.AddNPC("Vortigaunt","npc_vj_hlr2_vort",vCat)
-		VJ.AddNPC_HUMAN("Gordon Freeman","npc_vj_hlr2_freeman",{"weapon_vj_smg1","weapon_vj_ar2","weapon_vj_spas12"},vCat)
-		VJ.AddNPC("Lamarr","npc_vj_hlr2_lamarr",vCat)
+		-- VJ.AddNPC("Vortigaunt","npc_vj_hlr2_vort",spawnCategory)
+		VJ.AddNPC_HUMAN("Gordon Freeman","npc_vj_hlr2_freeman",{"weapon_vj_smg1","weapon_vj_ar2","weapon_vj_spas12"},spawnCategory)
+		VJ.AddNPC("Lamarr","npc_vj_hlr2_lamarr",spawnCategory)
 
 		-- Xen Creatures
 			-- Headcrab
-			VJ.AddNPC("Zombie","npc_vj_hlr2_zombie",vCat)
-			VJ.AddNPC("Zombie Assassin","npc_vj_hlr2b_zombie_assassin",vCat)
-			VJ.AddNPC("Fast Zombie","npc_vj_hlr2_zombie_fast",vCat)
-			VJ.AddNPC("Poison Zombie","npc_vj_hlr2_zombie_poison",vCat)
-			VJ.AddNPC("Zombine","npc_vj_hlr2_zombine",vCat)
-			VJ.AddNPC("Headcrab","npc_vj_hlr2_headcrab",vCat)
-			VJ.AddNPC("Fast Headcrab","npc_vj_hlr2_headcrab_fast",vCat)
-			VJ.AddNPC("Poison Headcrab","npc_vj_hlr2_headcrab_poison",vCat)
+			VJ.AddNPC("Zombie","npc_vj_hlr2_zombie",spawnCategory)
+			VJ.AddNPC("Zombie Assassin","npc_vj_hlr2b_zombie_assassin",spawnCategory)
+			VJ.AddNPC("Fast Zombie","npc_vj_hlr2_zombie_fast",spawnCategory)
+			VJ.AddNPC("Poison Zombie","npc_vj_hlr2_zombie_poison",spawnCategory)
+			VJ.AddNPC("Zombine","npc_vj_hlr2_zombine",spawnCategory)
+			VJ.AddNPC("Headcrab","npc_vj_hlr2_headcrab",spawnCategory)
+			VJ.AddNPC("Fast Headcrab","npc_vj_hlr2_headcrab_fast",spawnCategory)
+			VJ.AddNPC("Poison Headcrab","npc_vj_hlr2_headcrab_poison",spawnCategory)
 
-			VJ.AddNPC("Zombie (Slump)","npc_vj_hlr2_zombie_slump",vCat)
-			VJ.AddNPC("Fast Zombie (Slump)","npc_vj_hlr2_zombie_fast_slump",vCat)
-			VJ.AddNPC("Poison Zombie (Slump)","npc_vj_hlr2_zombie_poison_slump",vCat)
-			VJ.AddNPC("Zombine (Slump)","npc_vj_hlr2_zombine_slump",vCat)
+			VJ.AddNPC("Zombie (Slump)","npc_vj_hlr2_zombie_slump",spawnCategory)
+			VJ.AddNPC("Fast Zombie (Slump)","npc_vj_hlr2_zombie_fast_slump",spawnCategory)
+			VJ.AddNPC("Poison Zombie (Slump)","npc_vj_hlr2_zombie_poison_slump",spawnCategory)
+			VJ.AddNPC("Zombine (Slump)","npc_vj_hlr2_zombine_slump",spawnCategory)
 
-			VJ.AddNPC("Zombie (Beta)","npc_vj_hlr2b_zombie",vCat)
-			-- VJ.AddNPC("Zombie (2002)","npc_vj_hlr2b_zombie_fat",vCat)
-			VJ.AddNPC("Fast Zombie (Beta)","npc_vj_hlr2b_zombie_fast",vCat)
-			VJ.AddNPC("Poison Zombie (Beta)","npc_vj_hlr2b_zombie_poison",vCat)
-			VJ.AddNPC("Headcrab (Beta)","npc_vj_hlr2b_headcrab",vCat)
-			VJ.AddNPC("Fast Headcrab (Beta)","npc_vj_hlr2b_headcrab_fast",vCat)
-			VJ.AddNPC("Poison Headcrab (Beta)","npc_vj_hlr2b_headcrab_poison",vCat)
+			VJ.AddNPC("Zombie (Beta)","npc_vj_hlr2b_zombie",spawnCategory)
+			-- VJ.AddNPC("Zombie (2002)","npc_vj_hlr2b_zombie_fat",spawnCategory)
+			VJ.AddNPC("Fast Zombie (Beta)","npc_vj_hlr2b_zombie_fast",spawnCategory)
+			VJ.AddNPC("Poison Zombie (Beta)","npc_vj_hlr2b_zombie_poison",spawnCategory)
+			VJ.AddNPC("Headcrab (Beta)","npc_vj_hlr2b_headcrab",spawnCategory)
+			VJ.AddNPC("Fast Headcrab (Beta)","npc_vj_hlr2b_headcrab_fast",spawnCategory)
+			VJ.AddNPC("Poison Headcrab (Beta)","npc_vj_hlr2b_headcrab_poison",spawnCategory)
 		
 			-- Wild Life
-			-- VJ.AddNPC("Blob","npc_vj_hlr2_blob",vCat) -- Probably won't keep
-			VJ.AddNPC("Leech","npc_vj_hlr2_leech",vCat)
-			VJ.AddNPC("Hydra","npc_vj_hlr2b_hydra",vCat)
-			VJ.AddNPC("Bullsquid","npc_vj_hlr2b_bullsquid",vCat)
-			VJ.AddNPC("Houndeye","npc_vj_hlr2b_houndeye",vCat)
-			VJ.AddNPC("Ichthyosaur","npc_vj_hlr2_ichthyosaur",vCat)
-			-- VJ.AddCeilingNPC("Barnacle","npc_vj_hlr2_barnacle",vCat)
-			-- VJ.AddNPC("Sand Barnacle","npc_vj_hlr2b_barnacle_sand",vCat)
+			-- VJ.AddNPC("Blob","npc_vj_hlr2_blob",spawnCategory) -- Probably won't keep
+			VJ.AddNPC("Leech","npc_vj_hlr2_leech",spawnCategory)
+			VJ.AddNPC("Hydra","npc_vj_hlr2b_hydra",spawnCategory)
+			VJ.AddNPC("Bullsquid","npc_vj_hlr2b_bullsquid",spawnCategory)
+			VJ.AddNPC("Houndeye","npc_vj_hlr2b_houndeye",spawnCategory)
+			VJ.AddNPC("Ichthyosaur","npc_vj_hlr2_ichthyosaur",spawnCategory)
+			-- VJ.AddCeilingNPC("Barnacle","npc_vj_hlr2_barnacle",spawnCategory)
+			-- VJ.AddNPC("Sand Barnacle","npc_vj_hlr2b_barnacle_sand",spawnCategory)
 	
 	-- ConVars --
 	VJ.AddParticle("particles/advisor.pcf",{})

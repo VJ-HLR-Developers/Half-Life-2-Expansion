@@ -168,7 +168,7 @@ if SERVER then
 			if !IsValid(self.PullingOperator) then
 				for _,v in ipairs(ents.FindInSphere(self:GetPos(),500)) do
 					if v:IsNPC() && v:Visible(self) && v.IsVJBaseSNPC then
-						if VJ_AnimationExists(v,ACT_IDLE_MANNEDGUN) && (!v.VJ_GoingToManGun && !v.VJ_ManningGun) then
+						if VJ.AnimExists(v,ACT_IDLE_MANNEDGUN) && (!v.VJ_GoingToManGun && !v.VJ_ManningGun) then
 							if v.VJ_NextManGunT && v.VJ_NextManGunT > CurTime() then return end
 							self.PullingOperator = v
 							v.VJ_GoingToManGun = true

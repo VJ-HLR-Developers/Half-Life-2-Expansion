@@ -157,9 +157,9 @@ function ENT:CustomInitialize_CustomTank()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnPlayCreateSound(sdData, sdFile)
-	if VJ_HasValue(self.SoundTbl_Fire,sdFile) or VJ_HasValue(self.SoundTbl_FireRocket,sdFile) or VJ_HasValue(self.SoundTbl_Breath,sdFile) or VJ_HasValue(self.Tank_SoundTbl_DrivingEngine,sdFile) or VJ_HasValue(self.Tank_SoundTbl_Track,sdFile) then return end
-	VJ_EmitSound(self, "npc/overwatch/radiovoice/on3.wav")
-	timer.Simple(SoundDuration(sdFile),function() if IsValid(self) && sdData:IsPlaying() then VJ_EmitSound(self,"npc/overwatch/radiovoice/off2.wav") end end)
+	if VJ.HasValue(self.SoundTbl_Fire,sdFile) or VJ.HasValue(self.SoundTbl_FireRocket,sdFile) or VJ.HasValue(self.SoundTbl_Breath,sdFile) or VJ.HasValue(self.Tank_SoundTbl_DrivingEngine,sdFile) or VJ.HasValue(self.Tank_SoundTbl_Track,sdFile) then return end
+	VJ.EmitSound(self, "npc/overwatch/radiovoice/on3.wav")
+	timer.Simple(SoundDuration(sdFile),function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self,"npc/overwatch/radiovoice/off2.wav") end end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Controller_IntMsg(ply, controlEnt)
@@ -187,10 +187,10 @@ function ENT:CustomAttack()
 	if CurTime() > self.NextRocketT && enemy:Visible(self) then
 		if self.Ammo <= 0 then
 			local t = SoundDuration("ambient/machines/thumper_shutdown1.wav")
-			VJ_CreateSound(self,"ambient/machines/thumper_shutdown1.wav",75)
+			VJ.CreateSound(self,"ambient/machines/thumper_shutdown1.wav",75)
 			timer.Simple(t,function()
 				if IsValid(self) then
-					VJ_CreateSound(self,"ambient/machines/thumper_startup1.wav",75)
+					VJ.CreateSound(self,"ambient/machines/thumper_startup1.wav",75)
 					self.Ammo = 2
 				end
 			end)
@@ -222,7 +222,7 @@ function ENT:CustomAttack()
 		bullet.AmmoType = "AR2"
 		self:FireBullets(bullet)
 		
-		VJ_EmitSound(self,self.SoundTbl_Fire,90,self:VJ_DecideSoundPitch(100,110))
+		VJ.EmitSound(self,self.SoundTbl_Fire,90,self:VJ_DecideSoundPitch(100,110))
 		
 		ParticleEffect("vj_rifle_full_blue",startpos,self:GetAngles(),self)
 		local FireLight1 = ents.Create("light_dynamic")
@@ -264,7 +264,7 @@ function ENT:Tank_CustomOnThink()
 						combine:SetPos(self:GetPos() + self:GetForward()*(i <= 2 and -160 or (i <= 4 and -220 or -290)) + self:GetRight()*opSide + self:GetUp()*5)
 						combine:SetAngles(Angle(0, self:GetAngles().y + 180, 0))
 						combine:Spawn()
-						combine:Give(VJ_PICK({"weapon_vj_9mmpistol","weapon_vj_smg1"}))
+						combine:Give(VJ.PICK({"weapon_vj_9mmpistol","weapon_vj_smg1"}))
 						combine:VJ_DoSetEnemy(ene, true)
 						combine:SetState(VJ_STATE_FREEZE)
 						timer.Simple(0.2, function()

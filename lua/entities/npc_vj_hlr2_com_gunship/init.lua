@@ -109,13 +109,13 @@ function ENT:BarrageFire()
 			FireLight1:Fire("Kill","",0.07)
 			self:DeleteOnRemove(FireLight1)
 			if i == 20 then
-				VJ_CreateSound(self,"npc/combine_gunship/attack_stop2.wav",100)
+				VJ.CreateSound(self,"npc/combine_gunship/attack_stop2.wav",100)
 				self:VJ_ACT_PLAYACTIVITY(ACT_VM_RELOAD,false,false,false)
 			end
 		else
 			timer.Remove("vj_timer_fire_" .. self:EntIndex())
 			self.NextFireT = CurTime() +1
-			VJ_CreateSound(self,"npc/combine_gunship/attack_stop2.wav",100)
+			VJ.CreateSound(self,"npc/combine_gunship/attack_stop2.wav",100)
 			self:VJ_ACT_PLAYACTIVITY(ACT_VM_RELOAD,false,false,false)
 		end
 	end)
@@ -127,7 +127,7 @@ function ENT:CustomAttack()
 		if dist <= 4000 && self:Visible(self:GetEnemy()) then
 			if CurTime() > self.NextFireT then
 				self:BarrageFire()
-				VJ_CreateSound(self,"npc/combine_gunship/attack_start2.wav",100)
+				VJ.CreateSound(self,"npc/combine_gunship/attack_start2.wav",100)
 				self.NextFireT = CurTime() +8
 			end
 		end
@@ -244,11 +244,11 @@ function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
 	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,deathCorpse,5)
 
 	local function Explode(ent,pos)
-		VJ_EmitSound(ent,"vj_fire/explosion2.wav",100,100)
+		VJ.EmitSound(ent,"vj_fire/explosion2.wav",100,100)
 		util.BlastDamage(ent,ent,pos,200,40)
 		util.ScreenShake(pos, 100, 200, 1, 2500)
 		ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil)
-		if math.random(1,4) == 1 && ent:GetClass() != "prop_ragdoll" then VJ_CreateSound(ent,"npc/combine_gunship/gunship_pain.wav",90,math.random(95,110)) end
+		if math.random(1,4) == 1 && ent:GetClass() != "prop_ragdoll" then VJ.CreateSound(ent,"npc/combine_gunship/gunship_pain.wav",90,math.random(95,110)) end
 	end
 
 	function deathCorpse:Think()
@@ -290,7 +290,7 @@ function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
 		if GetConVar("ai_serverragdolls"):GetInt() == 1 then
 			undo.ReplaceEntity(self, self.Corpse)
 		else
-			VJ_AddCorpse(self.Corpse)
+			VJ.Corpse_Add(self.Corpse)
 			//hook.Call("VJ_CreateSNPCCorpse", nil, self.Corpse, self)
 			if GetConVar("vj_npc_undocorpse"):GetInt() == 1 then undo.ReplaceEntity(self, self.Corpse) end -- Undoable
 		end
@@ -357,7 +357,7 @@ function ENT:WarpCannon()
 	hitTime = math.Clamp(hitTime,0,1) ^0.5
 	timer.Simple(hitTime,function()
 		if IsValid(self) then
-			util.VJ_SphereDamage(self,self,attackpos,300,500,bit.bor(DMG_DISSOLVE,DMG_BLAST),true,false,{Force=175})
+			VJ.ApplyRadiusDamage(self,self,attackpos,300,500,bit.bor(DMG_DISSOLVE,DMG_BLAST),true,false,{Force=175})
 			local FireLight1 = ents.Create("light_dynamic")
 			FireLight1:SetKeyValue("brightness", "8")
 			FireLight1:SetKeyValue("distance", "300")
@@ -374,7 +374,7 @@ function ENT:WarpCannon()
 	end)
 	timer.Simple(0.5,function()
 		if IsValid(self) then
-			VJ_EmitSound(self,"npc/strider/fire.wav",130,self:VJ_DecideSoundPitch(100,110))
+			VJ.EmitSound(self,"npc/strider/fire.wav",130,self:VJ_DecideSoundPitch(100,110))
 			self.CarpetBombing = false
 
 			ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,2)
@@ -396,7 +396,7 @@ function ENT:WarpCannon()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:StartWarpCannon()
-	VJ_CreateSound(self,"npc/strider/charging.wav",110)
+	VJ.CreateSound(self,"npc/strider/charging.wav",110)
 
 	local muz = ents.Create("env_sprite")
 	muz:SetKeyValue("model","effects/strider_bulge_dx60.vmt")

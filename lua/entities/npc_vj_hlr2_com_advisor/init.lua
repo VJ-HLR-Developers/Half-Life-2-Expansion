@@ -141,9 +141,9 @@ function ENT:ShieldCode(bEnable)
 	self:StopParticles()
 	ParticleEffect("aurora_shockwave",self:GetPos() + self:OBBCenter(),Angle(0,0,0),nil)
 	ParticleEffect("electrical_arc_01_system",self:GetPos() + self:OBBCenter(),Angle(0,0,0),nil)
-	VJ_CreateSound(self,"ambient/energy/whiteflash.wav",120)
+	VJ.CreateSound(self,"ambient/energy/whiteflash.wav",120)
 	for _, v in ipairs(ents.FindInSphere(self:GetPos(),8000)) do
-		if VJ_IsProp(v) && self:Visible(v) then
+		if VJ.IsProp(v) && self:Visible(v) then
 			local phys = v:GetPhysicsObject()
 			if IsValid(phys) && phys:GetMass() <= 6000 then
 				constraint.RemoveConstraints(v, "Weld")
@@ -175,8 +175,8 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:GrabEntity(ent)
 	table.insert(self.tbl_HeldEntities,ent)
-	VJ_EmitSound(self,"vj_hlr/hl2_npc/advisor/advisor_blast6.wav")
-	VJ_EmitSound(ent,"ambient/energy/whiteflash.wav")
+	VJ.EmitSound(self,"vj_hlr/hl2_npc/advisor/advisor_blast6.wav")
+	VJ.EmitSound(ent,"ambient/energy/whiteflash.wav")
 	ent:GetPhysicsObject():ApplyForceCenter(ent:GetPos() +Vector(0,0,ent:GetPhysicsObject():GetMass() *1.5))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -185,7 +185,7 @@ function ENT:CustomAttack()
 		//print("SEARCH ----")
 		local pTbl = {} -- Table of props that it found
 		for _, v in ipairs(ents.FindInSphere(self:GetEnemy():GetPos(), 2000)) do
-			if VJ_IsProp(v) && self:Visible(v) && self:GetEnemy():Visible(v) then
+			if VJ.IsProp(v) && self:Visible(v) && self:GetEnemy():Visible(v) then
 				local phys = v:GetPhysicsObject()
 				if IsValid(phys) && phys:GetMass() <= 4000 && v.BeingControlledByAdvisor != true then
 					//print("Prop -", v)
@@ -196,7 +196,7 @@ function ENT:CustomAttack()
 		//print(pTbl)
 		if #pTbl > 0 then -- If greater then 1, then we found an object!
 			self:SetNW2Bool("PsionicEffect", true)
-			VJ_EmitSound(self,"vj_hlr/hl2_npc/advisor/advisorattack03.wav", 95)
+			VJ.EmitSound(self,"vj_hlr/hl2_npc/advisor/advisorattack03.wav", 95)
 			self.PsionicAttacking = true
 			self:SetState(VJ_STATE_ONLY_ANIMATION)
 			for _, v in ipairs(pTbl) do
@@ -219,7 +219,7 @@ function ENT:CustomAttack()
 					if IsValid(v) then
 						local phys = v:GetPhysicsObject()
 						if IsValid(phys) then
-							VJ_EmitSound(self,"vj_hlr/hl2_npc/advisor/advisorattack02.wav", 95)
+							VJ.EmitSound(self,"vj_hlr/hl2_npc/advisor/advisorattack02.wav", 95)
 							v.BeingControlledByAdvisor = false
 							v:SetNW2Bool("BeingControlledByAdvisor", false)
 							phys:EnableGravity(true)
@@ -286,20 +286,20 @@ function ENT:CreateAlly()
 	})
 
 	local spawnpos = tr.HitPos +tr.HitNormal *30
-	local type = VJ_PICK(self.Spawnables)
+	local type = VJ.PICK(self.Spawnables)
 	local ally = ents.Create(type.ent)
 	ally:SetPos(spawnpos +Vector(0,0,type.offset))
 	ally:SetAngles(self:GetAngles())
 	ally:Spawn()
 	ally:Activate()
 	if type.weapons then
-		ally:Give(VJ_PICK(type.weapons))
+		ally:Give(VJ.PICK(type.weapons))
 		ally:GetActiveWeapon():Equip(ally)
 	end
 	
 	ParticleEffect("aurora_shockwave",ally:GetPos(),Angle(0,0,0),nil)
 	ParticleEffect("electrical_arc_01_system",ally:GetPos(),Angle(0,0,0),nil)
-	VJ_EmitSound(ally,"ambient/energy/whiteflash.wav",90)
+	VJ.EmitSound(ally,"ambient/energy/whiteflash.wav",90)
 	return ally
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -309,7 +309,7 @@ function ENT:CustomOnThink_AIEnabled()
 		if string.find(v:GetClass(),"rocket") or string.find(v:GetClass(),"missile") then
 			ParticleEffect("aurora_shockwave",v:GetPos(),Angle(0,0,0),nil)
 			ParticleEffect("electrical_arc_01_system",v:GetPos(),Angle(0,0,0),nil)
-			VJ_EmitSound(v,"ambient/energy/whiteflash.wav",90)
+			VJ.EmitSound(v,"ambient/energy/whiteflash.wav",90)
 			-- if v.SetDeathVariablesTrue then v:SetDeathVariablesTrue({HitPos=v:GetPos()},nil,true) end
 			-- v:Fire("Kill")
 			SafeRemoveEntity(v)

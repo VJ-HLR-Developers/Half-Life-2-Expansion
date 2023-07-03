@@ -144,7 +144,7 @@ function ENT:CustomOnThink()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRangeAttack_AfterStartTimer(seed)
-	timer.Simple(VJ_GetSequenceDuration(self,ACT_ARM),function()
+	timer.Simple(VJ.AnimDuration(self,ACT_ARM),function()
 		if IsValid(self) then
 			self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,false)
 		end
@@ -154,7 +154,7 @@ end
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	-- Absorb bullet damage
 	if dmginfo:IsBulletDamage() then
-		VJ_EmitSound(self, "vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav", 70)
+		VJ.EmitSound(self, "vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav", 70)
 		if math.random(1,3) == 1 then
 			dmginfo:ScaleDamage(0.50)
 			local spark = ents.Create("env_spark")
@@ -196,7 +196,7 @@ function ENT:WarpCannon(tPos)
 	hitTime = math.Clamp(hitTime,0,1) ^0.5
 	timer.Simple(hitTime,function()
 		if IsValid(self) then
-			util.VJ_SphereDamage(self,self,attackpos,300,500,bit.bor(DMG_DISSOLVE,DMG_BLAST),true,false,{Force=175})
+			VJ.ApplyRadiusDamage(self,self,attackpos,300,500,bit.bor(DMG_DISSOLVE,DMG_BLAST),true,false,{Force=175})
 			local FireLight1 = ents.Create("light_dynamic")
 			FireLight1:SetKeyValue("brightness", "8")
 			FireLight1:SetKeyValue("distance", "300")
@@ -213,7 +213,7 @@ function ENT:WarpCannon(tPos)
 	end)
 	timer.Simple(0.49,function()
 		if IsValid(self) then
-			VJ_EmitSound(self,"npc/strider/fire.wav",130,self:VJ_DecideSoundPitch(100,110))
+			VJ.EmitSound(self,"npc/strider/fire.wav",130,self:VJ_DecideSoundPitch(100,110))
 
 			ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,2)
 			timer.Simple(0.2,function() if IsValid(self) then self:StopParticles() end end)
@@ -234,7 +234,7 @@ function ENT:WarpCannon(tPos)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:StartWarpCannon(doLastPos)
-	VJ_CreateSound(self,"npc/strider/charging.wav",110)
+	VJ.CreateSound(self,"npc/strider/charging.wav",110)
 
 	local muz = ents.Create("env_sprite")
 	muz:SetKeyValue("model","effects/strider_bulge_dx60.vmt")

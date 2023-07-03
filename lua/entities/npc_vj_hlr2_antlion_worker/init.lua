@@ -40,12 +40,12 @@ ENT.SoundTbl_Death = {
 function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
 	timer.Simple(0.89999995708466,function()
 		if IsValid(self) then
-			VJ_EmitSound(self,"npc/antlion/antlion_burst" .. math.random(1,2) .. ".wav",75,100)
+			VJ.EmitSound(self,"npc/antlion/antlion_burst" .. math.random(1,2) .. ".wav",75,100)
 			ParticleEffect("antlion_gib_02",self:GetPos(),Angle(0,0,0),nil)
 			ParticleEffect("antlion_gib_02",self:GetPos(),Angle(0,0,0),nil)
 			local find = ents.FindInSphere(self:GetPos(),200)
 			for index,ent in pairs(find) do
-				if (ent:IsNPC() && ent != self && !VJ_HasValue(ent.VJ_NPC_Class,"CLASS_ANTLION")) || (ent:IsPlayer() && !VJ_CVAR_IGNOREPLAYERS) then
+				if (ent:IsNPC() && ent != self && !VJ.HasValue(ent.VJ_NPC_Class,"CLASS_ANTLION")) || (ent:IsPlayer() && !VJ_CVAR_IGNOREPLAYERS) then
 					local dmginfo = DamageInfo()
 					dmginfo:SetDamage(55)
 					dmginfo:SetDamageType(DMG_ACID)

@@ -189,9 +189,9 @@ function ENT:CustomRangeAttackCode()
 	util.ScreenShake(attackpos, 16, 200, 2, 1500)
 	util.ScreenShake(self:GetPos(),12,100,0.4,800)
 	sound.Play("weapons/mortar/mortar_explode3.wav",attackpos,80,100)
-	util.VJ_SphereDamage(self,self,attackpos,80,50,bit.bor(DMG_BLAST,DMG_BURN,DMG_DISSOLVE,DMG_AIRBOAT),true,false,{Force = 150})
+	VJ.ApplyRadiusDamage(self,self,attackpos,80,50,bit.bor(DMG_BLAST,DMG_BURN,DMG_DISSOLVE,DMG_AIRBOAT),true,false,{Force = 150})
 	
-	VJ_EmitSound(self,self.Turret_FireSound,120,self:VJ_DecideSoundPitch(100,110))
+	VJ.EmitSound(self,self.Turret_FireSound,120,self:VJ_DecideSoundPitch(100,110))
 	self:VJ_ACT_PLAYACTIVITY("vjseq_fire",true,0.15)
 	local gest = self:AddGestureSequence(self:LookupSequence("fire"))
 	self:SetLayerPriority(gest,1)
@@ -222,7 +222,7 @@ function ENT:CustomOnAlert(ent)
 	end)
 	//self.NextResetEnemyT = CurTime() + 1 -- Make sure it doesn't reset the enemy right away
 	self:VJ_ACT_PLAYACTIVITY({"deploy"}, true, false)
-	VJ_EmitSound(self,{"npc/turret_floor/click1.wav"}, 70, 100)
+	VJ.EmitSound(self,{"npc/turret_floor/click1.wav"}, 70, 100)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
@@ -232,7 +232,7 @@ function ENT:CustomOnThink()
 		self.turret_turningsd:SetSoundLevel(60)
 		self.turret_turningsd:PlayEx(1, 100)
 	else
-		VJ_STOPSOUND(self.turret_turningsd)
+		VJ.STOPSOUND(self.turret_turningsd)
 	end
 	self.Turret_CurrentParameter = parameter
 
@@ -242,12 +242,12 @@ function ENT:CustomOnThink()
 			gen.DoorState = 2
 			gen:ResetSequence(gen:LookupSequence("close"))
 			self.Bullseye:AddFlags(FL_NOTARGET)
-			if doorSound then VJ_CreateSound(gen,"vj_hlr/hl2_npc/ioncannon/ol09_gungrate_open.wav",80) end
+			if doorSound then VJ.CreateSound(gen,"vj_hlr/hl2_npc/ioncannon/ol09_gungrate_open.wav",80) end
 		elseif self.Turret_StandDown && gen.DoorState != 1 then
 			gen.DoorState = 1
 			gen:ResetSequence(gen:LookupSequence("open"))
 			self.Bullseye:RemoveFlags(FL_NOTARGET)
-			if doorSound then VJ_CreateSound(gen,"vj_hlr/hl2_npc/ioncannon/ol09_gungrate_open.wav",80) end
+			if doorSound then VJ.CreateSound(gen,"vj_hlr/hl2_npc/ioncannon/ol09_gungrate_open.wav",80) end
 		end
 	end
 end
@@ -258,7 +258,7 @@ function ENT:CustomOn_PoseParameterLookingCode(pitch, yaw, roll)
 		self.Turret_HasLOS = false
 	else
 		if self.Turret_HasLOS == false && IsValid(self:GetEnemy()) then -- If it just got LOS, then play the gun "activate" sound
-			VJ_EmitSound(self,{"npc/turret_floor/active.wav"}, 70, 100)
+			VJ.EmitSound(self,{"npc/turret_floor/active.wav"}, 70, 100)
 		end
 		self.Turret_HasLOS = true
 	end
@@ -284,7 +284,7 @@ function ENT:CustomOnThink_AIEnabled()
 		if !IsValid(self:GetEnemy()) or scan == true then
 			-- Playing a beeping noise
 			if self.Turret_NextScanBeepT < CurTime() then
-				VJ_EmitSound(self, {"npc/roller/code2.wav"}, 75, 100)
+				VJ.EmitSound(self, {"npc/roller/code2.wav"}, 75, 100)
 				self.Turret_NextScanBeepT = CurTime() + 1
 			end
 			-- LEFT TO RIGHT
@@ -309,7 +309,7 @@ function ENT:CustomOnThink_AIEnabled()
 		if self.Alerted == false && self.Turret_StandDown == false then
 			self.Turret_StandDown = true
 			self:VJ_ACT_PLAYACTIVITY({"retire"}, true, 1)
-			VJ_EmitSound(self,{"npc/turret_floor/retract.wav"}, 70, 100)
+			VJ.EmitSound(self,{"npc/turret_floor/retract.wav"}, 70, 100)
 		end
 		if self.Turret_StandDown == true then
 			self.AnimTbl_IdleStand = {ACT_IDLE}
@@ -320,7 +320,7 @@ end
 local defAng = Angle(0, 0, 0)
 --
 function ENT:CustomOnKilled(dmginfo, hitgroup)
-	VJ_EmitSound(self,"vj_hlr/hl2_npc/ioncannon/ol09_biggundestroy.wav",110)
+	VJ.EmitSound(self,"vj_hlr/hl2_npc/ioncannon/ol09_biggundestroy.wav",110)
 	local function explode(ent)
 		ent = ent or self
 		if !IsValid(ent) then return end

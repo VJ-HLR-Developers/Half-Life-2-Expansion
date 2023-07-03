@@ -61,7 +61,7 @@ function ENT:SetSlump(doSlump)
 			filter = self
 		})
 		self.SlumpSet = tr.Hit && "a" or "b"
-		self.AnimTbl_IdleStand = {VJ_SequenceToActivity(self,"slump_" .. self.SlumpSet)}
+		self.AnimTbl_IdleStand = {VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)}
 		self:SetMaxLookDistance(150)
 		self.SightAngle = 180
 		self:AddFlags(FL_NOTARGET)
@@ -115,7 +115,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "step" then
-		VJ_EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
+		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
 	elseif key == "pin" then
 		self:CreateGrenade()
 	elseif key == "melee" then
@@ -182,7 +182,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 		grenent.FussTime = (oldEnt.CurFuss -CurTime())
 		grenent:Spawn()
 		grenent.SoundTbl_Idle = {"weapons/grenade/tick1.wav"}
-		grenent.IdleSoundPitch = VJ_Set(100, 100)
+		grenent.IdleSoundPitch = VJ.SET(100, 100)
 		
 		local redGlow = ents.Create("env_sprite")
 		redGlow:SetKeyValue("model", "vj_base/sprites/vj_glow1.vmt")
@@ -198,7 +198,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 		util.SpriteTrail(grenent, 1, Color(200,0,0), true, 15, 15, 0.35, 1/(6+6)*0.5, "VJ_Base/sprites/vj_trial1.vmt")
 	end
 
-	VJ_CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
+	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
 	local dmgtype = dmginfo:GetDamageType()
 	if hitgroup == HITGROUP_HEAD then
 		ent:SetBodygroup(1,0)
@@ -231,8 +231,8 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnPlayCreateSound(sdData, sdFile)
-	if VJ_HasValue(self.SoundTbl_Pain,sdFile) or VJ_HasValue(self.DefaultSoundTbl_MeleeAttack,sdFile) then return end
-	VJ_EmitSound(self,"npc/combine_soldier/vo/on" .. math.random(1,2) .. ".wav")
+	if VJ.HasValue(self.SoundTbl_Pain,sdFile) or VJ.HasValue(self.DefaultSoundTbl_MeleeAttack,sdFile) then return end
+	VJ.EmitSound(self,"npc/combine_soldier/vo/on" .. math.random(1,2) .. ".wav")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CreateGrenade()
@@ -248,7 +248,7 @@ function ENT:CreateGrenade()
 	grenent.CurFuss = CurTime() +3.5
 	grenent:Spawn()
 	grenent.SoundTbl_Idle = {"weapons/grenade/tick1.wav"}
-	grenent.IdleSoundPitch = VJ_Set(100, 100)
+	grenent.IdleSoundPitch = VJ.SET(100, 100)
 	self:DeleteOnRemove(grenent)
 	
 	local redGlow = ents.Create("env_sprite")
@@ -280,15 +280,15 @@ function ENT:GrenadeCode()
 	if self:IsBusy() or self.GrenadePulled == true then return end
 	self.GrenadePulled = true
 	self.AnimTbl_IdleStand = {"Idle_Grenade"}
-	self.AnimTbl_Run = {VJ_SequenceToActivity(self,"Run_All_grenade")}
-	self.AnimTbl_Walk = {VJ_SequenceToActivity(self,"walk_All_Grenade")}
-	VJ_CreateSound(self,"npc/zombine/zombine_readygrenade" .. math.random(1,2) .. ".wav",80,100)
+	self.AnimTbl_Run = {VJ.SequenceToActivity(self,"Run_All_grenade")}
+	self.AnimTbl_Walk = {VJ.SequenceToActivity(self,"walk_All_Grenade")}
+	VJ.CreateSound(self,"npc/zombine/zombine_readygrenade" .. math.random(1,2) .. ".wav",80,100)
 	self:VJ_ACT_PLAYACTIVITY("pullGrenade",true,false,true)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SpawnBloodParticles(dmginfo, hitgroup)
 	if hitgroup == HITGROUP_HEAD then
-		local p_name = VJ_PICK(self.CustomBlood_Particle)
+		local p_name = VJ.PICK(self.CustomBlood_Particle)
 		if p_name == false then return end
 		
 		local dmg_pos = dmginfo:GetDamagePosition()
@@ -322,7 +322,7 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 
 		dmginfo:ScaleDamage(0.5)
 	end
-	if self.HasSounds == true && self.HasImpactSounds == true then VJ_EmitSound(self,"vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav",70) end
+	if self.HasSounds == true && self.HasImpactSounds == true then VJ.EmitSound(self,"vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav",70) end
 
 	if dmginfo:GetInflictor() == self.GrenadeEntity then
 		dmginfo:ScaleDamage(500)

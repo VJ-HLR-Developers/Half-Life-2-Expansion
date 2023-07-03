@@ -125,7 +125,7 @@ function ENT:CustomOnCallForHelp(ally)
 	if ally:GetClass() == self:GetClass() then
 		if !ally:BusyWithActivity() && !IsValid(ally:GetEnemy()) then
 			ally:PlaySoundSystem("CallForHelp")
-			local pickanim = VJ_PICK(ally.AnimTbl_CallForHelp)
+			local pickanim = VJ.PICK(ally.AnimTbl_CallForHelp)
 			ally:VJ_ACT_PLAYACTIVITY(pickanim,ally.CallForHelpStopAnimations,ally:DecideAnimationLength(pickanim,ally.CallForHelpStopAnimationsTime),ally.CallForHelpAnimationFaceEnemy,ally.CallForHelpAnimationDelay,{PlayBackRate=ally.CallForHelpAnimationPlayBackRate,PlayBackRateCalculated=true})
 			ally.NextCallForHelpAnimationT = CurTime() +ally.NextCallForHelpAnimationTime
 		end
@@ -167,7 +167,7 @@ function ENT:FireFlechette()
 			proj:SetAngles(vel:GetNormal():Angle())
 		end
 
-		VJ_EmitSound(self,"npc/ministrider/ministrider_fire1.wav",105,100)
+		VJ.EmitSound(self,"npc/ministrider/ministrider_fire1.wav",105,100)
 		ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,self.CurrentEye)
 	
 		local FireLight1 = ents.Create("light_dynamic")
@@ -252,7 +252,7 @@ function ENT:CustomOnThink()
 				if checkdist.Backward == true then randmove[#randmove+1] = "Backward" end
 				if checkdist.Right == true then randmove[#randmove+1] = "Right" end
 				if checkdist.Left == true then randmove[#randmove+1] = "Left" end
-				local pickmove = VJ_PICK(randmove)
+				local pickmove = VJ.PICK(randmove)
 				if pickmove == "Backward" then self:SetLastPosition(self:GetPos() +self:GetForward() *400) end
 				if pickmove == "Right" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
 				if pickmove == "Left" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end

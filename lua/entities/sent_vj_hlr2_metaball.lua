@@ -84,7 +84,7 @@ function ENT:Think()
 		-- self:MoveTowardsTargetEntity(187,self:GetOwner():GetEnemy())
 	-- end
 	-- util.ParticleTracerEx("Weapon_Combine_Ion_Cannon_Beam",self:GetPos(), self.LastPosition, false, self:EntIndex(), 0)
-	-- VJ_CreateTestObject(self.LastPosition, Angle(0,0,0), Color(145,255,0), 5)
+	-- VJ.DEBUG_TempEnt(self.LastPosition, Angle(0,0,0), Color(145,255,0), 5)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ModifyVelocityForSurface(flInterval,flSpeed)
@@ -180,7 +180,7 @@ end
 function ENT:PhysicsCollide(data, physobj)
 	local velSpeed = physobj:GetVelocity():Length()
 	if velSpeed > 50 then
-		VJ_EmitSound(self,"ambient/water/water_spray" .. math.random(1,3) .. ".wav",75,math.random(90,110))
+		VJ.EmitSound(self,"ambient/water/water_spray" .. math.random(1,3) .. ".wav",75,math.random(90,110))
 	end
 	local hitEnt = data.HitEntity
 	if IsValid(hitEnt) && (hitEnt:IsNPC() or hitEnt:IsPlayer()) then

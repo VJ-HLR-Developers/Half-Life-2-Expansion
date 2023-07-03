@@ -8,7 +8,7 @@ include('shared.lua')
 ENT.Model = {"models/vj_hlr/hl2b/combine_assassin.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 65
 ENT.HullType = HULL_HUMAN
-ENT.MaxJumpLegalDistance = VJ_Set(520,620)
+ENT.MaxJumpLegalDistance = VJ.SET(520,620)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
@@ -80,15 +80,15 @@ function ENT:CustomOnInitialize()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnPlayCreateSound(sdData, sdFile)
-	if VJ_HasValue(self.SoundTbl_BeforeMeleeAttack,sdFile) then return end
-	VJ_EmitSound(self, "npc/combine_soldier/vo/on"..math.random(1,2)..".wav")
-	timer.Simple(SoundDuration(sdFile), function() if IsValid(self) && sdData:IsPlaying() then VJ_EmitSound(self,"npc/combine_soldier/vo/off"..math.random(1,3)..".wav") end end)
+	if VJ.HasValue(self.SoundTbl_BeforeMeleeAttack,sdFile) then return end
+	VJ.EmitSound(self, "npc/combine_soldier/vo/on"..math.random(1,2)..".wav")
+	timer.Simple(SoundDuration(sdFile), function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self,"npc/combine_soldier/vo/off"..math.random(1,3)..".wav") end end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "Foot" then
-		VJ_EmitSound(self,"npc/footsteps/hardboot_generic2.wav",72,100)
-		VJ_EmitSound(self,{"npc/stalker/stalker_footstep_left1.wav","npc/stalker/stalker_footstep_left2.wav","npc/stalker/stalker_footstep_right1.wav","npc/stalker/stalker_footstep_right2.wav"},75)
+		VJ.EmitSound(self,"npc/footsteps/hardboot_generic2.wav",72,100)
+		VJ.EmitSound(self,{"npc/stalker/stalker_footstep_left1.wav","npc/stalker/stalker_footstep_left2.wav","npc/stalker/stalker_footstep_right1.wav","npc/stalker/stalker_footstep_right2.wav"},75)
 	end
 	if key == "left" or key == "right" then
 		local wep = self:GetActiveWeapon()
@@ -159,13 +159,13 @@ function ENT:Dodge()
 		if checkdist.Right == true then randmove[#randmove+1] = "Right" end
 		if checkdist.Left == true then randmove[#randmove+1] = "Left" end
 		if checkdist.Forward == true then randmove[#randmove+1] = "Forward" end
-		local pickmove = VJ_PICK(randmove)
+		local pickmove = VJ.PICK(randmove)
 		local anim = "flipback"
 		if pickmove == "Right" then anim = "FlipRight" end
 		if pickmove == "Left" then anim = "FlipLeft" end
 		if pickmove == "Forward" then anim = "FlipForwardB" end
 		if type(pickmove) == "table" && #pickmove == 4 then
-			anim = VJ_PICK({"flipback","FlipRight","FlipLeft","FlipForwardB"})
+			anim = VJ.PICK({"flipback","FlipRight","FlipLeft","FlipForwardB"})
 		end
 		if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
 			self:VJ_ACT_PLAYACTIVITY(anim,true,false,false)

@@ -62,7 +62,7 @@ function ENT:ComputeCentroid()
 
 	self.CentroidPos = tempCentroid /count
 	self.CentroidPos = self:GetPos() +Vector(0,0,40)
-	VJ_CreateTestObject(self.CentroidPos,Angle(0,0,0), Color(255,0,0), 5)
+	VJ.DEBUG_TempEnt(self.CentroidPos,Angle(0,0,0), Color(255,0,0), 5)
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DoBlobBatchedAI(iStart,iEnd)

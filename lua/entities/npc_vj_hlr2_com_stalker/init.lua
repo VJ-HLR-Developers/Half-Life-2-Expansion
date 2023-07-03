@@ -87,7 +87,7 @@ function ENT:FireLaser()
 			elec:SetAttachment(1)
 			util.Effect("VJ_HLR_StalkerBeam",elec)
 
-			util.VJ_SphereDamage(self,self,hitpos,30,2,DMG_BURN,true,false,{Force=1})
+			VJ.ApplyRadiusDamage(self,self,hitpos,30,2,DMG_BURN,true,false,{Force=1})
 		end
 	end
 end
@@ -107,11 +107,11 @@ function ENT:CustomOnThink()
 			-- self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,true)
 			-- self.NextLAnimT = CurTime() +self:SequenceDuration(self:LookupSequence("rangeattack")) -0.1
 		-- end
-		local moveCheck = VJ_PICK(self:VJ_CheckAllFourSides(math.random(150,400),true,"0111"))
+		local moveCheck = VJ.PICK(self:VJ_CheckAllFourSides(math.random(150,400),true,"0111"))
 		if moveCheck && math.random(1,50) == 1 then
 			self:StopMoving()
 			self:SetLastPosition(moveCheck)
-			self:VJ_TASK_GOTO_LASTPOS(VJ_PICK({"TASK_RUN_PATH", "TASK_WALK_PATH"}), function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.ConstantlyFaceEnemy = true end)
+			self:VJ_TASK_GOTO_LASTPOS(VJ.PICK({"TASK_RUN_PATH", "TASK_WALK_PATH"}), function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.ConstantlyFaceEnemy = true end)
 		end
 		self:FaceCertainEntity(self:GetEnemy(),true)
 		self:FireLaser()
@@ -127,7 +127,7 @@ function ENT:CustomOnThink()
 			if self:Visible(ent) && ent:GetPos():Distance(self:GetPos()) < self.NoChaseAfterCertainRange_FarDistance then
 				if !self.IsLaserAttacking then
 					self.IsLaserAttacking = true
-					VJ_EmitSound(self,"vj_hlr/hl2_npc/beta_stalker/laser_start.wav",70,100)
+					VJ.EmitSound(self,"vj_hlr/hl2_npc/beta_stalker/laser_start.wav",70,100)
 				end
 			else
 				if self.IsLaserAttacking then
@@ -139,7 +139,7 @@ function ENT:CustomOnThink()
 		if self.VJ_TheController:KeyDown(IN_ATTACK2) then
 			if !self.IsLaserAttacking then
 				self.IsLaserAttacking = true
-				VJ_EmitSound(self,"vj_hlr/hl2_npc/beta_stalker/laser_start.wav",70,100)
+				VJ.EmitSound(self,"vj_hlr/hl2_npc/beta_stalker/laser_start.wav",70,100)
 			end
 		else
 			if self.IsLaserAttacking then

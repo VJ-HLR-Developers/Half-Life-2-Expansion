@@ -46,7 +46,7 @@ function ENT:SetSlump(doSlump)
 	if doSlump then
 		self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
 		self.NextIdleStandTime = 0
-		self.AnimTbl_IdleStand = {VJ_SequenceToActivity(self,"slump_a")}
+		self.AnimTbl_IdleStand = {VJ.SequenceToActivity(self,"slump_a")}
 		self:SetMaxLookDistance(150)
 		self.SightAngle = 180
 		self:AddFlags(FL_NOTARGET)
@@ -141,16 +141,16 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "step" then
-		VJ_EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
+		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
 		if self.SoundTbl_FootStepAdd then
-			VJ_EmitSound(self,self.SoundTbl_FootStepAdd,self.FootStepSoundLevel)
+			VJ.EmitSound(self,self.SoundTbl_FootStepAdd,self.FootStepSoundLevel)
 		end
 	-- elseif key == "pickup" then
 		-- // Do something except not really
 	elseif key == "melee" then
 		self:MeleeAttackCode()
 		if self.IsBeta then
-			VJ_EmitSound(self,"vj_hlr/hl1_npc/bullchicken/bc_spithit3.wav")
+			VJ.EmitSound(self,"vj_hlr/hl1_npc/bullchicken/bc_spithit3.wav")
 
 			local pos,ang = self:GetBonePosition(53)
 			ParticleEffect("antlion_gib_01",pos,ang,nil)
@@ -178,14 +178,14 @@ function ENT:CustomAttack()
 		if dist <= 350 then
 			self:VJ_ACT_PLAYACTIVITY("headcrab2Leap",true,false,true)
 		else
-			VJ_CreateSound(self,self.SoundTbl_Warn,80)
+			VJ.CreateSound(self,self.SoundTbl_Warn,80)
 			sound.EmitHint(SOUND_DANGER, ent:GetPos(), 250, 1, self)
 			self:VJ_ACT_PLAYACTIVITY("ThrowWarning",true,false,true, 0, {OnFinish=function(interrupted, anim)
 				if interrupted then
 					return
 				end
 				self:VJ_ACT_PLAYACTIVITY("Throw",true,false,true)
-				VJ_CreateSound(self,self.SoundTbl_Throw,80)
+				VJ.CreateSound(self,self.SoundTbl_Throw,80)
 			end})
 		end
 		self.NextThrowT = CurTime() +math.random(8,12)
@@ -212,7 +212,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 		return false
 	end
 
-	VJ_CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
+	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
 	for i = 1,self.Headcrabs do
 		local crab = ents.Create(self.HeadcrabClass or "npc_vj_hlr2_headcrab_poison")
 		local enemy = self:GetEnemy()

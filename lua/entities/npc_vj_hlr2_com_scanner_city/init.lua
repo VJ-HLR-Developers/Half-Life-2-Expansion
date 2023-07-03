@@ -127,7 +127,7 @@ function ENT:CustomOnInitialize()
 	glowLight:Fire("SetParentAttachment","light",0)
 	self:DeleteOnRemove(glowLight)
 
-	self.ScanLoop = CreateSound(self,VJ_PICK{"npc/scanner/scanner_scan_loop1.wav","npc/scanner/scanner_scan_loop2.wav","npc/scanner/combat_scan_loop1.wav","npc/scanner/combat_scan_loop2.wav","npc/scanner/combat_scan_loop4.wav","npc/scanner/combat_scan_loop6.wav"})
+	self.ScanLoop = CreateSound(self,VJ.PICK{"npc/scanner/scanner_scan_loop1.wav","npc/scanner/scanner_scan_loop2.wav","npc/scanner/combat_scan_loop1.wav","npc/scanner/combat_scan_loop2.wav","npc/scanner/combat_scan_loop4.wav","npc/scanner/combat_scan_loop6.wav"})
 	self.ScanLoop:SetSoundLevel(70)
 
 -- dynamo_wheel: 0.5 ( -180, 180 )
@@ -150,10 +150,10 @@ function ENT:CustomAttack(ent, visible)
 	local dist = self.NearestPointToEnemyDistance
 	if dist <= self.NoChaseAfterCertainRange_FarDistance && CurTime() > self.NextCameraAttackT && !self.DoingCameraAttack && math.random(1,20) == 1 then
 		self.DoingCameraAttack = true
-		VJ_CreateSound(self,"npc/scanner/scanner_blip1.wav",75)
+		VJ.CreateSound(self,"npc/scanner/scanner_blip1.wav",75)
 		if !self.HLR_IsClawScanner then
 			self:VJ_ACT_PLAYACTIVITY("flare",true,false,false,0,{OnFinish=function(interrupted,anim)
-				VJ_CreateSound(self,"npc/scanner/scanner_photo1.wav",75)
+				VJ.CreateSound(self,"npc/scanner/scanner_photo1.wav",75)
 				for _,v in pairs(ents.FindInSphere(self:GetPos() +self:GetForward(),175)) do
 					if v:IsPlayer() then
 						v:ScreenFade(SCREENFADE.IN,Color(255,255,255),1,2)
@@ -175,7 +175,7 @@ function ENT:CustomAttack(ent, visible)
 				end})
 			end})
 		else
-			VJ_CreateSound(self,"npc/scanner/scanner_photo1.wav",75)
+			VJ.CreateSound(self,"npc/scanner/scanner_photo1.wav",75)
 			for _,v in pairs(ents.FindByClass("npc_vj_hlr2_com_strider")) do
 				if v:CheckRelationship(v) == D_LI && !IsValid(v:GetEnemy()) && !v:IsBusy() then
 					v:VJ_DoSetEnemy(self,true)
@@ -226,7 +226,7 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 	ParticleEffect("electrical_arc_01_system",self:GetPos(),Angle(0,0,0),nil)
 	util.BlastDamage(self,self,self:GetPos(),80,20)
 
-	VJ_EmitSound(self,"npc/scanner/scanner_electric2.wav",80)
+	VJ.EmitSound(self,"npc/scanner/scanner_electric2.wav",80)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()

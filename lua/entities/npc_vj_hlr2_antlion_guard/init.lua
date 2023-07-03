@@ -51,7 +51,7 @@ end
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(40,40,80),Vector(-40,-40,0))
 	self.IsDiging = false
-	self.ChargeAnim = VJ_SequenceToActivity(self, "charge_loop")
+	self.ChargeAnim = VJ.SequenceToActivity(self, "charge_loop")
 	self.Breath = CreateSound(self,"npc/antlion_guard/growl_idle.wav")
 	self.Breath:PlayEx(0.65,100)
 	self.ChargeBreath = CreateSound(self,"npc/antlion_guard/growl_high.wav")
@@ -68,7 +68,7 @@ function ENT:CustomOnInitialize()
 		self.IsDiging = true
 		self:SetNoDraw(true)
 		timer.Simple(0.000001,function()
-			self:VJ_ACT_PLAYACTIVITY("floor_break",true,VJ_GetSequenceDuration(self,"floor_break"),false)
+			self:VJ_ACT_PLAYACTIVITY("floor_break",true,VJ.AnimDuration(self,"floor_break"),false)
 			self.HasMeleeAttack = false
 			timer.Simple(0.5,function()
 				if IsValid(self) then
@@ -117,7 +117,7 @@ function ENT:CustomOnInitialize()
 					ParticleEffect("strider_impale_ground",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
 				end
 			end)
-			timer.Simple(VJ_GetSequenceDuration(self,"floor_break"),function()
+			timer.Simple(VJ.AnimDuration(self,"floor_break"),function()
 				if IsValid(self) then
 					self.IsDiging = false
 					self.HasMeleeAttack = true
@@ -218,7 +218,7 @@ function ENT:SummonAllies(anim)
 	self:VJ_ACT_PLAYACTIVITY(anim,true,false,false)
 	timer.Simple(0.5,function()
 		if IsValid(self) then
-			VJ_CreateSound(self,"npc/antlion_guard/angry2.wav",95,100)
+			VJ.CreateSound(self,"npc/antlion_guard/angry2.wav",95,100)
 			for i = 1,math.random(4,self.IsGuardian && 10 or 6) do
 				self:CreateAntlion(self:GetRight() *math.random(-350,350) +self:GetForward()*math.random(-350,350))
 			end
@@ -227,7 +227,7 @@ function ENT:SummonAllies(anim)
 	if anim == "bark" then
 		timer.Simple(1,function()
 			if IsValid(self) then
-				VJ_CreateSound(self,"npc/antlion_guard/angry3.wav",95,100)
+				VJ.CreateSound(self,"npc/antlion_guard/angry3.wav",95,100)
 			end
 		end)
 		timer.Simple(1.65,function()
@@ -238,7 +238,7 @@ function ENT:SummonAllies(anim)
 	else
 		timer.Simple(1.4,function()
 			if IsValid(self) then
-				VJ_CreateSound(self,"npc/antlion_guard/angry1.wav",95,100)
+				VJ.CreateSound(self,"npc/antlion_guard/angry1.wav",95,100)
 			end
 		end)
 	end
@@ -249,7 +249,7 @@ function ENT:CustomOnAlert(ent)
 	if self:BusyWithActivity() or self.Charging then return end
 	self.NextChargeT = CurTime() +5
 	if math.random(1,3) == 1 && CurTime() > self.NextSummonT then
-		self:SummonAllies(VJ_PICK({"bark","roar"}))
+		self:SummonAllies(VJ.PICK({"bark","roar"}))
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -333,7 +333,7 @@ function ENT:CustomOnThink_AIEnabled()
 		end
 		if ((controlled && self.VJ_TheController:KeyDown(IN_ATTACK2)) or !controlled) && ent:GetPos():Distance(self:GetPos()) <= 2500 && !self:BusyWithActivity() && CurTime() > self.NextChargeT && !self.Charging && ent:Visible(self) && self:GetSequenceName(self:GetSequence()) != "charge_startfast" then
 			self:VJ_ACT_PLAYACTIVITY("charge_startfast",true,false,true)
-			VJ_CreateSound(self,{"npc/antlion_guard/angry1.wav","npc/antlion_guard/angry2.wav","npc/antlion_guard/angry3.wav"},72)
+			VJ.CreateSound(self,{"npc/antlion_guard/angry1.wav","npc/antlion_guard/angry2.wav","npc/antlion_guard/angry3.wav"},72)
 			self.ChargeBreath:Play()
 			self.ChargeBreath:ChangeVolume(1,1)
 			timer.Simple(self:SequenceDuration(self:LookupSequence("charge_startfast")),function()
@@ -359,7 +359,7 @@ function ENT:StopCharging(crash)
 	self.NextChargeT = CurTime() +math.Rand(8,15)
 	if crash then
 		util.ScreenShake(self:GetPos(),16,100,2,1500)
-		VJ_CreateSound(self,"npc/antlion_guard/shove1.wav",75)
+		VJ.CreateSound(self,"npc/antlion_guard/shove1.wav",75)
 	end
 	self:VJ_ACT_PLAYACTIVITY(crash && {"charge_crash","charge_crash02","charge_crash03"} or "charge_stop",true,false,false)
 	self.AnimTbl_IdleStand = {ACT_IDLE}

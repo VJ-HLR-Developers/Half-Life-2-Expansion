@@ -121,7 +121,7 @@ function ENT:FireLaser()
 			elec:SetAttachment(1)
 			util.Effect("VJ_HLR_StalkerBeam",elec)
 
-			util.VJ_SphereDamage(self,self,hitpos,30,2,DMG_BURN,true,false,{Force=1})
+			VJ.ApplyRadiusDamage(self,self,hitpos,30,2,DMG_BURN,true,false,{Force=1})
 		end
 	end
 end
@@ -153,7 +153,7 @@ function ENT:CustomOnThink()
 			if self:Visible(ent) && (CurTime() > self.NextRunAwayT) && ent:GetPos():Distance(self:GetPos()) < self.NoChaseAfterCertainRange_FarDistance && ent:GetPos():Distance(self:GetPos()) > self.NoChaseAfterCertainRange_CloseDistance then
 				if !self.IsLaserAttacking then
 					self.IsLaserAttacking = true
-					VJ_EmitSound(self,"vj_hlr/hl2_npc/beta_stalker/laser_start.wav",70,100)
+					VJ.EmitSound(self,"vj_hlr/hl2_npc/beta_stalker/laser_start.wav",70,100)
 				end
 			else
 				if self.IsLaserAttacking then
@@ -165,7 +165,7 @@ function ENT:CustomOnThink()
 		if self.VJ_TheController:KeyDown(IN_ATTACK2) then
 			if !self.IsLaserAttacking then
 				self.IsLaserAttacking = true
-				VJ_EmitSound(self,"vj_hlr/hl2_npc/beta_stalker/laser_start.wav",70,100)
+				VJ.EmitSound(self,"vj_hlr/hl2_npc/beta_stalker/laser_start.wav",70,100)
 			end
 		else
 			if self.IsLaserAttacking then
@@ -187,7 +187,7 @@ end
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
 	if CurTime() > self.NextRunAwayT && !self.VJ_IsBeingControlled then
 		self:LaserReset()
-		VJ_CreateSound(self,self.SoundTbl_Scramble,80,100)
+		VJ.CreateSound(self,self.SoundTbl_Scramble,80,100)
 		self:VJ_TASK_COVER_FROM_ENEMY("TASK_RUN_PATH",function(x) x.RunCode_OnFail = function() self.NextRunAwayT = 0 end end)
 		self.NextRunAwayT = CurTime() +5
 	end

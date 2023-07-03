@@ -56,14 +56,14 @@ function ENT:SetSlump(doSlump)
 		self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
 		self.NextIdleStandTime = 0
 		self.SlumpSet = math.random(1,2) == 1 && "a" or "b"
-		self.AnimTbl_IdleStand = {VJ_SequenceToActivity(self,"slump_" .. self.SlumpSet)}
+		self.AnimTbl_IdleStand = {VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)}
 		self:SetMaxLookDistance(150)
 		self.SightAngle = 180
 		self:AddFlags(FL_NOTARGET)
 	else
 		self.NextIdleStandTime = 0
 		self.AnimTbl_IdleStand = {ACT_IDLE}
-		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. (self.SlumpSet == "a" && VJ_PICK({"a","c"}) or self.SlumpSet), true, false, false, 0, {OnFinish=function(interrupted, anim)
+		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. (self.SlumpSet == "a" && VJ.PICK({"a","c"}) or self.SlumpSet), true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
 		self:SetMaxLookDistance(10000)
@@ -95,14 +95,14 @@ function ENT:CustomOnInitialize()
 
 	self.IsLeaping = false
 	self.LeapDelay = 0
-	self.LeapLoop = VJ_SequenceToActivity(self,"leapstrike")
+	self.LeapLoop = VJ.SequenceToActivity(self,"leapstrike")
 	self.TotalHits = 0
 	self.LastHitT = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "step" then
-		VJ_EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
+		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
 	elseif key == "melee" then
 		self:MeleeAttackCode()
 	end
@@ -113,7 +113,7 @@ function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt)
 	self.TotalHits = self.TotalHits +1
 	self.LastHitT = CurTime() +0.6
 	if self.TotalHits >= 8 then
-		VJ_CreateSound(self,"npc/fast_zombie/fz_frenzy1.wav",80)
+		VJ.CreateSound(self,"npc/fast_zombie/fz_frenzy1.wav",80)
 		self:VJ_ACT_PLAYACTIVITY("BR2_Roar",true,false,true)
 	end
 	return false
@@ -166,7 +166,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 		return false
 	end
 
-	VJ_CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
+	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
 	local dmgtype = dmginfo:GetDamageType()
 	if hitgroup == HITGROUP_HEAD then
 		ent:SetBodygroup(1,0)

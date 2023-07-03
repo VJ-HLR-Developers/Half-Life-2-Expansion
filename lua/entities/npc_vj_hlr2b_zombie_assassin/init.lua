@@ -59,7 +59,7 @@ ENT.HasExtraMeleeAttackSounds = true
 ENT.BreathSoundLevel = 45
 ENT.GeneralSoundPitch1 = 75
 ENT.GeneralSoundPitch2 = 85
-ENT.InvestigateSoundPitch = VJ_Set(75, 80)
+ENT.InvestigateSoundPitch = VJ.SET(75, 80)
 
 ENT.AnimationSet = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -69,9 +69,9 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "step" then
-		VJ_EmitSound(self,self.SoundTbl_FootStep,60)
+		VJ.EmitSound(self,self.SoundTbl_FootStep,60)
 	elseif key == "step_run" then
-		VJ_EmitSound(self,self.SoundTbl_FootStep_Run,68)
+		VJ.EmitSound(self,self.SoundTbl_FootStep_Run,68)
 	elseif key == "melee" then
 		self:MeleeAttackCode()
 	end
@@ -84,7 +84,7 @@ function ENT:CustomOnThink_AIEnabled()
 	if IsValid(enemy) && !controlled then
 		local dist = self.NearestPointToEnemyDistance
 		if CurTime() > self.NextScreamT && math.random(1,15) == 1 && dist < 200 then
-			VJ_CreateSound(self,"^npc/stalker/go_alert2a.wav",100,65)
+			VJ.CreateSound(self,"^npc/stalker/go_alert2a.wav",100,65)
 			util.ScreenShake(self:GetPos(), 10, 120, 2, 400)
 			sound.EmitHint(SOUND_DANGER, self:GetPos(), 400, 1.5, self)
 			for _,v in pairs(ents.FindInSphere(self:GetPos(), 400)) do
@@ -122,7 +122,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 		return false
 	end
 
-	VJ_CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
+	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
 	local dmgtype = dmginfo:GetDamageType()
 	if hitgroup == HITGROUP_HEAD then
 		ent:SetBodygroup(0,1)

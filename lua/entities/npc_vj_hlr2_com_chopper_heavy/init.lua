@@ -98,8 +98,8 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomRangeAttackCode_AfterProjectileSpawn(ent)
 	self.RangeUseAttachmentForPosID = self.RangeUseAttachmentForPosID == "Damage0" && "Damage3" or "Damage0"
-	VJ_CreateSound(ent,"weapons/rpg/rocketfire1.wav",80)
-	VJ_CreateSound(ent,"vj_weapons/rpg/rpg_fire_far.wav",120)
+	VJ.CreateSound(ent,"weapons/rpg/rocketfire1.wav",80)
+	VJ.CreateSound(ent,"vj_weapons/rpg/rpg_fire_far.wav",120)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CreateFakeBullet(att)
@@ -122,7 +122,7 @@ function ENT:FireBullet()
 	sound.EmitHint(SOUND_DANGER, self:GetEnemy():GetPos(), 250, 0.25, self)
 	for i = 1,3 do
 		local ent = self:CreateFakeBullet("Muzzle1")
-		VJ_EmitSound(ent,{"weapons/airboat/airboat_gun_energy1.wav","weapons/airboat/airboat_gun_energy2.wav"},95)
+		VJ.EmitSound(ent,{"weapons/airboat/airboat_gun_energy1.wav","weapons/airboat/airboat_gun_energy2.wav"},95)
 
 		local startpos = self:GetAttachment(self:LookupAttachment("Muzzle1")).Pos
 		local bulletPos = ent:GetPos()
@@ -150,7 +150,7 @@ function ENT:FireBullet()
 			
 			util.ScreenShake(tr.HitPos,16,100,0.5,175)
 			sound.Play("weapons/fx/nearmiss/bulletltor0" .. math.random(3,9) .. ".wav",tr.HitPos +tr.HitNormal *60,60,100,1)
-			if tr.MatType && VJ_HasValue({MAT_METAL,MAT_GRATE,MAT_CONCRETE,MAT_COMPUTER,MAT_VENT},tr.MatType) then
+			if tr.MatType && VJ.HasValue({MAT_METAL,MAT_GRATE,MAT_CONCRETE,MAT_COMPUTER,MAT_VENT},tr.MatType) then
 				sound.Play("weapons/fx/rics/ric" .. math.random(1,5) .. ".wav",tr.HitPos,65,100,1)
 			end
 		end
@@ -158,7 +158,7 @@ function ENT:FireBullet()
 		SafeRemoveEntity(ent)
 
 		local ent = self:CreateFakeBullet("Muzzle2")
-		VJ_EmitSound(ent,{"weapons/airboat/airboat_gun_energy1.wav","weapons/airboat/airboat_gun_energy2.wav"},95)
+		VJ.EmitSound(ent,{"weapons/airboat/airboat_gun_energy1.wav","weapons/airboat/airboat_gun_energy2.wav"},95)
 
 		local startposB = self:GetAttachment(self:LookupAttachment("Muzzle2")).Pos
 		local bulletPos = ent:GetPos()
@@ -186,7 +186,7 @@ function ENT:FireBullet()
 			
 			util.ScreenShake(tr.HitPos,16,100,0.5,175)
 			sound.Play("weapons/fx/nearmiss/bulletltor0" .. math.random(3,9) .. ".wav",tr.HitPos +tr.HitNormal *60,60,100,1)
-			if tr.MatType && VJ_HasValue({MAT_METAL,MAT_GRATE,MAT_CONCRETE,MAT_COMPUTER,MAT_VENT},tr.MatType) then
+			if tr.MatType && VJ.HasValue({MAT_METAL,MAT_GRATE,MAT_CONCRETE,MAT_COMPUTER,MAT_VENT},tr.MatType) then
 				sound.Play("weapons/fx/rics/ric" .. math.random(1,5) .. ".wav",tr.HitPos,65,100,1)
 			end
 		end
@@ -271,7 +271,7 @@ function ENT:CustomAttack()
 				if !self.Charged then
 					if !self.Charging then
 						self.Charging = true
-						VJ_EmitSound(self,"weapons/cguard/charging.wav",105,85)
+						VJ.EmitSound(self,"weapons/cguard/charging.wav",105,85)
 						local dur = SoundDuration("weapons/cguard/charging.wav")
 						timer.Simple(dur +(dur *0.85),function()
 							if IsValid(self) then
@@ -316,8 +316,8 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	util.BlastDamage(self, self, corpseEnt:GetPos(), 400, 40)
 	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
 
-	VJ_EmitSound(self,"vj_fire/explosion2.wav",100,100)
-	VJ_EmitSound(self,"vj_fire/explosion3.wav",100,100)
+	VJ.EmitSound(self,"vj_fire/explosion2.wav",100,100)
+	VJ.EmitSound(self,"vj_fire/explosion3.wav",100,100)
 	util.BlastDamage(self,self,corpseEnt:GetPos(),200,40)
 	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
 	if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",corpseEnt:GetPos(),Angle(0,0,0),nil) end

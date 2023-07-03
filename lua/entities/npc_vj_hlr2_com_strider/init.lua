@@ -111,7 +111,7 @@ end
 function ENT:CustomOnInitialize()
 	-- self:SetCollisionBounds(Vector(35,35,42),Vector(-35,-35,-500)) // For default strider model
 	self:SetCollisionBounds(Vector(35,35,500),Vector(-35,-35,0))
-	VJ_CreateBoneFollower(self)
+	VJ.CreateBoneFollower(self)
 
 	self.NextFireT = 0
 	self.NextWarpT = 0
@@ -140,7 +140,7 @@ function ENT:CustomOnThink()
 				if checkdist.Backward == true then randmove[#randmove+1] = "Backward" end
 				if checkdist.Right == true then randmove[#randmove+1] = "Right" end
 				if checkdist.Left == true then randmove[#randmove+1] = "Left" end
-				local pickmove = VJ_PICK(randmove)
+				local pickmove = VJ.PICK(randmove)
 				if pickmove == "Backward" then self:SetLastPosition(self:GetPos() +self:GetForward() *1000) end
 				if pickmove == "Right" then self:SetLastPosition(self:GetPos() +self:GetRight() *1000) end
 				if pickmove == "Left" then self:SetLastPosition(self:GetPos() +self:GetRight() *1000) end
@@ -179,7 +179,7 @@ function ENT:WarpCannon(tPos)
 	hitTime = math.Clamp(hitTime,0,1) ^0.5
 	timer.Simple(hitTime,function()
 		if IsValid(self) then
-			util.VJ_SphereDamage(self,self,attackpos,300,500,bit.bor(DMG_DISSOLVE,DMG_BLAST),true,false,{Force=175})
+			VJ.ApplyRadiusDamage(self,self,attackpos,300,500,bit.bor(DMG_DISSOLVE,DMG_BLAST),true,false,{Force=175})
 			local FireLight1 = ents.Create("light_dynamic")
 			FireLight1:SetKeyValue("brightness", "8")
 			FireLight1:SetKeyValue("distance", "300")
@@ -196,7 +196,7 @@ function ENT:WarpCannon(tPos)
 	end)
 	timer.Simple(0.5,function()
 		if IsValid(self) then
-			VJ_EmitSound(self,"npc/strider/fire.wav",130,self:VJ_DecideSoundPitch(100,110))
+			VJ.EmitSound(self,"npc/strider/fire.wav",130,self:VJ_DecideSoundPitch(100,110))
 
 			ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,2)
 			timer.Simple(0.2,function() if IsValid(self) then self:StopParticles() end end)
@@ -219,7 +219,7 @@ end
 function ENT:StartWarpCannon(doLastPos)
 	self.NextFireT = CurTime() +4
 	self.NextWarpT = CurTime() +(self:Health() <= self:GetMaxHealth() *0.5 && math.Rand(8,15) or (doLastPos && math.Rand(8,15) or math.Rand(20,40)))
-	VJ_CreateSound(self,"npc/strider/charging.wav",110)
+	VJ.CreateSound(self,"npc/strider/charging.wav",110)
 
 	local muz = ents.Create("env_sprite")
 	muz:SetKeyValue("model","effects/strider_bulge_dx60.vmt")
@@ -307,8 +307,8 @@ function ENT:ControllAI(enemy,dist,cos)
 				self:FireBullets(bullet)
 				self.Shots = self.Shots +1
 
-				-- VJ_EmitSound(self,{"npc/strider/strider_minigun.wav","npc/strider/strider_minigun2.wav"},110,100)
-				VJ_EmitSound(self,"NPC_Strider.FireMinigun",110,100)
+				-- VJ.EmitSound(self,{"npc/strider/strider_minigun.wav","npc/strider/strider_minigun2.wav"},110,100)
+				VJ.EmitSound(self,"NPC_Strider.FireMinigun",110,100)
 
 				local muz = ents.Create("env_sprite")
 				muz:SetKeyValue("model","effects/strider_muzzle.vmt")
@@ -383,8 +383,8 @@ function ENT:CustomAttack()
 					self:FireBullets(bullet)
 					self.Shots = self.Shots +1
 
-					-- VJ_EmitSound(self,{"npc/strider/strider_minigun.wav","npc/strider/strider_minigun2.wav"},110,100)
-					VJ_EmitSound(self,"NPC_Strider.FireMinigun",110,100)
+					-- VJ.EmitSound(self,{"npc/strider/strider_minigun.wav","npc/strider/strider_minigun2.wav"},110,100)
+					VJ.EmitSound(self,"NPC_Strider.FireMinigun",110,100)
 
 					local muz = ents.Create("env_sprite")
 					muz:SetKeyValue("model","effects/strider_muzzle.vmt")

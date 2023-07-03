@@ -6,7 +6,7 @@
 ---------------------------------------------------------------------------------------------------------------------------------------------
 -- AERIAL & AQUATIC BASE --
 // MOVETYPE_FLY | MOVETYPE_FLYGRAVITY
-ENT.CurrentAnim_AAMovement = nil
+ENT.AA_CurrentMoveAnimation = nil
 ENT.AA_NextMovementAnimation = 0
 ENT.AA_CanPlayMoveAnimation = false
 ENT.AA_CurrentMoveAnimationType = "Calm"
@@ -18,32 +18,6 @@ ENT.AA_MoveTimeCur = 0
 
 ENT.FlySpeed = 300
 ENT.Acceleration = 85 -- Obsolete
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:AA_MoveAnimation()
-	if self:GetSequence() != self.CurrentAnim_AAMovement && self:BusyWithActivity() == false /*&& self:GetActivity() == ACT_IDLE*/ && CurTime() > self.AA_NextMovementAnimation then
-		local animtbl = {}
-		if self.AA_CurrentMoveAnimationType == "Calm" then
-			if self.MovementType == VJ_MOVETYPE_AQUATIC then
-				animtbl = self.Aquatic_AnimTbl_Calm
-			else
-				animtbl = self.Aerial_AnimTbl_Calm
-			end
-		elseif self.AA_CurrentMoveAnimationType == "Alert" then
-			if self.MovementType == VJ_MOVETYPE_AQUATIC then
-				animtbl = self.Aquatic_AnimTbl_Alerted
-			else
-				animtbl = self.Aerial_AnimTbl_Alerted
-			end
-		end
-		local pickedanim = VJ_PICK(animtbl)
-		if type(pickedanim) == "number" then pickedanim = self:GetSequenceName(self:SelectWeightedSequence(pickedanim)) end
-		local idleanimid = VJ_GetSequenceName(self,pickedanim)
-		self.CurrentAnim_AAMovement = idleanimid
-		//self:AddGestureSequence(idleanimid)
-		self:VJ_ACT_PLAYACTIVITY(pickedanim,false,0,false,0,{AlwaysUseSequence=true,SequenceDuration=false,SequenceInterruptible=true})
-		self.AA_NextMovementAnimation = CurTime() + self:DecideAnimationLength(self.CurrentAnim_AAMovement, false)
-	end
-end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AA_StopMoving()
 	if self:GetVelocity():Length() > 0 then
