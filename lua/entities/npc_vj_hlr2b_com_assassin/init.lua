@@ -191,7 +191,7 @@ function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
 	self:SetBodygroup(1,1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDropWeapon_AfterWeaponSpawned(dmginfo, hitgroup, wepEnt)
+function ENT:CustomOnDropWeapon(dmginfo, hitgroup, wepEnt)
 	wepEnt:Remove()
 	for i = 1, 2 do
 		local att = self:GetAttachment(2 +i)

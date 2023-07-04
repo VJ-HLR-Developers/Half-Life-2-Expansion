@@ -43,7 +43,7 @@ ENT.BreathSoundLevel = 70
 ENT.IsGuardian = false
 ENT.ChargePercentage = 0.65
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:Controller_IntMsg(ply, controlEnt)
+function ENT:Controller_Initialize(ply, controlEnt)
 	ply:ChatPrint("MOUSE2: Charge Attack")
 	ply:ChatPrint("RELOAD: Summon Antlions (Only works on weak surfaces [Grass, Snow, Sand, etc])")
 end

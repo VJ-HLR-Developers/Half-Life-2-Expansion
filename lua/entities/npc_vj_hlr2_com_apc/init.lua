@@ -162,7 +162,7 @@ function ENT:OnPlayCreateSound(sdData, sdFile)
 	timer.Simple(SoundDuration(sdFile),function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self,"npc/overwatch/radiovoice/off2.wav") end end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:Controller_IntMsg(ply, controlEnt)
+function ENT:Controller_Initialize(ply, controlEnt)
 	ply:ChatPrint("JUMP: Deploy Civil-Protection Squad (1 time)")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
