@@ -12,13 +12,13 @@ if SERVER then
 
 	ENT.EmplacementModel = "models/props_combine/bunker_gun01.mdl"
 	ENT.BarricadeModel = "models/props_combine/combine_barricade_short01a.mdl"
-	ENT.EmplacementPosition = {up=8,right=0,forward=-3.4}
+	ENT.EmplacementPosition = {up=8, right=0, forward=-3.4}
 	ENT.IdleAnimation = "idle_inactive"
 	ENT.ActiveAnimation = "idle"
 	ENT.ActivateAnimation = "activate"
 	ENT.DeactivateAnimation = "retract"
 
-	function ENT:CustomOnInitialize()
+	function ENT:Initialize()
 		self:SetModel(self.BarricadeModel)
 		-- self:SetCollisionBounds(Vector(20,20,65),Vector(-20,-20,0))
 		self:SetMoveType(MOVETYPE_NONE)
