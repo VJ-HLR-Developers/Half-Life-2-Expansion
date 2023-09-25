@@ -27,15 +27,17 @@ function ENT:CustomOnThink()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDoDamage(data, phys, hitEnt)
-	for _,v in pairs(hitEnt) do
-		if v:IsNPC() or v:IsPlayer() then
-			local dmginfo = DamageInfo()
-			dmginfo:SetDamage(v:Health() -1)
-			dmginfo:SetDamageType(DMG_POISON)
-			dmginfo:SetDamagePosition(v:GetPos() +v:OBBCenter())
-			dmginfo:SetAttacker(self)
-			dmginfo:SetInflictor(self)
-			v:TakeDamageInfo(dmginfo)
+	if hitEnt then
+		for _,v in pairs(hitEnt) do
+			if v:IsNPC() or v:IsPlayer() then
+				local dmginfo = DamageInfo()
+				dmginfo:SetDamage(v:Health() -1)
+				dmginfo:SetDamageType(DMG_POISON)
+				dmginfo:SetDamagePosition(v:GetPos() +v:OBBCenter())
+				dmginfo:SetAttacker(self)
+				dmginfo:SetInflictor(self)
+				v:TakeDamageInfo(dmginfo)
+			end
 		end
 	end
 end

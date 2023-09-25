@@ -33,58 +33,60 @@ function ENT:CustomOnInitialize()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDoDamage(data, phys, hitEnt)
-	for _,v in pairs(hitEnt) do
-		v:EmitSound("ambient/energy/weld"..math.random(1,2)..".wav",60,100)
-		if IsValid(v) then
-			local zapEnt = v
-			timer.Create("VJ_HLR2_ZapEffect"..self:EntIndex()..tostring(zapEnt),0.2,15,function()
-				if IsValid(zapEnt) then
-					local effect = EffectData()
-					effect:SetOrigin(zapEnt:GetPos())
-					effect:SetStart(zapEnt:GetPos())
-					effect:SetMagnitude(5)
-					effect:SetEntity(zapEnt)
-					util.Effect("teslaHitBoxes",effect)
-					zapEnt:EmitSound("Weapon_StunStick.Activate")
-				end
-			end)
-			if v:IsPlayer() && IsValid(v:GetActiveWeapon()) then
-				local wep = v:GetActiveWeapon()
-				v:DropWeapon(wep)
-				local zapWep = wep
-				timer.Create("VJ_HLR2_ZapEffect_PWep"..self:EntIndex()..tostring(zapWep),0.2,15,function()
-					if IsValid(zapWep) then
+	if hitEnt then
+		for _,v in pairs(hitEnt) do
+			v:EmitSound("ambient/energy/weld"..math.random(1,2)..".wav",60,100)
+			if IsValid(v) then
+				local zapEnt = v
+				timer.Create("VJ_HLR2_ZapEffect"..self:EntIndex()..tostring(zapEnt),0.2,15,function()
+					if IsValid(zapEnt) then
 						local effect = EffectData()
-						effect:SetOrigin(zapWep:GetPos())
-						effect:SetStart(zapWep:GetPos())
+						effect:SetOrigin(zapEnt:GetPos())
+						effect:SetStart(zapEnt:GetPos())
 						effect:SetMagnitude(5)
-						effect:SetEntity(zapWep)
+						effect:SetEntity(zapEnt)
 						util.Effect("teslaHitBoxes",effect)
-						zapWep:EmitSound("Weapon_StunStick.Activate")
+						zapEnt:EmitSound("Weapon_StunStick.Activate")
 					end
 				end)
-			elseif v:IsNPC() && v.IsVJBaseSNPC && IsValid(v:GetActiveWeapon()) && math.random(1,3) == 1 then
-				local class = v:GetActiveWeapon():GetClass()
-				local ent = ents.Create(class)
-				ent:SetPos(v:GetActiveWeapon():GetPos())
-				ent:SetAngles(v:GetActiveWeapon():GetAngles())
-				ent:Spawn()
-				if IsValid(ent:GetPhysicsObject()) then
-					ent:GetPhysicsObject():SetVelocity(ent:GetPos() +VectorRand() *20)
-				end
-				v:GetActiveWeapon():Remove()
-				local zapNWep = ent
-				timer.Create("VJ_HLR2_ZapEffect_NWep"..self:EntIndex()..tostring(zapNWep),0.2,15,function()
-					if IsValid(zapNWep) then
-						local effect = EffectData()
-						effect:SetOrigin(zapNWep:GetPos())
-						effect:SetStart(zapNWep:GetPos())
-						effect:SetMagnitude(5)
-						effect:SetEntity(zapNWep)
-						util.Effect("teslaHitBoxes",effect)
-						zapNWep:EmitSound("Weapon_StunStick.Activate")
+				if v:IsPlayer() && IsValid(v:GetActiveWeapon()) then
+					local wep = v:GetActiveWeapon()
+					v:DropWeapon(wep)
+					local zapWep = wep
+					timer.Create("VJ_HLR2_ZapEffect_PWep"..self:EntIndex()..tostring(zapWep),0.2,15,function()
+						if IsValid(zapWep) then
+							local effect = EffectData()
+							effect:SetOrigin(zapWep:GetPos())
+							effect:SetStart(zapWep:GetPos())
+							effect:SetMagnitude(5)
+							effect:SetEntity(zapWep)
+							util.Effect("teslaHitBoxes",effect)
+							zapWep:EmitSound("Weapon_StunStick.Activate")
+						end
+					end)
+				elseif v:IsNPC() && v.IsVJBaseSNPC && IsValid(v:GetActiveWeapon()) && math.random(1,3) == 1 then
+					local class = v:GetActiveWeapon():GetClass()
+					local ent = ents.Create(class)
+					ent:SetPos(v:GetActiveWeapon():GetPos())
+					ent:SetAngles(v:GetActiveWeapon():GetAngles())
+					ent:Spawn()
+					if IsValid(ent:GetPhysicsObject()) then
+						ent:GetPhysicsObject():SetVelocity(ent:GetPos() +VectorRand() *20)
 					end
-				end)
+					v:GetActiveWeapon():Remove()
+					local zapNWep = ent
+					timer.Create("VJ_HLR2_ZapEffect_NWep"..self:EntIndex()..tostring(zapNWep),0.2,15,function()
+						if IsValid(zapNWep) then
+							local effect = EffectData()
+							effect:SetOrigin(zapNWep:GetPos())
+							effect:SetStart(zapNWep:GetPos())
+							effect:SetMagnitude(5)
+							effect:SetEntity(zapNWep)
+							util.Effect("teslaHitBoxes",effect)
+							zapNWep:EmitSound("Weapon_StunStick.Activate")
+						end
+					end)
+				end
 			end
 		end
 	end
