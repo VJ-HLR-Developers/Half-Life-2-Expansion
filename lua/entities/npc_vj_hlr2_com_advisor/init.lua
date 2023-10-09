@@ -28,7 +28,7 @@ ENT.MeleeAttackDamage = 55
 
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.AnimTbl_RangeAttack = {ACT_MELEE_ATTACK1} -- Range Attack Animations
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar" -- The entity that is spawned when range attacking
+ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar" -- Entities that it can spawn when range attacking | If set as a table, it picks a random entity
 ENT.TimeUntilRangeAttackProjectileRelease = 0.7
 ENT.NextRangeAttackTime = 10 -- How much time until it can use a range attack?
 ENT.RangeDistance = 5000 -- This is how far away it can shoot

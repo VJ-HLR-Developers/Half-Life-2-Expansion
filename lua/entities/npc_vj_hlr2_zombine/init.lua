@@ -179,7 +179,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 		grenent:SetModel("models/weapons/w_npcnade.mdl")
 		grenent:SetPos(self:GetAttachment(self:LookupAttachment("grenade_attachment")).Pos)
 		grenent:SetAngles(self:GetAttachment(self:LookupAttachment("grenade_attachment")).Ang)
-		grenent.FussTime = (oldEnt.CurFuss -CurTime())
+		grenent.FuseTime = (oldEnt.CurFuss -CurTime())
 		grenent:Spawn()
 		grenent.SoundTbl_Idle = {"weapons/grenade/tick1.wav"}
 		grenent.IdleSoundPitch = VJ.SET(100, 100)
@@ -244,7 +244,7 @@ function ENT:CreateGrenade()
 	grenent:SetOwner(self)
 	grenent:SetParent(self)
 	grenent:Fire("SetParentAttachment","grenade_attachment",0)
-	grenent.FussTime = 3.5
+	grenent.FuseTime = 3.5
 	grenent.CurFuss = CurTime() +3.5
 	grenent:Spawn()
 	grenent.SoundTbl_Idle = {"weapons/grenade/tick1.wav"}

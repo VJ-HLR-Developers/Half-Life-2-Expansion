@@ -39,7 +39,7 @@ ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
 
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.DisableRangeAttackAnimation = true
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_rocket" -- The entity that is spawned when range attacking
+ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_rocket" -- Entities that it can spawn when range attacking | If set as a table, it picks a random entity
 ENT.TimeUntilRangeAttackProjectileRelease = 0
 ENT.NextRangeAttackTime = 5 -- How much time until it can use a range attack?
 ENT.NextRangeAttackTime_DoRand = 10 -- How much time until it can use a range attack?
