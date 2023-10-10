@@ -98,7 +98,7 @@ function ENT:CustomOnThink_AIEnabled()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnGrenadeAttack(status, grenade, customEnt, landDir, landingPos)
+function ENT:OnGrenadeAttack(status, grenade, customEnt, landDir, landingPos)
 	if status == "Throw" then
 		-- Custom grenade model and sounds
 		grenade.SoundTbl_Idle = {"weapons/grenade/tick1.wav"}
