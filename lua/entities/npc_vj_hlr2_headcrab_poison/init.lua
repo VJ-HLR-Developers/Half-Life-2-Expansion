@@ -22,7 +22,6 @@ ENT.AnimTbl_IdleStand = {ACT_IDLE,"IdleSumo","IdleSniff"}
 
 ENT.BloodColor = "Yellow"
 ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
-ENT.BloodPoolSize = "Small"
 
 ENT.HasMeleeAttack = false
 
