@@ -88,7 +88,7 @@ function ENT:AAMove_FlyToPosition(Pos,isWander,ovSpeed)
 		self:SetLocalVelocity(GoToPos)
 		-- self:SetLocalVelocity(LerpVector(0.1,self:GetVelocity(),GoToPos))
 		-- self:AddVelocity(GoToPos)
-		-- self:FaceCertainPosition(GoToPos)
+		-- self:SetTurnTarget(GoToPos)
 		local moveTime = ((self:GetPos():Distance(Pos)) /self:GetVelocity():Length())
 		local vel_len = CurTime() +moveTime
 		self.AA_MoveTime = moveTime
@@ -96,7 +96,7 @@ function ENT:AAMove_FlyToPosition(Pos,isWander,ovSpeed)
 		if isWander then
 			self.AA_MoveLength_Wander = vel_len
 			self.AA_MoveLength_Chase = 0
-			self:FaceCertainPosition(GoToPos)
+			self:SetTurnTarget(GoToPos)
 			-- self:SetIdealYawAndUpdate(Angle(0,(Pos -self:GetPos()):Angle().y,0).y,speed)
 		else
 			self.AA_MoveLength_Wander = 0
@@ -119,7 +119,7 @@ end
 function ENT:AA_ChaseEnemy()
 	if self.Dead or (self.NextChaseTime > CurTime()) or !IsValid(self:GetEnemy()) then return end
 	
-	-- self:FaceCertainEntity(self:GetEnemy(),true)
-	self:FaceCertainPosition(self:GetEnemy():GetPos())
+	-- self:SetTurnTarget("Enemy")
+	self:SetTurnTarget(self:GetEnemy():GetPos())
 	self:AAMove_FlyToPosition(self:GetEnemy():GetPos())
 end

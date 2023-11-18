@@ -185,7 +185,7 @@ function ENT:OnThrown(enemy,owner,pos)
 		end
 	end)
 	self:SetEnemy(enemy)
-	self:FaceCertainEntity(enemy,true)
+	self:SetTurnTarget("Enemy")
 	self:SetGroundEntity(NULL)
 	local jumpcode = self:CalculateProjectile("Curve", self:GetPos(), pos, 850)
 	self:SetLocalVelocity(jumpcode)

@@ -111,9 +111,9 @@ function ENT:CustomOnThink()
 		if moveCheck && math.random(1,50) == 1 then
 			self:StopMoving()
 			self:SetLastPosition(moveCheck)
-			self:VJ_TASK_GOTO_LASTPOS(math.random(1, 2) == 1 and "TASK_RUN_PATH" or "TASK_WALK_PATH", function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.ConstantlyFaceEnemy = true end)
+			self:VJ_TASK_GOTO_LASTPOS(math.random(1, 2) == 1 and "TASK_RUN_PATH" or "TASK_WALK_PATH", function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
 		end
-		self:FaceCertainEntity(self:GetEnemy(),true)
+		self:SetTurnTarget("Enemy")
 		self:FireLaser()
 		if !self.Laser:IsPlaying() then
 			self.Laser:Play()

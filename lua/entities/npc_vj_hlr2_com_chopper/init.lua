@@ -235,7 +235,7 @@ function ENT:CustomAttack()
 					return
 				end
 				self:SetEnemy(NULL)
-				-- self:FaceCertainPosition(self.CarpetBombPos)
+				-- self:SetTurnTarget(self.CarpetBombPos)
 				if CurTime() > self.NextDropCarpetT then
 					local pos = {
 						[1] = {SpawnPos=self:GetAttachment(3).Pos,Right=0},

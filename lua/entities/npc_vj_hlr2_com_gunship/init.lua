@@ -137,10 +137,10 @@ end
 function ENT:BellyCannon(ent)
 	self:StartWarpCannon()
 end
+
+ENT.ConstantlyFaceEnemy = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
-	self.ConstantlyFaceEnemy = true
-	
 	if self.CarpetBombing && CurTime() > self.NextBombT then
 		if !IsValid(self:GetEnemy()) then
 			self.CarpetBombing = false

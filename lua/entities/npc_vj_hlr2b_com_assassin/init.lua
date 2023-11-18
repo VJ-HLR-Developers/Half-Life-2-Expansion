@@ -20,7 +20,7 @@ ENT.MeleeAttackDistance = 55 -- How close does it have to be until it attacks?
 ENT.MeleeAttackDamageDistance = 90 -- How far does the damage go?
 ENT.TimeUntilMeleeAttackDamage = false
 
-ENT.CombatFaceEnemy = false -- If enemy is exists and is visible
+ENT.CanTurnWhileMoving = false -- If enemy is exists and is visible
 ENT.Weapon_NoSpawnMenu = true -- If set to true, the NPC weapon setting in the spawnmenu will not be applied for this SNPC
 ENT.DisableWeaponFiringGesture = true -- If set to true, it will disable the weapon firing gestures
 ENT.MoveRandomlyWhenShooting = false -- Should it move randomly when shooting?

@@ -90,12 +90,12 @@ function ENT:CustomOnThink()
 	local freeman = self.Freeman
 	if IsValid(freeman) then
 		if freeman:GetPos():Distance(self:GetPos()) <= 300 then
-			self:FaceCertainEntity(freeman)
+			self:SetTurnTarget(freeman)
 			self:SetState(VJ_STATE_ONLY_ANIMATION)
 		else
 			self:SetState()
 			self:SetTarget(freeman)
-			self:VJ_TASK_GOTO_TARGET("TASK_WALK_PATH", function(y) y.ConstantlyFaceEnemy = true end)
+			self:VJ_TASK_GOTO_TARGET("TASK_WALK_PATH", function(y) y.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
 		end
 	else
 		if self:GetState() == VJ_STATE_ONLY_ANIMATION then
