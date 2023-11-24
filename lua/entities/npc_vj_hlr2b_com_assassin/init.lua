@@ -143,7 +143,7 @@ function ENT:CustomOnThink()
 			self:SetLocalVelocity(((self:GetPos() + self:GetRight()*-100) - (self:GetPos() + self:OBBCenter())):GetNormal()*200 +self:GetForward()*1 +self:GetUp()*600 + self:GetRight()*1)
 		end
 		self.AnimTbl_IdleStand = {ACT_GLIDE}
-		self:VJ_ACT_PLAYACTIVITY(ACT_JUMP,true,false,true,0,{},function(vsched)
+		self:VJ_ACT_PLAYACTIVITY(ACT_JUMP,true,false,true,0,{},function(sched)
 			self.Assassin_OffGround = true
 			self:VJ_ACT_PLAYACTIVITY(ACT_GLIDE,true,false,false)
 		end)
