@@ -49,7 +49,7 @@ ENT.Assassin_OffGround = false
 ENT.Assassin_CloakLevel = 1
 ENT.Assassin_NextDodgeT = CurTime()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnSetupWeaponHoldTypeAnims(hType)
+function ENT:CustomOnSetupWeaponHoldTypeAnims(wepHoldType)
 	self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= ACT_RANGE_ATTACK1
 	self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= ACT_RANGE_ATTACK1
 	self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= ACT_RANGE_ATTACK1
