@@ -136,6 +136,8 @@ function ENT:CustomOnInitialize()
 	spotlight:Activate()
 	spotlight:Fire("setparentattachment", "spotlight")
 	self:DeleteOnRemove(spotlight)
+	
+	self:CreateBoneFollowers()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomRangeAttackCode_AfterProjectileSpawn(ent)

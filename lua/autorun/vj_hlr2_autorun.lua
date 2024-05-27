@@ -121,6 +121,40 @@ if VJExists == true then
 	VJ.AddParticle("particles/vj_hlr_flechette_projectile.pcf",{"hunter_flechette_trail","hunter_projectile_explosion_1"})
 	VJ.AddParticle("particles/vj_hlr_hunter_shield.pcf",{"vj_hlr_huntershield_impact1"})
 	VJ.AddParticle("particles/warpshield.pcf",{})
+
+	if CLIENT then
+		local math_abs = math.abs
+		local blueFX = Vector(0,0.4,6)
+		local whiteFX = Vector(1,1,1)
+		matproxy.Add({
+			name = "HLR.Camo", -- Used for Combine Assassin's new cloak materials. It's made with her in mind, so if we use it for other stuff it might not function properly in it's current state
+			init = function(self,mat,values)
+				self.Result = values.resultvar
+				self.CloakColorTint = mat:GetVector("$cloakcolortint") or whiteFX
+			end,
+			bind = function(self,mat,ent)
+				if (!IsValid(ent)) then return end
+				
+				local parent = ent:GetParent()
+				local checkEnt = IsValid(parent) && parent or ent
+				ent.Mat_cloakfactor = ent.Mat_cloakfactor or (IsValid(parent) && parent.Mat_cloakfactor or 0)
+				local curValue = ent.Mat_cloakfactor
+				local finalResult = curValue or 0
+				if checkEnt.HLR_UsesCloakSystem then
+					if checkEnt:GetCloaked() then
+						finalResult = checkEnt:IsNPC() && (checkEnt:GetVelocity():Length() > 60 && 0.97 or checkEnt:GetFireTime() > CurTime() && 0.92) or 0.997
+					else
+						finalResult = 0
+						finalResultRefract = 0
+					end
+				end
+				ent.Mat_cloakfactor = Lerp(FrameTime() *0.3,curValue,finalResult)
+				self.CloakColorTint = LerpVector(FrameTime() *0.3,self.CloakColorTint,math_abs(curValue -finalResult) > 0.1 && blueFX or whiteFX)
+				mat:SetVector("$cloakcolortint",self.CloakColorTint)
+				mat:SetFloat(self.Result,ent.Mat_cloakfactor)
+			end
+		})
+	end
 	
 -- !!!!!! DON'T TOUCH ANYTHING BELOW THIS !!!!!! -------------------------------------------------------------------------------------------------------------------------
 	AddCSLuaFile()

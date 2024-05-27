@@ -17,4 +17,16 @@
 	
 	//"$envmap" "shadertest/cubemap"
 	"$model" 1
+
+	"$cloakpassenabled"			"1"
+	"$cloakfactor"				"0"
+	"$refractamount"			"1"
+
+	"Proxies"
+	{
+		"HLR.Camo"
+		{
+			resultVar	"$cloakfactor"
+		}
+	}
 }

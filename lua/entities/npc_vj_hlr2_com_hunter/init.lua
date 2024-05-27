@@ -134,6 +134,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(18,18,100),Vector(-18,-18,0))
+	-- self:CreateBoneFollowers()
 
 	self.Shots = 0
 	self.CurrentEye = 4
@@ -141,20 +142,26 @@ function ENT:CustomOnInitialize()
 	self.DoRangeAttack = false
 	self.IsPlanted = false
 
-	self.LastSawEnemy = NULL
 	self.LastSawEnemyPosition = nil
 
 	self.NextRangeT = CurTime() +1
 	self.NextShootAnimT = 0
 	self.NextShootT = 0
 	self.NextRandMoveT = 0
+
+	self.ChargeAnimationCache = VJ.SequenceToActivity(self,"charge_loop")
+	self.IsCharging = false
+	self.ChargeT = 0
+
+	self:SetStepHeight(28)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:FireFlechette()
 	if self.Shots < 12 then
+		local targetPos = IsValid(self:GetEnemy()) && self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() or self:GetPos() +self:GetForward() *400 +VectorRand(-1,1) *math.Rand(0,100)
 		local proj = ents.Create("obj_vj_hlr2_flechette")
 		proj:SetPos(self:GetAttachment(self.CurrentEye).Pos)
-		proj:SetAngles((self.LastSawEnemyPosition -self:GetAttachment(self.CurrentEye).Pos):Angle())
+		proj:SetAngles((targetPos -self:GetAttachment(self.CurrentEye).Pos):Angle())
 		proj:Spawn()
 		proj:Activate()
 		proj:SetOwner(self)
@@ -196,22 +203,28 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	-- print(key)
 	if key == "step" then
 		self:FootStepSoundCode()
-	end
-	if key == "melee" then
+	elseif key == "melee" then
 		self:MeleeAttackCode()
-	end
-	if key == "range" then
+	elseif key == "range" then
 		self:FireFlechette()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(projectile)
-	return self:CalculateProjectile("Line",self:GetPos(),self.LastSawEnemyPosition +Vector(0,0,-50),self.Flechette_Speed)
+	local ent = self:GetEnemy()
+	local targetPos
+	if ent:Visible(self) then
+		targetPos = ent:GetPos() +ent:OBBCenter()
+	else
+		targetPos = self.EnemyData && self.EnemyData.LastVisiblePos or projectile:GetPos() +projectile:GetForward() *1000
+	end
+	targetPos = targetPos +VectorRand(-35,35)
+	return self:CalculateProjectile("Line",projectile:GetPos(),targetPos,self.Flechette_Speed)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if dmginfo:IsBulletDamage() then
-		dmginfo:SetDamage(dmginfo:GetDamage() *0.6)
+		dmginfo:ScaleDamage(dmginfo:GetDamageType() == DMG_BUCKSHOT && 0.5 or 0.6)
 		self.DamageSpark1 = ents.Create("env_spark")
 		self.DamageSpark1:SetKeyValue("Magnitude","1")
 		self.DamageSpark1:SetKeyValue("Spark Trail Length","1")
@@ -226,87 +239,156 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
-	self.HasMeleeAttack = !self.DoRangeAttack
-	local enemy = self:GetEnemy()
-	if !self.VJ_IsBeingControlled then
-		if CurTime() > self.NextRangeT && !self.DoRangeAttack then
-			if IsValid(enemy) then
-				if enemy:Visible(self) then
-					self.LastSawEnemy = enemy
-				end
-				local dist = enemy:GetPos():Distance(self:GetPos())
-				if dist <= 3000 && dist > 175 && self.LastSawEnemy == enemy && self.LastSawEnemyPosition != nil && self:VisibleVec(self.LastSawEnemyPosition)/*enemy:Visible(self)*/ then
-					self.Shots = 0
-					self.DoRangeAttack = true
-				end
-			end
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE then
+		if self.IsPlanted then
+			return ACT_RANGE_ATTACK2
+		elseif self.IsCharging then
+			return self.ChargeAnimationCache
 		end
-		if IsValid(enemy) && enemy:Visible(self) then
-			self.LastSawEnemyPosition = enemy:GetPos() +enemy:OBBCenter()
-			local dist = enemy:GetPos():Distance(self:GetPos())
-			self.DisableChasingEnemy = dist < 3000 && dist > 400
-			if CurTime() > self.NextRandMoveT && !self.DoRangeAttack && self.DisableChasingEnemy == true then
-				local checkdist = self:VJ_CheckAllFourSides(400)
-				local randmove = {}
-				if checkdist.Backward == true then randmove[#randmove+1] = "Backward" end
-				if checkdist.Right == true then randmove[#randmove+1] = "Right" end
-				if checkdist.Left == true then randmove[#randmove+1] = "Left" end
-				local pickmove = VJ.PICK(randmove)
-				if pickmove == "Backward" then self:SetLastPosition(self:GetPos() +self:GetForward() *400) end
-				if pickmove == "Right" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
-				if pickmove == "Left" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
-				if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
-					self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
-					self.NextRandMoveT = CurTime() +math.Rand(2,3)
-				end
-			end
-		else
-			self.DisableChasingEnemy = false
-		end
-	else
-		if IsValid(enemy) then
-			self.LastSawEnemy = enemy
-			self.LastSawEnemyPosition = enemy:GetPos() +enemy:OBBCenter()
-		end
-		if self.VJ_TheController:KeyDown(IN_ATTACK2) then
-			if CurTime() > self.NextRangeT && !self.DoRangeAttack then
-				self.Shots = 0
-				self.DoRangeAttack = true
-			end
+	elseif (act == ACT_WALK or act == ACT_RUN) then
+		if self.IsCharging then
+			return self.ChargeAnimationCache
 		end
 	end
+	return act
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomAttack(ent,vis)
+	local dist = self.NearestPointToEnemyDistance
+
+	if self.IsCharging then
+		if CurTime() > self.ChargeT then
+			self:SetMaxYawSpeed(self.TurningSpeed)
+			self.IsCharging = false
+			self.ChargeT = 0
+			self.DisableChasingEnemy = false
+			self.HasMeleeAttack = true
+			self:CapabilitiesAdd(CAP_MOVE_JUMP)
+			-- self:SetState()
+			self:VJ_ACT_PLAYACTIVITY("charge_miss_slide",true,false,false)
+			return
+		end
+
+		self.DisableChasingEnemy = true
+		self.HasMeleeAttack = false
+		self:SetMaxYawSpeed(2)
+		self:FaceCertainEntity(ent,true)
+		local tr = util.TraceHull({
+			start = self:GetPos() +self:OBBCenter(),
+			endpos = self:GetPos() +self:OBBCenter() +self:GetForward() *100,
+			filter = self,
+			mins = self:OBBMins() *0.85,
+			maxs = self:OBBMaxs() *0.85,
+		})
+		self:SetLastPosition(tr.HitPos +tr.HitNormal *200)
+		self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+		if tr.Hit then
+			self:SetMaxYawSpeed(self.TurningSpeed)
+			self.IsCharging = false
+			self.ChargeT = 0
+			self.HasMeleeAttack = true
+			self.DisableChasingEnemy = false
+			self:CapabilitiesAdd(CAP_MOVE_JUMP)
+			self:SetState()
+			if tr.HitWorld then
+				self:VJ_ACT_PLAYACTIVITY("charge_crash",true,false,false)
+				util.ScreenShake(self:GetPos(),1000,100,1,500)
+			else
+				self:VJ_ACT_PLAYACTIVITY("charge_miss_slide",true,false,false)
+				local ent = tr.Entity
+				local isProp = IsValid(ent) && VJ.IsProp(ent) or false
+				if IsValid(ent) && (isProp or self:CheckRelationship(ent) == D_HT) then
+					if isProp then
+						local phys = ent:GetPhysicsObject()
+						if IsValid(phys) then
+							phys:ApplyForceCenter(self:GetForward() *1000 +self:GetUp() *200)
+						end
+					else
+						local vel = self:GetForward() *600 +self:GetUp() *200
+						ent:SetGroundEntity(NULL)
+						ent:SetVelocity(vel)
+					end
+					local dmginfo = DamageInfo()
+					dmginfo:SetDamage(20)
+					dmginfo:SetDamageType(bit.bor(DMG_CRUSH,DMG_SLASH))
+					dmginfo:SetDamageForce(self:GetForward() *1000)
+					dmginfo:SetAttacker(self)
+					dmginfo:SetInflictor(self)
+					dmginfo:SetDamagePosition(tr.HitPos)
+					ent:TakeDamageInfo(dmginfo)
+				end
+			end
+			-- PrintTable(tr)
+			-- VJ.DEBUG_TempEnt(tr.HitPos, self:GetAngles(), Color(255,0,0), 5)
+		end
+		return
+	end
+
+	if vis then
+		if !self.VJ_IsBeingControlled && !self:IsBusy() && CurTime() > self.NextRandMoveT && !self.DoRangeAttack && dist > 400 then
+			local checkdist = self:VJ_CheckAllFourSides(400)
+			local randmove = {}
+			if checkdist.Backward == true then randmove[#randmove+1] = "Backward" end
+			if checkdist.Right == true then randmove[#randmove+1] = "Right" end
+			if checkdist.Left == true then randmove[#randmove+1] = "Left" end
+			local pickmove = VJ.PICK(randmove)
+			if pickmove == "Backward" then self:SetLastPosition(self:GetPos() +self:GetForward() *400) end
+			if pickmove == "Right" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
+			if pickmove == "Left" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
+			if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
+				self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+				self.NextRandMoveT = CurTime() +math.Rand(2,3)
+				return
+			end
+		end
+
+		if dist > 500 && dist <= 2500 && !self.IsCharging && !self:IsBusy() && !self.DoRangeAttack && math.random(1,50) == 1 && math.abs(self:GetPos().z -ent:GetPos().z) <= 128 then
+			self.IsCharging = true
+			-- self:SetState(VJ_STATE_ONLY_ANIMATION)
+			self.ChargeT = CurTime() +6
+			self:VJ_ACT_PLAYACTIVITY("charge_start",true,false,true, 0, {OnFinish=function(interrupted, anim)
+				if interrupted then
+					return
+				end
+				self:CapabilitiesRemove(CAP_MOVE_JUMP)
+			end})
+			return
+		end
+	end
+
+	if self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2) && !self.DoRangeAttack && !self.IsCharging or !self.VJ_IsBeingControlled && !self.IsCharging && CurTime() > self.NextRangeT && !self.DoRangeAttack && dist > 250 && dist <= 2200 then
+		if !self:VisibleVec(self.EnemyData && self.EnemyData.LastVisiblePos or ent:GetPos() +ent:OBBCenter()) then return end
+		self.Shots = 0
+		self.DoRangeAttack = true
+		self.HasMeleeAttack = false
+	end
+
 	if self.DoRangeAttack then
-		if self.Dead then return end
 		if self.Shots >= 12 then
 			self.NextRangeT = CurTime() +math.Rand(3,6)
 			self.DoRangeAttack = false
 			self.IsPlanted = false
-			self.AnimTbl_IdleStand = {ACT_IDLE}
-			self.NextIdleStandTime = 0
-			self:VJ_TASK_IDLE_STAND()
-			self:SetState()
+			self.HasMeleeAttack = true
+			self:VJ_ACT_PLAYACTIVITY("vjseq_unplant",true,false,true, 0, {OnFinish=function(interrupted, anim)
+				if interrupted then
+					return
+				end
+				self:SetState()
+			end})
 			return
 		end
 		if !self.IsPlanted && !self:IsBusy() then
+			self:SetState(VJ_STATE_ONLY_ANIMATION)
 			self:VJ_ACT_PLAYACTIVITY("vjseq_plant",true,false,true, 0, {OnFinish=function(interrupted, anim)
 				if interrupted then
 					return
 				end
-				self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
-				self.AnimTbl_IdleStand = {ACT_RANGE_ATTACK2}
-				self.NextIdleStandTime = 0
-				self:VJ_TASK_IDLE_STAND()
 				self.IsPlanted = true
 			end})
-		end
-		-- if self.IsPlanted && CurTime() > self.NextShootAnimT then
-		-- 	self:VJ_ACT_PLAYACTIVITY(ACT_GESTURE_RANGE_ATTACK2,true,false,true)
-		-- 	self.NextShootAnimT = CurTime() +self:SequenceDuration(self:LookupSequence("shoot_unplanted")) -0.1
-		-- end
-		if self.IsPlanted && CurTime() > self.NextShootT then
+		elseif self.IsPlanted && CurTime() > self.NextShootT then
 			self:FireFlechette()
-			self.NextShootT = CurTime() +0.08
+			self.NextShootT = CurTime() +0.07
 		end
 	end
 end

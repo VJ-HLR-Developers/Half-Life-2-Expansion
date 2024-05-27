@@ -21,18 +21,18 @@ ENT.MeleeAttackDamageDistance = 75
 ENT.TimeUntilMeleeAttackDamage = false
 
 ENT.HasLeapAttack = true
-ENT.AnimTbl_LeapAttack = {"leapstrike"}
-ENT.LeapDistance = 600
+ENT.AnimTbl_LeapAttack = ACT_JUMP
+ENT.LeapDistance = 400
 ENT.LeapToMeleeDistance = 150
 ENT.TimeUntilLeapAttackDamage = 0.2
 ENT.NextLeapAttackTime = 3
 ENT.NextAnyAttackTime_Leap = 0.4
-ENT.LeapAttackExtraTimers = {0.4,0.6,0.8,1}
+ENT.LeapAttackExtraTimers = {0.4, 0.6, 0.8, 1}
 ENT.TimeUntilLeapAttackVelocity = 0.2
-ENT.LeapAttackVelocityForward = 500
-ENT.LeapAttackVelocityUp = 200
-ENT.LeapAttackDamage = 10
-ENT.LeapAttackDamageDistance = 65
+ENT.LeapAttackVelocityForward = 300
+ENT.LeapAttackVelocityUp = 250
+ENT.LeapAttackDamage = 15
+ENT.LeapAttackDamageDistance = 100
 
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
@@ -48,21 +48,16 @@ ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_
 ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav","npc/zombie/claw_miss2.wav"}
 ENT.SoundTbl_Pain = {"npc/fast_zombie/wake1.wav"}
 ENT.SoundTbl_DeathFollow = {"npc/fast_zombie/wake1.wav"}
-
-ENT.Zombie_AnimationSet = 0 -- 0 = Default, 1 = Fire
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetSlump(doSlump)
 	if doSlump then
 		self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
-		self.NextIdleStandTime = 0
 		self.SlumpSet = math.random(1,2) == 1 && "a" or "b"
-		self.AnimTbl_IdleStand = {VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)}
+		self.SlumpAnimation = VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)
 		self:SetMaxLookDistance(150)
 		self.SightAngle = 180
 		self:AddFlags(FL_NOTARGET)
 	else
-		self.NextIdleStandTime = 0
-		self.AnimTbl_IdleStand = {ACT_IDLE}
 		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. (self.SlumpSet == "a" && VJ.PICK({"a","c"}) or self.SlumpSet), true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
@@ -84,6 +79,7 @@ function ENT:CustomOnInitialize()
 	if self.OnInit then
 		self:OnInit()
 	end
+	self.SlumpAnimation = ACT_IDLE
 
 	if self.Slump then
 		self:SetSlump(true)
@@ -92,10 +88,8 @@ function ENT:CustomOnInitialize()
 	end
 
 	self:SetBodygroup(1,1)
+	self:SetCollisionBounds(Vector(13, 13, 50), Vector(-13, -13, 0))
 
-	self.IsLeaping = false
-	self.LeapDelay = 0
-	self.LeapLoop = VJ.SequenceToActivity(self,"leapstrike")
 	self.TotalHits = 0
 	self.LastHitT = 0
 end
@@ -119,32 +113,23 @@ function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt)
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnLeapAttack_AfterStartTimer(seed)
-	self.IsLeaping = true
-	self.LeapDelay = CurTime() +0.25
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE then
+		if self.IsSlumped then
+			return self.SlumpAnimation
+		elseif !self:OnGround() && !self:IsMoving() then
+			return ACT_GLIDE
+		elseif self:IsOnFire() && !self.IsBeta then
+			return ACT_IDLE_ON_FIRE
+		end
+	elseif act == ACT_CLIMB_DOWN then
+		return ACT_CLIMB_UP
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink_AIEnabled()
-	local slump = self.IsSlumped
-	local set = self.Zombie_AnimationSet
-
-	if !slump then
-		if self:IsOnFire() && set == 0 && !self.IsBeta then
-			self.Zombie_AnimationSet = 1
-			self.AnimTbl_IdleStand = {ACT_IDLE_ON_FIRE}
-		elseif !self:IsOnFire() && set == 1 && !self.IsBeta then
-			self.Zombie_AnimationSet = 0
-			self.AnimTbl_IdleStand = {ACT_IDLE}
-		end
-		if self.IsLeaping then
-			if self:IsOnGround() && CurTime() > self.LeapDelay then
-				self.IsLeaping = false
-				self:StopAttacks(true)
-			else
-				self:SetIdealActivity(self.LeapLoop)
-			end
-		end
-	else
+	if !self.IsSlumped then
 		self.NextIdleSoundT_RegularChange = CurTime() +math.random(4,8)
 	end
 end
@@ -168,7 +153,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 
 	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
 	local dmgtype = dmginfo:GetDamageType()
-	if hitgroup == HITGROUP_HEAD then
+	if hitgroup == HITGROUP_HEAD or dmgtype == DMG_BLAST then
 		ent:SetBodygroup(1,0)
 		self:CreateExtraDeathCorpse(
 			"prop_ragdoll",
@@ -181,7 +166,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 			end
 		)
 	else
-		if math.random(1,(dmgtype == DMG_CLUB or dmgtype == DMG_SLASH or DMG_BLAST) && 1 or 3) == 1 then
+		if math.random(1,(dmgtype == DMG_CLUB or dmgtype == DMG_SLASH) && 1 or 3) == 1 then
 			ent:SetBodygroup(1,0)
 			local crab = ents.Create(self.HeadcrabClass or "npc_vj_hlr2_headcrab_fast")
 			local enemy = self:GetEnemy()

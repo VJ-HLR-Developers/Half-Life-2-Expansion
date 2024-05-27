@@ -67,6 +67,8 @@ function ENT:CustomOnInitialize()
 	self.PP_Vert = 0
 	self.PP_Horz = 0
 	self.PP_Accel = 0
+
+	self:CreateBoneFollowers()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:BarrageFire()

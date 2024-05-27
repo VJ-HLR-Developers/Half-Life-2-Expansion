@@ -94,6 +94,8 @@ function ENT:CustomOnInitialize()
 	self.NextDropCarpetT = 0
 	
 	self.RangeUseAttachmentForPosID = "Damage0"
+	
+	self:CreateBoneFollowers()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomRangeAttackCode_AfterProjectileSpawn(ent)

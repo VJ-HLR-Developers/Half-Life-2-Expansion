@@ -130,69 +130,34 @@ function ENT:CustomOnAlert(ent)
 	self:VJ_ACT_PLAYACTIVITY("Threatdisplay",true,VJ.AnimDuration(self,"Threatdisplay"),false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE then
+		if self.WasThrown then
+			return self.FlyAnimation
+		end
+	elseif act == ACT_RUN then
+		if self.IsFollowing then
+			return self.ScurryAnimation
+		end
+		return self:Health() <= 10 && self.ScurryAnimation or ACT_RUN
+	elseif act == ACT_WALK then
+		if self.IsFollowing then
+			return self.ScurryAnimation
+		end
+		return self:Health() <= 10 && self.ScurryAnimation or ACT_RUN
+	end
+	return act
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	local animSet = self.AnimationSet
 	if self.WasThrown then
 		if self:IsOnGround() then
 			self.WasThrown = false
 			self:ClearSchedule()
-			self.NextIdleStandTime = 0
 			self:SetState()
-		else
-			self:ResetIdealActivity(self.FlyAnimation)
 		end
 	end
-	if self.VJ_IsBeingControlled == false then
-		if !self.IsFollowing then
-			if animSet != 0 then
-				self.AnimTbl_Run = {ACT_RUN}
-				self.AnimTbl_Walk = {ACT_RUN}
-				self.FootStepTimeRun = 0.5
-				self.FootStepTimeWalk = 0.5
-				self.AnimationSet = 0
-			elseif self:Health() <= 10 && animSet != 1 then
-				self.AnimTbl_Run = {self.ScurryAnimation}
-				self.FootStepTimeRun = 0.09
-				self.AnimationSet = 1
-			end
-		else
-			if animSet != 1 then
-				self.AnimTbl_Run = {self.ScurryAnimation}
-				self.AnimTbl_Walk = {self.ScurryAnimation}
-				self.FootStepTimeRun = 0.09
-				self.FootStepTimeWalk = 0.09
-				self.AnimationSet = 1
-			end
-		end
-	else
-		if animSet != 2 then
-			self.AnimTbl_Run = {self.ScurryAnimation}
-			self.AnimTbl_Walk = {ACT_RUN}
-			self.FootStepTimeRun = 0.09
-			self.FootStepTimeWalk = 0.5
-			self.AnimationSet = 2
-		end
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnThrown(enemy,owner,pos)
-	self:SetOwner(owner)
-	VJ.CreateSound(self,self.SoundTbl_LeapAttackJump,75)
-	timer.Simple(0.05,function()
-		if IsValid(self) then
-			self.CanAlertCrab = false
-			self.WasThrown = true
-		end
-	end)
-	self:SetEnemy(enemy)
-	self:SetTurnTarget("Enemy")
-	self:SetGroundEntity(NULL)
-	local jumpcode = self:CalculateProjectile("Curve", self:GetPos(), pos, 850)
-	self:SetLocalVelocity(jumpcode)
-	self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
-	-- self:VJ_ACT_PLAYACTIVITY("Drown",true,false,false,0,{OnFinish=function(interrupted,anim)
-	-- 	self.CanAlertCrab = true
-	-- end})
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTouch(v)

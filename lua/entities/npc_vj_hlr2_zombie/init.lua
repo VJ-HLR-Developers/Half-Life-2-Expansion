@@ -47,28 +47,23 @@ ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_
 ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav","npc/zombie/claw_miss2.wav"}
 ENT.SoundTbl_Pain = {"npc/zombie/zombie_pain1.wav","npc/zombie/zombie_pain2.wav","npc/zombie/zombie_pain3.wav","npc/zombie/zombie_pain4.wav","npc/zombie/zombie_pain5.wav","npc/zombie/zombie_pain6.wav"}
 ENT.SoundTbl_DeathFollow = {"npc/zombie/zombie_die1.wav","npc/zombie/zombie_die2.wav","npc/zombie/zombie_die3.wav"}
-
-ENT.Zombie_AnimationSet = 0 -- 0 = Default, 1 = Fire
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetSlump(doSlump)
 	if doSlump then
 		self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
-		self.NextIdleStandTime = 0
 		local tr = util.TraceHull({
 			start = self:GetPos(),
-			endpos = self:GetPos() +self:GetForward() *-20,
+			endpos = self:GetPos() +self:GetForward() *-25,
 			mins = self:OBBMins(),
 			maxs = self:OBBMaxs(),
 			filter = self
 		})
 		self.SlumpSet = tr.Hit && "a" or "b"
-		self.AnimTbl_IdleStand = {VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)}
+		self.SlumpAnimation = VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)
 		self:SetMaxLookDistance(150)
 		self.SightAngle = 180
 		self:AddFlags(FL_NOTARGET)
 	else
-		self.NextIdleStandTime = 0
-		self.AnimTbl_IdleStand = {ACT_IDLE}
 		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. self.SlumpSet, true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
@@ -76,6 +71,7 @@ function ENT:SetSlump(doSlump)
 		self.SightAngle = 80
 		self:RemoveFlags(FL_NOTARGET)
 	end
+	self.CanFlinch = doSlump && 0 or 1
 	self.IsSlumped = doSlump
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -87,6 +83,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	local zType = self.ZombieType or math.random(0,6)
+	self.SlumpAnimation = ACT_IDLE
 
 	if self.Slump then
 		self:SetSlump(true)
@@ -129,30 +126,32 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	elseif key == "scuff" then
 		VJ.EmitSound(self,"npc/zombie/foot_slide" .. math.random(1,3) .. ".wav",self.FootStepSoundLevel)
 	elseif key == "melee" or key == "swat" then
+		self.MeleeAttackDamage = 10
 		self:MeleeAttackCode()
 		if key == "swat" then
 			VJ.EmitSound(self,"npc/zombie/zombie_hit.wav",75)
 		end
+	elseif key == "melee_both" then
+		self.MeleeAttackDamage = 25
+		self:MeleeAttackCode()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
-	local slump = self.IsSlumped
-	local set = self.Zombie_AnimationSet
-
-	if !slump then
-		if self:IsOnFire() && set == 0 then
-			self.Zombie_AnimationSet = 1
-			self.AnimTbl_IdleStand = {ACT_IDLE_ON_FIRE}
-			self.AnimTbl_Walk = {ACT_WALK_ON_FIRE}
-			self.AnimTbl_Run = {ACT_WALK_ON_FIRE}
-		elseif !self:IsOnFire() && set == 1 then
-			self.Zombie_AnimationSet = 0
-			self.AnimTbl_IdleStand = {ACT_IDLE}
-			self.AnimTbl_Walk = {ACT_WALK}
-			self.AnimTbl_Run = {ACT_RUN}
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE then
+		if self.IsSlumped then
+			return self.SlumpAnimation
+		elseif self:IsOnFire() then
+			return ACT_IDLE_ON_FIRE
 		end
-	else
+	elseif (act == ACT_RUN or act == ACT_WALK) && self:IsOnFire() then
+		return ACT_WALK_ON_FIRE
+	end
+	return act
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnThink_AIEnabled()
+	if !self.IsSlumped then
 		self.NextIdleSoundT_RegularChange = CurTime() +math.random(4,8)
 	end
 end
@@ -176,7 +175,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 
 	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
 	local dmgtype = dmginfo:GetDamageType()
-	if hitgroup == HITGROUP_HEAD then
+	if hitgroup == HITGROUP_HEAD or dmgtype == DMG_BLAST then
 		ent:SetBodygroup(1,0)
 		self:CreateExtraDeathCorpse(
 			"prop_ragdoll",
@@ -189,7 +188,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 			end
 		)
 	else
-		if math.random(1,(dmgtype == DMG_CLUB or dmgtype == DMG_SLASH or DMG_BLAST) && 1 or 3) == 1 then
+		if math.random(1,(dmgtype == DMG_CLUB or dmgtype == DMG_SLASH) && 1 or 3) == 1 then
 			ent:SetBodygroup(1,0)
 			local crab = ents.Create(self.HeadcrabClass or "npc_vj_hlr2_headcrab")
 			local enemy = self:GetEnemy()

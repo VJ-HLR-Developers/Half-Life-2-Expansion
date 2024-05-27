@@ -110,14 +110,28 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	-- self:SetCollisionBounds(Vector(35,35,42),Vector(-35,-35,-500)) // For default strider model
-	self:SetCollisionBounds(Vector(35,35,500),Vector(-35,-35,0))
-	VJ.CreateBoneFollower(self)
+	self:SetCollisionBounds(Vector(22,22,500),Vector(-22,-22,0))
+	-- VJ.CreateBoneFollower(self)
+	self:CreateBoneFollowers({
+		"Combine_Strider.Body_Bone",
+		"Combine_Strider.Leg_Left_Bone1",
+		"Combine_Strider.Leg_Right_Bone1",
+		"Combine_Strider.Leg_Hind_Bone1",
+		"Combine_Strider.Leg_Left_Bone",
+		"Combine_Strider.Leg_Right_Bone",
+		"Combine_Strider.Leg_Hind_Bone",
+		-- "Combine_Strider.Neck_Bone",
+		-- "Combine_Strider.Gun_Bone1",
+		-- "Combine_Strider.Gun_Bone2",
+	})
 
 	self.NextFireT = 0
 	self.NextWarpT = 0
 	self.NextRandMoveT = 0
 	self.Shots = 0
 	self.LastSawEnemyPosition = nil
+
+	self:SetStepHeight(168)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)

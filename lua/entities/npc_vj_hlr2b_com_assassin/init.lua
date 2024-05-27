@@ -34,19 +34,19 @@ ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time
 ENT.AnimTbl_TakingCover = {ACT_IDLE_ANGRY} -- The animation it plays when hiding in a covered position, leave empty to let the base decide
 ENT.AnimTbl_AlertFriendsOnDeath = {ACT_IDLE_ANGRY} -- Animations it plays when an ally dies that also has AlertFriendsOnDeath set to true
 
-ENT.HasItemDropsOnDeath = false -- Should it drop items on death?
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
+ENT.HasItemDropsOnDeath = false
+
 ENT.SoundTbl_BeforeMeleeAttack = {"npc/metropolice/pain1.wav","npc/metropolice/pain2.wav","npc/metropolice/pain3.wav","npc/metropolice/pain4.wav"}
 ENT.SoundTbl_Pain = {"npc/combine_soldier/pain1.wav","npc/combine_soldier/pain2.wav","npc/combine_soldier/pain3.wav"}
 ENT.SoundTbl_Death = {"npc/combine_soldier/die1.wav","npc/combine_soldier/die2.wav","npc/combine_soldier/die3.wav"}
 
-ENT.GeneralSoundPitch1 = 120
-ENT.GeneralSoundPitch2 = 120
+ENT.GeneralSoundPitch1 = 145
+ENT.GeneralSoundPitch2 = 145
 
 ENT.Assassin_NextJumpT = 0
 ENT.Assassin_OffGround = false
 ENT.Assassin_CloakLevel = 1
+ENT.Assassin_NextCloakT = 0
 ENT.Assassin_NextDodgeT = CurTime()
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnSetupWeaponHoldTypeAnims(wepHoldType)
@@ -74,7 +74,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(13,13,60),Vector(-13,-13,0))
-	self:SetRenderMode(RENDERMODE_TRANSADD)
+	-- self:SetRenderMode(RENDERMODE_TRANSADD)
 
 	self:Give("weapon_vj_hlr_dualpistol")
 end
@@ -107,10 +107,13 @@ function ENT:CustomOnThink()
 	end
 
 	if self.Dead then return end
-	local cloaklvl = math.Clamp(self.Assassin_CloakLevel *255,40,255)
-	self:SetColor(Color(255,255,255,math.Clamp(self.Assassin_CloakLevel * 255, 40, 255)))
-	self.Assassin_CloakLevel = math.Clamp(self.Assassin_CloakLevel + 0.05, 0, 1)
-	if cloaklvl <= 220 then -- Yete asorme tsadz e, ere vor mouys NPC-nere chi desnen iren!
+	local validEnt = IsValid(self:GetEnemy())
+	local cloaked = self:GetCloaked()
+	-- local cloaklvl = math.Clamp(self.Assassin_CloakLevel *255,40,255)
+	-- self:SetColor(Color(255,255,255,math.Clamp(self.Assassin_CloakLevel * 255, 40, 255)))
+	-- self.Assassin_CloakLevel = math.Clamp(self.Assassin_CloakLevel + 0.05, 0, 1)
+	-- if cloaklvl <= 220 then -- Yete asorme tsadz e, ere vor mouys NPC-nere chi desnen iren!
+	if cloaked && CurTime() > self:GetFireTime() && self:GetMoveVelocity():Length() <= 60 then -- Yupe sa pee pee inz la poo poo
 		self:AddFlags(FL_NOTARGET)
 		self:DrawShadow(false)
 	else
@@ -131,10 +134,18 @@ function ENT:CustomOnThink()
 			end
 		end
 	end
-	if IsValid(self:GetEnemy()) && self.VJ_IsBeingControlled == false && self:IsOnGround() && CurTime() > self.Assassin_NextDodgeT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 2200 then
+	if (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_RELOAD) or !self.VJ_IsBeingControlled && validEnt && !cloaked) && CurTime() > self.Assassin_NextCloakT then
+		self:SetCloaked(!cloaked)
+		VJ.EmitSound(self,"npc/roller/mine/combine_mine_deploy1.wav",60,self:GetCloaked() && 120 or 100)
+		self.Assassin_NextCloakT = CurTime() +1
+	elseif !self.VJ_IsBeingControlled && !self.Alerted && cloaked then
+		self:SetCloaked(false)
+		self.Assassin_NextCloakT = CurTime() +1
+	end
+	if (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or validEnt && !self.VJ_IsBeingControlled && CurTime() > self.Assassin_NextDodgeT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 2200) && self:IsOnGround() then
 		self:Dodge()
 	end
-	if IsValid(self:GetEnemy()) && self.DoingWeaponAttack_Standing == true && self.VJ_IsBeingControlled == false && CurTime() > self.Assassin_NextJumpT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 1400 then
+	if validEnt && self.DoingWeaponAttack_Standing == true && self.VJ_IsBeingControlled == false && CurTime() > self.Assassin_NextJumpT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 1400 then
 		self:StopMoving()
 		self:SetGroundEntity(NULL)
 		if math.random(1,2) == 1 then
@@ -152,30 +163,37 @@ function ENT:CustomOnThink()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Dodge()
-	if CurTime() > self.Assassin_NextDodgeT && self:IsOnGround() then
-		local checkdist = self:VJ_CheckAllFourSides(400)
-		local randmove = {}
-		if checkdist.Backward == true then randmove[#randmove+1] = "Backward" end
-		if checkdist.Right == true then randmove[#randmove+1] = "Right" end
-		if checkdist.Left == true then randmove[#randmove+1] = "Left" end
-		if checkdist.Forward == true then randmove[#randmove+1] = "Forward" end
-		local pickmove = VJ.PICK(randmove)
-		local anim = "flipback"
-		if pickmove == "Right" then anim = "FlipRight" end
-		if pickmove == "Left" then anim = "FlipLeft" end
-		if pickmove == "Forward" then anim = "FlipForwardB" end
-		if type(pickmove) == "table" && #pickmove == 4 then
-			anim = VJ.PICK({"flipback","FlipRight","FlipLeft","FlipForwardB"})
-		end
-		if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
-			self:VJ_ACT_PLAYACTIVITY(anim,true,false,false)
+	if !self:IsBusy() then
+		if self.VJ_IsBeingControlled then
+			local ply = self.VJ_TheController
+			self:VJ_ACT_PLAYACTIVITY((ply:KeyDown(IN_MOVELEFT) && "FlipLeft") or (ply:KeyDown(IN_MOVERIGHT) && "FlipRight") or (ply:KeyDown(IN_FORWARD) && "FlipForwardB") or "flipback",true,false,true)
 			self.Assassin_NextDodgeT = CurTime() +math.Rand(2,6)
+		else
+			local checkdist = self:VJ_CheckAllFourSides(400)
+			local randmove = {}
+			if checkdist.Backward == true then randmove[#randmove+1] = "Backward" end
+			if checkdist.Right == true then randmove[#randmove+1] = "Right" end
+			if checkdist.Left == true then randmove[#randmove+1] = "Left" end
+			if checkdist.Forward == true then randmove[#randmove+1] = "Forward" end
+			local pickmove = VJ.PICK(randmove)
+			local anim = "flipback"
+			if pickmove == "Right" then anim = "FlipRight" end
+			if pickmove == "Left" then anim = "FlipLeft" end
+			if pickmove == "Forward" then anim = "FlipForwardB" end
+			if type(pickmove) == "table" && #pickmove == 4 then
+				anim = VJ.PICK({"flipback","FlipRight","FlipLeft","FlipForwardB"})
+			end
+			if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
+				self:VJ_ACT_PLAYACTIVITY(anim,true,false,true)
+				self.Assassin_NextDodgeT = CurTime() +math.Rand(2,6)
+			end
 		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnFireBullet(data)
 	self.Assassin_CloakLevel = 0
+	self:SetFireTime(CurTime() + 1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnIsAbleToShootWeapon()
@@ -184,10 +202,13 @@ function ENT:CustomOnIsAbleToShootWeapon()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
-	self:Dodge()
+	if !self.VJ_IsBeingControlled && CurTime() > self.Assassin_NextDodgeT && !self:IsMoving() && self:IsOnGround() then
+		self:Dodge()
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
+	self:SetCloaked(false)
 	self:SetBodygroup(1,1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

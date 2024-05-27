@@ -14,7 +14,7 @@ ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 ENT.BloodColor = "Yellow"
 ENT.CustomBlood_Particle = {"blood_impact_green_01"}
 
-ENT.MeleeAttackDamage = 10
+ENT.MeleeAttackDamage = 15
 ENT.AnimTbl_MeleeAttack = {"FastAttack"}
 ENT.MeleeAttackDistance = 35
 ENT.MeleeAttackDamageDistance = 75
@@ -40,34 +40,29 @@ ENT.GeneralSoundPitch2 = 100
 
 ENT.SoundTbl_FootStep = {"vj_hlr/hl2_npc/zombine/gear1.wav","vj_hlr/hl2_npc/zombine/gear2.wav","vj_hlr/hl2_npc/zombine/gear3.wav"}
 ENT.SoundTbl_Idle = {"vj_hlr/hl2_npc/zombine/zombine_idle1.wav","vj_hlr/hl2_npc/zombine/zombine_idle2.wav","vj_hlr/hl2_npc/zombine/zombine_idle3.wav","vj_hlr/hl2_npc/zombine/zombine_idle4.wav"}
-ENT.SoundTbl_Alert = {"vj_hlr/hl2_npc/zombine/zombine_alert1.wav","vj_hlr/hl2_npc/zombine/zombine_alert2.wav","vj_hlr/hl2_npc/zombine/zombine_alert3.wav","vj_hlr/hl2_npc/zombine/zombine_alert4.wav","vj_hlr/hl2_npc/zombine/zombine_alert5.wav","vj_hlr/hl2_npc/zombine/zombine_alert6.wav","vj_hlr/hl2_npc/zombine/zombine_alert7.wav"}
+ENT.SoundTbl_Alert = {"vj_hlr/hl2_npc/zombine/zombine_alert1.wav","vj_hlr/hl2_npc/zombine/zombine_alert2.wav","vj_hlr/hl2_npc/zombine/zombine_alert3.wav","vj_hlr/hl2_npc/zombine/zombine_alert4.wav","vj_hlr/hl2_npc/zombine/zombine_alert5.wav","vj_hlr/hl2_npc/zombine/zombine_alert7.wav"}
 ENT.SoundTbl_BeforeMeleeAttack = {"vj_hlr/hl2_npc/zombine/zombine_charge1.wav","vj_hlr/hl2_npc/zombine/zombine_charge2.wav"}
 ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_strike2.wav","npc/zombie/claw_strike3.wav"}
 ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav","npc/zombie/claw_miss2.wav"}
 ENT.SoundTbl_Pain = {"vj_hlr/hl2_npc/zombine/zombine_pain1.wav","vj_hlr/hl2_npc/zombine/zombine_pain2.wav","vj_hlr/hl2_npc/zombine/zombine_pain3.wav","vj_hlr/hl2_npc/zombine/zombine_pain4.wav"}
 ENT.SoundTbl_DeathFollow = {"vj_hlr/hl2_npc/zombine/zombine_die1.wav","vj_hlr/hl2_npc/zombine/zombine_die2.wav"}
-
-ENT.Zombie_AnimationSet = 0 -- 0 = Default, 1 = Run
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetSlump(doSlump)
 	if doSlump then
 		self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
-		self.NextIdleStandTime = 0
 		local tr = util.TraceHull({
 			start = self:GetPos(),
-			endpos = self:GetPos() +self:GetForward() *-20,
+			endpos = self:GetPos() +self:GetForward() *-25,
 			mins = self:OBBMins(),
 			maxs = self:OBBMaxs(),
 			filter = self
 		})
 		self.SlumpSet = tr.Hit && "a" or "b"
-		self.AnimTbl_IdleStand = {VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)}
+		self.SlumpAnimation = VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)
 		self:SetMaxLookDistance(150)
 		self.SightAngle = 180
 		self:AddFlags(FL_NOTARGET)
 	else
-		self.NextIdleStandTime = 0
-		self.AnimTbl_IdleStand = {ACT_IDLE}
 		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. self.SlumpSet, true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
@@ -76,6 +71,7 @@ function ENT:SetSlump(doSlump)
 		self:RemoveFlags(FL_NOTARGET)
 	end
 	self.IsSlumped = doSlump
+	self.CanFlinch = doSlump && 0 or 1
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAlert(ent)
@@ -86,12 +82,15 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	local zType = self.ZombieType or math.random(0,3)
+	self.SlumpAnimation = ACT_IDLE
 
 	if self.Slump then
 		self:SetSlump(true)
 	end
 
 	self.GrenadePulled = false
+	self.GrenadeTime = 0
+	self.RageState = false
 
 	if self.ZombieType != 69 then
 		if zType == 3 then
@@ -102,9 +101,6 @@ function ENT:CustomOnInitialize()
 		end
 		self:SetSkin(zType)
 	end
-
-	self.AnimTbl_Walk = {ACT_WALK}
-	self.AnimTbl_Run = {ACT_WALK}
 
 	if self.OnInit then
 		self:OnInit()
@@ -123,49 +119,62 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
-	local slump = self.IsSlumped
-	local set = self.Zombie_AnimationSet
-	local grenPulled = self.GrenadePulled
-
-	if !slump then
-		local ent = self:GetEnemy()
-		local dist = self.NearestPointToEnemyDistance
-		if grenPulled then
-			if !IsValid(self.GrenadeEntity) && self.GrenadeTime != nil && CurTime() > self.GrenadeTime then
-				self:TakeDamage(999999999,self,self)
-			end
-			return
-		end
-		if self.VJ_IsBeingControlled == false then
-			if IsValid(self:GetEnemy()) && math.random(1,(self:Health() < self:GetMaxHealth() *0.25) && 15 or 150) == 1 && dist < 300 then
-				self:GrenadeCode()
-			end
-		else
-			if self.VJ_TheController:KeyDown(IN_ATTACK2) then
-				self:GrenadeCode()
-			end
-		end
-		if !IsValid(ent) then
-			if set == 1 then
-				self.Zombie_AnimationSet = 0
-				self.AnimTbl_Walk = {ACT_WALK}
-				self.AnimTbl_Run = {ACT_WALK}
-			end
-			return
-		end
-		if dist <= 600 && set == 0 && math.random(1,100) == 1 then
-			self.Zombie_AnimationSet = 1
-			self.AnimTbl_Walk = {ACT_RUN}
-			self.AnimTbl_Run = {ACT_RUN}
-		elseif dist > 600 && set == 1 then
-			self.Zombie_AnimationSet = 0
-			self.AnimTbl_Walk = {ACT_WALK}
-			self.AnimTbl_Run = {ACT_WALK}
-		end
-	else
-		self.NextIdleSoundT_RegularChange = CurTime() +math.random(4,8)
+function ENT:CustomAttack(ent,vis)
+	local dist = self.NearestPointToEnemyDistance
+	if !self.RageState && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or !self.VJ_IsBeingControlled && dist <= 750 && math.random(1,dist *0.5) == 1) then
+		self:StopAllCommonSpeechSounds()
+		VJ.CreateSound(self,"vj_hlr/hl2_npc/zombine/zombine_alert6.wav",80)
+		self.RageState = true
+		self.RageStateTime = CurTime() +math.Rand(6,12)
+	elseif self.RageState && CurTime() > self.RageStateTime then
+		self.RageState = false
 	end
+
+	if !self.GrenadePulled && !self:IsBusy() && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2) or !self.VJ_IsBeingControlled && math.random(1,(self:Health() < self:GetMaxHealth() *0.25) && 15 or 150) == 1 && dist < 300) then
+		self.GrenadePulled = true
+		self.GrenadeTime = CurTime() +20
+		VJ.CreateSound(self,"npc/zombine/zombine_readygrenade" .. math.random(1,2) .. ".wav",80,100)
+		self:VJ_ACT_PLAYACTIVITY("pullGrenade",true,false,true)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnThink_AIEnabled()
+	if self.IsSlumped then
+		self.NextIdleSoundT_RegularChange = CurTime() +math.random(4,8)
+	else
+		if self.GrenadePulled && CurTime() > self.GrenadeTime then
+			self:SetHealth(0)
+			self.GodMode = false
+			local dmginfo = DamageInfo()
+			dmginfo:SetDamage(100)
+			dmginfo:SetDamageType(DMG_BLAST)
+			dmginfo:SetAttacker(self)
+			dmginfo:SetInflictor(IsValid(self.GrenadeEntity) && self.GrenadeEntity or self)
+			dmginfo:SetDamagePosition(self:GetAttachment(self:LookupAttachment("grenade_attachment")).Pos)
+			self:TakeDamageInfo(dmginfo)
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE then
+		if self.IsSlumped then
+			return self.SlumpAnimation
+		elseif self.GrenadePulled then
+			return ACT_IDLE_AGITATED
+		end
+	elseif act == ACT_RUN then
+		if self.RageState then
+			return self.GrenadePulled && ACT_RUN_AGITATED or ACT_RUN
+		end
+		return ACT_WALK
+	elseif act == ACT_WALK then
+		if self.RageState then
+			return self.GrenadePulled && ACT_RUN_AGITATED or ACT_RUN
+		end
+		return self.GrenadePulled && ACT_WALK_AGITATED or ACT_WALK
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
@@ -200,7 +209,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 
 	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
 	local dmgtype = dmginfo:GetDamageType()
-	if hitgroup == HITGROUP_HEAD then
+	if hitgroup == HITGROUP_HEAD or dmgtype == DMG_BLAST then
 		ent:SetBodygroup(1,0)
 		self:CreateExtraDeathCorpse(
 			"prop_ragdoll",
@@ -213,7 +222,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 			end
 		)
 	else
-		if math.random(1,(dmgtype == DMG_CLUB or dmgtype == DMG_SLASH or DMG_BLAST) && 1 or 3) == 1 then
+		if math.random(1,(dmgtype == DMG_CLUB or dmgtype == DMG_SLASH) && 1 or 3) == 1 then
 			ent:SetBodygroup(1,0)
 			local crab = ents.Create(self.HeadcrabClass or "npc_vj_hlr2_headcrab")
 			local enemy = self:GetEnemy()
@@ -247,6 +256,8 @@ function ENT:CreateGrenade()
 	grenent.FuseTime = 3.5
 	grenent.CurFuss = CurTime() +3.5
 	grenent:Spawn()
+	grenent:Activate()
+	grenent:SetSolid(SOLID_NONE)
 	grenent.SoundTbl_Idle = {"weapons/grenade/tick1.wav"}
 	grenent.IdleSoundPitch = VJ.SET(100, 100)
 	self:DeleteOnRemove(grenent)
@@ -276,61 +287,38 @@ function ENT:CreateGrenade()
 	-- grenent.VJHumanTossingAway = true // Soldiers kept stealing their grenades xD
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:GrenadeCode()
-	if self:IsBusy() or self.GrenadePulled == true then return end
-	self.GrenadePulled = true
-	self.AnimTbl_IdleStand = {"Idle_Grenade"}
-	self.AnimTbl_Run = {VJ.SequenceToActivity(self,"Run_All_grenade")}
-	self.AnimTbl_Walk = {VJ.SequenceToActivity(self,"walk_All_Grenade")}
-	VJ.CreateSound(self,"npc/zombine/zombine_readygrenade" .. math.random(1,2) .. ".wav",80,100)
-	self:VJ_ACT_PLAYACTIVITY("pullGrenade",true,false,true)
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:SpawnBloodParticles(dmginfo, hitgroup)
-	if hitgroup == HITGROUP_HEAD then
-		local p_name = VJ.PICK(self.CustomBlood_Particle)
-		if p_name == false then return end
-		
-		local dmg_pos = dmginfo:GetDamagePosition()
-		if dmg_pos == Vector(0, 0, 0) then dmg_pos = self:GetPos() + self:OBBCenter() end
-		
-		local spawnparticle = ents.Create("info_particle_system")
-		spawnparticle:SetKeyValue("effect_name",p_name)
-		spawnparticle:SetPos(dmg_pos)
-		spawnparticle:Spawn()
-		spawnparticle:Activate()
-		spawnparticle:Fire("Start","",0)
-		spawnparticle:Fire("Kill","",0.1)
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if hitgroup == HITGROUP_HEAD then return end
-	if (dmginfo:IsBulletDamage()) then
-		local attacker = dmginfo:GetAttacker()
-		local spark = ents.Create("env_spark")
-		spark:SetKeyValue("Magnitude","1")
-		spark:SetKeyValue("Spark Trail Length","1")
-		spark:SetPos(dmginfo:GetDamagePosition())
-		spark:SetAngles(self:GetAngles())
-		spark:SetParent(self)
-		spark:Spawn()
-		spark:Activate()
-		spark:Fire("StartSpark", "", 0)
-		spark:Fire("StopSpark", "", 0.001)
-		self:DeleteOnRemove(spark)
-
-		dmginfo:ScaleDamage(0.5)
-	end
-	if self.HasSounds == true && self.HasImpactSounds == true then VJ.EmitSound(self,"vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav",70) end
-
-	if dmginfo:GetInflictor() == self.GrenadeEntity then
-		dmginfo:ScaleDamage(500)
+	if dmginfo:IsBulletDamage() then
+		if self.HasSounds == true && self.HasImpactSounds == true then VJ.EmitSound(self, "vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav", 70) end
+		if math.random(1, 3) == 1 then
+			dmginfo:ScaleDamage(0.50)
+			local spark = ents.Create("env_spark")
+			spark:SetKeyValue("Magnitude","1")
+			spark:SetKeyValue("Spark Trail Length","1")
+			spark:SetPos(dmginfo:GetDamagePosition())
+			spark:SetAngles(self:GetAngles())
+			spark:SetParent(self)
+			spark:Spawn()
+			spark:Activate()
+			spark:Fire("StartSpark", "", 0)
+			spark:Fire("StopSpark", "", 0.001)
+			self:DeleteOnRemove(spark)
+		else
+			dmginfo:ScaleDamage(0.80)
+		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
 	if self.IsSlumped then
 		self:SetSlump(false)
+	else
+		if !self.RageState && !self:IsBusy() && math.random(1,10) == 1 then
+			self:StopAllCommonSpeechSounds()
+			VJ.CreateSound(self,"vj_hlr/hl2_npc/zombine/zombine_alert6.wav",80)
+			self.RageState = true
+			self.RageStateTime = CurTime() +math.Rand(6,12)
+		end
 	end
 end
