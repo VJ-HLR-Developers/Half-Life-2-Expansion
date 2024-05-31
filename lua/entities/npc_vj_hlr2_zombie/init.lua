@@ -1,5 +1,5 @@
 AddCSLuaFile("shared.lua")
-include('shared.lua')
+include("shared.lua")
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
@@ -15,7 +15,7 @@ ENT.BloodColor = "Yellow"
 ENT.CustomBlood_Particle = {"blood_impact_green_01"}
 
 ENT.MeleeAttackDamage = 10
-ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1}
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 ENT.MeleeAttackDistance = 35
 ENT.MeleeAttackDamageDistance = 75
 ENT.TimeUntilMeleeAttackDamage = false
@@ -23,7 +23,7 @@ ENT.TimeUntilMeleeAttackDamage = false
 ENT.CanFlinch = 1
 ENT.FlinchChance = 8
 ENT.NextFlinchTime = 3
-ENT.AnimTbl_Flinch = {ACT_FLINCH_PHYSICS}
+ENT.AnimTbl_Flinch = ACT_FLINCH_PHYSICS
 ENT.HitGroupFlinching_DefaultWhenNotHit = true
 ENT.HitGroupFlinching_Values = {
 	{HitGroup = {HITGROUP_HEAD}, Animation = {"vjges_flinch_head"}},

@@ -7,8 +7,8 @@ ENT.Purpose 		= "Spawn it and fight with it!"
 ENT.Instructions 	= "Click on the spawnicon to spawn it."
 ENT.Category		= "Half-Life 2"
 
-if CLIENT then
+/*if CLIENT then
     function ENT:Initialize()
-       // self:SetIK(false)
+       self:SetIK(false)
     end
-end
+end*/

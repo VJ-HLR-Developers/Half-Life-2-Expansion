@@ -24,7 +24,7 @@ ENT.AA_MinWanderDist = 1000 -- Minimum distance that the NPC should go to when w
 ENT.AA_MoveAccelerate = 4 -- The NPC will gradually speed up to the max movement speed as it moves towards its destination | Calculation = FrameTime * x
 ENT.AA_MoveDecelerate = 4 -- The NPC will slow down as it approaches its destination | Calculation = MaxSpeed / x
 
-ENT.PoseParameterLooking_InvertPitch = true -- Inverts the pitch poseparameters (X)
+ENT.PoseParameterLooking_InvertPitch = true -- Inverts the pitch pose parameters (X)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
 ENT.FindEnemy_UseSphere = true

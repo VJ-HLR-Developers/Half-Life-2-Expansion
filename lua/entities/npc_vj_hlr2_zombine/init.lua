@@ -1,5 +1,5 @@
 AddCSLuaFile("shared.lua")
-include('shared.lua')
+include("shared.lua")
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
@@ -26,7 +26,7 @@ ENT.ItemDropsOnDeath_EntityList = {"weapon_frag"}
 ENT.CanFlinch = 1
 ENT.FlinchChance = 8
 ENT.NextFlinchTime = 5
-ENT.AnimTbl_Flinch = {ACT_FLINCH_PHYSICS}
+ENT.AnimTbl_Flinch = ACT_FLINCH_PHYSICS
 ENT.HitGroupFlinching_DefaultWhenNotHit = true
 ENT.HitGroupFlinching_Values = {
 	{HitGroup = {HITGROUP_LEFTLEG}, Animation = {ACT_FLINCH_LEFTLEG}},
@@ -204,7 +204,7 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
 		redGlow:Spawn()
 		redGlow:Activate()
 		grenent:DeleteOnRemove(redGlow)
-		util.SpriteTrail(grenent, 1, Color(200,0,0), true, 15, 15, 0.35, 1/(6+6)*0.5, "VJ_Base/sprites/vj_trial1.vmt")
+		util.SpriteTrail(grenent, 1, Color(200, 0, 0), true, 15, 15, 0.35, 0.0167, "VJ_Base/sprites/vj_trial1.vmt")
 	end
 
 	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
@@ -273,7 +273,7 @@ function ENT:CreateGrenade()
 	redGlow:Spawn()
 	redGlow:Activate()
 	grenent:DeleteOnRemove(redGlow)
-	util.SpriteTrail(grenent, 1, Color(200,0,0), true, 15, 15, 0.35, 1/(6+6)*0.5, "VJ_Base/sprites/vj_trial1.vmt")
+	util.SpriteTrail(grenent, 1, Color(200, 0, 0), true, 15, 15, 0.35, 0.0167, "VJ_Base/sprites/vj_trial1.vmt")
 
 	-- timer.Simple(3.485,function()
 	-- 	if IsValid(self) && IsValid(grenent) then

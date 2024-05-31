@@ -1,5 +1,5 @@
 AddCSLuaFile("shared.lua")
-include('shared.lua')
+include("shared.lua")
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
@@ -23,7 +23,7 @@ ENT.Bleeds = false
 ENT.Immune_AcidPoisonRadiation = true
 ENT.Immune_Dissolve = true
 
-ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1}
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 ENT.MeleeAttackDistance = 50
 ENT.MeleeAttackDamageDistance = 85
 ENT.TimeUntilMeleeAttackDamage = false

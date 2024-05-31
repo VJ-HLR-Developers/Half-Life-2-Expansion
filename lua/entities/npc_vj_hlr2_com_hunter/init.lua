@@ -1,5 +1,5 @@
 AddCSLuaFile("shared.lua")
-include('shared.lua')
+include("shared.lua")
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
@@ -26,15 +26,15 @@ ENT.AnimTbl_MeleeAttack = {
 }
 ENT.MeleeAttackDamage = 20
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDistance = 70 -- How close does it have to be until it attacks?
-ENT.MeleeAttackDamageDistance = 130 -- How far does the damage go?
+ENT.MeleeAttackDistance = 70 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
+ENT.MeleeAttackDamageDistance = 130 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.MeleeAttackBleedEnemy = true
 ENT.MeleeAttackBleedEnemyChance = 1
 ENT.MeleeAttackBleedEnemyDamage = 3
 ENT.SlowPlayerOnMeleeAttack = true
 
 ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
-ENT.AnimTbl_Death = {ACT_DIESIMPLE} -- Death Animations
+ENT.AnimTbl_Death = ACT_DIESIMPLE -- Death Animations
 
 ENT.VJC_Data = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
@@ -126,7 +126,7 @@ function ENT:CustomOnCallForHelp(ally)
 		if !ally:BusyWithActivity() && !IsValid(ally:GetEnemy()) then
 			ally:PlaySoundSystem("CallForHelp")
 			local pickanim = VJ.PICK(ally.AnimTbl_CallForHelp)
-			ally:VJ_ACT_PLAYACTIVITY(pickanim,ally.CallForHelpStopAnimations,ally:DecideAnimationLength(pickanim,ally.CallForHelpStopAnimationsTime),ally.CallForHelpAnimationFaceEnemy,ally.CallForHelpAnimationDelay,{PlayBackRate=ally.CallForHelpAnimationPlayBackRate,PlayBackRateCalculated=true})
+			ally:VJ_ACT_PLAYACTIVITY(pickanim,ally.CallForHelpStopAnimations,ally:DecideAnimationLength(pickanim,ally.CallForHelpStopAnimationsTime),ally.CallForHelpAnimationFaceEnemy,0,{PlayBackRateCalculated=true})
 			ally.NextCallForHelpAnimationT = CurTime() +ally.NextCallForHelpAnimationTime
 		end
 	end

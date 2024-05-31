@@ -12,8 +12,8 @@ ENT.Aerial_FlyingSpeed_Alerted = 600
 ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it"s wandering around while idle
 ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE} -- Animations it plays when it"s moving while alerted
 
-ENT.PoseParameterLooking_InvertPitch = false -- Inverts the pitch poseparameters (X)
-ENT.PoseParameterLooking_InvertYaw = false -- Inverts the yaw poseparameters (Y)
+ENT.PoseParameterLooking_InvertPitch = false -- Inverts the pitch pose parameters (X)
+ENT.PoseParameterLooking_InvertYaw = false -- Inverts the yaw pose parameters (Y)
 ENT.PoseParameterLooking_Names = {pitch={"flex_vert"},yaw={"flex_herz"},roll={"fin_accel"}}
 
 ENT.HasRangeAttack = false -- Should the SNPC have a range attack?

@@ -1,11 +1,11 @@
 AddCSLuaFile("shared.lua")
-include('shared.lua')
+include("shared.lua")
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/strider.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = "models/vj_hlr/hl2/strider.mdl" -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
 ENT.StartHealth = 500
 ENT.HullType = HULL_LARGE
 ENT.VJ_IsHugeMonster = true
@@ -22,9 +22,9 @@ ENT.PoseParameterLooking_InvertYaw = true
 ENT.PoseParameterLooking_Names = {pitch={"minigunPitch"},yaw={"minigunYaw"},roll={}}
 
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
-ENT.MeleeAttackDistance = 50 -- How close does it have to be until it attacks?
-ENT.MeleeAttackDamageDistance = 100 -- How far does the damage go?
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1 -- Melee Attack Animations
+ENT.MeleeAttackDistance = 50 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
+ENT.MeleeAttackDamageDistance = 100 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.MeleeAttackDamage = 150
 ENT.TimeUntilMeleeAttackDamage = false
 
@@ -110,19 +110,21 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	-- self:SetCollisionBounds(Vector(35,35,42),Vector(-35,-35,-500)) // For default strider model
-	self:SetCollisionBounds(Vector(22,22,500),Vector(-22,-22,0))
-	-- VJ.CreateBoneFollower(self)
+	self:SetCollisionBounds(Vector(35, 35, 500),Vector(-35, -35, 0))
 	self:CreateBoneFollowers({
 		"Combine_Strider.Body_Bone",
+		-- EP2 only (Disabled as it will cause IK issues)
+		//"Combine_Strider.Neck_Bone",
+		//"Combine_Strider.Gun_Bone1",
+		//"Combine_Strider.Gun_Bone2",
+		-- Lower legs
 		"Combine_Strider.Leg_Left_Bone1",
 		"Combine_Strider.Leg_Right_Bone1",
 		"Combine_Strider.Leg_Hind_Bone1",
+		-- Upper legs
 		"Combine_Strider.Leg_Left_Bone",
 		"Combine_Strider.Leg_Right_Bone",
 		"Combine_Strider.Leg_Hind_Bone",
-		-- "Combine_Strider.Neck_Bone",
-		-- "Combine_Strider.Gun_Bone1",
-		-- "Combine_Strider.Gun_Bone2",
 	})
 
 	self.NextFireT = 0

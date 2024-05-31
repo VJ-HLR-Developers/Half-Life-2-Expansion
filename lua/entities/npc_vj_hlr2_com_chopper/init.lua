@@ -22,8 +22,8 @@ ENT.AA_MinWanderDist = 1000 -- Minimum distance that the NPC should go to when w
 ENT.AA_MoveAccelerate = 8 -- The NPC will gradually speed up to the max movement speed as it moves towards its destination | Calculation = FrameTime * x
 ENT.AA_MoveDecelerate = 4 -- The NPC will slow down as it approaches its destination | Calculation = MaxSpeed / x
 
-ENT.PoseParameterLooking_InvertPitch = true -- Inverts the pitch poseparameters (X)
-ENT.PoseParameterLooking_InvertYaw = true -- Inverts the yaw poseparameters (Y)
+ENT.PoseParameterLooking_InvertPitch = true -- Inverts the pitch pose parameters (X)
+ENT.PoseParameterLooking_InvertYaw = true -- Inverts the yaw pose parameters (Y)
 ENT.PoseParameterLooking_Names = {pitch={"weapon_pitch"},yaw={"weapon_yaw"},roll={}}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
@@ -49,7 +49,7 @@ ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachme
 ENT.RangeAttackExtraTimers = {1}
 
 ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
-ENT.AnimTbl_Death = {ACT_DIESIMPLE} -- Death Animations
+ENT.AnimTbl_Death = ACT_DIESIMPLE -- Death Animations
 ENT.DeathAnimationTime = false -- Time until the SNPC spawns its corpse and gets removed
 ENT.DeathCorpseCollisionType = COLLISION_GROUP_NONE -- Collision type for the corpse | SNPC Options Menu can only override this value if it's set to COLLISION_GROUP_DEBRIS!
 
