@@ -145,7 +145,6 @@ if VJExists == true then
 						finalResult = checkEnt:IsNPC() && (checkEnt:GetVelocity():Length() > 60 && 0.97 or checkEnt:GetFireTime() > CurTime() && 0.92) or 0.997
 					else
 						finalResult = 0
-						finalResultRefract = 0
 					end
 				end
 				ent.Mat_cloakfactor = Lerp(FrameTime() *0.3,curValue,finalResult)
