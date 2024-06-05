@@ -229,8 +229,8 @@ function ENT:CustomAttack()
 			end
 			if self.CarpetBombing then
 				self:AA_MoveTo(self.CarpetBombPos, false, "Alert", {FaceDest=true, FaceDestTarget=false, IgnoreGround=true})
-				local resMe, resPos = self:VJ_GetNearestPointToVector(self.CarpetBombPos, true)
-				if resMe:Distance(resPos) <= 100 then
+				local resMe = self:NearestPoint(self.CarpetBombPos)
+				if resMe:Distance(self.CarpetBombPos) <= 100 then
 					self:AA_StopMoving()
 					self.CarpetBombing = false
 					self.NextCarpetBombT = CurTime() +math.Rand(30,60)
