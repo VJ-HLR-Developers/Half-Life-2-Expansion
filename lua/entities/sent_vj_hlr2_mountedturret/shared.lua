@@ -60,7 +60,8 @@ if SERVER then
 	end
 	
 	function ENT:SetEmplacementStatus()
-		if IsValid(self.Operator) then
+		local operator = self.Operator
+		if IsValid(operator) then
 			if !self.IsActivated && !self.IsActivating then
 				self.Emplacement:ResetSequence(self.ActivateAnimation)
 				self:EmitSound("weapons/shotgun/shotgun_cock.wav",70,100)
@@ -105,50 +106,54 @@ if SERVER then
 
 	function ENT:ManGun(ent)
 		self.Operator = ent
-		self.Operator:StopMoving()
-		self.Operator:StopMoving()
-		self.Operator.OldIdle = self.Operator.AnimTbl_IdleStand
-		self.Operator.OldAttack = self.Operator.AnimTbl_WeaponAttack
-		self.Operator.OldMeleeAttack = self.Operator.HasMeleeAttack
-		self.Operator.OldGrenadeAttack = self.Operator.HasGrenadeAttack
-		if IsValid(self.Operator:GetActiveWeapon()) then
-			self.Operator.OldWeapon = self.Operator:GetActiveWeapon():GetClass()
-			self.Operator:GetActiveWeapon():Remove()
+		local operator = self.Operator
+		operator:StopMoving()
+		operator:StopMoving()
+		operator.OldIdle = operator.AnimTbl_IdleStand
+		operator.OldAttack = operator.AnimTbl_WeaponAttack
+		operator.OldMeleeAttack = operator.HasMeleeAttack
+		operator.OldGrenadeAttack = operator.HasGrenadeAttack
+		if IsValid(operator:GetActiveWeapon()) then
+			operator.OldWeapon = operator:GetActiveWeapon():GetClass()
+			operator:GetActiveWeapon():Remove()
 		end
-		self.Operator.MovementType = VJ_MOVETYPE_STATIONARY
-		self.Operator.CanTurnWhileStationary = false
-		self.Operator.AnimTbl_IdleStand = {ACT_IDLE_MANNEDGUN}
-		self.Operator.AnimTbl_WeaponAttack = {ACT_IDLE_MANNEDGUN}
-		self.Operator.DisableWandering = true
-		self.Operator.DisableChasingEnemy = true
-		self.Operator.NoWeapon_UseScaredBehavior = false
-		self.Operator.HasMeleeAttack = false
-		self.Operator.HasGrenadeAttack = false
-		self.Operator:StartEngineTask(ai.GetTaskID("TASK_PLAY_SEQUENCE"), ACT_IDLE_MANNEDGUN)
+		operator.MovementType = VJ_MOVETYPE_STATIONARY
+		operator.CanTurnWhileStationary = false
+		-- operator.AnimTbl_IdleStand = {ACT_IDLE_MANNEDGUN}
+		-- operator.AnimTbl_WeaponAttack = {ACT_IDLE_MANNEDGUN}
+		operator.AnimationTranslations[ACT_IDLE] = ACT_IDLE_MANNEDGUN
+		operator.DisableWandering = true
+		operator.DisableChasingEnemy = true
+		operator.NoWeapon_UseScaredBehavior = false
+		operator.HasMeleeAttack = false
+		operator.HasGrenadeAttack = false
+		-- operator:StartEngineTask(ai.GetTaskID("TASK_PLAY_SEQUENCE"), ACT_IDLE_MANNEDGUN)
 		self.VJ_GoingToManGun = false
 		self.VJ_ManningGun = true
 		self.PullingOperator = NULL
 	end
 
 	function ENT:UnMan()
-		self.Operator.VJ_NextManGunT = CurTime() +10
-		self.Operator.AnimTbl_WeaponAttack = self.Operator.OldAttack
-		self.Operator.HasMeleeAttack = self.Operator.OldMeleeAttack
-		self.Operator.HasGrenadeAttack = self.Operator.OldGrenadeAttack
-		if self.Operator.OldWeapon != nil then
-			self.Operator:Give(self.Operator.OldWeapon)
+		local operator = self.Operator
+		operator.VJ_NextManGunT = CurTime() +10
+		operator.AnimTbl_WeaponAttack = operator.OldAttack
+		operator.HasMeleeAttack = operator.OldMeleeAttack
+		operator.HasGrenadeAttack = operator.OldGrenadeAttack
+		if operator.OldWeapon != nil then
+			operator:Give(operator.OldWeapon)
 		end
-		self.Operator.MovementType = VJ_MOVETYPE_GROUND
-		self.Operator.CanTurnWhileStationary = true
-		self.Operator.AnimTbl_IdleStand = self.Operator.OldIdle
-		self.Operator.DisableWandering = false
-		self.Operator.DisableChasingEnemy = false
-		self.Operator.NoWeapon_UseScaredBehavior = true
-		self.Operator:SetPos(self.Operator:GetPos() +self.Operator:GetForward() *-16 +self:GetUp() *6)
+		operator.MovementType = VJ_MOVETYPE_GROUND
+		operator.CanTurnWhileStationary = true
+		-- operator.AnimTbl_IdleStand = operator.OldIdle
+		operator.AnimationTranslations[ACT_IDLE] = nil
+		operator.DisableWandering = false
+		operator.DisableChasingEnemy = false
+		operator.NoWeapon_UseScaredBehavior = true
+		operator:SetPos(operator:GetPos() +operator:GetForward() *-16 +self:GetUp() *6)
 		self.Emplacement:SetPoseParameter("aim_pitch",0)
 		self.Emplacement:SetPoseParameter("aim_yaw",0)
-		self.Operator.VJ_GoingToManGun = false
-		self.Operator.VJ_ManningGun = false
+		operator.VJ_GoingToManGun = false
+		operator.VJ_ManningGun = false
 		self.Operator = NULL
 	end
 
@@ -163,7 +168,8 @@ if SERVER then
 		end
 		self.TargetPos = self:GetPos() +self:GetForward() *-50
 		self.HandlePos = self:GetPos() +self:GetForward() *-40 +self:GetUp() *-31
-		if !IsValid(self.Operator) then
+		local operator = self.Operator
+		if !IsValid(operator) then
 			self:DoPoseParameterLooking(true)
 			if !IsValid(self.PullingOperator) then
 				for _,v in ipairs(ents.FindInSphere(self:GetPos(),500)) do
@@ -189,16 +195,16 @@ if SERVER then
 				end
 			end
 		else
-			self.Operator:SetPos(self.HandlePos)
-			self.Operator:SetAngles(self:GetAngles())
-			if IsValid(self.Operator:GetEnemy()) then
-				local ene = self.Operator:GetEnemy()
-				if (self.Emplacement:GetForward():Dot((ene:GetPos() - self.Emplacement:GetPos()):GetNormalized()) > math.cos(math.rad(self.Operator.SightAngle))) && (ene:GetPos():Distance(self:GetPos()) < self.Operator.Weapon_FiringDistanceFar) then
+			operator:SetPos(self.HandlePos)
+			operator:SetAngles(self:GetAngles())
+			if IsValid(operator:GetEnemy()) then
+				local ene = operator:GetEnemy()
+				if (self.Emplacement:GetForward():Dot((ene:GetPos() - self.Emplacement:GetPos()):GetNormalized()) > math.cos(math.rad(operator.SightAngle))) && (ene:GetPos():Distance(self:GetPos()) < operator.Weapon_FiringDistanceFar) then
 					if self:Visible(ene) then
 						self:FireEmplacement()
 					end
 				else
-					if ene:GetPos():Distance(self.Operator:GetPos()) <= 500 then
+					if ene:GetPos():Distance(operator:GetPos()) <= 500 then
 						self:UnMan()
 					end
 				end
@@ -250,7 +256,8 @@ if SERVER then
 			self.Emplacement.Loop:SetSoundLevel(72)
 			self.Emplacement.Loop:Play()
 		end
-		ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self.Emplacement,1)
+		ParticleEffectAttach("vj_muzzle_ar2_main",PATTACH_POINT_FOLLOW,self.Emplacement,1)
+		-- ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self.Emplacement,1)
 		self.Emplacement:ResetSequence("fire")
 		sound.Play("^weapons/ar1/ar1_dist2.wav",self.Emplacement:GetPos(),90,100 +(self.Overheat /4) *GetConVarNumber("host_timescale"))
 	end
@@ -266,9 +273,10 @@ if SERVER then
 
 	function ENT:DoPoseParameterLooking(resetPoses)
 		if !IsValid(self.Operator) then return end
+		local operator = self.Operator
 		resetPoses = resetPoses or false
 		local ent = NULL
-		if self.Operator.VJ_IsBeingControlled == true then ent = self.Operator.VJ_TheController else ent = self.Operator:GetEnemy() end
+		if operator.VJ_IsBeingControlled == true then ent = operator.VJ_TheController else ent = operator:GetEnemy() end
 		local p_enemy = 0 -- Pitch
 		local y_enemy = 0 -- Yaw
 		local r_enemy = 0 -- Roll
@@ -277,7 +285,7 @@ if SERVER then
 		if IsValid(ent) && resetPoses == false then
 			local self_pos = self.Emplacement:GetPos() + self.Emplacement:OBBCenter()
 			local enemy_pos = false //Vector(0, 0, 0)
-			if self.Operator.VJ_IsBeingControlled == true then enemy_pos = self.Operator.VJ_TheController:GetEyeTrace().HitPos else enemy_pos = ent:GetPos() + ent:OBBCenter() end
+			if operator.VJ_IsBeingControlled == true then enemy_pos = operator.VJ_TheController:GetEyeTrace().HitPos else enemy_pos = ent:GetPos() + ent:OBBCenter() end
 			if enemy_pos == false then return end
 			local self_ang = self.Emplacement:GetAngles()
 			local enemy_ang = (enemy_pos - self_pos):Angle()
@@ -297,15 +305,15 @@ if SERVER then
 				y_enemy = y_enemy +2
 			end
 			-- p_enemy = p_enemy -(y_enemy /3)
-			print(y_enemy,p_enemy)
+			-- print(y_enemy,p_enemy)
 			-- y_enemy = y_enemy +2
 			-- if !(self:GetForward():Dot((ent:GetPos() - self:GetPos()):GetNormalized()) > math.cos(math.rad(30))) then
 				-- y_enemy = y_enemy -5
 			-- end
 		end
 		self.Emplacement:SetPoseParameter("aim_pitch",ang_app(self.Emplacement:GetPoseParameter("aim_pitch"),p_enemy,10))
-		self.Operator:SetPoseParameter("aim_pitch",ang_app(self.Operator:GetPoseParameter("aim_pitch"),p_enemy,10))
+		operator:SetPoseParameter("aim_pitch",ang_app(operator:GetPoseParameter("aim_pitch"),p_enemy,10))
 		self.Emplacement:SetPoseParameter("aim_yaw",ang_app(self.Emplacement:GetPoseParameter("aim_yaw"),y_enemy,10))
-		self.Operator:SetPoseParameter("aim_yaw",ang_app(self.Operator:GetPoseParameter("aim_yaw"),y_enemy,10))
+		operator:SetPoseParameter("aim_yaw",ang_app(operator:GetPoseParameter("aim_yaw"),y_enemy,10))
 	end
 end

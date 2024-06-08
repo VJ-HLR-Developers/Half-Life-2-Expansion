@@ -74,7 +74,7 @@ if VJExists == true then
 		VJ.AddNPC("G-Man","npc_vj_hlr2_gman",spawnCategory)
 
 		-- Resistance
-		-- VJ.AddNPC("Vortigaunt","npc_vj_hlr2_vort",spawnCategory)
+		VJ.AddNPC("Vortigaunt","npc_vj_hlr2_vortigaunt",spawnCategory)
 		VJ.AddNPC_HUMAN("Gordon Freeman","npc_vj_hlr2_freeman",{"weapon_vj_smg1","weapon_vj_ar2","weapon_vj_spas12"},spawnCategory)
 		VJ.AddNPC("Lamarr","npc_vj_hlr2_lamarr",spawnCategory)
 

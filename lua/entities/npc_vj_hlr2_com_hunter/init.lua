@@ -283,6 +283,9 @@ function ENT:CustomAttack(ent,vis)
 		})
 		self:SetLastPosition(tr.HitPos +tr.HitNormal *200)
 		self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+		if self:OnGround() then
+			self:SetVelocity(self:GetMoveVelocity() *1.01)
+		end
 		if tr.Hit then
 			self:SetMaxYawSpeed(self.TurningSpeed)
 			self.IsCharging = false

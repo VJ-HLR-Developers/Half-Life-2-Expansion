@@ -139,6 +139,7 @@ end
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "step" then
 		self:FootStepSoundCode()
+		util.ScreenShake(self:GetPos(), 14, 200, 0.6, 1024)
 	end
 	if key == "melee" then
 		self:MeleeAttackCode()
