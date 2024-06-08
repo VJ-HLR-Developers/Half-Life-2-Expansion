@@ -37,6 +37,11 @@ ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance"
 ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance"
 ENT.NoChaseAfterCertainRange_Type = "OnlyRange"
 
+ENT.IsMedicSNPC = true
+ENT.Medic_HealDistance = 256
+ENT.Medic_HealthAmount = 50
+ENT.Medic_SpawnPropOnHeal = false
+
 ENT.CanFlinch = 1
 ENT.FlinchChance = 8
 ENT.NextFlinchTime = 3
@@ -236,7 +241,9 @@ function ENT:CustomOnInitialize()
 		self.Vort_AnimationCache["heal_end"] = self:GetSequenceActivity(self:LookupSequence("heal_end"))
 	end
 
+	self.Vort_DispelT = 0
 	self.NextRandMoveT = 0
+	self.AnimTbl_Medic_GiveHealth = self.Vort_AnimationCache["heal_cycle"]
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local getEventName = util.GetAnimEventNameByID
@@ -244,42 +251,69 @@ local getEventName = util.GetAnimEventNameByID
 function ENT:CustomOnHandleAnimEvent(ev, evTime, evCycle, evType, evOptions)
 	local event = getEventName(ev)
 	-- print("OnHandleAnimEvent", "eventName", event, "ev", ev, "evTime", evTime, "evCycle", evCycle, "evType", evType, "evOptions", evOptions)
-	if event == "AE_VORTIGAUNT_ZAP_POWERUP" then
-		if !self.Vort_ZapPowerUp or self.Vort_ZapPowerUp && !self.Vort_ZapPowerUp:IsPlaying() then
+	if event == "AE_VORTIGAUNT_ZAP_POWERUP" or event == "AE_VORTIGAUNT_DEFEND_BEAMS" or event == "AE_VORTIGAUNT_HEAL_STARTBEAMS" then
+		local short = event == "AE_VORTIGAUNT_DEFEND_BEAMS"
+		local noElec = event == "AE_VORTIGAUNT_HEAL_STARTBEAMS"
+		if !short && !noElec && (!self.Vort_ZapPowerUp or self.Vort_ZapPowerUp && !self.Vort_ZapPowerUp:IsPlaying()) then
 			self.Vort_ZapPowerUp = CreateSound(self,"npc/vort/attack_charge.wav")
 			self.Vort_ZapPowerUp:Play()
 		end
 
-		for i = 3,4 do
-			ParticleEffectAttach("vortigaunt_charge_token",PATTACH_POINT_FOLLOW,self,i)
+		for i = 3,(noElec && 3 or 4) do
+			ParticleEffectAttach(noElec && "vortigaunt_hand_glow" or "vortigaunt_charge_token",PATTACH_POINT_FOLLOW,self,i)
 
-			local target = ents.Create("prop_vj_animatable")
-			target:SetName("vortigaunt_charge_token" .. i .. "_" .. target:EntIndex())
-			target:SetModel("models/props_junk/watermelon01.mdl")
-			target:SetPos(self:GetAttachment(i).Pos +VectorRand() *math.Rand(0, 128))
-			target:Spawn()
-			target:Activate()
-			target:SetNoDraw(true)
-			target:DrawShadow(false)
-			target:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
-			target:SetSolid(SOLID_NONE)
+			local light = ents.Create("light_dynamic")
+			light:SetKeyValue("_light","44 255 139 255")
+			light:SetKeyValue("style","0")
+			light:SetKeyValue("distance","200")
+			light:SetKeyValue("brightness","2")
+			light:SetLocalPos(self:GetAttachment(i).Pos)
+			light:SetLocalAngles(self:GetAttachment(i).Ang)
+			light:Spawn()
+			light:Activate()
+			light:SetParent(self)
+			light:Fire("TurnOn","",0)
+			light:Fire("SetParentAttachment",i == 3 && "leftclaw" or "rightclaw")
+			self:DeleteOnRemove(light)
 
-			local att = self:GetAttachment(i)
-			local particle = ents.Create("info_particle_system")
-			particle:SetKeyValue("effect_name","vortigaunt_beam_charge")
-			particle:SetPos(att.Pos)
-			particle:SetAngles(att.Ang)
-			particle:SetKeyValue("start_active","1")
-			particle:SetKeyValue("cpoint1",target:GetName())
-			particle:Spawn()
-			particle:Activate()
-			particle:SetParent(self)
-			particle:Fire("SetParentAttachment",i == 3 && "leftclaw" or "rightclaw")
-			particle:DeleteOnRemove(target)
-			self:DeleteOnRemove(particle)
+			if !noElec then
+				local target = ents.Create("prop_vj_animatable")
+				target:SetName("vortigaunt_charge_token" .. i .. "_" .. target:EntIndex())
+				target:SetModel("models/props_junk/watermelon01.mdl")
+				target:SetPos(self:GetAttachment(i).Pos +VectorRand() *math.Rand(0, 128))
+				target:Spawn()
+				target:Activate()
+				target:SetNoDraw(true)
+				target:DrawShadow(false)
+				target:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
+				target:SetSolid(SOLID_NONE)
 
-			SafeRemoveEntityDelayed(target, 1.5)
-			SafeRemoveEntityDelayed(particle, 1.5)
+				local att = self:GetAttachment(i)
+				local particle = ents.Create("info_particle_system")
+				particle:SetKeyValue("effect_name","vortigaunt_beam_charge")
+				particle:SetPos(att.Pos)
+				particle:SetAngles(att.Ang)
+				particle:SetKeyValue("start_active","1")
+				particle:SetKeyValue("cpoint1",target:GetName())
+				particle:Spawn()
+				particle:Activate()
+				particle:SetParent(self)
+				particle:Fire("SetParentAttachment",i == 3 && "leftclaw" or "rightclaw")
+				particle:DeleteOnRemove(target)
+				self:DeleteOnRemove(particle)
+			end
+
+			local deleteTime = (short or noElec) && 0.25 or 1.5
+			SafeRemoveEntityDelayed(target, deleteTime)
+			SafeRemoveEntityDelayed(particle, deleteTime)
+			SafeRemoveEntityDelayed(light, deleteTime)
+			if short then
+				timer.Simple(0.25, function()
+					if IsValid(self) then
+						self:StopParticles()
+					end
+				end)
+			end
 		end
 	elseif event == "AE_VORTIGAUNT_SHOOT_SOUNDSTART" then
 		VJ.STOPSOUND(self.Vort_ZapPowerUp)
@@ -293,6 +327,36 @@ function ENT:CustomOnHandleAnimEvent(ev, evTime, evCycle, evType, evOptions)
 		self:MeleeAttackCode()
 	elseif event == "AE_VORTIGAUNT_CLAW_RIGHT" then
 		self:MeleeAttackCode()
+	elseif event == "AE_VORTIGAUNT_START_DISPEL" then
+		VJ.EmitSound(self,"vj_hlr/hl2_npc/vort/vort_dispell.wav",75)
+	elseif event == "AE_VORTIGAUNT_ACCEL_DISPEL" then
+		VJ.EmitSound(self,"vj_hlr/hl2_npc/vort/vort_attack_shoot1.wav",85)
+	elseif event == "AE_VORTIGAUNT_DISPEL" then
+		self:StopParticles()
+		VJ.STOPSOUND(self.Vort_ZapPowerUp)
+		VJ.EmitSound(self,"vj_hlr/hl2_npc/vort/vort_explode" .. math.random(1,2) .. ".wav",85)
+		util.ScreenShake(self:GetPos(), 16, 100, 1, 600)
+		VJ.ApplyRadiusDamage(self, self, self:GetPos(), 500, 90, bit.bor(DMG_SHOCK,DMG_ENERGYBEAM,DMG_BLAST), true, false, {Force = 175})
+		for _,v in pairs(ents.FindInSphere(self:GetPos(), 500)) do
+			if (v:IsNPC() && v != self or v:IsPlayer()) && self:CheckRelationship(v) == D_LI then
+				v:SetHealth(math.Clamp(v:Health() +25, 1, v:GetMaxHealth()))
+			end
+		end
+		self:SetHealth(math.Clamp(self:Health() +50, 1, self:GetMaxHealth()))
+
+		effects.BeamRingPoint(self:GetPos(), 0.2, 12, 500, 64, 0, Color(44,255,139), {material="sprites/lgtning.vmt", framerate=2, flags=0, speed=0, delay=0, spread=0})
+		effects.BeamRingPoint(self:GetPos(), 0.2, 12, 500, 64, 0, Color(44,255,139), {material="sprites/lgtning.vmt", framerate=2, flags=0, speed=0, delay=0, spread=0})
+	
+		local light = ents.Create("light_dynamic")
+		light:SetKeyValue("_light","44 255 139 255")
+		light:SetKeyValue("style","0")
+		light:SetKeyValue("distance","600")
+		light:SetKeyValue("brightness","4")
+		light:SetPos(self:GetPos())
+		light:Spawn()
+		light:Activate()
+		light:Fire("TurnOn","",0)
+		SafeRemoveEntityDelayed(light, 0.15)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -310,6 +374,17 @@ function ENT:CustomRangeAttackCode()
 	
 	sound.Play("vj_hlr/hl2_npc/vort/vort_attack_shoot" .. math.random(3,4) .. ".wav",hitPos,75)
 	VJ.ApplyRadiusDamage(self, self, hitPos, 100, 25, bit.bor(DMG_SHOCK,DMG_ENERGYBEAM), true, false, {Force = 90})
+
+	local light = ents.Create("light_dynamic")
+	light:SetKeyValue("_light","44 255 139 255")
+	light:SetKeyValue("style","0")
+	light:SetKeyValue("distance","200")
+	light:SetKeyValue("brightness","2")
+	light:SetPos(hitPos)
+	light:Spawn()
+	light:Activate()
+	light:Fire("TurnOn","",0)
+	SafeRemoveEntityDelayed(light, 0.1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local alertAntlions = {"vj_hlr/hl2_npc/vort/vo/alert_antlions.wav"}
@@ -323,6 +398,13 @@ function ENT:CustomOnAlert(ent)
 			end
 		end
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnMedic_OnHeal(ent)
+	if ent:IsPlayer() then
+		ent:SetArmor(math.Clamp(ent:Armor() +25, 0, 100))
+	end
+	return true
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:TranslateActivity(act)
@@ -366,12 +448,26 @@ function ENT:CustomAttack(ent,vis)
 				self.NextRandMoveT = CurTime() +math.Rand(3,6)
 			end
 		end
+	else
+		local ply = self.VJ_TheController
+		if ply:KeyDown(IN_JUMP) && CurTime() > self.Vort_DispelT && !self:IsBusy() then
+			local _,dur = self:VJ_ACT_PLAYACTIVITY("dispel",true,false,false)
+			self.NextDoAnyAttackT = CurTime() +dur
+			self.NextRandMoveT = CurTime() +dur
+			self.Vort_DispelT = CurTime() +dur
+		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
+	if self.VJ_IsBeingControlled then return end
 	if math.random(1,dmginfo:IsBulletDamage() && 3 or 6) == 1 then
 		self.Vort_RunAway = true
+	elseif !self.Vort_RunAway && math.random(1,4) == 1 && !dmginfo:IsBulletDamage() && CurTime() > self.Vort_DispelT then
+		local _,dur = self:VJ_ACT_PLAYACTIVITY("dispel",true,false,false)
+		self.NextDoAnyAttackT = CurTime() +dur
+		self.NextRandMoveT = CurTime() +dur
+		self.Vort_DispelT = CurTime() +dur +math.random(1,4)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
