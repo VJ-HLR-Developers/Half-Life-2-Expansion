@@ -395,3 +395,68 @@ function ENT:CustomAttack(ent,vis)
 		end
 	end
 end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local defAng = Angle(0, 0, 0)
+local angY45 = Angle(0, 45, 0)
+local angY45 = Angle(0, 45, 0)
+local angYN45 = Angle(0, -45, 0)
+local angY90 = Angle(0, 90, 0)
+local angYN90 = Angle(0, -90, 0)
+local angY135 = Angle(0, 135, 0)
+local angYN135 = Angle(0, -135, 0)
+local angY180 = Angle(0, 180, 0)
+--
+function ENT:Controller_Movement(cont, ply, bullseyePos)
+	if self.MovementType != VJ_MOVETYPE_STATIONARY then
+		local gerta_lef = ply:KeyDown(IN_MOVELEFT)
+		local gerta_rig = ply:KeyDown(IN_MOVERIGHT)
+		local gerta_arak = ply:KeyDown(IN_SPEED)
+		local aimVector = ply:GetAimVector()
+		local FT = FrameTime() *(self.TurningSpeed *1.25)
+
+		self.VJC_Data.TurnAngle = self.VJC_Data.TurnAngle or defAng
+
+		if self.IsCharging then
+			return
+		end
+		
+		if ply:KeyDown(IN_FORWARD) then
+			if self.MovementType == VJ_MOVETYPE_AERIAL or self.MovementType == VJ_MOVETYPE_AQUATIC then
+				self:AA_MoveTo(cont.VJCE_Bullseye, true, gerta_arak and "Alert" or "Calm", {IgnoreGround=true})
+			else
+				-- if gerta_lef then
+				-- 	cont:StartMovement(aimVector, angY45)
+				-- elseif gerta_rig then
+				-- 	cont:StartMovement(aimVector, angYN45)
+				-- else
+				-- 	cont:StartMovement(aimVector, defAng)
+				-- end
+				self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, gerta_lef && angY45 or gerta_rig && angYN45 or defAng)
+				cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+			end
+		elseif ply:KeyDown(IN_BACK) then
+			-- if gerta_lef then
+			-- 	cont:StartMovement(aimVector*-1, angYN45)
+			-- elseif gerta_rig then
+			-- 	cont:StartMovement(aimVector*-1, angY45)
+			-- else
+			-- 	cont:StartMovement(aimVector*-1, defAng)
+			-- end
+			self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, gerta_lef && angY135 or gerta_rig && angYN135 or angY180)
+			cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+		elseif gerta_lef then
+			-- cont:StartMovement(aimVector, angY90)
+			self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, angY90)
+			cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+		elseif gerta_rig then
+			-- cont:StartMovement(aimVector, angYN90)
+			self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, angYN90)
+			cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+		else
+			self:StopMoving()
+			if self.MovementType == VJ_MOVETYPE_AERIAL or self.MovementType == VJ_MOVETYPE_AQUATIC then
+				self:AA_StopMoving()
+			end
+		end
+	end
+end

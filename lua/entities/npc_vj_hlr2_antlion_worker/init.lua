@@ -5,31 +5,28 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/antlion_worker.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = "models/vj_hlr/hl2/antlion_worker.mdl"
 ENT.StartHealth = 60
----------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_ANTLION"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.CustomBlood_Particle = {"antlion_spit_player_splat"}
-ENT.MeleeAttackDistance = 15 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 
-ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
-ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1 -- Range Attack Animations
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_antlionspit" -- Entities that it can spawn when range attacking | If set as a table, it picks a random entity
+ENT.CustomBlood_Particle = {"antlion_spit_player_splat"}
+
+ENT.HasRangeAttack = true
+ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
+ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_antlionspit"
 ENT.TimeUntilRangeAttackProjectileRelease = false
-ENT.NextRangeAttackTime = 1.5 -- How much time until it can use a range attack?
-ENT.RangeDistance = 2000 -- This is how far away it can shoot
-ENT.RangeToMeleeDistance = 400 -- How close does it have to be until it uses melee?
-ENT.RangeUseAttachmentForPos = false -- Should the projectile spawn on a attachment?
+ENT.NextRangeAttackTime = 1.5
+ENT.RangeDistance = 2000
+ENT.RangeToMeleeDistance = 400
+ENT.RangeUseAttachmentForPos = false
 ENT.RangeAttackPos_Up = 20
 ENT.RangeAttackPos_Forward = 30
 
-ENT.NoChaseAfterCertainRange = true -- Should the SNPC not be able to chase when it's between number x and y?
-ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance" -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance" -- How near until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
+ENT.NoChaseAfterCertainRange = true
+ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance"
+ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance"
 ENT.NoChaseAfterCertainRange_Type = "OnlyRange"
 
-ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
+ENT.HasDeathAnimation = true
 ENT.AnimTbl_Death = {"explode"}
 ENT.GibOnDeathDamagesTable = {"All"}
 ENT.SoundTbl_Death = {
@@ -43,18 +40,7 @@ function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
 			VJ.EmitSound(self,"npc/antlion/antlion_burst" .. math.random(1,2) .. ".wav",75,100)
 			ParticleEffect("antlion_gib_02",self:GetPos(),Angle(0,0,0),nil)
 			ParticleEffect("antlion_gib_02",self:GetPos(),Angle(0,0,0),nil)
-			local find = ents.FindInSphere(self:GetPos(),200)
-			for index,ent in pairs(find) do
-				if (ent:IsNPC() && ent != self && !VJ.HasValue(ent.VJ_NPC_Class,"CLASS_ANTLION")) || (ent:IsPlayer() && !VJ_CVAR_IGNOREPLAYERS) then
-					local dmginfo = DamageInfo()
-					dmginfo:SetDamage(55)
-					dmginfo:SetDamageType(DMG_ACID)
-					dmginfo:SetDamagePosition(ent:GetPos() +ent:OBBCenter())
-					dmginfo:SetAttacker(self)
-					dmginfo:SetInflictor(self)
-					ent:TakeDamageInfo(dmginfo)
-				end
-			end
+			VJ.ApplyRadiusDamage(self, self, self:GetPos(), 160, 50, DMG_ACID, true, false, {Force = 50})
 
 			local head = self:GetPos() +self:GetForward() *50 +self:GetRight() *0 +self:GetUp() *30
 			local lF = self:GetPos() +self:GetForward() *40 +self:GetRight() *-15 +self:GetUp() *30

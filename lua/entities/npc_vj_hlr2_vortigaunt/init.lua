@@ -9,6 +9,12 @@ ENT.Model = {"models/vortigaunt.mdl"}
 ENT.StartHealth = 100
 ENT.HullType = HULL_HUMAN
 
+ENT.JumpVars = {
+	MaxRise = 80, -- How high it can jump up ((S -> A) AND (S -> E))
+	MaxDrop = 192, -- How low it can jump down (E -> S)
+	MaxDistance = 250, -- Maximum distance between Start and End
+}
+
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY","CLASS_VORTIGAUNT"}
 ENT.FriendsWithAllPlayerAllies = true
 ENT.HasOnPlayerSight = true

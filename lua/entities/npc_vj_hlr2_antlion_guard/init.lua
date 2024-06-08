@@ -5,38 +5,40 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/antlion_guard.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = "models/vj_hlr/hl2/antlion_guard.mdl"
 ENT.StartHealth = 500
 ENT.HullType = HULL_LARGE
-ENT.VJ_IsHugeMonster = true -- Is this a huge monster?
----------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_ANTLION"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1 -- Melee Attack Animations
-ENT.MeleeAttackDistance = 70 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.MeleeAttackDamageDistance = 150 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.MeleeAttackDamage = 15
-ENT.MeleeAttackDamageType = DMG_CRUSH
-ENT.HasMeleeAttackKnockBack = true -- If true, it will cause a knockback to its enemy
-ENT.FootStepTimeRun = 0.21 -- Next foot step sound when it is running
-ENT.FootStepTimeWalk = 0.3 -- Next foot step sound when it is walking
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
+ENT.VJ_IsHugeMonster = true
+
+ENT.VJC_Data = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "Antlion_Guard.head",
+    FirstP_Offset = Vector(5, 0, 3),
+}
+
+ENT.VJ_NPC_Class = {"CLASS_ANTLION"}
+ENT.BloodColor = "Yellow"
+ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
+
+ENT.HasMeleeAttack = true
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
+ENT.MeleeAttackDistance = 70
+ENT.MeleeAttackDamageDistance = 150
+ENT.MeleeAttackDamage = 10
+ENT.MeleeAttackDamageType = bit.bor(DMG_SLASH,DMG_CRUSH)
+ENT.HasMeleeAttackKnockBack = true
+
+ENT.FootStepTimeRun = 0.21
+ENT.FootStepTimeWalk = 0.3
+ENT.HasExtraMeleeAttackSounds = true
 ENT.GeneralSoundPitch1 = 100
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
+
 -- ENT.SoundTbl_Breath = {"npc/antlion_guard/growl_idle.wav"}
 ENT.SoundTbl_FootStep = {"npc/antlion_guard/foot_heavy1.wav","npc/antlion_guard/foot_heavy2.wav","npc/antlion_guard/foot_light1.wav","npc/antlion_guard/foot_light2.wav"}
 ENT.SoundTbl_Death = {"npc/antlion_guard/antlion_guard_die1.wav","npc/antlion_guard/antlion_guard_die2.wav"}
 ENT.SoundTbl_BeforeMeleeAttack = {"npc/antlion_guard/angry1.wav"}
 ENT.SoundTbl_MeleeAttackExtra = {"npc/antlion_guard/shove1.wav"}
-
-ENT.VJC_Data = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "Antlion_Guard.head", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(5, 0, 3), -- The offset for the controller when the camera is in first person
-}
 
 ENT.BreathSoundLevel = 70
 
@@ -45,9 +47,13 @@ ENT.ChargePercentage = 0.65
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Controller_Initialize(ply, controlEnt)
 	ply:ChatPrint("MOUSE2: Charge Attack")
-	ply:ChatPrint("RELOAD: Summon Antlions (Only works on weak surfaces [Grass, Snow, Sand, etc])")
+	ply:ChatPrint("RELOAD: Summon Antlions")
+	-- ply:ChatPrint("RELOAD: Summon Antlions (Only works on weak surfaces [Grass, Snow, Sand, etc])")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+ENT.Guard_AnimationCache = {}
+ENT.Guard_Antlions = {}
+--
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(40,40,80),Vector(-40,-40,0))
 	self.IsDiging = false
@@ -63,7 +69,16 @@ function ENT:CustomOnInitialize()
 	self.Charging = false
 	self.BreathPitch = 100
 
-	if self.IsGuardian then self:SetSkin(1) end
+	if !self.Guard_AnimationCache["charge_loop"] then
+		self.Guard_AnimationCache["charge_loop"] = self:GetSequenceActivity(self:LookupSequence("charge_loop"))
+	end
+
+	if self.IsGuardian then
+		self:SetSkin(1)
+		self.MeleeAttackDamage = 110
+		self.MeleeAttackDamageType = bit.bor(DMG_SLASH,DMG_POISON,DMG_CRUSH)
+		self.Immune_AcidPoisonRadiation = true
+	end
 	if self:IsDirt(self:GetPos()) then
 		self.IsDiging = true
 		self:SetNoDraw(true)
@@ -136,7 +151,7 @@ function ENT:CreateEffects()
 	glow1:SetKeyValue("scale","1")
 	glow1:SetKeyValue("rendermode","5")
 	glow1:SetKeyValue("rendercolor","127 225 0")
-	glow1:SetKeyValue("spawnflags","1") -- If animated
+	glow1:SetKeyValue("spawnflags","1")
 	glow1:SetParent(self)
 	glow1:Fire("SetParentAttachment","attach_glow1",0)
 	glow1:Spawn()
@@ -147,7 +162,7 @@ function ENT:CreateEffects()
 	glow2:SetKeyValue("scale","0.4")
 	glow2:SetKeyValue("rendermode","5")
 	glow2:SetKeyValue("rendercolor","127 225 0")
-	glow2:SetKeyValue("spawnflags","1") -- If animated
+	glow2:SetKeyValue("spawnflags","1")
 	glow2:SetParent(self)
 	glow2:Fire("SetParentAttachment","attach_glow2",0)
 	glow2:Spawn()
@@ -158,7 +173,7 @@ function ENT:CreateEffects()
 	glow3:SetKeyValue("scale","0.4")
 	glow3:SetKeyValue("rendermode","5")
 	glow3:SetKeyValue("rendercolor","127 225 0")
-	glow3:SetKeyValue("spawnflags","1") -- If animated
+	glow3:SetKeyValue("spawnflags","1")
 	glow3:SetParent(self)
 	glow3:Fire("SetParentAttachment","0",0)
 	glow3:Spawn()
@@ -169,7 +184,7 @@ function ENT:CreateEffects()
 	glow4:SetKeyValue("scale","0.4")
 	glow4:SetKeyValue("rendermode","5")
 	glow4:SetKeyValue("rendercolor","127 225 0")
-	glow4:SetKeyValue("spawnflags","1") -- If animated
+	glow4:SetKeyValue("spawnflags","1")
 	glow4:SetParent(self)
 	glow4:Fire("SetParentAttachment","1",0)
 	glow4:Spawn()
@@ -178,7 +193,7 @@ function ENT:CreateEffects()
 	local glowlight = ents.Create("light_dynamic")
 	glowlight:SetKeyValue("_light","127 225 0 200")
 	glowlight:SetKeyValue("brightness","1")
-	glowlight:SetKeyValue("distance","200")
+	glowlight:SetKeyValue("distance","300")
 	glowlight:SetKeyValue("style","0")
 	glowlight:SetPos(self:GetPos())
 	glowlight:SetParent(self)
@@ -190,7 +205,7 @@ function ENT:CreateEffects()
 	local glowlight_top = ents.Create("light_dynamic")
 	glowlight_top:SetKeyValue("_light","127 225 0 200")
 	glowlight_top:SetKeyValue("brightness","2")
-	glowlight_top:SetKeyValue("distance","150")
+	glowlight_top:SetKeyValue("distance","300")
 	glowlight_top:SetKeyValue("style","0")
 	glowlight_top:SetPos(self:GetPos())
 	glowlight_top:SetParent(self)
@@ -212,6 +227,27 @@ function ENT:IsDirt(pos)
 	return tr.HitWorld && (mat == MAT_SAND || mat == MAT_DIRT || mat == MAT_FOLIAGE || mat == MAT_SLOSH || mat == 85)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:FindNodesNearPoint(checkPos,total,dist,minDist)
+	local nodegraph = table.Copy(VJ_Nodegraph.Data.Nodes)
+	local closestNode = NULL
+	local closestDist = 999999
+	local minDist = minDist or 0
+	for _,v in pairs(nodegraph) do
+		local dist = v.pos:Distance(checkPos)
+		if dist < closestDist && dist > minDist then
+			closestNode = v
+			closestDist = dist
+		end
+	end
+	local savedPoints = {}
+	for _,v in pairs(nodegraph) do
+		if v.pos:Distance(closestNode.pos) <= (dist or 1024) then
+			table.insert(savedPoints,v.pos)
+		end
+	end
+	return #savedPoints > 0 && savedPoints or false
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SummonAllies(anim)
 	if self:BusyWithActivity() or self.Charging then return end
 	local anim = anim or "bark"
@@ -220,7 +256,8 @@ function ENT:SummonAllies(anim)
 		if IsValid(self) then
 			VJ.CreateSound(self,"npc/antlion_guard/angry2.wav",95,100)
 			for i = 1,math.random(4,self.IsGuardian && 10 or 6) do
-				self:CreateAntlion(self:GetRight() *math.random(-350,350) +self:GetForward()*math.random(-350,350))
+				local pos = self:FindNodesNearPoint(self:GetPos(),16,1024,256)
+				self:CreateAntlion(VJ.PICK(pos) or self:GetPos() +self:GetRight() *math.Rand(-512,512) +self:GetForward() *math.Rand(-512,512))
 			end
 		end
 	end)
@@ -254,121 +291,227 @@ function ENT:CustomOnAlert(ent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CreateAntlion(pos)
+	print(pos)
 	local class = "npc_vj_hlr2_antlion"
 	if math.random(1,3) == 1 then
 		class = "npc_vj_hlr2_antlion_worker"
 	end
 	local antlion = ents.Create(class)
-	antlion:SetPos(self:GetPos() +pos +Vector(0,0,10))
+	antlion:SetPos(pos +Vector(0,0,10))
 	antlion:SetAngles(self:GetAngles())
 	antlion:Spawn()
 	antlion:Activate()
 	antlion.VJ_NPC_Class = self.VJ_NPC_Class
 	antlion:Dig(true)
+	table.insert(self.Guard_Antlions,antlion)
 	ParticleEffect("advisor_plat_break",antlion:GetPos(),antlion:GetAngles(),antlion)
 	ParticleEffect("strider_impale_ground",antlion:GetPos(),antlion:GetAngles(),antlion)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MeleeAttackKnockbackVelocity(hitEnt)
-	return self:GetForward()*math.random(400, 500) + self:GetUp()*300
+	return self:GetForward() *math.random(400,500) +self:GetUp() *300
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if dmginfo:IsBulletDamage() then
-		dmginfo:SetDamage(math.random(1,2))
+		dmginfo:ScaleDamage(math.Rand(0.5,0.75))
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomAttack(ent,vis)
+	local dist = self.NearestPointToEnemyDistance
+	if self.IsCharging then
+		if CurTime() > self.ChargeT then
+			self:SetMaxYawSpeed(self.TurningSpeed)
+			self.IsCharging = false
+			self.ChargeT = 0
+			self.DisableChasingEnemy = false
+			self.HasMeleeAttack = true
+			self:CapabilitiesAdd(CAP_MOVE_JUMP)
+			self:VJ_ACT_PLAYACTIVITY("charge_stop",true,false,false)
+			self.ChargeBreath:Stop()
+			return
+		end
+
+		self.DisableChasingEnemy = true
+		self.HasMeleeAttack = false
+		self:SetMaxYawSpeed(2)
+		self:FaceCertainEntity(ent,true)
+		local tr = util.TraceHull({
+			start = self:GetPos() +self:OBBCenter(),
+			endpos = self:GetPos() +self:OBBCenter() +self:GetForward() *100,
+			filter = self,
+			mins = self:OBBMins() *0.85,
+			maxs = self:OBBMaxs() *0.85,
+		})
+		self:SetLastPosition(tr.HitPos +tr.HitNormal *200)
+		self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+		if self:OnGround() then
+			self:SetVelocity(self:GetMoveVelocity() *1.01)
+		end
+		-- VJ.DEBUG_TempEnt(self:GetLastPosition(), self:GetAngles(), Color(255,0,0), 5)
+		if tr.Hit then
+			self:SetMaxYawSpeed(self.TurningSpeed)
+			self.IsCharging = false
+			self.ChargeT = 0
+			self.HasMeleeAttack = true
+			self.DisableChasingEnemy = false
+			self:CapabilitiesAdd(CAP_MOVE_JUMP)
+			self:SetState()
+			self.ChargeBreath:Stop()
+			if tr.HitWorld then
+				self:VJ_ACT_PLAYACTIVITY({"charge_crash","charge_crash02","charge_crash03"},true,false,false)
+				util.ScreenShake(self:GetPos(),1000,100,1,500)
+				VJ.CreateSound(self,"npc/antlion_guard/shove1.wav",75)
+			else
+				self:VJ_ACT_PLAYACTIVITY("charge_stop",true,false,false)
+				local gest = self:AddGestureSequence(self:LookupSequence("charge_hit"))
+				self:SetLayerPriority(gest,1)
+				self:SetLayerPlaybackRate(gest,0.5)
+				local ent = tr.Entity
+				local isProp = IsValid(ent) && VJ.IsProp(ent) or false
+				if IsValid(ent) && (isProp or self:CheckRelationship(ent) == D_HT) then
+					if isProp then
+						local phys = ent:GetPhysicsObject()
+						if IsValid(phys) then
+							phys:ApplyForceCenter(self:GetForward() *1000 +self:GetUp() *200)
+						end
+					else
+						local vel = self:GetForward() *600 +self:GetUp() *200
+						ent:SetGroundEntity(NULL)
+						ent:SetVelocity(vel)
+					end
+					local dmginfo = DamageInfo()
+					dmginfo:SetDamage(20)
+					dmginfo:SetDamageType(bit.bor(DMG_SLASH,DMG_CRUSH))
+					dmginfo:SetDamageForce(self:GetForward() *1000)
+					dmginfo:SetAttacker(self)
+					dmginfo:SetInflictor(self)
+					dmginfo:SetDamagePosition(tr.HitPos)
+					ent:TakeDamageInfo(dmginfo)
+				end
+			end
+			-- PrintTable(tr)
+			-- VJ.DEBUG_TempEnt(tr.HitPos, self:GetAngles(), Color(255,0,0), 5)
+		end
+		return
+	end
+
+	local controlled = self.VJ_IsBeingControlled
+	local ply = self.VJ_TheController
+	if (controlled && ply:KeyDown(IN_ATTACK2) or !controlled && vis && dist > 500 && dist <= 2500 && !self:IsBusy() && math.random(1,50) == 1 && math.abs(self:GetPos().z -ent:GetPos().z) <= 128) && !self.IsCharging then
+		self.IsCharging = true
+		self.ChargeT = CurTime() +6
+		VJ.CreateSound(self,{"npc/antlion_guard/angry1.wav","npc/antlion_guard/angry2.wav","npc/antlion_guard/angry3.wav"},72)
+		self.ChargeBreath:Play()
+		self.ChargeBreath:ChangeVolume(1,1)
+		self:VJ_ACT_PLAYACTIVITY("charge_startfast",true,false,true, 0, {OnFinish=function(interrupted, anim)
+			if interrupted then
+				return
+			end
+			self:CapabilitiesRemove(CAP_MOVE_JUMP)
+		end})
+		return
+	end
+
+	if ((controlled && ply:KeyDown(IN_RELOAD)) or !controlled && math.random(1,75) == 1) && CurTime() > self.NextSummonT then
+		self:SummonAllies()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink_AIEnabled()
-	local ent = self:GetEnemy()
-	local hasEnemy = IsValid(ent)
-	local controlled = IsValid(self.VJ_TheController)
-	if self.Charging then
-		local tPos = hasEnemy && ent:GetPos() or self:GetPos() +self:GetForward() *500
-		local setangs = self:GetFaceAngle((tPos -self:GetPos()):Angle())
-		self:SetAngles(Angle(setangs.p,self:GetAngles().y,setangs.r))
-		self:SetIdealYawAndUpdate(setangs.y)
-		self:AutoMovement(self:GetAnimTimeInterval() *self.ChargePercentage) -- For some reason, letting it go at 100% forces the walkframe speed to be doubled, essentially ignoring the walkframes in the animation. Basically, think how NextBots just slide everywhere faster than their animation is supposed to
-		self:SetGroundEntity(NULL)
-		local tr = util.TraceHull({
-			start = self:GetPos() +self:OBBCenter(),
-			endpos = self:GetPos() +self:OBBCenter() +self:GetForward() *135,
-			filter = self,
-			mins = self:OBBMins() /2,
-			maxs = self:OBBMaxs() /2
-		})
-		local hitEnt = NULL
-		for _,v in pairs(ents.FindInSphere(self:GetPos() +self:GetForward(),135)) do
-			if IsValid(v) && v != self && (v != self.VJ_TheController && v != self.VJ_TheControllerBullseye) then
-				-- print(v,self:CheckRelationship(v))
-				if self:CheckRelationship(v) == D_HT then
-					hitEnt = v
-					local dmginfo = DamageInfo()
-					dmginfo:SetDamage(35)
-					dmginfo:SetDamageType(DMG_CRUSH)
-					dmginfo:SetDamagePosition(v:GetPos() +v:OBBCenter())
-					dmginfo:SetAttacker(self)
-					dmginfo:SetInflictor(self)
-					v:TakeDamageInfo(dmginfo,self,self)
-					v:SetGroundEntity(NULL)
-					v:SetVelocity(self:GetForward() *math.random(400, 500) *2)
+	local hasEnemy = IsValid(self:GetEnemy())
 
-					local gesture = self:AddGestureSequence(self:LookupSequence("charge_hit"))
-					self:SetLayerPriority(gesture,1)
-					self:SetLayerPlaybackRate(gesture,0.5)
-				end
-			end
-		end
-		if CurTime() > self.StopChargingT or tr.HitWorld == true or IsValid(hitEnt) then
-			self:StopCharging(tr && tr.HitWorld)
-		end
-	end
 	self.BreathPitch = Lerp(FrameTime() *10, self.BreathPitch, hasEnemy && 110 or 90)
 	self.Breath:ChangeVolume(hasEnemy && 1 or 0.65,1)
 	self.Breath:ChangePitch(self.BreathPitch)
 	self.ChargeBreath:ChangePitch(self.BreathPitch)
-	if hasEnemy then
-		if ((controlled && self.VJ_TheController:KeyDown(IN_RELOAD)) or !controlled && math.random(1,75) == 1) && CurTime() > self.NextSummonT then
-			self:SummonAllies()
-		end
-		if ((controlled && self.VJ_TheController:KeyDown(IN_ATTACK2)) or !controlled) && ent:GetPos():Distance(self:GetPos()) <= 2500 && !self:BusyWithActivity() && CurTime() > self.NextChargeT && !self.Charging && ent:Visible(self) && self:GetSequenceName(self:GetSequence()) != "charge_startfast" then
-			self:VJ_ACT_PLAYACTIVITY("charge_startfast",true,false,true)
-			VJ.CreateSound(self,{"npc/antlion_guard/angry1.wav","npc/antlion_guard/angry2.wav","npc/antlion_guard/angry3.wav"},72)
-			self.ChargeBreath:Play()
-			self.ChargeBreath:ChangeVolume(1,1)
-			timer.Simple(self:SequenceDuration(self:LookupSequence("charge_startfast")),function()
-				if IsValid(self) then
-					self.StopChargingT = CurTime() +15
-					self.Charging = true
-					self:SetMaxYawSpeed(4)
-					self.AnimTbl_IdleStand = {self.ChargeAnim}
-					self.AnimTbl_Walk = {self.ChargeAnim}
-					self.AnimTbl_Run = {self.ChargeAnim}
-					self:SetState(VJ_STATE_ONLY_ANIMATION)
-				end
-			end)
-		end
-	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:StopCharging(crash)
-	self:SetState()
-	self.Charging = false
-	self.StopChargingT = CurTime()
-	self:SetMaxYawSpeed(self.TurningSpeed)
-	self.NextChargeT = CurTime() +math.Rand(8,15)
-	if crash then
-		util.ScreenShake(self:GetPos(),16,100,2,1500)
-		VJ.CreateSound(self,"npc/antlion_guard/shove1.wav",75)
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE then
+		if self.IsCharging then
+			return self.Guard_AnimationCache["charge_loop"]
+		end
+	elseif (act == ACT_WALK or act == ACT_RUN) then
+		if self.IsCharging then
+			return self.Guard_AnimationCache["charge_loop"]
+		end
 	end
-	self:VJ_ACT_PLAYACTIVITY(crash && {"charge_crash","charge_crash02","charge_crash03"} or "charge_stop",true,false,false)
-	self.AnimTbl_IdleStand = {ACT_IDLE}
-	self.AnimTbl_Walk = {ACT_WALK}
-	self.AnimTbl_Run = {ACT_RUN}
-	self.ChargeBreath:Stop()
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
 	self.Breath:Stop()
 	self.ChargeBreath:Stop()
+	if !self.Dead then
+		for _, v in ipairs(self.Guard_Antlions) do
+			if IsValid(v) then v:Remove() end
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local defAng = Angle(0, 0, 0)
+local angY45 = Angle(0, 45, 0)
+local angY45 = Angle(0, 45, 0)
+local angYN45 = Angle(0, -45, 0)
+local angY90 = Angle(0, 90, 0)
+local angYN90 = Angle(0, -90, 0)
+local angY135 = Angle(0, 135, 0)
+local angYN135 = Angle(0, -135, 0)
+local angY180 = Angle(0, 180, 0)
+--
+function ENT:Controller_Movement(cont, ply, bullseyePos)
+	if self.MovementType != VJ_MOVETYPE_STATIONARY then
+		local gerta_lef = ply:KeyDown(IN_MOVELEFT)
+		local gerta_rig = ply:KeyDown(IN_MOVERIGHT)
+		local gerta_arak = ply:KeyDown(IN_SPEED)
+		local aimVector = ply:GetAimVector()
+		local FT = FrameTime() *(self.TurningSpeed *1.25)
+
+		self.VJC_Data.TurnAngle = self.VJC_Data.TurnAngle or defAng
+
+		if self.IsCharging then
+			return
+		end
+		
+		if ply:KeyDown(IN_FORWARD) then
+			if self.MovementType == VJ_MOVETYPE_AERIAL or self.MovementType == VJ_MOVETYPE_AQUATIC then
+				self:AA_MoveTo(cont.VJCE_Bullseye, true, gerta_arak and "Alert" or "Calm", {IgnoreGround=true})
+			else
+				-- if gerta_lef then
+				-- 	cont:StartMovement(aimVector, angY45)
+				-- elseif gerta_rig then
+				-- 	cont:StartMovement(aimVector, angYN45)
+				-- else
+				-- 	cont:StartMovement(aimVector, defAng)
+				-- end
+				self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, gerta_lef && angY45 or gerta_rig && angYN45 or defAng)
+				cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+			end
+		elseif ply:KeyDown(IN_BACK) then
+			-- if gerta_lef then
+			-- 	cont:StartMovement(aimVector*-1, angYN45)
+			-- elseif gerta_rig then
+			-- 	cont:StartMovement(aimVector*-1, angY45)
+			-- else
+			-- 	cont:StartMovement(aimVector*-1, defAng)
+			-- end
+			self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, gerta_lef && angY135 or gerta_rig && angYN135 or angY180)
+			cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+		elseif gerta_lef then
+			-- cont:StartMovement(aimVector, angY90)
+			self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, angY90)
+			cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+		elseif gerta_rig then
+			-- cont:StartMovement(aimVector, angYN90)
+			self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, angYN90)
+			cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+		else
+			self:StopMoving()
+			if self.MovementType == VJ_MOVETYPE_AERIAL or self.MovementType == VJ_MOVETYPE_AQUATIC then
+				self:AA_StopMoving()
+			end
+		end
+	end
 end

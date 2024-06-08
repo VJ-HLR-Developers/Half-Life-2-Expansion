@@ -5,36 +5,49 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/antlion_soldier.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = "models/vj_hlr/hl2/antlion_soldier.mdl"
 ENT.StartHealth = 30
 ENT.HullType = HULL_HUMAN
----------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_ANTLION"} -- NPCs with the same class with be allied to each other
 
-ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
+ENT.VJ_NPC_Class = {"CLASS_ANTLION"}
+
+ENT.VJC_Data = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "Antlion.Head_Bone",
+    FirstP_Offset = Vector(15, 0, 2),
+}
+
+ENT.BloodColor = "Yellow"
 ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
 
-ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1,"pounce","pounce2"} -- Melee Attack Animations
-ENT.MeleeAttackDistance = 50 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.MeleeAttackDamageDistance = 85 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDamage = 10
+ENT.HasMeleeAttack = true
+ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1,"pounce","pounce2"}
+ENT.MeleeAttackDistance = 50
+ENT.MeleeAttackDamageDistance = 85
+ENT.TimeUntilMeleeAttackDamage = false
+ENT.MeleeAttackDamage = 5
 
 ENT.HasLeapAttack = true
-ENT.LeapAttackDamage = 0
-ENT.AnimTbl_LeapAttack = {} -- Melee Attack Animations
-ENT.LeapDistance = 1000 -- The distance of the leap, for example if it is set to 500, when the SNPC is 500 Unit away, it will jump
-ENT.LeapToMeleeDistance = 0 -- How close does it have to be until it uses melee?
-ENT.DisableLeapAttackAnimation = true -- if true, it will disable the animation code
+ENT.AnimTbl_LeapAttack = ACT_JUMP
+-- ENT.AnimTbl_LeapAttack = "fly_in"
+ENT.LeapDistance = 1024
+ENT.LeapToMeleeDistance = 256
+ENT.TimeUntilLeapAttackDamage = 0.2
+ENT.NextLeapAttackTime = 6
+ENT.NextAnyAttackTime_Leap = 2.4
+ENT.LeapAttackExtraTimers = {0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4}
+ENT.TimeUntilLeapAttackVelocity = 0.2
+ENT.LeapAttackDamage = 5
+ENT.LeapAttackDamageDistance = 100
 
 ENT.DisableFootStepSoundTimer = true
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
+ENT.HasExtraMeleeAttackSounds = true
 ENT.GeneralSoundPitch1 = 100
 
-ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
-ENT.ConstantlyFaceEnemy_Postures = "Moving" -- "Both" = Moving or standing | "Moving" = Only when moving | "Standing" = Only when standing
-ENT.ConstantlyFaceEnemyDistance = 500 -- How close does it have to be until it starts to face the enemy?
+ENT.ConstantlyFaceEnemy = true
+ENT.ConstantlyFaceEnemy_Postures = "Moving"
+ENT.ConstantlyFaceEnemyDistance = 500
 
 ENT.SoundTbl_FootStep = {"npc/antlion/foot1.wav","npc/antlion/foot2.wav","npc/antlion/foot3.wav","npc/antlion/foot4.wav"}
 ENT.SoundTbl_Idle = {
@@ -61,37 +74,18 @@ ENT.SoundTbl_Death = {
 	"npc/antlion/pain2.wav",
 }
 
-ENT.VJC_Data = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "Antlion.Head_Bone", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(15, 0, 2), -- The offset for the controller when the camera is in first person
-}
-
 ENT.MaxJumpLegalDistance = VJ.SET(1000,1500)
----------------------------------------------------------------------------------------------------------------------------------------------
+ENT.Antlion_StartedLeapAttack = false
+-- ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnLeapAttackVelocityCode()
-	self:SetGroundEntity(NULL)
-	self:ForceMoveJump(self:CalculateProjectile("Curve", self:GetPos(), self:GetEnemy():GetPos(),math.Clamp(self:GetEnemy():GetPos():Distance(self:GetPos()),600,1100)))
+	self.Antlion_StartedLeapAttack = true
+	self:SetVelocity(self:CalculateProjectile("Curve", self:GetPos(), self:GetAimPosition(self:GetEnemy(), self:GetPos(), 1, 1100), 1100))
 	return true
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(projectile)
-	local enemy = self:GetEnemy()
-	local tr = util.TraceLine({
-		start = enemy:GetPos(),
-		endpos = enemy:GetPos() +Vector(0,0,800),
-		filter = enemy
-	})
-	local offset = VectorRand() *25
-	if tr.Hit then -- Try to aim forward if the enemy has some sort of cover over their head
-		return self:CalculateProjectile("Curve", projectile:GetPos(), enemy:GetPos() +enemy:OBBCenter() +offset, 1400)
-	end
-	local rangeAdjustment = math.Clamp(self.NearestPointToEnemyDistance *0.75,750,1100) -- Dynamic high-curving projectiles
-	if rangeAdjustment <= 900 then -- Too close, just fire straight
-		return self:CalculateProjectile("Curve", projectile:GetPos(), enemy:GetPos() +enemy:OBBCenter() +offset, 1400)
-	end
-	return self:CalculateProjectile("Curve", projectile:GetPos() +Vector(0,0,-100), enemy:GetPos() +offset, rangeAdjustment)
+	local projPos = projectile:GetPos()
+	return self:CalculateProjectile("Curve", projPos, self:GetAimPosition(self:GetEnemy(), projPos, 1, 1100) +(VectorRand() *28), 1100)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:IsDirt(pos)
@@ -105,8 +99,8 @@ function ENT:IsDirt(pos)
 	return tr.HitWorld && (mat == MAT_SAND || mat == MAT_DIRT || mat == MAT_FOLIAGE || mat == MAT_SLOSH || mat == 85)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:Dig(forceRemove)
-	if self:IsDirt(self:GetPos()) then
+function ENT:Dig(ignoreDirt)
+	if !ignoreDirt && self:IsDirt(self:GetPos()) or ignoreDirt then
 		self:SetNoDraw(true)
 		self.IsDigging = true
 		timer.Simple(0.02,function()
@@ -121,8 +115,6 @@ function ENT:Dig(forceRemove)
 				timer.Simple(VJ.AnimDuration(self,"digout"),function() if IsValid(self) then self.HasMeleeAttack = true self.IsDigging = false end end)
 			end
 		end)
-	else
-		if forceRemove then self:Remove() end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -150,8 +142,11 @@ function ENT:CustomOnInitialize()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
-	self.HasLeapAttack = IsValid(self.VJ_TheController)
+function ENT:CustomOnThink_AIEnabled()
+	if self.Antlion_StartedLeapAttack && self:OnGround() then
+		self.Antlion_StartedLeapAttack = false
+		self:VJ_ACT_PLAYACTIVITY("jump_stop",true,false,false)
+	end
 	if self.FlyLoop:IsPlaying() then
 		if self:GetSequenceActivity(self:GetSequence()) == 27 or self:GetSequenceActivity(self:GetSequence()) == 30 then
 			return
@@ -207,6 +202,13 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 		self.FlyLoop:Stop()
 		VJ.EmitSound(self,"npc/antlion/land1.wav",75,100)
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE && self.Antlion_StartedLeapAttack then
+		return ACT_GLIDE
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
