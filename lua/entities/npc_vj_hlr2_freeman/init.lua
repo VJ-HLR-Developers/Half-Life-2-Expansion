@@ -28,9 +28,7 @@ ENT.GrenadeAttackAttachment = "anim_attachment_RH" -- The attachment that the gr
 
 ENT.BecomeEnemyToPlayer = true -- Should the friendly SNPC become enemy towards the player if it's damaged by a player?
 
-ENT.WeaponInventory_AntiArmor = true -- If true, the NPC will spawn with one of the given weapons (Will only be given the weapon if it already has another!)
 ENT.WeaponInventory_AntiArmorList = {"weapon_vj_hlr2_rpg"} -- It will randomly be given one of these weapons
-ENT.WeaponInventory_Melee = true -- If true, the NPC will spawn with one of the given weapons (Will only be given the weapon if it already has another!)
 ENT.WeaponInventory_MeleeList = {"weapon_vj_crowbar"} -- It will randomly be given one of these weapons
 
 ENT.SoundTbl_FootStep = {"NPC_Citizen.FootstepLeft","NPC_Citizen.FootstepRight"}
