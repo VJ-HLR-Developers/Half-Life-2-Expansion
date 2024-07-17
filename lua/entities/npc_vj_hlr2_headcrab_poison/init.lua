@@ -160,7 +160,7 @@ function ENT:CustomOnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTouch(v)
+function ENT:OnTouch(ent)
 	if self.WasThrown && !self.HasRanThrownDamage then
 		if (v:IsNPC() || (v:IsPlayer() && v:Alive())) && (self:Disposition(v) != D_LI) && (v != self) && (v:GetClass() != self:GetClass()) then
 			self.HasRanThrownDamage = true
