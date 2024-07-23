@@ -49,27 +49,26 @@ ENT.Assassin_CloakLevel = 1
 ENT.Assassin_NextCloakT = 0
 ENT.Assassin_NextDodgeT = CurTime()
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnSetupWeaponHoldTypeAnims(wepHoldType)
-	self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= ACT_RANGE_ATTACK1
-	self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= ACT_RANGE_ATTACK1
-	self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= ACT_RANGE_ATTACK1
-	self.WeaponAnimTranslations[ACT_RELOAD] 						= ACT_IDLE_ANGRY
-	self.WeaponAnimTranslations[ACT_COVER_LOW] 						= ACT_IDLE_ANGRY
-	self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= ACT_IDLE_ANGRY
+function ENT:SetAnimationTranslations(wepHoldType)
+	self.AnimationTranslations[ACT_RANGE_ATTACK1] 				= ACT_RANGE_ATTACK1
+	self.AnimationTranslations[ACT_GESTURE_RANGE_ATTACK1] 		= ACT_RANGE_ATTACK1
+	self.AnimationTranslations[ACT_RANGE_ATTACK1_LOW] 			= ACT_RANGE_ATTACK1
+	self.AnimationTranslations[ACT_RELOAD] 						= ACT_IDLE_ANGRY
+	self.AnimationTranslations[ACT_COVER_LOW] 					= ACT_IDLE_ANGRY
+	self.AnimationTranslations[ACT_RELOAD_LOW] 					= ACT_IDLE_ANGRY
 	
-	self.WeaponAnimTranslations[ACT_IDLE] 							= ACT_IDLE
-	self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= ACT_IDLE_ANGRY
+	self.AnimationTranslations[ACT_IDLE] 						= ACT_IDLE
+	self.AnimationTranslations[ACT_IDLE_ANGRY] 					= ACT_IDLE_ANGRY
 	
-	self.WeaponAnimTranslations[ACT_WALK] 							= ACT_WALK
-	self.WeaponAnimTranslations[ACT_WALK_AIM] 						= ACT_WALK
-	self.WeaponAnimTranslations[ACT_WALK_CROUCH] 					= ACT_WALK
-	self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= ACT_WALK
+	self.AnimationTranslations[ACT_WALK] 						= ACT_WALK
+	self.AnimationTranslations[ACT_WALK_AIM] 					= ACT_WALK
+	self.AnimationTranslations[ACT_WALK_CROUCH] 				= ACT_WALK
+	self.AnimationTranslations[ACT_WALK_CROUCH_AIM] 			= ACT_WALK
 	
-	self.WeaponAnimTranslations[ACT_RUN] 							= ACT_RUN
-	self.WeaponAnimTranslations[ACT_RUN_AIM] 						= ACT_RUN
-	self.WeaponAnimTranslations[ACT_RUN_CROUCH] 					= ACT_RUN
-	self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= ACT_RUN
-	return true
+	self.AnimationTranslations[ACT_RUN] 						= ACT_RUN
+	self.AnimationTranslations[ACT_RUN_AIM] 					= ACT_RUN
+	self.AnimationTranslations[ACT_RUN_CROUCH] 					= ACT_RUN
+	self.AnimationTranslations[ACT_RUN_CROUCH_AIM] 				= ACT_RUN
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
