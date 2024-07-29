@@ -25,7 +25,7 @@ ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 ENT.MeleeAttackDistance = 70
 ENT.MeleeAttackDamageDistance = 150
-ENT.MeleeAttackDamage = 10
+ENT.MeleeAttackDamage = 25
 ENT.MeleeAttackDamageType = bit.bor(DMG_SLASH,DMG_CRUSH)
 ENT.HasMeleeAttackKnockBack = true
 
@@ -291,7 +291,7 @@ function ENT:CustomOnAlert(ent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CreateAntlion(pos)
-	print(pos)
+	-- print(pos)
 	local class = "npc_vj_hlr2_antlion"
 	if math.random(1,3) == 1 then
 		class = "npc_vj_hlr2_antlion_worker"
@@ -382,7 +382,7 @@ function ENT:CustomAttack(ent,vis)
 						ent:SetVelocity(vel)
 					end
 					local dmginfo = DamageInfo()
-					dmginfo:SetDamage(20)
+					dmginfo:SetDamage(50)
 					dmginfo:SetDamageType(bit.bor(DMG_SLASH,DMG_CRUSH))
 					dmginfo:SetDamageForce(self:GetForward() *1000)
 					dmginfo:SetAttacker(self)
