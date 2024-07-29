@@ -120,7 +120,7 @@ function ENT:UnMan()
     operator.AnimationTranslations[ACT_IDLE] = data.OldIdle
     operator.AnimationTranslations[ACT_COVER_LOW] = data.OldCover
     operator:SetWeaponState()
-    local wep = ent:GetActiveWeapon()
+    local wep = operator:GetActiveWeapon()
     if IsValid(wep) then
         wep:SetNoDraw(false)
         wep:DrawShadow(true)
