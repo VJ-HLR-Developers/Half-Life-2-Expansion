@@ -90,7 +90,7 @@ function ENT:ManGun(ent)
     self.OperatorData = {
         OldIdle = ent.AnimationTranslations[ACT_IDLE],
         OldCover = ent.AnimationTranslations[ACT_COVER_LOW],
-        OldTurnSpeed = ent:GetInternalVariable("m_fMaxYawSpeed"),
+        OldTurnSpeed = ent:GetMaxYawSpeed(),
         OldMoveType = ent:GetMoveType(),
     }
     ent:StopMoving()
