@@ -227,16 +227,16 @@ function ENT:Think()
 end
 
 function ENT:FireEmplacement()
-    if self.Gun_Status != 2 then return end
-    if self.OverheatRechargeT > CurTime() then
-        return
-    end
+    if self.Gun_Status != 2 or self.OverheatRechargeT > CurTime() then return end
+    local operator = self.Operator
+    if !IsValid(operator) then return end
     local turret = self.Emplacement
     local att = turret:GetAttachment(1)
     local bullet = {}
     bullet.Num = 1
     bullet.Src = att.Pos
-    bullet.Dir = att.Ang:Forward()
+    bullet.Dir = (operator:GetEnemy():GetPos() +operator:GetEnemy():OBBCenter()) -att.Pos
+    -- bullet.Dir = att.Ang:Forward()
     bullet.Callback = function(attacker, tr, dmginfo)
         local laserhit = EffectData()
         laserhit:SetOrigin(tr.HitPos)
@@ -244,7 +244,8 @@ function ENT:FireEmplacement()
         laserhit:SetScale(25)
         util.Effect("AR2Impact",laserhit)
     end
-    bullet.Spread = Vector(0.045,0.045,0)
+    bullet.Spread = Vector(math.random(-45,45),math.random(-45,45),math.random(-45,45))
+    -- bullet.Spread = Vector(0.045,0.045,0)
     bullet.Tracer = 1
     bullet.TracerName = "AirboatGunTracer"
     bullet.Force = 3
