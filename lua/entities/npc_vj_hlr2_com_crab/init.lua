@@ -83,7 +83,7 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackCode_GetShootPos(projectile)
+function ENT:RangeAttackProjVelocity(projectile)
 	return self:CalculateProjectile("Line",self:GetPos(),self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),self.RPG_Speed)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ function ENT:CustomRangeAttackCode()
 		local phys = proj:GetPhysicsObject()
 		if IsValid(phys) then
 			phys:Wake()
-			phys:SetVelocity(self:RangeAttackCode_GetShootPos(proj))
+			phys:SetVelocity(self:RangeAttackProjVelocity(proj))
 		end
 		VJ.EmitSound(self,"weapons/stinger_fire1.wav",105,100)
 		ParticleEffectAttach("vj_rifle_full",PATTACH_POINT_FOLLOW,self,2)

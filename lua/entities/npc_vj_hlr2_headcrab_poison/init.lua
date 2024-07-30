@@ -32,9 +32,6 @@ ENT.TimeUntilRangeAttackProjectileRelease = 0.725
 ENT.NextRangeAttackTime = 3
 ENT.RangeDistance = 800
 ENT.RangeToMeleeDistance = 400
-ENT.RangeUseAttachmentForPos = false
-ENT.RangeAttackPos_Up = 15
-ENT.RangeAttackPos_Forward = 10
 
 ENT.HasLeapAttack = true
 ENT.AnimTbl_LeapAttack = {ACT_RANGE_ATTACK1}
@@ -111,7 +108,11 @@ function ENT:CustomOnInitialize()
 	self.HasRanThrownDamage = false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackCode_GetShootPos(projectile)
+function ENT:RangeAttackProjSpawnPos(projectile)
+	return self:GetPos() + self:GetUp() * 15 + self:GetForward() * 10
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackProjVelocity(projectile)
 	return self:CalculateProjectile("Curve", projectile:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 1200)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

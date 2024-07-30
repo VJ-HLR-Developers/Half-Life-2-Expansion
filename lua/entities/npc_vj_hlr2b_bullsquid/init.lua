@@ -36,8 +36,6 @@ ENT.RangeAttackReps = 3
 ENT.NextRangeAttackTime = 1.5
 ENT.RangeDistance = 1024
 ENT.RangeToMeleeDistance = 256
-ENT.RangeUseAttachmentForPos = true
-ENT.RangeUseAttachmentForPosID = "mouth"
 
 ENT.Aquatic_SwimmingSpeed_Calm = 200
 ENT.Aquatic_SwimmingSpeed_Alerted = 300
@@ -154,7 +152,11 @@ function ENT:MeleeAttackKnockbackVelocity(hitEnt)
 	return self:GetForward() * 55 + self:GetUp() * 255
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackCode_GetShootPos(projectile)
+function ENT:RangeAttackProjSpawnPos(projectile)
+	return self:GetAttachment(self:LookupAttachment("mouth")).Pos
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackProjVelocity(projectile)
 	local projPos = projectile:GetPos()
 	return self:CalculateProjectile("Curve", projPos, self:GetAimPosition(self:GetEnemy(), projPos, 1, 1100) +(VectorRand() *28), 1100)
 end

@@ -33,9 +33,6 @@ ENT.TimeUntilRangeAttackProjectileRelease = 0.7
 ENT.NextRangeAttackTime = 10 -- How much time until it can use a range attack?
 ENT.RangeDistance = 5000 -- This is how far away it can shoot
 ENT.RangeToMeleeDistance = 400 -- How close does it have to be until it uses melee?
-ENT.RangeUseAttachmentForPos = false -- Should the projectile spawn on a attachment?
-ENT.RangeAttackPos_Up = 35
-ENT.RangeAttackPos_Forward = 70
 
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
 
@@ -83,7 +80,11 @@ util.AddNetworkString("VJ_HLR_AdvisorScreenFX")
 
 ENT.PsionicAttacking = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackCode_GetShootPos(projectile)
+function ENT:RangeAttackProjSpawnPos(projectile)
+	return self:GetPos() + self:GetUp() * 35 + self:GetForward() * 70
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackProjVelocity(projectile)
 	return self:CalculateProjectile("Curve", self:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), self:GetPos():Distance(self:GetEnemy():GetPos()))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

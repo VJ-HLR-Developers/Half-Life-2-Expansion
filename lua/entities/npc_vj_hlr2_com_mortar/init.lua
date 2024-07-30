@@ -33,9 +33,6 @@ ENT.TimeUntilRangeAttackProjectileRelease = 0.7
 ENT.NextRangeAttackTime = 3 -- How much time until it can use a range attack?
 ENT.RangeDistance = 2500 -- This is how far away it can shoot
 ENT.RangeToMeleeDistance = 1 -- How close does it have to be until it uses melee?
-ENT.RangeUseAttachmentForPos = false -- Should the projectile spawn on a attachment?
-ENT.RangeAttackPos_Up = 10
-ENT.RangeAttackPos_Forward = -20
 
 ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
 ENT.FlinchChance = 3 -- Chance of it flinching from 1 to x | 1 will make it always flinch
@@ -75,7 +72,11 @@ function ENT:CustomOnInitialize()
 	self:DeleteOnRemove(glowFX)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackCode_GetShootPos(projectile)
+function ENT:RangeAttackProjSpawnPos(projectile)
+	return self:GetPos() + self:GetUp() * 10 + self:GetForward() * -20
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackProjVelocity(projectile)
 	return self:CalculateProjectile("Curve", projectile:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 1200)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

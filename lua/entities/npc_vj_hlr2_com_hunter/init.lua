@@ -168,7 +168,7 @@ function ENT:FireFlechette()
 		proj:SetPhysicsAttacker(self)
 		local phys = proj:GetPhysicsObject()
 		if IsValid(phys) then
-			local vel = self:RangeAttackCode_GetShootPos(proj)
+			local vel = self:RangeAttackProjVelocity(proj)
 			phys:Wake()
 			phys:SetVelocity(vel)
 			proj:SetAngles(vel:GetNormal():Angle())
@@ -210,7 +210,7 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackCode_GetShootPos(projectile)
+function ENT:RangeAttackProjVelocity(projectile)
 	local ent = self:GetEnemy()
 	local targetPos
 	if ent:Visible(self) then

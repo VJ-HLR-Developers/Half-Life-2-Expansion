@@ -83,7 +83,7 @@ function ENT:CustomOnLeapAttackVelocityCode()
 	return true
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackCode_GetShootPos(projectile)
+function ENT:RangeAttackProjVelocity(projectile)
 	local projPos = projectile:GetPos()
 	return self:CalculateProjectile("Curve", projPos, self:GetAimPosition(self:GetEnemy(), projPos, 1, 1100) +(VectorRand() *28), 1100)
 end

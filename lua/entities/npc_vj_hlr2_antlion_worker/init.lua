@@ -17,9 +17,6 @@ ENT.TimeUntilRangeAttackProjectileRelease = false
 ENT.NextRangeAttackTime = 1.5
 ENT.RangeDistance = 2000
 ENT.RangeToMeleeDistance = 400
-ENT.RangeUseAttachmentForPos = false
-ENT.RangeAttackPos_Up = 20
-ENT.RangeAttackPos_Forward = 30
 
 ENT.NoChaseAfterCertainRange = true
 ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance"
@@ -33,6 +30,10 @@ ENT.SoundTbl_Death = {
 	"npc/antlion/antlion_preburst_scream1.wav",
 	"npc/antlion/antlion_preburst_scream2.wav",
 }
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackProjSpawnPos(projectile)
+	return self:GetPos() + self:GetUp() * 20 + self:GetForward() * 30
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
 	timer.Simple(0.89999995708466,function()
