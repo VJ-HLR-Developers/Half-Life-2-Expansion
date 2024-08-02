@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/crabsynth.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = {"models/vj_hlr/hl2/crabsynth.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 850
 ENT.HullType = HULL_LARGE
 ENT.VJ_IsHugeMonster = true
@@ -26,12 +26,12 @@ ENT.MeleeAttackBleedEnemyChance = 1
 ENT.MeleeAttackBleedEnemyDamage = 3
 ENT.SlowPlayerOnMeleeAttack = true
 
-ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
+ENT.HasRangeAttack = true -- Can this NPC range attack?
 ENT.RangeAttackAnimationStopMovement = false
 ENT.DisableDefaultRangeAttackCode = true -- When true, it won't spawn the range attack entity, allowing you to make your own
 ENT.DisableRangeAttackAnimation = true -- if true, it will disable the animation code
 ENT.RangeToMeleeDistance = 350 -- How close does it have to be until it uses melee?
-ENT.RangeAttackAngleRadius = 75 -- What is the attack angle radius? | 100 = In front of the SNPC | 180 = All around the SNPC
+ENT.RangeAttackAngleRadius = 75 -- What is the attack angle radius? | 100 = In front of the NPC | 180 = All around the NPC
 ENT.TimeUntilRangeAttackProjectileRelease = 0.001 -- How much time until the projectile code is ran?
 ENT.NextRangeAttackTime = 0.001 -- How much time until it can use a range attack?
 ENT.NextAnyAttackTime_Range = 0.001 -- How much time until it can use any attack again? | Counted in Seconds

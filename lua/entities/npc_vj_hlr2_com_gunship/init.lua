@@ -5,9 +5,9 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/combine_gunship.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = {"models/vj_hlr/hl2/combine_gunship.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 1000
-ENT.Aerial_FlyingSpeed_Calm = 520 -- The speed it should fly with, when it"s wandering, moving slowly, etc. | Basically walking compared to ground SNPCs
+ENT.Aerial_FlyingSpeed_Calm = 520 -- The speed it should fly with, when it"s wandering, moving slowly, etc. | Basically walking compared to ground NPCs
 ENT.Aerial_FlyingSpeed_Alerted = 600
 ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it"s wandering around while idle
 ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE} -- Animations it plays when it"s moving while alerted
@@ -16,7 +16,7 @@ ENT.PoseParameterLooking_InvertPitch = false -- Inverts the pitch pose parameter
 ENT.PoseParameterLooking_InvertYaw = false -- Inverts the yaw pose parameters (Y)
 ENT.PoseParameterLooking_Names = {pitch={"flex_vert"},yaw={"flex_herz"},roll={"fin_accel"}}
 
-ENT.HasRangeAttack = false -- Should the SNPC have a range attack?
+ENT.HasRangeAttack = false -- Can this NPC range attack?
 
 ENT.HasDeathAnimation = false -- Does it play an animation when it dies?
 ENT.HasDeathRagdoll = false

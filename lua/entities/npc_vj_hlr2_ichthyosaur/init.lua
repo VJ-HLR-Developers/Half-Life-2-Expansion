@@ -5,16 +5,16 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/icky.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want
+ENT.Model = {"models/vj_hlr/hl2/icky.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 200
 ENT.HullType = HULL_LARGE_CENTERED
 
 ENT.IdleAlwaysWander = true
 ENT.TurningUseAllAxis = true -- If set to true, angles will not be restricted to y-axis, it will change all axes (plural axis)
-ENT.MovementType = VJ_MOVETYPE_AQUATIC -- How does the SNPC move?
+ENT.MovementType = VJ_MOVETYPE_AQUATIC -- How the NPC moves around
 
-ENT.Aquatic_SwimmingSpeed_Calm = 150 -- The speed it should swim with, when it's wandering, moving slowly, etc. | Basically walking compared to ground SNPCs
-ENT.Aquatic_SwimmingSpeed_Alerted = 500 -- The speed it should swim with, when it's chasing an enemy, moving away quickly, etc. | Basically running compared to ground SNPCs
+ENT.Aquatic_SwimmingSpeed_Calm = 150 -- The speed it should swim with, when it's wandering, moving slowly, etc. | Basically walking compared to ground NPCs
+ENT.Aquatic_SwimmingSpeed_Alerted = 500 -- The speed it should swim with, when it's chasing an enemy, moving away quickly, etc. | Basically running compared to ground NPCs
 ENT.Aquatic_AnimTbl_Calm = {ACT_GLIDE} -- Animations it plays when it's wandering around while idle
 ENT.Aquatic_AnimTbl_Alerted = {ACT_SWIM} -- Animations it plays when it's moving while alerted
 
@@ -30,7 +30,7 @@ ENT.VJ_NPC_Class = {"CLASS_XEN"} -- NPCs with the same class with be allied to e
 ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasBloodPool = false -- Does it have a blood pool?
 
-ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
+ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.MeleeAttackDamage = 35
 ENT.MeleeAttackDamageType = DMG_ALWAYSGIB -- Type of Damage
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1 -- Melee Attack Animations
