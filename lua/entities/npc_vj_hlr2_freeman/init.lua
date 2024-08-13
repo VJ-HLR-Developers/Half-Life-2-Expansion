@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2024 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -124,7 +124,7 @@ end
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	-- Absorb bullet damage
 	if dmginfo:IsBulletDamage() then
-		if self.HasSounds == true && self.HasImpactSounds == true then VJ.EmitSound(self, "vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav", 70) end
+		if self.HasSounds == true && self.HasImpactSounds == true then VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1,10)..".wav", 70) end
 		if math.random(1,3) == 1 then
 			dmginfo:ScaleDamage(0.50)
 			local spark = ents.Create("env_spark")

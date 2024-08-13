@@ -1,5 +1,5 @@
 /*--------------------------------------------------
-	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2024 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 --------------------------------------------------*/
@@ -95,8 +95,3 @@ function EFFECT:Render()
 		5 +sinWave *35,1,0,Color(255,255,255,255)
 	)
 end
-/*--------------------------------------------------
-	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
-	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
-	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
---------------------------------------------------*/

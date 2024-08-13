@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2024 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -246,7 +246,7 @@ function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
 	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,deathCorpse,5)
 
 	local function Explode(ent,pos)
-		VJ.EmitSound(ent,"vj_fire/explosion2.wav",100,100)
+		VJ.EmitSound(ent,"vj_base/ambience/explosion2.wav",100,100)
 		util.BlastDamage(ent,ent,pos,200,40)
 		util.ScreenShake(pos, 100, 200, 1, 2500)
 		ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil)

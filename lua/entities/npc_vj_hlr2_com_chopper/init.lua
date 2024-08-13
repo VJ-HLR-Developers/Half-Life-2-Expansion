@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2024 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -143,7 +143,7 @@ end
 function ENT:CustomRangeAttackCode_AfterProjectileSpawn(ent)
 	self.RangeUseAttachmentForPosID = self.RangeUseAttachmentForPosID == "Damage0" && "Damage3" or "Damage0"
 	VJ.CreateSound(ent,"weapons/rpg/rocketfire1.wav",80)
-	VJ.CreateSound(ent,"vj_weapons/rpg/rpg_fire_far.wav",120)
+	VJ.CreateSound(ent,"vj_base/weapons/rpg/rpg1_single_dist.wav",120)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:BarrageFire()
@@ -197,7 +197,7 @@ end
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "explosion" then
 		local pos,ang = self:GetBonePosition(0)
-		VJ.EmitSound(self,"vj_fire/explosion2.wav",100,100)
+		VJ.EmitSound(self,"vj_base/ambience/explosion2.wav",100,100)
 		util.BlastDamage(self,self,pos,200,40)
 		util.ScreenShake(pos, 100, 200, 1, 2500)
 		if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil) end
@@ -333,7 +333,7 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 	-- for i=0,1,0.5 do
 		-- timer.Simple(i,function()
 			-- if IsValid(self) then
-				-- VJ.EmitSound(self,"vj_fire/explosion2.wav",100,100)
+				-- VJ.EmitSound(self,"vj_base/ambience/explosion2.wav",100,100)
 				-- util.BlastDamage(self,self,self:GetPos(),200,40)
 				-- util.ScreenShake(self:GetPos(), 100, 200, 1, 2500)
 				-- if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",self:GetPos(),Angle(0,0,0),nil) end
@@ -343,8 +343,8 @@ function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
 	
 	-- timer.Simple(1.5,function()
 		-- if IsValid(self) then
-			-- VJ.EmitSound(self,"vj_fire/explosion2.wav",100,100)
-			-- VJ.EmitSound(self,"vj_fire/explosion3.wav",100,100)
+			-- VJ.EmitSound(self,"vj_base/ambience/explosion2.wav",100,100)
+			-- VJ.EmitSound(self,"vj_base/ambience/explosion3.wav",100,100)
 			-- util.BlastDamage(self,self,self:GetPos(),200,40)
 			-- util.ScreenShake(self:GetPos(), 100, 200, 1, 2500)
 			-- if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",self:GetPos(),Angle(0,0,0),nil) end
@@ -359,8 +359,8 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	util.BlastDamage(self, self, corpseEnt:GetPos(), 400, 40)
 	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
 
-	VJ.EmitSound(self,"vj_fire/explosion2.wav",100,100)
-	VJ.EmitSound(self,"vj_fire/explosion3.wav",100,100)
+	VJ.EmitSound(self,"vj_base/ambience/explosion2.wav",100,100)
+	VJ.EmitSound(self,"vj_base/ambience/explosion3.wav",100,100)
 	util.BlastDamage(self,self,corpseEnt:GetPos(),200,40)
 	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
 	if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",corpseEnt:GetPos(),Angle(0,0,0),nil) end

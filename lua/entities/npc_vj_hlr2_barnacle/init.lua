@@ -5,7 +5,7 @@ include("shared.lua")
 	parameters and it has events, so have fun.
 */
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2023 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2024 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -225,7 +225,7 @@ function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomGibOnDeathSounds(dmginfo, hitgroup)
-	VJ.EmitSound(self, "vj_gib/default_gib_splat.wav", 90, 100)
+	VJ.EmitSound(self, "vj_base/gib/splat.wav", 90, 100)
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
