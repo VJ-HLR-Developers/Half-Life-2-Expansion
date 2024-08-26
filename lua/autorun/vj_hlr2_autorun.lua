@@ -70,7 +70,7 @@ if VJExists == true then
 		VJ.AddNPC("Overwatch Heavy Chopper","npc_vj_hlr2_com_chopper_heavy",spawnCategory)
 		VJ.AddNPC("Overwatch Gunship Synth","npc_vj_hlr2_com_gunship",spawnCategory)
 		-- VJ.AddNPC("Overwatch Dropship Synth","npc_vj_hlr2_com_dropship",spawnCategory) -- Very unfinished
-		VJ.AddNPC("Vortigaunt Slave","npc_vj_hlr2_vortigaunt_slave",spawnCategory)
+		-- VJ.AddNPC("Vortigaunt Slave","npc_vj_hlr2_vortigaunt_slave",spawnCategory)
 		
 		-- Unknown
 		VJ.AddNPC("G-Man","npc_vj_hlr2_gman",spawnCategory)
