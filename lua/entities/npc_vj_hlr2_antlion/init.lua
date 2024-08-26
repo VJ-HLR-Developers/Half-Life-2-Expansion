@@ -77,10 +77,9 @@ ENT.SoundTbl_Death = {
 ENT.MaxJumpLegalDistance = VJ.SET(1000,1500)
 ENT.Antlion_StartedLeapAttack = false
 -- ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnLeapAttackVelocityCode()
+function ENT:GetLeapAttackVelocity()
 	self.Antlion_StartedLeapAttack = true
-	self:SetVelocity(self:CalculateProjectile("Curve", self:GetPos(), self:GetAimPosition(self:GetEnemy(), self:GetPos(), 1, 1100), 1100))
-	return true
+	return self:CalculateProjectile("Curve", self:GetPos(), self:GetAimPosition(self:GetEnemy(), self:GetPos(), 1, 1100), 1100)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackProjVelocity(projectile)
