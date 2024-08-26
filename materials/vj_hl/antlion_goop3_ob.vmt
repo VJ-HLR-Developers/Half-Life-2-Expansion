@@ -1,0 +1,11 @@
+"SpriteCard"
+{
+	"$basetexture" "particle\antlion_goop3\antlion_goop3"
+	$vertexcolor 1
+	$vertexalpha 1
+	$translucent 1
+	$maxsize .4
+	$additive 1
+	$overbrightfactor 24
+	$depthblendscale 8
+}

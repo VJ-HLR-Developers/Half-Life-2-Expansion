@@ -50,6 +50,7 @@ if VJExists == true then
 		VJ.AddNPC("Overwatch Stalker (Beta)","npc_vj_hlr2b_com_stalker",spawnCategory)
 		-- VJ.AddNPC("Overwatch Alien Assassin","npc_vj_hlr2b_com_alienassassin",spawnCategory)
 		-- VJ.AddNPC("Overwatch Combot","npc_vj_hlr2b_com_combot",spawnCategory)
+		VJ.AddNPC("Overwatch Cremator","npc_vj_hlr2b_com_cremator",spawnCategory)
 		-- VJ.AddNPC("Overwatch Shield Scanner (Beta)","npc_vj_hlr2b_com_scanner_shield",spawnCategory)
 		-- VJ.AddNPC("Overwatch Wasteland Scanner","npc_vj_hlr2b_com_scanner_waste",spawnCategory)
 		VJ.AddNPC("Overwatch Assassin","npc_vj_hlr2b_com_assassin",spawnCategory)
@@ -68,7 +69,8 @@ if VJExists == true then
 		VJ.AddNPC("Overwatch Hunter Chopper","npc_vj_hlr2_com_chopper",spawnCategory)
 		VJ.AddNPC("Overwatch Heavy Chopper","npc_vj_hlr2_com_chopper_heavy",spawnCategory)
 		VJ.AddNPC("Overwatch Gunship Synth","npc_vj_hlr2_com_gunship",spawnCategory)
-		-- VJ.AddNPC("Overwatch Dropship Synth","npc_vj_hlr2_com_dropship",spawnCategory)
+		-- VJ.AddNPC("Overwatch Dropship Synth","npc_vj_hlr2_com_dropship",spawnCategory) -- Very unfinished
+		VJ.AddNPC("Vortigaunt Slave","npc_vj_hlr2_vortigaunt_slave",spawnCategory)
 		
 		-- Unknown
 		VJ.AddNPC("G-Man","npc_vj_hlr2_gman",spawnCategory)
@@ -120,6 +122,7 @@ if VJExists == true then
 	VJ.AddParticle("particles/vj_hlr_flechette.pcf",{})
 	VJ.AddParticle("particles/vj_hlr_flechette_projectile.pcf",{"hunter_flechette_trail","hunter_projectile_explosion_1"})
 	VJ.AddParticle("particles/vj_hlr_hunter_shield.pcf",{"vj_hlr_huntershield_impact1"})
+	VJ.AddParticle("particles/vj_hlr_cremator.pcf",{"vj_hlr_cremator_range"})
 	VJ.AddParticle("particles/warpshield.pcf",{})
 
 	if CLIENT then

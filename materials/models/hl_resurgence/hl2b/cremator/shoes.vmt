@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+    "$basetexture"              "models/hl_resurgence/hl2b/cremator/shoes"
+	"$bumpmap"					"models/hl_resurgence/hl2b/cremator/shoes_n"
+
+	"$phong"                    "1"
+	"$phongboost"               "1"
+	"$phongexponent"            "80"
+	"$phongtint"            	"[0.288235294 0.19411764705 0.1]"
+	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+
+	"$envmap"                   "env_cubemap"
+	"$envmaptint" 				"[0.02 0.02 0.02]"
+	"$envmapfresnel"            "0.4"
+}

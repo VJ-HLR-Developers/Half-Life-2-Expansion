@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+    "$basetexture"              "models/hl_resurgence/hl2b/cremator/hands"
+	"$bumpmap"					"vj_base/flat"
+
+	"$phong"                    "1"
+	"$phongboost"               "0.5"
+	"$phongexponent"            "67"
+	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+}

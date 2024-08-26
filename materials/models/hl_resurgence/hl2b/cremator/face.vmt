@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+    "$basetexture"              "models/hl_resurgence/hl2b/cremator/face"
+	"$bumpmap"					"vj_base/flat"
+
+	"$selfillum"				"1"
+	"$selfillumtint"			"[3 3 3]"
+}
