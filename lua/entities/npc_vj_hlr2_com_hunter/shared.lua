@@ -7,7 +7,7 @@ ENT.Purpose 		= "Spawn it and fight with it!"
 ENT.Instructions 	= "Click on the spawnicon to spawn it."
 ENT.Category		= "Half-Life Resurgence"
 
-if CLIENT then
+if CLIENT && GetConVar("vj_hlr2_combine_eyeglow"):GetInt() == 1 then
     local mat = Material("sprites/light_glow02_add")
     local size = 20
     local col = Color(131, 224, 255)

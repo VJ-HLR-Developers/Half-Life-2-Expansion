@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2b/cremator.mdl"}
+ENT.Model = "models/vj_hlr/hl2b/cremator.mdl"
 ENT.StartHealth = 650
 ENT.HullType = HULL_HUMAN
 ENT.TurningSpeed = 12
@@ -18,7 +18,7 @@ ENT.FlinchChance = 35
 ENT.AnimTbl_Flinch = ACT_SMALL_FLINCH
 
 ENT.HasMeleeAttack = true
-ENT.AnimTbl_MeleeAttack = {ACT_RANGE_ATTACK1,ACT_RANGE_ATTACK2,ACT_RANGE_ATTACK1,ACT_RANGE_ATTACK2,ACT_RELOAD}
+ENT.AnimTbl_MeleeAttack = {ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK2, ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK2, ACT_RELOAD}
 ENT.TimeUntilMeleeAttackDamage = false
 ENT.MeleeAttackAnimationFaceEnemy = false
 ENT.MeleeAttackDistance = 300
