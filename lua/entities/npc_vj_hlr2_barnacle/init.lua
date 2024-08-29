@@ -113,7 +113,7 @@ function ENT:Barnacle_CalculateTongue()
 	self.Barnacle_LastHeight = math.Clamp(height,128,1024)
 	self:SetPoseParameter("tongue_height",-math.Clamp(height,-128,1024))
 
-	if IsValid(trent) && (trent:IsNPC() or trent:IsPlayer()) && self:CheckRelationship(trent) == D_HT && trent.VJ_IsHugeMonster != true then
+	if IsValid(trent) && (trent:IsNPC() or trent:IsPlayer()) && self:CheckRelationship(trent) == D_HT && trent.VJTag_ID_Boss != true then
 		-- If the grabbed enemy is a new enemy then reset the enemy values
 		if self.Barnacle_CurEnt != trent then
 			self:Barnacle_ResetEnt()

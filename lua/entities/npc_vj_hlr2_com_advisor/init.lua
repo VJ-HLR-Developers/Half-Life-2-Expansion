@@ -9,7 +9,7 @@ include("shared.lua")
 ENT.Model = {"models/vj_hlr/hl2/advisor_ep2.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 500
 ENT.HullType = HULL_TINY
-ENT.VJ_IsHugeMonster = true -- Is this a huge monster?
+ENT.VJTag_ID_Boss = true -- Is this a huge monster?
 ENT.MovementType = VJ_MOVETYPE_AERIAL -- How the NPC moves around
 ENT.Aerial_FlyingSpeed_Calm = 200 -- The speed it should fly with, when it's wandering, moving slowly, etc. | Basically walking compared to ground NPCs
 ENT.Aerial_FlyingSpeed_Alerted = 325

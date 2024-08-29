@@ -7,7 +7,7 @@ include("shared.lua")
 -----------------------------------------------*/
 ENT.Model = "models/Combine_dropship.mdl"
 ENT.StartHealth = 500
-ENT.VJ_IsHugeMonster = true
+ENT.VJTag_ID_Boss = true
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 
 ENT.BloodColor = "White"

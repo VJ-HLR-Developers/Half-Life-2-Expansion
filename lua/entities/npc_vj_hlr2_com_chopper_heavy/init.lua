@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.VJ_IsHugeMonster = true -- Is this a huge monster?
+ENT.VJTag_ID_Boss = true -- Is this a huge monster?
 ENT.Model = {"models/vj_hlr/hl2/combine_heavychopper.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 4000
 ENT.HullType = HULL_LARGE

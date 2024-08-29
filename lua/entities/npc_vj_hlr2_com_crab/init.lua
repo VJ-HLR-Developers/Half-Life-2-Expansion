@@ -8,7 +8,7 @@ include("shared.lua")
 ENT.Model = {"models/vj_hlr/hl2/crabsynth.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 850
 ENT.HullType = HULL_LARGE
-ENT.VJ_IsHugeMonster = true
+ENT.VJTag_ID_Boss = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Blue" -- The blood type, this will determine what it should use (decal, particle, etc.)

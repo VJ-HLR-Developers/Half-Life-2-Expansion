@@ -8,7 +8,7 @@ include("shared.lua")
 ENT.Model = "models/vj_hlr/hl2/antlion_guard.mdl"
 ENT.StartHealth = 500
 ENT.HullType = HULL_LARGE
-ENT.VJ_IsHugeMonster = true
+ENT.VJTag_ID_Boss = true
 
 ENT.VJC_Data = {
     CameraMode = 1,
