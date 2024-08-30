@@ -174,7 +174,7 @@ function ENT:FireFlechette()
 			proj:SetAngles(vel:GetNormal():Angle())
 		end
 
-		VJ.EmitSound(self,"npc/ministrider/ministrider_fire1.wav",105,100)
+		VJ.EmitSound(self,"^npc/ministrider/ministrider_fire1.wav",105,100)
 		ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,self.CurrentEye)
 	
 		local FireLight1 = ents.Create("light_dynamic")
@@ -213,7 +213,7 @@ end
 function ENT:RangeAttackProjVelocity(projectile)
 	local ent = self:GetEnemy()
 	local targetPos
-	if ent:Visible(self) then
+	if IsValid(ent) && ent:Visible(self) then
 		targetPos = ent:GetPos() +ent:OBBCenter()
 	else
 		targetPos = self.EnemyData && self.EnemyData.LastVisiblePos or projectile:GetPos() +projectile:GetForward() *1000
@@ -254,10 +254,10 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack(ent,vis)
+function ENT:CustomOnThink_AIEnabled()
 	local dist = self.NearestPointToEnemyDistance
 
-	if self.IsCharging then
+	if self.IsCharging && !self:IsBusy() then
 		if CurTime() > self.ChargeT then
 			self:SetMaxYawSpeed(self.TurningSpeed)
 			self.IsCharging = false
@@ -265,7 +265,7 @@ function ENT:CustomAttack(ent,vis)
 			self.DisableChasingEnemy = false
 			self.HasMeleeAttack = true
 			self:CapabilitiesAdd(CAP_MOVE_JUMP)
-			-- self:SetState()
+			self:SetState()
 			self:VJ_ACT_PLAYACTIVITY("charge_miss_slide",true,false,false)
 			return
 		end
@@ -273,7 +273,7 @@ function ENT:CustomAttack(ent,vis)
 		self.DisableChasingEnemy = true
 		self.HasMeleeAttack = false
 		self:SetMaxYawSpeed(2)
-		self:FaceCertainEntity(ent,true)
+		self:SetTurnTarget("Enemy",0.2)
 		local tr = util.TraceHull({
 			start = self:GetPos() +self:OBBCenter(),
 			endpos = self:GetPos() +self:OBBCenter() +self:GetForward() *100,
@@ -328,45 +328,6 @@ function ENT:CustomAttack(ent,vis)
 		return
 	end
 
-	if vis then
-		if !self.VJ_IsBeingControlled && !self:IsBusy() && CurTime() > self.NextRandMoveT && !self.DoRangeAttack && dist > 400 then
-			local checkdist = self:VJ_CheckAllFourSides(400)
-			local randmove = {}
-			if checkdist.Backward == true then randmove[#randmove+1] = "Backward" end
-			if checkdist.Right == true then randmove[#randmove+1] = "Right" end
-			if checkdist.Left == true then randmove[#randmove+1] = "Left" end
-			local pickmove = VJ.PICK(randmove)
-			if pickmove == "Backward" then self:SetLastPosition(self:GetPos() +self:GetForward() *400) end
-			if pickmove == "Right" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
-			if pickmove == "Left" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
-			if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
-				self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
-				self.NextRandMoveT = CurTime() +math.Rand(2,3)
-				return
-			end
-		end
-
-		if dist > 500 && dist <= 2500 && !self.IsCharging && !self:IsBusy() && !self.DoRangeAttack && math.random(1,50) == 1 && math.abs(self:GetPos().z -ent:GetPos().z) <= 128 then
-			self.IsCharging = true
-			-- self:SetState(VJ_STATE_ONLY_ANIMATION)
-			self.ChargeT = CurTime() +6
-			self:VJ_ACT_PLAYACTIVITY("charge_start",true,false,true, 0, {OnFinish=function(interrupted, anim)
-				if interrupted then
-					return
-				end
-				self:CapabilitiesRemove(CAP_MOVE_JUMP)
-			end})
-			return
-		end
-	end
-
-	if self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2) && !self.DoRangeAttack && !self.IsCharging or !self.VJ_IsBeingControlled && !self.IsCharging && CurTime() > self.NextRangeT && !self.DoRangeAttack && dist > 250 && dist <= 2200 then
-		if !self:VisibleVec(self.EnemyData && self.EnemyData.LastVisiblePos or ent:GetPos() +ent:OBBCenter()) then return end
-		self.Shots = 0
-		self.DoRangeAttack = true
-		self.HasMeleeAttack = false
-	end
-
 	if self.DoRangeAttack then
 		if self.Shots >= 12 then
 			self.NextRangeT = CurTime() +math.Rand(3,6)
@@ -393,6 +354,50 @@ function ENT:CustomAttack(ent,vis)
 			self:FireFlechette()
 			self.NextShootT = CurTime() +0.07
 		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomAttack(ent,vis)
+	if self.IsCharging then return end
+
+	local dist = self.NearestPointToEnemyDistance
+	if vis then
+		if !self.VJ_IsBeingControlled && !self:IsBusy() && CurTime() > self.NextRandMoveT && !self.DoRangeAttack && dist > 400 then
+			local checkdist = self:VJ_CheckAllFourSides(400)
+			local randmove = {}
+			if checkdist.Backward == true then randmove[#randmove+1] = "Backward" end
+			if checkdist.Right == true then randmove[#randmove+1] = "Right" end
+			if checkdist.Left == true then randmove[#randmove+1] = "Left" end
+			local pickmove = VJ.PICK(randmove)
+			if pickmove == "Backward" then self:SetLastPosition(self:GetPos() +self:GetForward() *400) end
+			if pickmove == "Right" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
+			if pickmove == "Left" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
+			if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
+				self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+				self.NextRandMoveT = CurTime() +math.Rand(2,3)
+				return
+			end
+		end
+
+		if dist > 500 && dist <= 2500 && !self.IsCharging && !self:IsBusy() && !self.DoRangeAttack && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or !self.VJ_IsBeingControlled && math.random(1,50) == 1) && math.abs(self:GetPos().z -ent:GetPos().z) <= 128 then
+			self:VJ_ACT_PLAYACTIVITY("charge_start",true,false,true, 0, {OnFinish=function(interrupted, anim)
+				if interrupted then
+					return
+				end
+				self:CapabilitiesRemove(CAP_MOVE_JUMP)
+			end})
+			self.IsCharging = true
+			-- self:SetState(VJ_STATE_ONLY_ANIMATION)
+			self.ChargeT = CurTime() +6
+			return
+		end
+	end
+
+	if self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2) && !self.DoRangeAttack && !self.IsCharging or !self.VJ_IsBeingControlled && !self.IsCharging && CurTime() > self.NextRangeT && !self.DoRangeAttack && dist > 250 && dist <= 2200 then
+		if !self:VisibleVec(self.EnemyData && self.EnemyData.LastVisiblePos or ent:GetPos() +ent:OBBCenter()) then return end
+		self.Shots = 0
+		self.DoRangeAttack = true
+		self.HasMeleeAttack = false
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

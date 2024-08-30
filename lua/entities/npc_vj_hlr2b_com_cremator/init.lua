@@ -9,6 +9,7 @@ ENT.Model = "models/vj_hlr/hl2b/cremator.mdl"
 ENT.StartHealth = 650
 ENT.HullType = HULL_HUMAN
 ENT.TurningSpeed = 12
+ENT.CanEat = true
 
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = "Red"
@@ -23,15 +24,27 @@ ENT.TimeUntilMeleeAttackDamage = false
 ENT.MeleeAttackAnimationFaceEnemy = false
 ENT.MeleeAttackDistance = 300
 
+-- ENT.HasRangeAttack = true
+-- ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2b_cremator"
+-- ENT.AnimTbl_RangeAttack = "vjges_" .. ACT_GESTURE_RANGE_ATTACK1
+-- ENT.RangeAttackAnimationStopMovement = false
+-- ENT.RangeDistance = 850
+-- ENT.RangeToMeleeDistance = 500
+-- ENT.RangeAttackAngleRadius = 60
+-- ENT.TimeUntilRangeAttackProjectileRelease = 0.2
+-- ENT.NextRangeAttackTime = 12
+
 ENT.PoseParameterLooking_InvertYaw = true
-ENT.ConstantlyFaceEnemyDistance = 500
+ENT.ConstantlyFaceEnemyDistance = 1000
 
 ENT.DisableFootStepSoundTimer = true
 ENT.GeneralSoundPitch1 = 100
 ENT.PainSoundPitch = VJ_Set(40, 55)
+ENT.OnKilledEnemySoundPitch = VJ_Set(65, 70)
 
 ENT.SoundTbl_FootStep = {"vj_hlr/hl2_npc/cremator/foot1.wav","vj_hlr/hl2_npc/cremator/foot2.wav","vj_hlr/hl2_npc/cremator/foot3.wav"}
 ENT.SoundTbl_Alert = {"vj_hlr/hl2_npc/cremator/alert_object.wav","vj_hlr/hl2_npc/cremator/alert_player.wav"}
+ENT.SoundTbl_OnKilledEnemy = {"npc/metropolice/vo/chuckle.wav"}
 ENT.SoundTbl_Pain = {"npc/combine_soldier/pain1.wav","npc/combine_soldier/pain2.wav","npc/combine_soldier/pain3.wav"}
 ENT.SoundTbl_Death = {"vj_hlr/hl2_npc/cremator/crem_die.wav"}
 
@@ -70,15 +83,35 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 		VJ.EmitSound(self,"vj_hlr/hl2_npc/cremator/plasma_ignite.wav",75)
 		self.FireLoop:Play()
 		self:SetMaxYawSpeed(1)
+
+		local att = self:GetAttachment(self:LookupAttachment("muzzle"))
+		local light = ents.Create("light_dynamic")
+		light:SetKeyValue("brightness", "6")
+		light:SetKeyValue("distance", "400")
+		light:SetLocalPos(att.Pos +att.Ang:Forward() *(self.Cremator_FlameRange /2))
+		light:SetLocalAngles(self:GetAngles())
+		light:Fire("Color", "59 255 91")
+		light:SetParent(self)
+		light:Spawn()
+		light:Activate()
+		light:Fire("TurnOn", "", 0)
+		light:Fire("SetParentAttachmentMaintainOffset", "muzzle", 0)
+		self:DeleteOnRemove(light)
+		self.FireLight = light
 	elseif key == "fire_end" then
 		self.IsFlameActive = false
 		self:StopParticles()
 		VJ.EmitSound(self,"vj_hlr/hl2_npc/cremator/plasma_stop.wav",75)
 		self.FireLoop:Stop()
 		self:SetMaxYawSpeed(self.TurningSpeed)
+		SafeRemoveEntity(self.FireLight)
 	elseif key == "gun_foley" then
 		VJ.EmitSound(self,"physics/metal/weapon_impact_soft" .. math.random(1,3) .. ".wav",70)
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackProjSpawnPos(projectile)
+	return self:GetAttachment(self:LookupAttachment("muzzle")).Pos
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnChangeActivity(act)
@@ -88,9 +121,12 @@ function ENT:OnChangeActivity(act)
 		VJ.EmitSound(self,"vj_hlr/hl2_npc/cremator/plasma_stop.wav",75)
 		self.FireLoop:Stop()
 		self:SetMaxYawSpeed(self.TurningSpeed)
+		SafeRemoveEntity(self.FireLight)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+local dmgType = bit.bor(DMG_BURN,DMG_DISSOLVE,DMG_ENERGYBEAM)
+--
 function ENT:CustomOnThink_AIEnabled()
 	if self.Alerted && self.IdleLoopStatus == 0 then
 		self.IdleLoop:Stop()
@@ -106,7 +142,7 @@ function ENT:CustomOnThink_AIEnabled()
 		local att = self:GetAttachment(self:LookupAttachment("muzzle"))
 		local pos,ang = att.Pos,att.Ang
 		sound.EmitHint(SOUND_DANGER, pos +ang:Forward() *(self.Cremator_FlameRange /2), self.Cremator_FlameRange *2, 0.2, self)
-		VJ.ApplyRadiusDamage(self,self,(self:GetPos() +(self:GetForward() *self:OBBMaxs().y)),self.Cremator_FlameRange,self.Cremator_FlameDamage,bit.bor(DMG_BURN,DMG_DISSOLVE,DMG_ENERGYBEAM),true,false,{UseCone=true,UseConeDegree=35,UseConeDirection=ang:Forward()},
+		VJ.ApplyRadiusDamage(self,self,(self:GetPos() +(self:GetForward() *self:OBBMaxs().y)),self.Cremator_FlameRange,self.Cremator_FlameDamage,dmgType,true,false,{UseCone=true,UseConeDegree=35,UseConeDirection=ang:Forward()},
 		function(ent)
 			if (ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot() or VJ.IsProp(ent)) then
 				if ent:IsPlayer() then
@@ -120,6 +156,7 @@ function ENT:CustomOnThink_AIEnabled()
 			end
 		end)	
 	end
+	-- self.HasRangeAttack = self:GetIdealActivity() == ACT_RUN
 	self.ConstantlyFaceEnemy = self:GetIdealActivity() == ACT_RUN
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -131,6 +168,41 @@ end
 -- 	end
 -- 	return act
 -- end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnEat(status, statusInfo)
+	if status == "CheckFood" then
+		return statusInfo.owner.BloodData && statusInfo.owner.BloodData.Color != "Oil"
+	elseif status == "BeginEating" then
+		return select(2, self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK2, true, false))
+	elseif status == "Eat" then
+		return 999
+	elseif status == "StopEating" then
+		if statusInfo != "Dead" && self.EatingData.AnimStatus != "None" then
+			return 0
+		end
+	end
+	return 0
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:EatingReset(statusInfo)
+	local eatingData = self.EatingData
+	self:SetState(VJ_STATE_NONE)
+	self:CustomOnEat("StopEating", statusInfo)
+	self.VJTag_IsEating = false
+	local food = eatingData.Ent
+	if IsValid(food) then
+		local foodData = food.FoodData
+		if foodData.NumConsumers <= 1 then
+			food.VJTag_IsBeingEaten = false
+			foodData.NumConsumers = 0
+			foodData.SizeRemaining = foodData.Size
+		else
+			foodData.NumConsumers = foodData.NumConsumers - 1
+			foodData.SizeRemaining = foodData.SizeRemaining + self:OBBMaxs():Distance(self:OBBMins())
+		end
+	end
+	self.EatingData = {Ent = NULL, NextCheck = eatingData.NextCheck, AnimStatus = "None", OrgIdle = nil}
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
 	VJ.STOPSOUND(self.IdleLoop)
