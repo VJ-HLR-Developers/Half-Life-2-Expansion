@@ -7,4 +7,5 @@
 	"$phongboost"               "1"
 	"$phongexponent"            "9"
 	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+	"$phongwarptexture" 		"vj_hl/phongwarp_steel"
 }

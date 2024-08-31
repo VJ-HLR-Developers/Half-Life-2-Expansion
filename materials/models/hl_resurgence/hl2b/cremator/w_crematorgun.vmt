@@ -4,9 +4,10 @@
 	"$bumpmap"					"models/hl_resurgence/hl2b/cremator/w_crematorgun_n"
 
 	"$phong"                    "1"
-	"$phongboost"               "0.75"
+	"$phongboost"               "2"
 	"$phongexponent"            "90"
 	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+	"$phongwarptexture" 		"vj_hl/phongwarp_steel"
 
 	"$envmap"                   "env_cubemap"
 	"$envmaptint" 				"[0.05 0.05 0.05]"

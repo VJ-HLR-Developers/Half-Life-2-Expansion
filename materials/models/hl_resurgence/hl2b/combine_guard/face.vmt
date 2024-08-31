@@ -1,5 +1,10 @@
 "VertexLitGeneric"
 {
-	// Original shader: VertexLitTexture
-	"$basetexture" "models/hl_resurgence/hl2b/combine_guard/face"
+    "$basetexture"              "models/hl_resurgence/hl2b/combine_guard/face"
+	"$bumpmap"					"models/hl_resurgence/hl2b/combine_guard/face_n"
+
+	"$phong"                    "1"
+	"$phongboost"               "0.1"
+	"$phongexponent"            "12"
+	"$phongfresnelranges"       "[0.15 0.545 0.115]"
 }

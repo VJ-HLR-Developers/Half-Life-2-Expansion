@@ -7,12 +7,13 @@ include("shared.lua")
 -----------------------------------------------*/
 ENT.Model = {"models/vj_hlr/hl2b/combine_guard.mdl"}
 ENT.StartHealth = 500
+ENT.SightAngle = 95
 ENT.HullType = HULL_HUMAN
 
 ENT.VJC_Data = {
 	CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-	ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-	FirstP_Bone = "ValveBiped.Bip01_Head", -- If left empty, the base will attempt to calculate a position for first person
+	ThirdP_Offset = Vector(0, 0, -40), -- The offset for the controller when the camera is in third person
+	FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
 	FirstP_Offset = Vector(0, 0, 5), -- The offset for the controller when the camera is in first person
 	FirstP_ShrinkBone = true, -- Should the bone shrink? Useful if the bone is obscuring the player's view
 }
@@ -117,6 +118,19 @@ ENT.HasExtraMeleeAttackSounds = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(20,20,90),Vector(-20,-20,0))
+
+	self.NextKnockdownT = 0
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:GetSightDirection()
+	return self:GetAttachment(self:LookupAttachment("eyes")).Ang:Forward()
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE && self.Alerted then
+		return ACT_IDLE_ANGRY
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt,isProp)
@@ -129,49 +143,101 @@ end
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	if key == "step" then
 		self:FootStepSoundCode()
-	end
-	if key == "melee" then
+	elseif key == "melee" then
 		self:MeleeAttackCode()
-	end
-	if key == "charge" then
+	elseif key == "charge" then
 		self:StartWarpCannon(true)
+	elseif key == "range" then
+		local targetPos = self.TargetPos or self:GetPos() +self:GetForward() *1250
+		self:WarpCannon(targetPos)
 	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
-	local ent = self:GetEnemy()
-	self.LastSawEnemyPosition = IsValid(ent) && ent:Visible(self) && ent:GetPos() +ent:OBBCenter() or nil
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRangeAttack_AfterStartTimer(seed)
-	timer.Simple(VJ.AnimDuration(self,ACT_ARM),function()
-		if IsValid(self) then
-			self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,false)
-		end
-	end)
+	-- self:VJ_ACT_PLAYACTIVITY("idleact",true,false,true,0,{OnFinish=function(interrupted,anim)
+	-- 	if interrupted then return end
+	-- 	self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,false)
+	-- end})
+	self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	-- Absorb bullet damage
-	if dmginfo:IsBulletDamage() then
-		VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1,10)..".wav", 70)
-		if math.random(1,3) == 1 then
-			dmginfo:ScaleDamage(0.50)
-			local spark = ents.Create("env_spark")
-			spark:SetKeyValue("Magnitude","1")
-			spark:SetKeyValue("Spark Trail Length","1")
-			spark:SetPos(dmginfo:GetDamagePosition())
-			spark:SetAngles(self:GetAngles())
-			spark:SetParent(self)
-			spark:Spawn()
-			spark:Activate()
-			spark:Fire("StartSpark", "", 0)
-			spark:Fire("StopSpark", "", 0.001)
-			self:DeleteOnRemove(spark)
-		else
-			dmginfo:ScaleDamage(0.80)
+	if hitgroup == 100 then
+		dmginfo:ScaleDamage(0.1) -- Shield
+	elseif hitgroup == 101 then
+		dmginfo:ScaleDamage(0) -- Gun
+	elseif hitgroup == 1 then
+		dmginfo:ScaleDamage(2)
+		local pos = dmginfo:GetDamagePosition()
+		if pos == defPos then pos = self:GetPos() + self:OBBCenter() end
+		
+		local particle = ents.Create("info_particle_system")
+		particle:SetKeyValue("effect_name", "vj_impact1_red")
+		particle:SetPos(pos)
+		particle:Spawn()
+		particle:Activate()
+		particle:Fire("Start")
+		particle:Fire("Kill", "", 0.1)
+	else
+		if dmginfo:IsBulletDamage() then
+			if self.HasSounds == true && self.HasImpactSounds == true then
+				VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1, 10)..".wav", 70)
+			end
+			if math.random(1, 3) == 1 then
+				dmginfo:ScaleDamage(0.50)
+				local effectData = EffectData()
+				effectData:SetOrigin(dmginfo:GetDamagePosition())
+				effectData:SetNormal(dmginfo:GetDamageForce():GetNormalized())
+				effectData:SetMagnitude(3)
+				effectData:SetScale(1)
+				util.Effect("ElectricSpark", effectData)
+			else
+				dmginfo:ScaleDamage(0.80)
+			end
 		end
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local bit_band = bit.band
+--
+function ENT:CustomOnTakeDamage_AfterDamage(dmginfo,hitgroup)
+	local explosion = dmginfo:IsExplosionDamage()
+	if self:Health() > 0 && (explosion or bit_band(dmginfo:GetDamageType(),DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
+		local dmgAng = ((explosion && dmginfo:GetDamagePosition() or dmginfo:GetAttacker():GetPos()) -self:GetPos()):Angle()
+		dmgAng.p = 0
+		dmgAng.r = 0
+		self:TaskComplete()
+		self:StopMoving()
+		self:ClearSchedule()
+		self:ClearGoal()
+		self:SetAngles(dmgAng)
+		self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
+		local _,dur = self:VJ_ACT_PLAYACTIVITY("physfall",true,false,false,0,{OnFinish=function(interrupted)
+			self:VJ_ACT_PLAYACTIVITY("physgetup",true,false,false,0,{OnFinish=function(interrupted)
+				self:SetState()
+			end})
+		end})
+		self.NextKnockdownT = CurTime() +(dur *2)
+		self.NextCallForBackUpOnDamageT = CurTime() +dur
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
+	local explosion = dmginfo:IsExplosionDamage()
+	if (explosion or bit_band(dmginfo:GetDamageType(),DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
+		self.HasDeathAnimation = true
+		self.AnimTbl_Death = "physfall"
+		self.WaitBeforeDeathTime = self:DecideAnimationLength("physfall",false) +self:DecideAnimationLength("physdeath",false) -1
+		timer.Simple(self:DecideAnimationLength("physfall",false),function()
+			if IsValid(self) then
+				self:VJ_ACT_PLAYACTIVITY("physdeath",true,false,false)
+			end
+		end)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnKilled(dmginfo, hitgroup)
+	self:SetBodygroup(1,1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DoTrace(tPos)
@@ -213,7 +279,7 @@ function ENT:WarpCannon(tPos)
 	end)
 	timer.Simple(0.49,function()
 		if IsValid(self) then
-			VJ.EmitSound(self,"npc/strider/fire.wav",130,self:VJ_DecideSoundPitch(100,110))
+			VJ.EmitSound(self,"^npc/strider/fire.wav",130,self:VJ_DecideSoundPitch(100,110))
 
 			ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,2)
 			timer.Simple(0.2,function() if IsValid(self) then self:StopParticles() end end)
@@ -234,25 +300,7 @@ function ENT:WarpCannon(tPos)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:StartWarpCannon(doLastPos)
-	VJ.CreateSound(self,"npc/strider/charging.wav",110)
-
-	local muz = ents.Create("env_sprite")
-	muz:SetKeyValue("model","effects/strider_bulge_dx60.vmt")
-	muz:SetKeyValue("scale",tostring(math.Rand(1,1.5)))
-	muz:SetKeyValue("GlowProxySize","2.0") -- Size of the glow to be rendered for visibility testing.
-	muz:SetKeyValue("HDRColorScale","1.0")
-	muz:SetKeyValue("renderfx","14")
-	muz:SetKeyValue("rendermode","3") -- Set the render mode to "3" (Glow)
-	muz:SetKeyValue("renderamt","255") -- Transparency
-	muz:SetKeyValue("disablereceiveshadows","0") -- Disable receiving shadows
-	muz:SetKeyValue("framerate","10.0") -- Rate at which the sprite should animate, if at all.
-	muz:SetKeyValue("spawnflags","0")
-	muz:SetParent(self)
-	muz:Fire("SetParentAttachment","muzzle")
-	muz:SetAngles(Angle(math.random(-100, 100), math.random(-100, 100), math.random(-100, 100)))
-	muz:Spawn()
-	muz:Activate()
-	muz:Fire("Kill","",SoundDuration("npc/strider/charging.wav") +0.3)
+	VJ.CreateSound(self,"^npc/strider/charging.wav",110)
 
 	local pinch = ents.Create("env_sprite")
 	pinch:SetKeyValue("model","effects/strider_pinch_dudv.vmt")
@@ -272,27 +320,33 @@ function ENT:StartWarpCannon(doLastPos)
 	pinch:Activate()
 	pinch:Fire("Kill","",SoundDuration("npc/strider/charging.wav") +1)
 
+	local muz = ents.Create("env_sprite")
+	muz:SetKeyValue("model","effects/strider_bulge_dx60.vmt")
+	muz:SetKeyValue("scale",tostring(math.Rand(1,1.5)))
+	muz:SetKeyValue("GlowProxySize","2.0") -- Size of the glow to be rendered for visibility testing.
+	muz:SetKeyValue("HDRColorScale","1.0")
+	muz:SetKeyValue("renderfx","14")
+	muz:SetKeyValue("rendermode","3") -- Set the render mode to "3" (Glow)
+	muz:SetKeyValue("renderamt","255") -- Transparency
+	muz:SetKeyValue("disablereceiveshadows","0") -- Disable receiving shadows
+	muz:SetKeyValue("framerate","10.0") -- Rate at which the sprite should animate, if at all.
+	muz:SetKeyValue("spawnflags","0")
+	muz:SetParent(self)
+	muz:Fire("SetParentAttachment","muzzle")
+	muz:SetAngles(Angle(math.random(-100, 100), math.random(-100, 100), math.random(-100, 100)))
+	muz:Spawn()
+	muz:Activate()
+	muz:Fire("Kill","",SoundDuration("npc/strider/charging.wav") +0.3)
+
 	local target = self:GetEnemy()
-	local targetPos = self:GetPos() +self:GetForward() *800
+	local targetPos = self:GetPos() +self:GetForward() *1250
 	if IsValid(target) then
 		targetPos = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()
 	end
 	if doLastPos then
-		targetPos = self.LastSawEnemyPosition != nil && self.LastSawEnemyPosition or self:GetPos() +self:GetForward() *800
+		targetPos = self.EnemyData != nil && self.EnemyData.LastVisiblePos or self:GetPos() +self:GetForward() *1250
 	end
 	sound.EmitHint(SOUND_DANGER, targetPos, 500, 1, self)
 
-	timer.Simple(0.5,function()
-		if IsValid(self) then
-			local target = self:GetEnemy()
-			local targetPos = self:GetPos() +self:GetForward() *800
-			if IsValid(target) then
-				targetPos = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()
-			end
-			if doLastPos then
-				targetPos = self.LastSawEnemyPosition != nil && self.LastSawEnemyPosition or self:GetPos() +self:GetForward() *800
-			end
-			self:WarpCannon(targetPos)
-		end
-	end)
+	self.TargetPos = targetPos
 end

@@ -1,5 +1,21 @@
 "VertexLitGeneric"
 {
-	// Original shader: VertexLitTexture
-	"$basetexture" "models/hl_resurgence/hl2b/combine_guard/kneecap"
+    "$basetexture"              "models/hl_resurgence/hl2b/combine_guard/kneecap"
+	"$bumpmap"					"models/hl_resurgence/hl2b/combine_guard/kneecap_n"
+
+    // "$blendtintbybasealpha" 	"1"
+    // "$color2" 					"[0.1 0.1 0.1]"
+
+	"$phong"                    "1"
+	"$phongboost"               "1"
+	"$phongexponent"            "45"
+	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+	"$phongwarptexture" 		"vj_hl/phongwarp_steel"
+
+	"$envmap"                   "env_cubemap"
+	"$envmapsphere" 			"1"
+	"$multipass" 				"1"
+	"$envmaptint" 				"[0.22 0.22 0.22]"
+	"$envmapfresnel"            "0.6"
+	"$basealphaenvmapmask"		"1"
 }

@@ -1,5 +1,19 @@
 "VertexLitGeneric"
 {
-	// Original shader: VertexLitTexture
-	"$basetexture" "models/hl_resurgence/hl2b/combine_guard/innercollar"
+    "$basetexture"              "models/hl_resurgence/hl2b/combine_guard/innercollar"
+	"$bumpmap"					"models/hl_resurgence/hl2b/combine_guard/innercollar_n"
+
+    "$color2" 					"[0.9 0.9 0.9]"
+
+	"$phong"                    "1"
+	"$phongboost"               "0.2"
+	"$phongexponent"            "45"
+	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+	"$phongwarptexture" 		"vj_hl/phongwarp_steel"
+
+	"$envmap"                   "env_cubemap"
+	"$envmapsphere" 			"1"
+	"$multipass" 				"1"
+	"$envmaptint" 				"[0.05 0.05 0.05]"
+	"$envmapfresnel"            "0.6"
 }

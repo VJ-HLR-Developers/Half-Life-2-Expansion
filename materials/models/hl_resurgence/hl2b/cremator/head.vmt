@@ -4,7 +4,8 @@
 	"$bumpmap"					"models/hl_resurgence/hl2b/cremator/head_n"
 
 	"$phong"                    "1"
-	"$phongboost"               "1"
-	"$phongexponent"            "80"
+	"$phongboost"               "2"
+	"$phongexponent"            "10"
 	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+	"$phongwarptexture" 		"vj_hl/phongwarp_steel"
 }

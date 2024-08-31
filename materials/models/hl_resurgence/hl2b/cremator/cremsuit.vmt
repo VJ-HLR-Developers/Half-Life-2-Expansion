@@ -7,9 +7,10 @@
     "$color2" 					"[0.1 0.1 0.1]"
 
 	"$phong"                    "1"
-	"$phongboost"               "0.5"
-	"$phongexponent"            "30"
+	"$phongboost"               "0.1"
+	"$phongexponent"            "40"
 	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+	"$phongwarptexture" 		"vj_hl/phongwarp_steel"
 
 	"$envmap"                   "env_cubemap"
 	"$envmaptint" 				"[0.1 0.1 0.1]"

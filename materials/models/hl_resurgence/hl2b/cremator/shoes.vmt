@@ -8,6 +8,7 @@
 	"$phongexponent"            "80"
 	"$phongtint"            	"[0.288235294 0.19411764705 0.1]"
 	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+	"$phongwarptexture" 		"vj_hl/phongwarp_steel"
 
 	"$envmap"                   "env_cubemap"
 	"$envmaptint" 				"[0.02 0.02 0.02]"

@@ -1,9 +1,26 @@
 "VertexLitGeneric"
 {
-	// Original shader: VertexLitMaskedEnvMappedTexture
-	"$basetexture" "models/hl_resurgence/hl2b/combine_guard/head"
-	"$envmapmask" "models/hl_resurgence/hl2b/combine_guard/head_mask"
-	"$envmap" "models/hl_resurgence/hl2b/combine_guard/combineguard_envmap"
-	"$multipass" 1
-	"$selfillum" 1
+    "$basetexture"              "models/hl_resurgence/hl2b/combine_guard/head"
+	"$bumpmap"					"models/hl_resurgence/hl2b/combine_guard/head_n"
+
+    "$blendtintbybasealpha" 	"1"
+    "$color2" 					"[0.1 0.1 0.1]"
+
+	"$detail" 				    "models/hl_resurgence/hl2b/combine_guard/head_glow"
+    "$detailscale"              "1"
+    "$detailblendfactor"        "3"
+    "$detailblendmode"          "5"
+
+	"$phong"                    "1"
+	"$phongboost"               "1"
+	"$phongexponent"            "45"
+	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+	"$phongwarptexture" 		"vj_hl/phongwarp_steel"
+
+	"$envmap"                   "env_cubemap"
+	"$envmapsphere" 			"1"
+	"$multipass" 				"1"
+	"$envmaptint" 				"[0.22 0.22 0.22]"
+	"$envmapfresnel"            "0.6"
+	"$basealphaenvmapmask"		"1"
 }
