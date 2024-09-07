@@ -28,8 +28,7 @@ ENT.VJC_Data = {
     FirstP_Bone = "Bone47", -- If left empty, the base will attempt to calculate a position for first person
     FirstP_Offset = Vector(10, 0, 5), -- The offset for the controller when the camera is in first person
 }
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
+	-- ====== Sound Paths ====== --
 ENT.SoundTbl_Alert = {
 	"vj_hlr/hl2_npc/hydra/hydra_alert1.wav",
 	"vj_hlr/hl2_npc/hydra/hydra_alert2.wav",

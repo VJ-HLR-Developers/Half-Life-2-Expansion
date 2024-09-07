@@ -127,7 +127,7 @@ function ENT:CustomOnAlert(ent)
 
 	VJ.STOPSOUND(self.CurrentIdleSound)
 	self.NextIdleSoundT = self.NextIdleSoundT + 2
-	self.CurrentAlertSound = VJ.CreateSound(self,VJ.PICK(self.SoundTbl_AlertAnim),self.AlertSoundLevel,self:VJ_DecideSoundPitch(self.AlertSoundPitch.a,self.AlertSoundPitch.b))
+	self.CurrentSpeechSound = VJ.CreateSound(self,VJ.PICK(self.SoundTbl_AlertAnim),self.AlertSoundLevel,self:VJ_DecideSoundPitch(self.AlertSoundPitch.a,self.AlertSoundPitch.b))
 	self:VJ_ACT_PLAYACTIVITY("Threatdisplay",true,VJ.AnimDuration(self,"Threatdisplay"),false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

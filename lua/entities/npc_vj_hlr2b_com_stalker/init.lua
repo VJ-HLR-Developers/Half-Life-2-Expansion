@@ -31,8 +31,7 @@ ENT.VJC_Data = {
     FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
     FirstP_Offset = Vector(1, 0, 1), -- The offset for the controller when the camera is in first person
 }
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
+	-- ====== Sound Paths ====== --
 ENT.SoundTbl_FootStep = {
 	"vj_hlr/hl2_npc/beta_stalker/stalker_footstep_left1.wav",
 	"vj_hlr/hl2_npc/beta_stalker/stalker_footstep_left2.wav",

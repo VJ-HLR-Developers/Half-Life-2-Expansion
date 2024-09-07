@@ -33,8 +33,7 @@ ENT.VJC_Data = {
     FirstP_Bone = "HoundEye.Head", -- If left empty, the base will attempt to calculate a position for first person
     FirstP_Offset = Vector(4, 0, 0), -- The offset for the controller when the camera is in first person
 }
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
+	-- ====== Sound Paths ====== --
 ENT.SoundTbl_FootStep = {
 	"npc/zombie/foot1.wav",
 	"npc/zombie/foot2.wav",

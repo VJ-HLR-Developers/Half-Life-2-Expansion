@@ -122,7 +122,8 @@ end
 function ENT:CustomAttack(ent,vis)
 	local dist = self.NearestPointToEnemyDistance
 	if !self.RageState && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or !self.VJ_IsBeingControlled && dist <= 750 && math.random(1,dist *0.5) == 1) then
-		self:StopAllCommonSpeechSounds()
+		VJ.STOPSOUND(self.CurrentSpeechSound)
+		VJ.STOPSOUND(self.CurrentIdleSound)
 		VJ.CreateSound(self,"vj_hlr/hl2_npc/zombine/zombine_alert6.wav",80)
 		self.RageState = true
 		self.RageStateTime = CurTime() +math.Rand(6,12)
@@ -315,7 +316,8 @@ function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
 		self:SetSlump(false)
 	else
 		if !self.RageState && !self:IsBusy() && math.random(1,10) == 1 then
-			self:StopAllCommonSpeechSounds()
+			VJ.STOPSOUND(self.CurrentSpeechSound)
+			VJ.STOPSOUND(self.CurrentIdleSound)
 			VJ.CreateSound(self,"vj_hlr/hl2_npc/zombine/zombine_alert6.wav",80)
 			self.RageState = true
 			self.RageStateTime = CurTime() +math.Rand(6,12)

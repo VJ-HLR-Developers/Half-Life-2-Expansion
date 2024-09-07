@@ -20,8 +20,7 @@ ENT.NoChaseAfterCertainRange_CloseDistance = 0 -- How near until it can chase ag
 ENT.NoChaseAfterCertainRange_Type = "OnlyRange" -- "Regular" = Default behavior | "OnlyRange" = Only does it if it's able to range attack
 ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time system for the footstep sound code, allowing you to use other ways like model events
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
+	-- ====== Sound Paths ====== --
 ENT.SoundTbl_FootStep = {
 	"npc/stalker/stalker_footstep_left1.wav",
 	"npc/stalker/stalker_footstep_left2.wav",

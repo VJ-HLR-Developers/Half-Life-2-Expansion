@@ -45,8 +45,7 @@ ENT.VJC_Data = {
 
 ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time system for the footstep sound code, allowing you to use other ways like model events
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
+	-- ====== Sound Paths ====== --
 -- ENT.SoundTbl_Breath = {"npc/combine_gunship/gunship_engine_loop3.wav"}
 ENT.SoundTbl_FootStep = {
 	"npc/ministrider/ministrider_footstep1.wav",

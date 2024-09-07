@@ -53,8 +53,7 @@ ENT.NoChaseAfterCertainRange = true -- Should the SNPC not be able to chase when
 ENT.NoChaseAfterCertainRange_FarDistance = 4000 -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
 ENT.NoChaseAfterCertainRange_CloseDistance = 0 -- How near until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
 ENT.NoChaseAfterCertainRange_Type = "Regular" -- "Regular" = Default behavior | "OnlyRange" = Only does it if it"s able to range attack
-	-- ====== Sound File Paths ====== --
--- Leave blank if you don't want any sounds to play
+	-- ====== Sound Paths ====== --
 ENT.SoundTbl_Breath = {"ambient/atmosphere/city_beacon_loop1.wav"}
 ENT.SoundTbl_Idle = {
 	"vj_hlr/hl2_npc/advisor/advisor_speak01.wav",
