@@ -23,6 +23,8 @@ ENT.AnimTbl_MeleeAttack = {ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK2, ACT_RANGE_ATTAC
 ENT.TimeUntilMeleeAttackDamage = false
 ENT.MeleeAttackAnimationFaceEnemy = false
 ENT.MeleeAttackDistance = 300
+ENT.AttackProps = false
+ENT.PushProps = false
 
 -- ENT.HasRangeAttack = true
 -- ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2b_cremator"
