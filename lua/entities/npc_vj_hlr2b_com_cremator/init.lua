@@ -169,7 +169,7 @@ end
 -- 	return act
 -- end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnEat(status, statusInfo)
+function ENT:OnEat(status, statusInfo)
 	if status == "CheckFood" then
 		return statusInfo.owner.BloodData && statusInfo.owner.BloodData.Color != "Oil"
 	elseif status == "BeginEating" then
@@ -187,7 +187,7 @@ end
 function ENT:EatingReset(statusInfo)
 	local eatingData = self.EatingData
 	self:SetState(VJ_STATE_NONE)
-	self:CustomOnEat("StopEating", statusInfo)
+	self:OnEat("StopEating", statusInfo)
 	self.VJTag_IsEating = false
 	local food = eatingData.Ent
 	if IsValid(food) then
