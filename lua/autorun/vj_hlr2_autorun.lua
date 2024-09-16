@@ -48,7 +48,7 @@ if VJExists == true then
 		-- VJ.AddNPC_HUMAN("Civil Protection (Beta)","npc_vj_hlr2b_com_civilp",{"weapon_vj_9mmpistol","weapon_vj_smg1"},spawnCategory)
 		VJ.AddNPC("Overwatch Guard","npc_vj_hlr2b_com_guard",spawnCategory)
 		VJ.AddNPC("Overwatch Stalker (Beta)","npc_vj_hlr2b_com_stalker",spawnCategory)
-		-- VJ.AddNPC("Overwatch Alien Assassin","npc_vj_hlr2b_com_alienassassin",spawnCategory)
+		-- VJ.AddNPC("Overwatch Prowler","npc_vj_hlr2b_com_alienassassin",spawnCategory)
 		-- VJ.AddNPC("Overwatch Combot","npc_vj_hlr2b_com_combot",spawnCategory)
 		VJ.AddNPC("Overwatch Cremator","npc_vj_hlr2b_com_cremator",spawnCategory)
 		-- VJ.AddNPC("Overwatch Shield Scanner (Beta)","npc_vj_hlr2b_com_scanner_shield",spawnCategory)
@@ -83,7 +83,7 @@ if VJExists == true then
 		-- Xen Creatures
 			-- Headcrab
 			VJ.AddNPC("Zombie","npc_vj_hlr2_zombie",spawnCategory)
-			VJ.AddNPC("Zombie Assassin","npc_vj_hlr2b_zombie_assassin",spawnCategory)
+			VJ.AddNPC("Prowler Zombie","npc_vj_hlr2b_zombie_assassin",spawnCategory)
 			VJ.AddNPC("Fast Zombie","npc_vj_hlr2_zombie_fast",spawnCategory)
 			VJ.AddNPC("Poison Zombie","npc_vj_hlr2_zombie_poison",spawnCategory)
 			VJ.AddNPC("Zombine","npc_vj_hlr2_zombine",spawnCategory)

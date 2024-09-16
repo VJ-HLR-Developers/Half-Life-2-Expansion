@@ -5,164 +5,161 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/crabsynth.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2/crabsynth.mdl"
 ENT.StartHealth = 850
-ENT.HullType = HULL_LARGE
-ENT.VJTag_ID_Boss = true
----------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = "Blue" -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.Immune_Dissolve = true -- Immune to Dissolving | Example: Combine Ball
-ENT.Immune_AcidPoisonRadiation = true -- Immune to Acid, Poison and Radiation
+ENT.HullType = HULL_HUMAN
+ENT.TurningSpeed = 12
+
+ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
+ENT.BloodColor = "Blue"
+
+ENT.PoseParameterLooking_InvertPitch = true
 
 ENT.HasMeleeAttack = true
-ENT.MeleeAttackDamage = 85
-ENT.TimeUntilMeleeAttackDamage = 0.1 -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDistance = 75 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.MeleeAttackDamageDistance = 170 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.HasMeleeAttackKnockBack = true
-ENT.MeleeAttackBleedEnemy = true
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
+ENT.MeleeAttackDistance = 140
+ENT.MeleeAttackDamageDistance = 180
+ENT.TimeUntilMeleeAttackDamage = false
+ENT.MeleeAttackAnimationFaceEnemy = false
 ENT.MeleeAttackBleedEnemyChance = 1
-ENT.MeleeAttackBleedEnemyDamage = 3
-ENT.SlowPlayerOnMeleeAttack = true
+ENT.MeleeAttackBleedEnemyReps = 10
+ENT.SlowPlayerOnMeleeAttackTime = 10
 
-ENT.HasRangeAttack = true -- Can this NPC range attack?
+ENT.HasRangeAttack = true
+ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
 ENT.RangeAttackAnimationStopMovement = false
-ENT.DisableDefaultRangeAttackCode = true -- When true, it won't spawn the range attack entity, allowing you to make your own
-ENT.DisableRangeAttackAnimation = true -- if true, it will disable the animation code
-ENT.RangeToMeleeDistance = 350 -- How close does it have to be until it uses melee?
-ENT.RangeAttackAngleRadius = 75 -- What is the attack angle radius? | 100 = In front of the NPC | 180 = All around the NPC
-ENT.TimeUntilRangeAttackProjectileRelease = 0.001 -- How much time until the projectile code is ran?
-ENT.NextRangeAttackTime = 0.001 -- How much time until it can use a range attack?
-ENT.NextAnyAttackTime_Range = 0.001 -- How much time until it can use any attack again? | Counted in Seconds
-ENT.RangeDistance = 4000
+ENT.RangeAttackAnimationFaceEnemy = false
+ENT.RangeDistance = 1750
+ENT.RangeToMeleeDistance = 500
+ENT.TimeUntilRangeAttackProjectileRelease = false
+ENT.NextRangeAttackTime = 5
+ENT.NextRangeAttackTime_DoRand = 9
 
-ENT.VJC_Data = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "Box01", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(15, 0, 20), -- The offset for the controller when the camera is in first person
-}
+ENT.ConstantlyFaceEnemyDistance = 1750
 
-ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time system for the footstep sound code, allowing you to use other ways like model events
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
-	-- ====== Sound Paths ====== --
-ENT.SoundTbl_Breath = {"npc/combine_gunship/gunship_engine_loop3.wav"}
-ENT.SoundTbl_FootStep = {"ambient/materials/clang1.wav"}
-ENT.SoundTbl_FootStepHeavy = {"ambient/materials/door_hit1.wav"}
-ENT.SoundTbl_Idle = {"npc/combine_gunship/ping_patrol.wav","npc/combine_gunship/ping_search.wav","npc/combine_gunship/gunship_ping_search.wav","npc/combine_gunship/gunship_moan.wav"}
-ENT.SoundTbl_Alert = {"npc/combine_gunship/see_enemy.wav"}
-ENT.SoundTbl_Pain = {"npc/combine_gunship/gunship_pain.wav"}
-ENT.SoundTbl_Death = {}
-
-ENT.BreathSoundLevel = 80
-ENT.IdleSoundLevel = 90
-ENT.AlertSoundLevel = 95
-ENT.PainSoundLevel = 90
+ENT.DisableFootStepSoundTimer = true
+ENT.HasExtraMeleeAttackSounds = true
 ENT.GeneralSoundPitch1 = 100
 
-ENT.BulletSpread = 15
-ENT.RPG_ReloadTime = 10
-ENT.RPG_Speed = 2000
+ENT.SoundTbl_Idle = "vj_hlr/hl2_npc/crab/taunt.wav"
+ENT.SoundTbl_Pain = "vj_hlr/hl2_npc/crab/pain1.wav"
+ENT.SoundTbl_MeleeAttackExtra = "vj_hlr/hl2_npc/crab/stab.wav"
+ENT.SoundTbl_MeleeAttackMiss = "vj_hlr/hl2_npc/crab/step2.wav"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
-	self:SetCollisionBounds(Vector(75,75,120), Vector(-75,-75,0))
-	self.NextRocketT = CurTime() +2
+	self:SetCollisionBounds(Vector(45,45,100), Vector(-45,-45,0))
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:Controller_Initialize(ply,controlEnt)
+	function controlEnt:CustomOnThink()
+		self.VJC_BullseyeTracking = self.VJCE_NPC:GetIdealActivity() == ACT_WALK
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
+	-- print(key)
 	if key == "step" then
-		self:FootStepSoundCode()
-	end
-	if key == "step_heavy" then
-		VJ.EmitSound(self,self.SoundTbl_FootStepHeavy,88)
-	end
-	if key == "melee" then
+		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/step2.wav", 75)
+	elseif key == "step_heavy" then
+		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/step.wav", 80)
+		util.ScreenShake(self:GetPos(), 8, 100, 0.2, 500)
+	elseif key == "attack" then
+		self.MeleeAttackDamage = 20
+		self.HasMeleeAttackKnockBack = false
+		self.MeleeAttackBleedEnemy = false
+		self.SlowPlayerOnMeleeAttack = false
 		self:MeleeAttackCode()
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjVelocity(projectile)
-	return self:CalculateProjectile("Line",self:GetPos(),self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),self.RPG_Speed)
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:MeleeAttackKnockbackVelocity(hitEnt)
-	return self:GetForward()*800 + self:GetUp()*150
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomRangeAttackCode()
-	if CurTime() > self.NextRocketT then
-		local proj = ents.Create("obj_vj_tank_shell")
-		proj:SetPos(self:GetAttachment(self:LookupAttachment("rpg")).Pos)
-		proj:SetAngles((self:GetEnemy():GetPos() -proj:GetPos()):Angle())
-		proj:Spawn()
-		proj:Activate()
-		proj:SetOwner(self)
-		proj:SetPhysicsAttacker(self)
-		local phys = proj:GetPhysicsObject()
-		if IsValid(phys) then
-			phys:Wake()
-			phys:SetVelocity(self:RangeAttackProjVelocity(proj))
-		end
-		VJ.EmitSound(self,"weapons/stinger_fire1.wav",105,100)
-		ParticleEffectAttach("vj_rifle_full",PATTACH_POINT_FOLLOW,self,2)
-		ParticleEffectAttach("smoke_exhaust_01a",PATTACH_POINT_FOLLOW,self,2)
-		timer.Simple(self.RPG_ReloadTime -SoundDuration("npc/combine_gunship/attack_start2.wav"),function()
-			if IsValid(self) then
-				VJ.EmitSound(self,"vnpc/combine_gunship/attack_start2.wav",85,100)
+	elseif key == "attack_stab" then
+		self.MeleeAttackDamage = 40
+		self.HasMeleeAttackKnockBack = false
+		self.MeleeAttackBleedEnemy = true
+		self.SlowPlayerOnMeleeAttack = true
+		self:MeleeAttackCode()
+	elseif key == "attack_left" then
+		self.MeleeAttackDamage = 20
+		self.HasMeleeAttackKnockBack = true
+		self.MeleeAttackBleedEnemy = false
+		self.SlowPlayerOnMeleeAttack = false
+		self:MeleeAttackCode()
+	elseif key == "gun_drop" then
+		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/flesh_rip.wav", 80)
+	elseif key == "gun_load" then
+		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/gun_drop.wav", 80)
+	elseif key == "gun_charge" then
+		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/charge_cannon.wav", 80)
+	elseif key == "gun_fire" then
+		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/fire.wav", 150)
+		ParticleEffectAttach("vj_muzzle_ar2_main",PATTACH_POINT_FOLLOW,self,1)
+		local att = self:GetAttachment(1)
+		local targetPos = IsValid(self:GetEnemy()) && self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() or self:GetPos() +self:GetForward() *1500
+		for i = 1,2 do
+			local bullet = {}
+			bullet.Num = 1
+			bullet.Src = att.Pos
+			bullet.Dir = targetPos -att.Pos
+			bullet.Callback = function(attacker, tr, dmginfo)
+				local laserhit = EffectData()
+				laserhit:SetOrigin(tr.HitPos)
+				laserhit:SetNormal(tr.HitNormal)
+				laserhit:SetScale(25)
+				util.Effect("AR2Impact",laserhit)
+
+				util.ScreenShake(tr.HitPos, 16, 100, 0.2, 100, true)
 			end
-		end)
-		self.NextRocketT = CurTime() +self.RPG_ReloadTime
+			bullet.Spread = Vector(math.random(-45,45),math.random(-45,45),math.random(-45,45))
+			bullet.Tracer = 1
+			bullet.TracerName = "AirboatGunTracer"
+			bullet.Force = 3
+			bullet.Damage = self:VJ_GetDifficultyValue(13)
+			bullet.AmmoType = "AR2"
+			self:FireBullets(bullet)
+		end
+	elseif key == "gun_retract" then
+		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/gun_retract.wav", 80)
 	end
-	local bullet = {}
-	bullet.Num = 1
-	bullet.Src = self:GetAttachment(self:LookupAttachment("muzzle")).Pos
-	bullet.Dir = (self:GetEnemy():GetPos()+self:GetEnemy():OBBCenter())-self:GetAttachment(self:LookupAttachment("muzzle")).Pos +Vector(math.random(-self.BulletSpread,self.BulletSpread),math.random(-self.BulletSpread,self.BulletSpread),math.random(-self.BulletSpread,self.BulletSpread))
-	bullet.Spread = self.BulletSpread
-	bullet.Tracer = 1
-	bullet.TracerName = "AR2Tracer"
-	bullet.Force = 3
-	bullet.Damage = 5
-	bullet.AmmoType = "AR2"
-	self:FireBullets(bullet)
-	
-	VJ.EmitSound(self,"weapons/airboat/airboat_gun_energy"..math.random(1,2)..".wav",100,100)
-	
-	ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,1)
-	timer.Simple(0.2,function() if IsValid(self) then self:StopParticles() end end)
-	
-	local FireLight1 = ents.Create("light_dynamic")
-	FireLight1:SetKeyValue("brightness", "4")
-	FireLight1:SetKeyValue("distance", "120")
-	FireLight1:SetPos(self:GetAttachment(self:LookupAttachment("muzzle")).Pos)
-	FireLight1:SetLocalAngles(self:GetAngles())
-	FireLight1:Fire("Color", "0 31 225")
-	FireLight1:SetParent(self)
-	FireLight1:Spawn()
-	FireLight1:Activate()
-	FireLight1:Fire("TurnOn","",0)
-	FireLight1:Fire("Kill","",0.07)
-	self:DeleteOnRemove(FireLight1)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:MeleeAttackKnockbackVelocity()
+	return self:GetForward() *125 +self:GetRight() *-450 +self:GetUp() *150
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnThink_AIEnabled()
+	self.ConstantlyFaceEnemy = self:GetIdealActivity() == ACT_WALK
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_RUN && !IsValid(self.VJ_TheController) then
+		local dist = self.NearestPointToEnemyDistance
+		if dist && (dist >= 2000 or dist <= 500) then
+			return ACT_RUN
+		end
+		return ACT_WALK
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
 	if hitgroup == 15 then
+		self.HasBloodParticle = true
+		self.HasBloodDecal = true
 		dmginfo:SetDamage(dmginfo:GetDamage() *4.5)
 		VJ.EmitSound(self,"ambient/energy/zap"..math.random(1,9)..".wav",70)
-		self.DamageSpark1 = ents.Create("env_spark")
-		self.DamageSpark1:SetKeyValue("Magnitude","1")
-		self.DamageSpark1:SetKeyValue("Spark Trail Length","1")
-		self.DamageSpark1:SetPos(dmginfo:GetDamagePosition())
-		self.DamageSpark1:SetAngles(self:GetAngles())
-		self.DamageSpark1:SetParent(self)
-		self.DamageSpark1:Spawn()
-		self.DamageSpark1:Activate()
-		self.DamageSpark1:Fire("StartSpark", "", 0)
-		self.DamageSpark1:Fire("StopSpark", "", 0.001)
-		self:DeleteOnRemove(self.DamageSpark1)
+		local spark = ents.Create("env_spark")
+		spark:SetKeyValue("Magnitude","1")
+		spark:SetKeyValue("Spark Trail Length","1")
+		spark:SetPos(dmginfo:GetDamagePosition())
+		spark:SetAngles(self:GetAngles())
+		spark:SetParent(self)
+		spark:Spawn()
+		spark:Activate()
+		spark:Fire("StartSpark", "", 0)
+		spark:Fire("StopSpark", "", 0.001)
+		self:DeleteOnRemove(spark)
 	else
+		self.HasBloodParticle = false
+		self.HasBloodDecal = false
 		if dmginfo:IsBulletDamage() then
-			dmginfo:SetDamage(1)
+			dmginfo:ScaleDamage(0.35)
 		end
 	end
 end
