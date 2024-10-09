@@ -5,7 +5,8 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vortigaunt.mdl"}
+ENT.Model = "models/vortigaunt.mdl"
+-- ENT.Model = "models/vortigaunt_slave.mdl"
 ENT.StartHealth = 100
 ENT.HullType = HULL_HUMAN
 
@@ -49,7 +50,7 @@ ENT.Medic_HealthAmount = 50
 ENT.Medic_SpawnPropOnHeal = false
 
 ENT.CanFlinch = 1
-ENT.FlinchChance = 8
+ENT.FlinchChance = 15
 ENT.NextFlinchTime = 3
 ENT.AnimTbl_Flinch = {"vjges_flinch_01","vjges_flinch_02","vjges_flinch_03"}
 
