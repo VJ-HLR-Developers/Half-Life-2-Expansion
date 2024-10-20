@@ -22,7 +22,7 @@ ENT.Blob_MB_IdleSpeedFactor = 0.5
 ENT.Blob_MB_Speed = 187
 ENT.Blob_MB_SinAmplitude = 60
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	-- self:AddEffects(EF_NODRAW)
 	self:SetPos(self:GetPos()+ Vector(0, 0, 20))
 	self:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
@@ -44,7 +44,7 @@ function ENT:CustomOnInitialize()
 	end
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	self.LastThink = CurTime()
 
 	self:ComputeCentroid()

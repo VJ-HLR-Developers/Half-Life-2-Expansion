@@ -21,11 +21,11 @@ ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should 
 ENT.HasBloodPool = false -- Does it have a blood pool?
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.MeleeAttackDamage = 1
-ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1 -- Melee Attack Animations
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDistance = 40 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.MeleeAttackDamageDistance = 20 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.HasDeathRagdoll = false
+ENT.HasDeathCorpse = false
 ENT.PushProps = false -- Should it push props when trying to move?
 ENT.AttackProps = false -- Should it attack props when trying to move?
 	-- ====== Sound Paths ====== --
@@ -38,7 +38,7 @@ ENT.Leech_FollowOffsetPos = 0
 
 Leech_Leader = NULL
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(4,4,3),Vector(-4,-4,-2))
 	self.Leech_FollowOffsetPos = Vector(math.random(-50, 50), math.random(-120, 120), math.random(-150, 150))
 	if !IsValid(Leech_Leader) then
@@ -46,13 +46,13 @@ function ENT:CustomOnInitialize()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "melee" then
 		self:MeleeAttackCode()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	if !self.Dead && self:WaterLevel() == 0 then
 		self:TakeDamage(1,self,self)
 	end

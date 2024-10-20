@@ -34,7 +34,7 @@ ENT.MeleeAttackBleedEnemyDamage = 3
 ENT.SlowPlayerOnMeleeAttack = true
 
 ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
-ENT.AnimTbl_Death = ACT_DIESIMPLE -- Death Animations
+ENT.AnimTbl_Death = ACT_DIESIMPLE
 
 ENT.VJC_Data = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
@@ -120,7 +120,7 @@ ENT.PainSoundLevel = 90
 ENT.GeneralSoundPitch1 = 100
 ENT.Flechette_Speed = 3000
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnCallForHelp(ally)
+function ENT:OnCallForHelp(ally)
 	if ally:GetClass() == self:GetClass() then
 		if !ally:BusyWithActivity() && !IsValid(ally:GetEnemy()) then
 			ally:PlaySoundSystem("CallForHelp")
@@ -131,7 +131,7 @@ function ENT:CustomOnCallForHelp(ally)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(18,18,100),Vector(-18,-18,0))
 	-- self:CreateBoneFollowers()
 
@@ -198,7 +198,7 @@ function ENT:FireFlechette()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	-- print(key)
 	if key == "step" then
 		self:FootStepSoundCode()
@@ -221,8 +221,8 @@ function ENT:RangeAttackProjVelocity(projectile)
 	return self:CalculateProjectile("Line",projectile:GetPos(),targetPos,self.Flechette_Speed)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	if dmginfo:IsBulletDamage() then
+function ENT:OnDamaged(dmginfo, hitgroup, status)
+	if status == "PreDamage" && dmginfo:IsBulletDamage() then
 		dmginfo:ScaleDamage(dmginfo:GetDamageType() == DMG_BUCKSHOT && 0.5 or 0.6)
 		self.DamageSpark1 = ents.Create("env_spark")
 		self.DamageSpark1:SetKeyValue("Magnitude","1")
@@ -253,7 +253,7 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	local dist = self.NearestPointToEnemyDistance
 
 	if self.IsCharging && !self:IsBusy() then

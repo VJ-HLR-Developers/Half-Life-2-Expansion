@@ -55,14 +55,14 @@ ENT.SoundTbl_Death = {
 
 ENT.GeneralSoundPitch1 = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(20,20,65),Vector(-20,-20,0))
 	self.Laser = CreateSound(self,"npc/stalker/laser_burn.wav")
 	self.Laser:SetSoundLevel(75)
 	self.NextLAnimT = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:FootStepSoundCode()
 	end
@@ -99,7 +99,7 @@ function ENT:LaserReset()
 	self.NextIdleTime = CurTime()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	self.DisableChasingEnemy = self.IsLaserAttacking
 	if self.IsLaserAttacking then
 		-- if CurTime() > self.NextLAnimT then

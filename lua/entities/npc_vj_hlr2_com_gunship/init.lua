@@ -19,7 +19,7 @@ ENT.PoseParameterLooking_Names = {pitch={"flex_vert"},yaw={"flex_herz"},roll={"f
 ENT.HasRangeAttack = false -- Can this NPC range attack?
 
 ENT.HasDeathAnimation = false -- Does it play an animation when it dies?
-ENT.HasDeathRagdoll = false
+ENT.HasDeathCorpse = false
 
 ENT.VJC_Data = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
@@ -37,7 +37,7 @@ ENT.AlertSoundLevel = 150
 ENT.PainSoundLevel = 150
 ENT.DeathSoundLevel = 150
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(140,140,100),Vector(-140,-140,-75))
 	self:SetPos(self:GetPos() +Vector(0,0,400))
 	
@@ -142,7 +142,7 @@ end
 
 ENT.ConstantlyFaceEnemy = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	if self.CarpetBombing && CurTime() > self.NextBombT then
 		if !IsValid(self:GetEnemy()) then
 			self.CarpetBombing = false
@@ -217,123 +217,125 @@ function ENT:CustomOnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
-	local deathCorpse = ents.Create("prop_vj_animatable")
-	deathCorpse:SetModel(self:GetModel())
-	deathCorpse:SetPos(self:GetPos())
-	deathCorpse:SetAngles(self:GetAngles())
-	deathCorpse:SetSkin(self:GetModel() == "models/vj_hlr/hl1/osprey_blkops.mdl" and 1 or 0)
-	function deathCorpse:Initialize()
-		self:PhysicsInit(SOLID_VPHYSICS)
-		self:SetMoveType(MOVETYPE_VPHYSICS)
-		self:SetMoveCollide(MOVECOLLIDE_FLY_BOUNCE)
-		self:SetCollisionGroup(COLLISION_GROUP_NONE)
-		self:SetSolid(SOLID_CUSTOM)
-		local phys = self:GetPhysicsObject()
-		if IsValid(phys) then
-			phys:Wake()
-			phys:EnableGravity(true)
-			phys:SetBuoyancyRatio(0)
-			phys:SetVelocity(self:GetVelocity())
-		end
-	end
-	deathCorpse.NextExpT = 0
-	deathCorpse:Spawn()
-	deathCorpse:Activate()
-	local phys = deathCorpse:GetPhysicsObject()
-	phys:SetVelocity(self:GetVelocity() +self:GetForward() *math.random(900,1500))
-	
-	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,deathCorpse,5)
-
-	local function Explode(ent,pos)
-		VJ.EmitSound(ent,"vj_base/ambience/explosion2.wav",100,100)
-		util.BlastDamage(ent,ent,pos,200,40)
-		util.ScreenShake(pos, 100, 200, 1, 2500)
-		ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil)
-		if math.random(1,4) == 1 && ent:GetClass() != "prop_ragdoll" then VJ.CreateSound(ent,"npc/combine_gunship/gunship_pain.wav",90,math.random(95,110)) end
-	end
-
-	function deathCorpse:Think()
-		if CurTime() > self.NextExpT && math.random(1,3) == 1 then
-			self.NextExpT = CurTime() + math.Rand(0.2,0.5)
-			local expPos = self:GetPos() + Vector(math.Rand(-150, 150), math.Rand(-150, 150), math.Rand(-150, -50))
-			Explode(deathCorpse,expPos)
-		end
-	
-		self:NextThink(CurTime())
-		return true
-	end
-	
-	function deathCorpse:PhysicsCollide(data, phys)
-		if self.Dead then return end
-		if data.HitEntity.IsVJBaseCorpse_Gib then return end
-		self.Dead = true
-
-		util.BlastDamage(self, self, self:GetPos() +self:OBBCenter(), 600, 200)
-
-		self.Corpse = ents.Create("prop_ragdoll")
-		self.Corpse:SetModel(self:GetModel())
-		self.Corpse:SetPos(self:GetPos())
-		self.Corpse:SetAngles(self:GetAngles())
-		self.Corpse:Spawn()
-		self.Corpse:Activate()
-		self.Corpse:SetColor(self:GetColor())
-		self.Corpse:SetMaterial(self:GetMaterial())
-		self.Corpse:SetSkin(1)
-		if self.DeathCorpseSubMaterials != nil then
-			for _, x in ipairs(self.DeathCorpseSubMaterials) do
-				if self:GetSubMaterial(x) != "" then
-					self.Corpse:SetSubMaterial(x, self:GetSubMaterial(x))
-				end
+function ENT:OnDeath(dmginfo, hitgroup, status)
+	if status == "Initial" then
+		local deathCorpse = ents.Create("prop_vj_animatable")
+		deathCorpse:SetModel(self:GetModel())
+		deathCorpse:SetPos(self:GetPos())
+		deathCorpse:SetAngles(self:GetAngles())
+		deathCorpse:SetSkin(self:GetModel() == "models/vj_hlr/hl1/osprey_blkops.mdl" and 1 or 0)
+		function deathCorpse:Initialize()
+			self:PhysicsInit(SOLID_VPHYSICS)
+			self:SetMoveType(MOVETYPE_VPHYSICS)
+			self:SetMoveCollide(MOVECOLLIDE_FLY_BOUNCE)
+			self:SetCollisionGroup(COLLISION_GROUP_NONE)
+			self:SetSolid(SOLID_CUSTOM)
+			local phys = self:GetPhysicsObject()
+			if IsValid(phys) then
+				phys:Wake()
+				phys:EnableGravity(true)
+				phys:SetBuoyancyRatio(0)
+				phys:SetVelocity(self:GetVelocity())
 			end
 		end
-		self.Corpse.IsVJBaseCorpse = true
-		self.Corpse.ChildEnts = self.DeathCorpse_ChildEnts or {}
-		if GetConVar("ai_serverragdolls"):GetInt() == 1 then
-			undo.ReplaceEntity(self, self.Corpse)
-		else
-			VJ.Corpse_Add(self.Corpse)
-			//hook.Call("VJ_CreateSNPCCorpse", nil, self.Corpse, self)
-			if GetConVar("vj_npc_undocorpse"):GetInt() == 1 then undo.ReplaceEntity(self, self.Corpse) end -- Undoable
-		end
-		cleanup.ReplaceEntity(self, self.Corpse)
-		for boneLimit = 0, self.Corpse:GetPhysicsObjectCount() - 1 do -- 128 = Bone Limit
-			local childphys = self.Corpse:GetPhysicsObjectNum(boneLimit)
-			if IsValid(childphys) then
-				local childphys_bonepos, childphys_boneang = self:GetBonePosition(self.Corpse:TranslatePhysBoneToBone(boneLimit))
-				if (childphys_bonepos) then
-					childphys:SetAngles(childphys_boneang)
-					childphys:SetPos(childphys_bonepos)
-				end
-			end
-		end
-		self.Corpse:Fire("FadeAndRemove","",360)
-		self.Corpse:CallOnRemove("vj_"..self.Corpse:EntIndex(),function(ent,exttbl)
-			if !exttbl then return end
-			for _,v in ipairs(exttbl) do
-				if IsValid(v) then
-					if v:GetClass() == "prop_ragdoll" then v:Fire("FadeAndRemove","",0) else v:Fire("kill","",0) end
-				end
-			end
-		end,self.Corpse.ChildEnts)
-		hook.Call("CreateEntityRagdoll", nil, self, self.Corpse)
-		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self.Corpse,2)
-		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self.Corpse,4)
-
-		local phys = self.Corpse:GetPhysicsObject()
-		phys:SetVelocity(self:GetVelocity() +self:GetForward() *math.random(1400,1750))
+		deathCorpse.NextExpT = 0
+		deathCorpse:Spawn()
+		deathCorpse:Activate()
+		local phys = deathCorpse:GetPhysicsObject()
+		phys:SetVelocity(self:GetVelocity() +self:GetForward() *math.random(900,1500))
 		
-		local corpse = self.Corpse
-		for i = 1,6 do
-			timer.Simple(i *math.Rand(0.25,0.45),function()
-				if IsValid(corpse) && math.random(1,2) == 1 then
-					local expPos = corpse:GetPos() + Vector(math.Rand(-150, 150), math.Rand(-150, 150), math.Rand(-150, -50))
-					Explode(corpse,expPos)
-				end
-			end)
+		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,deathCorpse,5)
+
+		local function Explode(ent,pos)
+			VJ.EmitSound(ent,"vj_base/ambience/explosion2.wav",100,100)
+			util.BlastDamage(ent,ent,pos,200,40)
+			util.ScreenShake(pos, 100, 200, 1, 2500)
+			ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil)
+			if math.random(1,4) == 1 && ent:GetClass() != "prop_ragdoll" then VJ.CreateSound(ent,"npc/combine_gunship/gunship_pain.wav",90,math.random(95,110)) end
 		end
 
-		self:Remove()
+		function deathCorpse:Think()
+			if CurTime() > self.NextExpT && math.random(1,3) == 1 then
+				self.NextExpT = CurTime() + math.Rand(0.2,0.5)
+				local expPos = self:GetPos() + Vector(math.Rand(-150, 150), math.Rand(-150, 150), math.Rand(-150, -50))
+				Explode(deathCorpse,expPos)
+			end
+		
+			self:NextThink(CurTime())
+			return true
+		end
+		
+		function deathCorpse:PhysicsCollide(data, phys)
+			if self.Dead then return end
+			if data.HitEntity.IsVJBaseCorpse_Gib then return end
+			self.Dead = true
+
+			util.BlastDamage(self, self, self:GetPos() +self:OBBCenter(), 600, 200)
+
+			self.Corpse = ents.Create("prop_ragdoll")
+			self.Corpse:SetModel(self:GetModel())
+			self.Corpse:SetPos(self:GetPos())
+			self.Corpse:SetAngles(self:GetAngles())
+			self.Corpse:Spawn()
+			self.Corpse:Activate()
+			self.Corpse:SetColor(self:GetColor())
+			self.Corpse:SetMaterial(self:GetMaterial())
+			self.Corpse:SetSkin(1)
+			if self.DeathCorpseSubMaterials != nil then
+				for _, x in ipairs(self.DeathCorpseSubMaterials) do
+					if self:GetSubMaterial(x) != "" then
+						self.Corpse:SetSubMaterial(x, self:GetSubMaterial(x))
+					end
+				end
+			end
+			self.Corpse.IsVJBaseCorpse = true
+			self.Corpse.ChildEnts = self.DeathCorpse_ChildEnts or {}
+			if GetConVar("ai_serverragdolls"):GetInt() == 1 then
+				undo.ReplaceEntity(self, self.Corpse)
+			else
+				VJ.Corpse_Add(self.Corpse)
+				//hook.Call("VJ_CreateSNPCCorpse", nil, self.Corpse, self)
+				if GetConVar("vj_npc_undocorpse"):GetInt() == 1 then undo.ReplaceEntity(self, self.Corpse) end -- Undoable
+			end
+			cleanup.ReplaceEntity(self, self.Corpse)
+			for boneLimit = 0, self.Corpse:GetPhysicsObjectCount() - 1 do -- 128 = Bone Limit
+				local childphys = self.Corpse:GetPhysicsObjectNum(boneLimit)
+				if IsValid(childphys) then
+					local childphys_bonepos, childphys_boneang = self:GetBonePosition(self.Corpse:TranslatePhysBoneToBone(boneLimit))
+					if (childphys_bonepos) then
+						childphys:SetAngles(childphys_boneang)
+						childphys:SetPos(childphys_bonepos)
+					end
+				end
+			end
+			self.Corpse:Fire("FadeAndRemove","",360)
+			self.Corpse:CallOnRemove("vj_"..self.Corpse:EntIndex(),function(ent,exttbl)
+				if !exttbl then return end
+				for _,v in ipairs(exttbl) do
+					if IsValid(v) then
+						if v:GetClass() == "prop_ragdoll" then v:Fire("FadeAndRemove","",0) else v:Fire("kill","",0) end
+					end
+				end
+			end,self.Corpse.ChildEnts)
+			hook.Call("CreateEntityRagdoll", nil, self, self.Corpse)
+			ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self.Corpse,2)
+			ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self.Corpse,4)
+
+			local phys = self.Corpse:GetPhysicsObject()
+			phys:SetVelocity(self:GetVelocity() +self:GetForward() *math.random(1400,1750))
+			
+			local corpse = self.Corpse
+			for i = 1,6 do
+				timer.Simple(i *math.Rand(0.25,0.45),function()
+					if IsValid(corpse) && math.random(1,2) == 1 then
+						local expPos = corpse:GetPos() + Vector(math.Rand(-150, 150), math.Rand(-150, 150), math.Rand(-150, -50))
+						Explode(corpse,expPos)
+					end
+				end)
+			end
+
+			self:Remove()
+		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

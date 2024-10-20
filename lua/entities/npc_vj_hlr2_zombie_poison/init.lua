@@ -62,18 +62,18 @@ function ENT:SetSlump(doSlump)
 	self.CanFlinch = doSlump && 0 or 1
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	if self.IsSlumped then
 		self:SetSlump(false)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	local zType = self.ZombieType or math.random(1,8)
 	self.SlumpAnimation = ACT_IDLE
 
-	if self.OnInit then
-		self:OnInit()
+	if self.OnInit2 then
+		self:OnInit2()
 	end
 
 	if self.Slump then
@@ -148,7 +148,7 @@ function ENT:ThrowHeadcrab(pos)
 	-- end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
 		if self.SoundTbl_FootStepAdd then
@@ -190,19 +190,19 @@ function ENT:CustomAttack(ent,vis)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	if self.IsSlumped then
 		self.NextIdleSoundT_RegularChange = CurTime() +math.random(4,8)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
+function ENT:OnBleed(dmginfo, hitgroup)
 	if self.IsSlumped then
 		self:SetSlump(false)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
+function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 	if self:GetBodygroup(1) == 0 then
 		return false
 	end

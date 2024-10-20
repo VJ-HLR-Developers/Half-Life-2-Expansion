@@ -85,7 +85,7 @@ ENT.SoundTbl_Death = {
 
 ENT.GeneralSoundPitch1 = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(20,20,65),Vector(-20,-20,0))
 	self.Laser = CreateSound(self,"vj_hlr/hl2_npc/beta_stalker/laser_burn.wav")
 	self.Laser:SetSoundLevel(75)
@@ -93,7 +93,7 @@ function ENT:CustomOnInitialize()
 	self.NextRunAwayT = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:FootStepSoundCode()
 	end
@@ -133,7 +133,7 @@ function ENT:LaserReset()
 	self.NextIdleTime = CurTime()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	if self.IsLaserAttacking then
 		if CurTime() > self.NextLAnimT then
 			self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,true)
@@ -172,10 +172,8 @@ function ENT:CustomOnThink()
 			end
 		end
 	end
-	if !IsValid(self:GetEnemy()) || IsValid(self:GetEnemy()) && self:GetEnemy():Health() <= 0 then
-		if self.IsLaserAttacking then
-			self:LaserReset()
-		end
+	if !IsValid(self:GetEnemy()) || IsValid(self:GetEnemy()) && self:GetEnemy():Health() <= 0 && self.IsLaserAttacking then
+		self:LaserReset()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -183,11 +181,11 @@ function ENT:CustomOnRemove()
 	self.Laser:Stop()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
-	if CurTime() > self.NextRunAwayT && !self.VJ_IsBeingControlled then
+function ENT:OnDamaged(dmginfo, hitgroup, status)
+	if status == "PostDamage" && CurTime() > self.NextRunAwayT && !self.VJ_IsBeingControlled then
 		self:LaserReset()
 		VJ.CreateSound(self,self.SoundTbl_Scramble,80,100)
 		self:VJ_TASK_COVER_FROM_ENEMY("TASK_RUN_PATH",function(x) x.RunCode_OnFail = function() self.NextRunAwayT = 0 end end)
-		self.NextRunAwayT = CurTime() +5
+		self.NextRunAwayT = CurTime() + 5
 	end
 end

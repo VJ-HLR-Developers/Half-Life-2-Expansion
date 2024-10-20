@@ -69,15 +69,15 @@ function ENT:SetSlump(doSlump)
 	self.IsSlumped = doSlump
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	if self.IsSlumped then
 		self:SetSlump(false)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
-	if self.OnInit then
-		self:OnInit()
+function ENT:Init()
+	if self.OnInit2 then
+		self:OnInit2()
 	end
 	self.SlumpAnimation = ACT_IDLE
 
@@ -94,7 +94,7 @@ function ENT:CustomOnInitialize()
 	self.LastHitT = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
 	elseif key == "melee" then
@@ -128,25 +128,27 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	if !self.IsSlumped then
 		self.NextIdleSoundT_RegularChange = CurTime() +math.random(4,8)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	local nonGes = (hitgroup == HITGROUP_LEFTLEG or hitgroup == HITGROUP_RIGHTLEG)
-	self.FlinchChance = nonGes && 8 or 2
-	self.NextFlinchTime = nonGes && 5 or 2
+function ENT:OnDamaged(dmginfo, hitgroup, status)
+	if status == "PreDamage" then
+		local nonGes = (hitgroup == HITGROUP_LEFTLEG or hitgroup == HITGROUP_RIGHTLEG)
+		self.FlinchChance = nonGes && 8 or 2
+		self.NextFlinchTime = nonGes && 5 or 2
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
+function ENT:OnBleed(dmginfo, hitgroup)
 	if self.IsSlumped then
 		self:SetSlump(false)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
+function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 	if self:GetBodygroup(1) == 0 then
 		return false
 	end

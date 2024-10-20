@@ -11,7 +11,7 @@ ENT.StartHealth = 200
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
 ENT.FriendsWithAllPlayerAllies = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(8,10,15), Vector(-8,-10,0))
 
 	self.Headcrab_Sleeping = false
@@ -20,13 +20,13 @@ function ENT:CustomOnInitialize()
 	self.Headcrab_SleepAnimT = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	if self.Headcrab_Sleeping then
 		self.Headcrab_WakeUpT = 0
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
+function ENT:OnBleed(dmginfo, hitgroup)
 	if self.Headcrab_Sleeping then
 		self.Headcrab_WakeUpT = 0
 	else
@@ -34,7 +34,7 @@ function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 
 	if self.Headcrab_Sleeping then
 		if CurTime() > self.Headcrab_SleepAnimT then

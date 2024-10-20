@@ -33,12 +33,12 @@ ENT.HasBloodPool = false -- Does it have a blood pool?
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.MeleeAttackDamage = 35
 ENT.MeleeAttackDamageType = DMG_ALWAYSGIB -- Type of Damage
-ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1 -- Melee Attack Animations
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDistance = 75 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.MeleeAttackDamageDistance = 120 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
-ENT.AnimTbl_Death = ACT_DIESIMPLE -- Death Animations
+ENT.AnimTbl_Death = ACT_DIESIMPLE
 
 ENT.MeleeAttackBleedEnemy = true -- Should the enemy bleed when attacked by melee?
 ENT.MeleeAttackBleedEnemyChance = 1 -- Chance that the enemy bleeds | 1 = always
@@ -60,11 +60,11 @@ ENT.GeneralSoundPitch1 = 100
 
 ENT.Icky_Idle = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(40,40,40), Vector(-40,-40,-40))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "melee" then
 		self:MeleeAttackCode()
 	end
@@ -89,7 +89,7 @@ function ENT:CustomOnMeleeAttack_Miss()
 	VJ.CreateSound(self,"npc/ichthyosaur/snap_miss.wav",75)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	local waterLevel = self:WaterLevel()
 	if math.random(1,10) == 1 && waterLevel > 0 then
 		effects.Bubbles(self:GetPos() +(self:OBBMins() *0.5),self:GetPos() +(self:OBBMaxs() *0.5),math.random(1,4),math.random(100,300),1)

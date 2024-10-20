@@ -31,7 +31,7 @@ ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time
 
 ENT.GeneralSoundPitch1 = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:AddFlags(FL_NOTARGET)
 	self.AnimTbl_Run = {ACT_WALK}
 	
@@ -82,11 +82,11 @@ function ENT:OnMaintainRelationships(ent,entFri,entDist)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnPlayerSight(ent)
+function ENT:OnPlayerSight(ent)
 	self:FreemanSpeech(ent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	local freeman = self.Freeman
 	if IsValid(freeman) then
 		if freeman:GetPos():Distance(self:GetPos()) <= 300 then

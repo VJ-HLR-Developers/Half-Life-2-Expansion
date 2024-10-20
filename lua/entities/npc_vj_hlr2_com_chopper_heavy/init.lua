@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.VJTag_ID_Boss = true -- Is this a huge monster?
+ENT.VJTag_ID_Boss = true
 ENT.Model = {"models/vj_hlr/hl2/combine_heavychopper.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 4000
 ENT.HullType = HULL_LARGE
@@ -70,7 +70,7 @@ function ENT:RangeAttackProjVelocity(projectile)
 	return self:CalculateProjectile("Line",self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos,self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(140,140,100),Vector(-140,-140,-75))
 	self:SetPos(self:GetPos() +Vector(0,0,400))
 	
@@ -292,7 +292,7 @@ function ENT:CustomAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	local velNorm = self:GetVelocity():GetNormal()
 	local speed = FrameTime()*4
 	self:SetPoseParameter("tilt_x", Lerp(speed, self:GetPoseParameter("tilt_x"), velNorm.x))
@@ -305,13 +305,15 @@ function ENT:CustomOnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
-	ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,self,8)
-	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,4)
-	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,6)
+function ENT:OnDeath(dmginfo, hitgroup, status)
+	if status == "Initial" then
+		ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,self,8)
+		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,4)
+		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,6)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
+function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpseEnt)
 	local pos,ang = self:GetBonePosition(0)
 	corpseEnt:SetPos(pos)
 	corpseEnt:GetPhysicsObject():SetVelocity(((self:GetPos() +self:GetRight() *-700 +self:GetForward() *-300 +self:GetUp() *-200) -self:GetPos()))
@@ -322,13 +324,13 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	VJ.EmitSound(self,"vj_base/ambience/explosion3.wav",100,100)
 	util.BlastDamage(self,self,corpseEnt:GetPos(),200,40)
 	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
-	if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",corpseEnt:GetPos(),Angle(0,0,0),nil) end
+	if self.HasGibOnDeathEffects == true then ParticleEffect("vj_explosion2",corpseEnt:GetPos(),Angle(0,0,0),nil) end
 
 	if math.random(1,3) == 1 then
 		self:CreateExtraDeathCorpse("prop_ragdoll","models/combine_soldier.mdl",{Pos=corpseEnt:GetPos()+corpseEnt:GetUp()*90+corpseEnt:GetRight()*-30,Vel=Vector(math.Rand(-600,600), math.Rand(-600,600),500)},function(extraent) extraent:Ignite(math.Rand(8,10),0); extraent:SetColor(Color(90,90,90)) end)
 	end
 
-	if self.HasGibDeathParticles == true then
+	if self.HasGibOnDeathEffects == true then
 		ParticleEffect("vj_explosion3",corpseEnt:GetPos(),Angle(0,0,0),nil)
 		ParticleEffect("vj_explosion2",corpseEnt:GetPos() +corpseEnt:GetForward()*-130,Angle(0,0,0),nil)
 		ParticleEffect("vj_explosion2",corpseEnt:GetPos() +corpseEnt:GetForward()*130,Angle(0,0,0),nil)

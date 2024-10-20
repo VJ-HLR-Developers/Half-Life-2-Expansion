@@ -15,14 +15,14 @@ ENT.HullType = HULL_HUMAN
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"} -- NPCs with the same class with be allied to each other
 ENT.FriendsWithAllPlayerAllies = true -- Should this NPC be friends with other player allies?
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.AnimTbl_MeleeAttack = {"vjseq_MeleeAttack01"} -- Melee Attack Animations
+ENT.AnimTbl_MeleeAttack = {"vjseq_MeleeAttack01"}
 ENT.TimeUntilMeleeAttackDamage = 0.7 -- This counted in seconds | This calculates the time until it hits something
 ENT.FootStepTimeRun = 0.25 -- Next foot step sound when it is running
 ENT.FootStepTimeWalk = 0.5 -- Next foot step sound when it is walking
 
 ENT.HasGrenadeAttack = true -- Should the NPC have a grenade attack?
 ENT.GrenadeAttackModel = "models/weapons/w_npcnade.mdl" -- Overrides the model of the grenade | Can be nil, string, and table | Does NOT apply to picked up grenades and forced grenade attacks with custom entity
-ENT.AnimTbl_GrenadeAttack = {ACT_RANGE_ATTACK_THROW} -- Grenade Attack Animations
+ENT.AnimTbl_GrenadeAttack = {ACT_RANGE_ATTACK_THROW}
 ENT.TimeUntilGrenadeIsReleased = 0.87 -- Time until the grenade is released
 ENT.GrenadeAttackAttachment = "anim_attachment_RH" -- The attachment that the grenade will spawn at
 
@@ -53,7 +53,7 @@ ENT.WeaponsList = {
 	},
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self.NextWeaponSwitchT = CurTime() + math.Rand(2,4)
 
 	for _,category in pairs(self.WeaponsList) do
@@ -65,14 +65,14 @@ function ENT:CustomOnInitialize()
 	self:DoChangeWeapon(VJ.PICK(self.WeaponsList["Normal"]),true)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	if math.random(1, 2) == 1 && ent:IsNPC() && ent.VJTag_ID_Headcrab then
 		self:DoChangeWeapon("weapon_vj_crowbar", true)
 		return
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	local ent = self:GetEnemy()
 	local dist = self.NearestPointToEnemyDistance
 	if IsValid(ent) then
@@ -121,60 +121,64 @@ function ENT:OnGrenadeAttack(status, grenade, customEnt, landDir, landingPos)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	-- Absorb bullet damage
-	if dmginfo:IsBulletDamage() then
-		if self.HasSounds == true && self.HasImpactSounds == true then VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1,10)..".wav", 70) end
-		if math.random(1,3) == 1 then
-			dmginfo:ScaleDamage(0.50)
-			local spark = ents.Create("env_spark")
-			spark:SetKeyValue("Magnitude","1")
-			spark:SetKeyValue("Spark Trail Length","1")
-			spark:SetPos(dmginfo:GetDamagePosition())
-			spark:SetAngles(self:GetAngles())
-			spark:SetParent(self)
-			spark:Spawn()
-			spark:Activate()
-			spark:Fire("StartSpark", "", 0)
-			spark:Fire("StopSpark", "", 0.001)
-			self:DeleteOnRemove(spark)
-		else
-			dmginfo:ScaleDamage(0.60)
+function ENT:OnDamaged(dmginfo, hitgroup, status)
+	if status == "PreDamage" then
+		-- Absorb bullet damage
+		if dmginfo:IsBulletDamage() then
+			if self.HasSounds == true && self.HasImpactSounds == true then VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1,10)..".wav", 70) end
+			if math.random(1,3) == 1 then
+				dmginfo:ScaleDamage(0.50)
+				local spark = ents.Create("env_spark")
+				spark:SetKeyValue("Magnitude","1")
+				spark:SetKeyValue("Spark Trail Length","1")
+				spark:SetPos(dmginfo:GetDamagePosition())
+				spark:SetAngles(self:GetAngles())
+				spark:SetParent(self)
+				spark:Spawn()
+				spark:Activate()
+				spark:Fire("StartSpark", "", 0)
+				spark:Fire("StopSpark", "", 0.001)
+				self:DeleteOnRemove(spark)
+			else
+				dmginfo:ScaleDamage(0.60)
+			end
 		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnKilled(dmginfo, hitgroup)
-	local myCenterPos = self:GetPos() + self:OBBCenter()
-	for _,category in pairs(self.WeaponsList) do
-		for _,wep in pairs(category) do
-			local e = ents.Create(wep)
-			e:SetPos(myCenterPos +VectorRand(-30,30))
-			e:SetAngles(self:GetAngles())
-			e:Spawn()
-			local phys = e:GetPhysicsObject()
-			if ((IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():GetClass() == "prop_combine_ball") or (!IsValid(dmginfo:GetInflictor()))) && IsValid(phys) then
-				phys:SetMass(60)
-				phys:ApplyForceCenter(dmginfo:GetDamageForce())
+function ENT:OnDeath(dmginfo, hitgroup, status)
+	if status == "Finish" then
+		local myCenterPos = self:GetPos() + self:OBBCenter()
+		for _,category in pairs(self.WeaponsList) do
+			for _,wep in pairs(category) do
+				local e = ents.Create(wep)
+				e:SetPos(myCenterPos +VectorRand(-30,30))
+				e:SetAngles(self:GetAngles())
+				e:Spawn()
+				local phys = e:GetPhysicsObject()
+				if ((IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():GetClass() == "prop_combine_ball") or (!IsValid(dmginfo:GetInflictor()))) && IsValid(phys) then
+					phys:SetMass(60)
+					phys:ApplyForceCenter(dmginfo:GetDamageForce())
+				end
 			end
 		end
-	end
-	local e = ents.Create(self.WeaponInventory.AntiArmor:GetClass())
-	e:SetPos(myCenterPos)
-	e:SetAngles(self:GetAngles())
-	e:Spawn()
-	local phys = e:GetPhysicsObject()
-	if ((IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():GetClass() == "prop_combine_ball") or (!IsValid(dmginfo:GetInflictor()))) && IsValid(phys) then
-		phys:SetMass(60)
-		phys:ApplyForceCenter(dmginfo:GetDamageForce())
-	end
-	local e = ents.Create(self.WeaponInventory.Melee:GetClass())
-	e:SetPos(myCenterPos)
-	e:SetAngles(self:GetAngles())
-	e:Spawn()
-	local phys = e:GetPhysicsObject()
-	if ((IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():GetClass() == "prop_combine_ball") or (!IsValid(dmginfo:GetInflictor()))) && IsValid(phys) then
-		phys:SetMass(60)
-		phys:ApplyForceCenter(dmginfo:GetDamageForce())
+		local e = ents.Create(self.WeaponInventory.AntiArmor:GetClass())
+		e:SetPos(myCenterPos)
+		e:SetAngles(self:GetAngles())
+		e:Spawn()
+		local phys = e:GetPhysicsObject()
+		if ((IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():GetClass() == "prop_combine_ball") or (!IsValid(dmginfo:GetInflictor()))) && IsValid(phys) then
+			phys:SetMass(60)
+			phys:ApplyForceCenter(dmginfo:GetDamageForce())
+		end
+		local e = ents.Create(self.WeaponInventory.Melee:GetClass())
+		e:SetPos(myCenterPos)
+		e:SetAngles(self:GetAngles())
+		e:Spawn()
+		local phys = e:GetPhysicsObject()
+		if ((IsValid(dmginfo:GetInflictor()) && dmginfo:GetInflictor():GetClass() == "prop_combine_ball") or (!IsValid(dmginfo:GetInflictor()))) && IsValid(phys) then
+			phys:SetMass(60)
+			phys:ApplyForceCenter(dmginfo:GetDamageForce())
+		end
 	end
 end

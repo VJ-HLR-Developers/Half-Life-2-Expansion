@@ -54,7 +54,7 @@ end
 ENT.Guard_AnimationCache = {}
 ENT.Guard_Antlions = {}
 --
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(40,40,80),Vector(-40,-40,0))
 	self.IsDiging = false
 	self.ChargeAnim = VJ.SequenceToActivity(self, "charge_loop")
@@ -282,7 +282,7 @@ function ENT:SummonAllies(anim)
 	self.NextSummonT = CurTime() +math.Rand(25,45)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	if self:BusyWithActivity() or self.Charging then return end
 	self.NextChargeT = CurTime() +5
 	if math.random(1,3) == 1 && CurTime() > self.NextSummonT then
@@ -312,9 +312,9 @@ function ENT:MeleeAttackKnockbackVelocity(hitEnt)
 	return self:GetForward() *math.random(400,500) +self:GetUp() *300
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	if dmginfo:IsBulletDamage() then
-		dmginfo:ScaleDamage(math.Rand(0.5,0.75))
+function ENT:OnDamaged(dmginfo, hitgroup, status)
+	if status == "PreDamage" && dmginfo:IsBulletDamage() then
+		dmginfo:ScaleDamage(math.Rand(0.5, 0.75))
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -419,7 +419,7 @@ function ENT:CustomAttack(ent,vis)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	local hasEnemy = IsValid(self:GetEnemy())
 
 	self.BreathPitch = Lerp(FrameTime() *10, self.BreathPitch, hasEnemy && 110 or 90)

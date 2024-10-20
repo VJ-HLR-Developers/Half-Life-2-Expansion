@@ -15,7 +15,7 @@ ENT.BloodColor = "Red" -- The blood type, this will determine what it should use
 
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.MeleeAttackDamage = 10
-ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1 -- Melee Attack Animations
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 ENT.MeleeAttackDistance = 55 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.MeleeAttackDamageDistance = 90 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.TimeUntilMeleeAttackDamage = false
@@ -23,7 +23,7 @@ ENT.TimeUntilMeleeAttackDamage = false
 ENT.CanTurnWhileMoving = false -- Can the NPC turn while moving? | EX: GoldSrc NPCs, Facing enemy while running to cover, Facing the player while moving out of the way
 ENT.Weapon_NoSpawnMenu = true -- If set to true, the NPC weapon setting in the spawnmenu will not be applied for this SNPC
 ENT.DisableWeaponFiringGesture = true -- If set to true, it will disable the weapon firing gestures
-ENT.MoveRandomlyWhenShooting = false -- Should it move randomly while shooting a weapon?
+ENT.Weapon_StrafeWhileFiring = false -- Should it move randomly while firing a weapon?
 
 ENT.HasCallForHelpAnimation = false -- if true, it will play the call for help animation
 
@@ -71,7 +71,7 @@ function ENT:SetAnimationTranslations(wepHoldType)
 	self.AnimationTranslations[ACT_RUN_CROUCH_AIM] 				= ACT_RUN
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(13,13,60),Vector(-13,-13,0))
 	-- self:SetRenderMode(RENDERMODE_TRANSADD)
 
@@ -84,7 +84,7 @@ function ENT:OnPlayCreateSound(sdData, sdFile)
 	timer.Simple(SoundDuration(sdFile), function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self,"npc/combine_soldier/vo/off"..math.random(1,3)..".wav") end end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "Foot" then
 		VJ.EmitSound(self,"npc/footsteps/hardboot_generic2.wav",72,100)
 		VJ.EmitSound(self,{"npc/stalker/stalker_footstep_left1.wav","npc/stalker/stalker_footstep_left2.wav","npc/stalker/stalker_footstep_right1.wav","npc/stalker/stalker_footstep_right2.wav"},75)
@@ -100,7 +100,7 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	if IsValid(self:GetActiveWeapon()) then
 		self:GetActiveWeapon():SetClip1(999)
 	end
@@ -195,23 +195,25 @@ function ENT:OnFireBullet(data)
 	self:SetFireTime(CurTime() + 1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnIsAbleToShootWeapon()
+function ENT:OnWeaponCanFire()
 	if self.Assassin_OffGround == true then return false end
 	return true
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
+function ENT:OnBleed(dmginfo, hitgroup)
 	if !self.VJ_IsBeingControlled && CurTime() > self.Assassin_NextDodgeT && !self:IsMoving() && self:IsOnGround() then
 		self:Dodge()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
-	self:SetCloaked(false)
-	self:SetBodygroup(1,1)
+function ENT:OnDeath(dmginfo, hitgroup, status)
+	if status == "Finish" then
+		self:SetCloaked(false)
+		self:SetBodygroup(1, 1)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDropWeapon(dmginfo, hitgroup, wepEnt)
+function ENT:OnDeathWeaponDrop(dmginfo, hitgroup, wepEnt)
 	wepEnt:Remove()
 	for i = 1, 2 do
 		local att = self:GetAttachment(2 +i)

@@ -39,7 +39,7 @@ ENT.SoundTbl_OnCollide = {
 
 ENT.IdleSoundLevel = 60
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	ParticleEffectAttach("hunter_flechette_trail",PATTACH_POINT_FOLLOW,self,1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

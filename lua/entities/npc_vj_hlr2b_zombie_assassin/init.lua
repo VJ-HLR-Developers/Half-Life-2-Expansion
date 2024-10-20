@@ -63,11 +63,11 @@ ENT.InvestigateSoundPitch = VJ.SET(75, 80)
 
 ENT.AnimationSet = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self.NextScreamT = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		VJ.EmitSound(self,self.SoundTbl_FootStep,60)
 	elseif key == "step_run" then
@@ -77,7 +77,7 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	local controlled = self.VJ_IsBeingControlled
 	local set = self.AnimationSet
 	local enemy = self:GetEnemy()
@@ -117,7 +117,7 @@ function ENT:CustomOnThink_AIEnabled()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
+function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 	if self:GetBodygroup(0) == 1 then
 		return false
 	end

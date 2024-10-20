@@ -85,7 +85,7 @@ ENT.SoundTbl_Death = {
 
 ENT.Bullsquid_MoveType = 0 -- 0 = Normal | 1 = Swimming
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(40,40,40),Vector(-40,-40,0))
 
 	self:ManipulateBoneJiggle(3,1)
@@ -109,7 +109,7 @@ function ENT:CustomOnInitialize()
 	self:ManipulateBoneJiggle(21,1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:FootStepSoundCode()
 	end
@@ -123,7 +123,7 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	if self:WaterLevel() > 1 then
 		if self.Bullsquid_MoveType != 1 then
 			if self.MovementType != VJ_MOVETYPE_AQUATIC then
@@ -161,7 +161,7 @@ function ENT:RangeAttackProjVelocity(projectile)
 	return self:CalculateProjectile("Curve", projPos, self:GetAimPosition(self:GetEnemy(), projPos, 1, 1100) +(VectorRand() *28), 1100)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	if self:WaterLevel() < 2 then
 		if ent.VJTag_ID_Headcrab && math.random(1,2) == 1 then
 			self:VJ_ACT_PLAYACTIVITY("hc_spot",true,false,true)

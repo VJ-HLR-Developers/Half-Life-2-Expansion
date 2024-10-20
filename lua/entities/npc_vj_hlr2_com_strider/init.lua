@@ -22,7 +22,7 @@ ENT.PoseParameterLooking_InvertYaw = true
 ENT.PoseParameterLooking_Names = {pitch={"minigunPitch"},yaw={"minigunYaw"},roll={}}
 
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
-ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1 -- Melee Attack Animations
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 ENT.MeleeAttackDistance = 50 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.MeleeAttackDamageDistance = 100 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.MeleeAttackDamage = 150
@@ -60,8 +60,8 @@ ENT.CanFlinch = 2 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch on
 ENT.FlinchDamageTypes = {DMG_BLAST} -- If it uses damage-based flinching, which types of damages should it flinch from?
 ENT.FlinchChance = 1
 ENT.NextFlinchTime = 2
-ENT.AnimTbl_Flinch = {"dodgeleft","dodgeright"} -- If it uses normal based animation, use this
--- ENT.AnimTbl_Flinch = {"vjges_flinch_gesture","vjges_flinch_gesture2","vjges_flinch_gesture_big"} -- If it uses normal based animation, use this
+ENT.AnimTbl_Flinch = {"dodgeleft","dodgeright"} -- The regular flinch animations to play
+-- ENT.AnimTbl_Flinch = {"vjges_flinch_gesture","vjges_flinch_gesture2","vjges_flinch_gesture_big"} -- The regular flinch animations to play
 
 ENT.SoundTbl_FootStep = {
 	"NPC_Strider.Footstep"
@@ -108,7 +108,7 @@ function ENT:GetSightDirection()
 	return self:GetAttachment(self:LookupAttachment("eyes")).Ang:Forward()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	-- self:SetCollisionBounds(Vector(35,35,42),Vector(-35,-35,-500)) // For default strider model
 	self:SetCollisionBounds(Vector(35, 35, 500),Vector(-35, -35, 0))
 	self:CreateBoneFollowers({
@@ -136,7 +136,7 @@ function ENT:CustomOnInitialize()
 	self:SetStepHeight(168)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:FootStepSoundCode()
 		util.ScreenShake(self:GetPos(), 14, 200, 0.6, 1024)
@@ -146,7 +146,7 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	if !self.VJ_IsBeingControlled then
 		if IsValid(self:GetEnemy()) && self:GetEnemy():Visible(self) then
 			self.LastSawEnemyPosition = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()

@@ -55,6 +55,6 @@ ENT.SoundTbl_IdleDialogueAnswer = {"npc/headcrab/alert1.wav","npc/headcrab/idle1
 ENT.GeneralSoundPitch1 = 100
 ENT.FootStepSoundLevel = 50
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(8,10,15), Vector(-8,-10,0))
 end

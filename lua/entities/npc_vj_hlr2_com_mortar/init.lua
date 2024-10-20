@@ -17,21 +17,21 @@ ENT.Aerial_AnimTbl_Alerted = {"mortar_forward"} -- Animations it plays when it's
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Blue" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasMeleeAttack = false -- Can this NPC melee attack?
--- ENT.AnimTbl_MeleeAttack = ACT_RANGE_ATTACK1 -- Melee Attack Animations
+-- ENT.AnimTbl_MeleeAttack = ACT_RANGE_ATTACK1
 -- ENT.MeleeAttackDistance = 60 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 -- ENT.MeleeAttackDamageDistance = 80 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 -- ENT.TimeUntilMeleeAttackDamage = 0.7 -- This counted in seconds | This calculates the time until it hits something
 -- ENT.NextAnyAttackTime_Melee = 1.3 -- How much time until it can use any attack again? | Counted in Seconds
 -- ENT.MeleeAttackDamage = 30
-ENT.HasDeathRagdoll = false -- Should the NPC spawn a corpse when it dies?
+ENT.HasDeathCorpse = false -- Should a corpse spawn when it's killed?
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
 
 ENT.HasRangeAttack = true -- Can this NPC range attack?
-ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1 -- Range Attack Animations
+ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
 ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar" -- Entities that it can spawn when range attacking | If set as a table, it picks a random entity
 ENT.TimeUntilRangeAttackProjectileRelease = 0.7
 ENT.NextRangeAttackTime = 3 -- How much time until it can use a range attack?
-ENT.RangeDistance = 2500 -- This is how far away it can shoot
+ENT.RangeDistance = 2500 -- How far can it range attack?
 ENT.RangeToMeleeDistance = 1 -- How close does it have to be until it uses melee?
 
 ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
@@ -55,7 +55,7 @@ ENT.SoundTbl_Death = {"vj_hlr/hl2_npc/waste_scanner/grenade_fire.wav"}
 ENT.BreathSoundLevel = 75
 ENT.AlertSoundLevel = 90
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(33, 33, 26), Vector(-33, -33, -30))
 
 	local glowFX = ents.Create("light_dynamic")
@@ -80,17 +80,21 @@ function ENT:RangeAttackProjVelocity(projectile)
 	return self:CalculateProjectile("Curve", projectile:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 1200)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnFlinch_BeforeFlinch(dmginfo, hitgroup)
-	local dmgtype = dmginfo:GetDamageType()
-	if (dmgtype == DMG_BULLET or dmgtype == DMG_SLASH) then
-		self.AnimTbl_Flinch = {"Mortar_Flinch_Back","Mortar_Flinch_Left","Mortar_Flinch_Right","Mortar_Flinch_Front"}
-	else
-		self.AnimTbl_Flinch = {"Mortar_BigFlinch_Back","Mortar_BigFlinch_Left","Mortar_BigFlinch_Right","Mortar_BigFlinch_Front"}
+function ENT:OnFlinch(dmginfo, hitgroup, status)
+	if status == "PriorExecution" then
+		local dmgtype = dmginfo:GetDamageType()
+		if (dmgtype == DMG_BULLET or dmgtype == DMG_SLASH) then
+			self.AnimTbl_Flinch = {"Mortar_Flinch_Back","Mortar_Flinch_Left","Mortar_Flinch_Right","Mortar_Flinch_Front"}
+		else
+			self.AnimTbl_Flinch = {"Mortar_BigFlinch_Back","Mortar_BigFlinch_Left","Mortar_BigFlinch_Right","Mortar_BigFlinch_Front"}
+		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
-	ParticleEffect("explosion_turret_break",self:GetPos(),Angle(0,0,0),nil)
-	ParticleEffect("electrical_arc_01_system",self:GetPos(),Angle(0,0,0),nil)
-	util.BlastDamage(self,self,self:GetPos(),80,20)
+function ENT:OnDeath(dmginfo, hitgroup, status)
+	if status == "Initial" then
+		ParticleEffect("explosion_turret_break",self:GetPos(),Angle(0,0,0),nil)
+		ParticleEffect("electrical_arc_01_system",self:GetPos(),Angle(0,0,0),nil)
+		util.BlastDamage(self,self,self:GetPos(),80,20)
+	end
 end

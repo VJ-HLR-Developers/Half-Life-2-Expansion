@@ -54,13 +54,13 @@ ENT.SoundTbl_OnCollide = {"ambient/explosions/explode_8.wav"}
 -- Custom
 ENT.Rocket_Follow = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	-- ParticleEffectAttach("vj_rpg1_smoke", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 	-- ParticleEffectAttach("vj_rpg2_smoke2", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 	ParticleEffectAttach("electrical_arc_01_system",PATTACH_POINT_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	local owner = self:GetOwner()
 	local phys = self:GetPhysicsObject()
 	if IsValid(owner) && IsValid(phys) then

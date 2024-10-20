@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.VJTag_ID_Boss = true -- Is this a huge monster?
+ENT.VJTag_ID_Boss = true
 ENT.Model = {"models/vj_hlr/hl2/combine_helicopter.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 2000
 ENT.HullType = HULL_LARGE
@@ -43,14 +43,14 @@ ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_rocket" -- Entities that it can spaw
 ENT.TimeUntilRangeAttackProjectileRelease = 0
 ENT.NextRangeAttackTime = 5 -- How much time until it can use a range attack?
 ENT.NextRangeAttackTime_DoRand = 10 -- How much time until it can use a range attack?
-ENT.RangeDistance = 7500 -- This is how far away it can shoot
+ENT.RangeDistance = 7500 -- How far can it range attack?
 ENT.RangeToMeleeDistance = 0 -- How close does it have to be until it uses melee?
 ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachment?
 ENT.RangeAttackExtraTimers = {1}
 
 ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
-ENT.AnimTbl_Death = ACT_DIESIMPLE -- Death Animations
-ENT.DeathAnimationTime = false -- Time until the NPC spawns its corpse and gets removed
+ENT.AnimTbl_Death = ACT_DIESIMPLE
+ENT.DeathAnimationTime = false -- How long should the death animation play?
 ENT.DeathCorpseCollisionType = COLLISION_GROUP_NONE -- Collision type for the corpse | NPC Options Menu can only override this value if it's set to COLLISION_GROUP_DEBRIS!
 
 ENT.VJC_Data = {
@@ -84,7 +84,7 @@ function ENT:RangeAttackProjVelocity(projectile)
 	return self:CalculateProjectile("Line",self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos,self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),500)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(140,140,100),Vector(-140,-140,-75))
 	self:SetPos(self:GetPos() +Vector(0,0,400))
 	
@@ -194,13 +194,13 @@ function ENT:BarrageFire()
 	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "explosion" then
 		local pos,ang = self:GetBonePosition(0)
 		VJ.EmitSound(self,"vj_base/ambience/explosion2.wav",100,100)
 		util.BlastDamage(self,self,pos,200,40)
 		util.ScreenShake(pos, 100, 200, 1, 2500)
-		if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil) end
+		if self.HasGibOnDeathEffects == true then ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil) end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -312,7 +312,7 @@ function ENT:CustomAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	self.ConstantlyFaceEnemy = !self.CarpetBombing
 	self:SetPoseParameter("move_yaw", Lerp(FrameTime()*4, self:GetPoseParameter("move_yaw"), self:GetVelocity():GetNormal().y))
 	
@@ -323,36 +323,15 @@ function ENT:CustomOnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
-	ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,self,8)
-	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,4)
-	ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,6)
-
-	-- self:DoChangeMovementType(VJ_MOVETYPE_GROUND) // VJ_MOVETYPE_PHYSICS
-
-	-- for i=0,1,0.5 do
-		-- timer.Simple(i,function()
-			-- if IsValid(self) then
-				-- VJ.EmitSound(self,"vj_base/ambience/explosion2.wav",100,100)
-				-- util.BlastDamage(self,self,self:GetPos(),200,40)
-				-- util.ScreenShake(self:GetPos(), 100, 200, 1, 2500)
-				-- if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",self:GetPos(),Angle(0,0,0),nil) end
-			-- end
-		-- end)
-	-- end
-	
-	-- timer.Simple(1.5,function()
-		-- if IsValid(self) then
-			-- VJ.EmitSound(self,"vj_base/ambience/explosion2.wav",100,100)
-			-- VJ.EmitSound(self,"vj_base/ambience/explosion3.wav",100,100)
-			-- util.BlastDamage(self,self,self:GetPos(),200,40)
-			-- util.ScreenShake(self:GetPos(), 100, 200, 1, 2500)
-			-- if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",self:GetPos(),Angle(0,0,0),nil) end
-		-- end
-	-- end)
+function ENT:OnDeath(dmginfo, hitgroup, status)
+	if status == "Initial" then
+		ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,self,8)
+		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,4)
+		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,6)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
+function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpseEnt)
 	local pos,ang = self:GetBonePosition(0)
 	corpseEnt:SetPos(pos)
 	corpseEnt:GetPhysicsObject():SetVelocity(((self:GetPos() +self:GetRight() *-700 +self:GetForward() *-300 +self:GetUp() *-200) -self:GetPos()))
@@ -363,13 +342,13 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	VJ.EmitSound(self,"vj_base/ambience/explosion3.wav",100,100)
 	util.BlastDamage(self,self,corpseEnt:GetPos(),200,40)
 	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
-	if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",corpseEnt:GetPos(),Angle(0,0,0),nil) end
+	if self.HasGibOnDeathEffects == true then ParticleEffect("vj_explosion2",corpseEnt:GetPos(),Angle(0,0,0),nil) end
 
 	if math.random(1,3) == 1 then
 		self:CreateExtraDeathCorpse("prop_ragdoll","models/combine_soldier.mdl",{Pos=corpseEnt:GetPos()+corpseEnt:GetUp()*90+corpseEnt:GetRight()*-30,Vel=Vector(math.Rand(-600,600), math.Rand(-600,600),500)},function(extraent) extraent:Ignite(math.Rand(8,10),0); extraent:SetColor(Color(90,90,90)) end)
 	end
 
-	if self.HasGibDeathParticles == true then
+	if self.HasGibOnDeathEffects == true then
 		ParticleEffect("vj_explosion3",corpseEnt:GetPos(),Angle(0,0,0),nil)
 		ParticleEffect("vj_explosion2",corpseEnt:GetPos() +corpseEnt:GetForward()*-130,Angle(0,0,0),nil)
 		ParticleEffect("vj_explosion2",corpseEnt:GetPos() +corpseEnt:GetForward()*130,Angle(0,0,0),nil)

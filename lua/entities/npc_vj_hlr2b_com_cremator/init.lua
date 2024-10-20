@@ -53,7 +53,7 @@ ENT.SoundTbl_Death = {"vj_hlr/hl2_npc/cremator/crem_die.wav"}
 ENT.Cremator_FlameRange = 370
 ENT.Cremator_FlameDamage = 2
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self.IsFlameActive = false
 	self.IdleLoopStatus = 0
 
@@ -69,12 +69,12 @@ function ENT:CustomOnInitialize()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Controller_Initialize(ply,controlEnt)
-	function controlEnt:CustomOnThink()
+	function controlEnt:OnThink()
 		self.VJC_BullseyeTracking = self.VJCE_NPC:GetIdealActivity() == ACT_RUN
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	-- print(key)
 	if key == "step" then
 		self:FootStepSoundCode()
@@ -129,7 +129,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local dmgType = bit.bor(DMG_BURN,DMG_DISSOLVE,DMG_ENERGYBEAM)
 --
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	if self.Alerted && self.IdleLoopStatus == 0 then
 		self.IdleLoop:Stop()
 		self.AlertLoop:Play()
@@ -171,25 +171,25 @@ end
 -- 	return act
 -- end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnEat(status, statusInfo)
+function ENT:OnEat(status, statusData)
 	if status == "CheckFood" then
-		return statusInfo.owner.BloodData && statusInfo.owner.BloodData.Color != "Oil"
+		return statusData.owner.BloodData && statusData.owner.BloodData.Color != "Oil"
 	elseif status == "BeginEating" then
 		return select(2, self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK2, true, false))
 	elseif status == "Eat" then
 		return 999
 	elseif status == "StopEating" then
-		if statusInfo != "Dead" && self.EatingData.AnimStatus != "None" then
+		if statusData != "Dead" && self.EatingData.AnimStatus != "None" then
 			return 0
 		end
 	end
 	return 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:EatingReset(statusInfo)
+function ENT:EatingReset(statusData)
 	local eatingData = self.EatingData
 	self:SetState(VJ_STATE_NONE)
-	self:OnEat("StopEating", statusInfo)
+	self:OnEat("StopEating", statusData)
 	self.VJTag_IsEating = false
 	local food = eatingData.Ent
 	if IsValid(food) then

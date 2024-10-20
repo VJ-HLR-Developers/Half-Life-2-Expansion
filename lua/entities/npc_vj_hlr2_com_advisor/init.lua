@@ -9,7 +9,7 @@ include("shared.lua")
 ENT.Model = {"models/vj_hlr/hl2/advisor_ep2.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 500
 ENT.HullType = HULL_TINY
-ENT.VJTag_ID_Boss = true -- Is this a huge monster?
+ENT.VJTag_ID_Boss = true
 ENT.MovementType = VJ_MOVETYPE_AERIAL -- How the NPC moves around
 ENT.Aerial_FlyingSpeed_Calm = 200 -- The speed it should fly with, when it's wandering, moving slowly, etc. | Basically walking compared to ground NPCs
 ENT.Aerial_FlyingSpeed_Alerted = 325
@@ -20,18 +20,18 @@ ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied 
 ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
 
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
-ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1 -- Melee Attack Animations
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 ENT.MeleeAttackDistance = 120 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.MeleeAttackDamageDistance = 170 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 55
 
 ENT.HasRangeAttack = true -- Can this NPC range attack?
-ENT.AnimTbl_RangeAttack = {ACT_MELEE_ATTACK1} -- Range Attack Animations
+ENT.AnimTbl_RangeAttack = {ACT_MELEE_ATTACK1}
 ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar" -- Entities that it can spawn when range attacking | If set as a table, it picks a random entity
 ENT.TimeUntilRangeAttackProjectileRelease = 0.7
 ENT.NextRangeAttackTime = 10 -- How much time until it can use a range attack?
-ENT.RangeDistance = 5000 -- This is how far away it can shoot
+ENT.RangeDistance = 5000 -- How far can it range attack?
 ENT.RangeToMeleeDistance = 400 -- How close does it have to be until it uses melee?
 
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
@@ -87,7 +87,7 @@ function ENT:RangeAttackProjVelocity(projectile)
 	return self:CalculateProjectile("Curve", self:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), self:GetPos():Distance(self:GetEnemy():GetPos()))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(38,38,30), Vector(-38,-38,-30))
 	
 	self.NextScreenBlastT = CurTime() +math.Rand(3,8)
@@ -112,7 +112,7 @@ function ENT:CustomOnInitialize()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "melee" then
 		self:MeleeAttackCode()
 	end
@@ -162,8 +162,8 @@ function ENT:ShieldCode(bEnable)
 	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	if self.HasShield then
+function ENT:OnDamaged(dmginfo, hitgroup, status)
+	if status == "PreDamage" && self.HasShield then
 		self:RemoveAllDecals()
 		self.ShieldHealth = self.ShieldHealth -dmginfo:GetDamage()
 		dmginfo:SetDamage(0)
@@ -238,7 +238,7 @@ function ENT:CustomAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	if self.AA_MoveTimeCur > CurTime() then
 		local remaining = self.AA_MoveTimeCur -CurTime()
 		if remaining < 2 then
@@ -303,7 +303,7 @@ function ENT:CreateAlly()
 	return ally
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	if self.Dead then return end
 	for _,v in pairs(ents.FindInSphere(self:GetPos(),300)) do
 		if string.find(v:GetClass(),"rocket") or string.find(v:GetClass(),"missile") then

@@ -28,7 +28,7 @@ ENT.VJC_Data = {
 
 local doorSound = !IsMounted("ep2")
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self.SightDistance = 5000
 	self:SetCollisionBounds(Vector(8, 12, 22), Vector(-8, -12, 0))
 	self.RangeDistance = self.SightDistance
@@ -214,7 +214,7 @@ function ENT:CustomRangeAttackCode()
 	self:DeleteOnRemove(FireLight1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	self.HasPoseParameterLooking = false -- Make it not aim at the enemy right away!
 	timer.Simple(0.6, function()
 		if IsValid(self) then
@@ -226,7 +226,7 @@ function ENT:CustomOnAlert(ent)
 	VJ.EmitSound(self,{"npc/turret_floor/click1.wav"}, 70, 100)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	local parameter = self:GetPoseParameter("aim_yaw")
 	if parameter != self.Turret_CurrentParameter then
 		self.turret_turningsd = CreateSound(self, "ambient/alarms/combine_bank_alarm_loop4.wav") 
@@ -253,7 +253,7 @@ function ENT:CustomOnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOn_PoseParameterLookingCode(pitch, yaw, roll)
+function ENT:OnUpdatePoseParamTracking(pitch, yaw, roll)
 	-- Compare the difference between the current position of the pose parameter and the position it's suppose to go to
 	if (math.abs(math.AngleDifference(self:GetPoseParameter("aim_yaw"), math.ApproachAngle(self:GetPoseParameter("aim_yaw"), yaw, self.PoseParameterLooking_TurningSpeed))) >= 10) or (math.abs(math.AngleDifference(self:GetPoseParameter("aim_pitch"), math.ApproachAngle(self:GetPoseParameter("aim_pitch"), pitch, self.PoseParameterLooking_TurningSpeed))) >= 10) then
 		self.Turret_HasLOS = false
@@ -265,7 +265,7 @@ function ENT:CustomOn_PoseParameterLookingCode(pitch, yaw, roll)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	if IsValid(self:GetEnemy()) or self.Alerted == true then
 		self.Turret_StandDown = false
 		self.AnimTbl_IdleStand = {"idlealert"}
@@ -320,24 +320,26 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local defAng = Angle(0, 0, 0)
 --
-function ENT:CustomOnKilled(dmginfo, hitgroup)
-	VJ.EmitSound(self,"vj_hlr/hl2_npc/ioncannon/ol09_biggundestroy.wav",110)
-	local function explode(ent)
-		ent = ent or self
-		if !IsValid(ent) then return end
-		local startPos = ent:GetPos() + ent:OBBCenter()
-		ParticleEffect("explosion_turret_break_fire", startPos, defAng, NULL)
-		ParticleEffect("explosion_turret_break_flash", startPos, defAng, NULL)
-		ParticleEffect("explosion_turret_break_pre_smoke Version #2", startPos, defAng, NULL)
-		ParticleEffect("explosion_turret_break_sparks", startPos, defAng, NULL)
-		ParticleEffect("vj_explosion1", startPos, defAng, NULL)
+function ENT:OnDeath(dmginfo, hitgroup, status)
+	if status == "Finish" then
+		VJ.EmitSound(self,"vj_hlr/hl2_npc/ioncannon/ol09_biggundestroy.wav",110)
+		local function explode(ent)
+			ent = ent or self
+			if !IsValid(ent) then return end
+			local startPos = ent:GetPos() + ent:OBBCenter()
+			ParticleEffect("explosion_turret_break_fire", startPos, defAng, NULL)
+			ParticleEffect("explosion_turret_break_flash", startPos, defAng, NULL)
+			ParticleEffect("explosion_turret_break_pre_smoke Version #2", startPos, defAng, NULL)
+			ParticleEffect("explosion_turret_break_sparks", startPos, defAng, NULL)
+			ParticleEffect("vj_explosion1", startPos, defAng, NULL)
+		end
+		explode(self)
+		explode(self.MainStand)
+		explode(self.SmallStand)
+		explode(self.Generator)
+		explode(self.Turret1)
+		explode(self.Turret2)
 	end
-	explode(self)
-	explode(self.MainStand)
-	explode(self.SmallStand)
-	explode(self.Generator)
-	explode(self.Turret1)
-	explode(self.Turret2)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local sdGibCollide = {"physics/metal/metal_box_impact_hard1.wav", "physics/metal/metal_box_impact_hard2.wav", "physics/metal/metal_box_impact_hard3.wav"}

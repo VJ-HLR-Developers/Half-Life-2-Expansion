@@ -117,7 +117,7 @@ function ENT:Dig(ignoreDirt)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(20,20,64),Vector(-20,-20,0))
 	self:SetSkin(math.random(0,3))
 	self.DefaultDamage = self.MeleeAttackDamage
@@ -137,11 +137,11 @@ function ENT:CustomOnInitialize()
 	self.IsDigging = false
 	self:Dig()
 	if self.HasDeathAnimation then
-		self.HasDeathRagdoll = false
+		self.HasDeathCorpse = false
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	if self.Antlion_StartedLeapAttack && self:OnGround() then
 		self.Antlion_StartedLeapAttack = false
 		self:VJ_ACT_PLAYACTIVITY("jump_stop",true,false,false)
@@ -155,7 +155,7 @@ function ENT:CustomOnThink_AIEnabled()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	if self.IsDiging == true then return end
 	if math.random(1,6) == 1 then
 		local tbl = VJ.PICK({"distract","roar"})
@@ -163,7 +163,7 @@ function ENT:CustomOnAlert(ent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "melee" then
 		self.MeleeAttackDamage = self.DefaultDamage
 		self:MeleeAttackCode()

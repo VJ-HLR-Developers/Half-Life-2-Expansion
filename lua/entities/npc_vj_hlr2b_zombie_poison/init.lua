@@ -12,7 +12,7 @@ ENT.MeleeAttackDamageDistance = 150
 ENT.MeleeAttackDamage = 25
 ENT.MeleeAttackDamageType = bit.bor(DMG_POISON,DMG_ACID)
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnInit()
+function ENT:OnInit2()
 	self.SoundTbl_MeleeAttackExtra = {"vj_hlr/hl1_npc/bullchicken/bc_spithit1.wav","vj_hlr/hl1_npc/bullchicken/bc_spithit2.wav"}
 
 	self.IsBeta = true

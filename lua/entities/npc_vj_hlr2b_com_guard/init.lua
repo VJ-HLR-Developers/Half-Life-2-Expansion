@@ -116,7 +116,7 @@ ENT.GeneralSoundPitch1 = 100
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(20,20,90),Vector(-20,-20,0))
 
 	self.NextKnockdownT = 0
@@ -140,7 +140,7 @@ function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt,isProp)
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:FootStepSoundCode()
 	elseif key == "melee" then
@@ -161,83 +161,83 @@ function ENT:CustomOnRangeAttack_AfterStartTimer(seed)
 	self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	if hitgroup == 100 then
-		dmginfo:ScaleDamage(0.1) -- Shield
-	elseif hitgroup == 101 then
-		dmginfo:ScaleDamage(0) -- Gun
-	elseif hitgroup == 1 then
-		dmginfo:ScaleDamage(2)
-		local pos = dmginfo:GetDamagePosition()
-		if pos == defPos then pos = self:GetPos() + self:OBBCenter() end
-		
-		local particle = ents.Create("info_particle_system")
-		particle:SetKeyValue("effect_name", "vj_impact1_red")
-		particle:SetPos(pos)
-		particle:Spawn()
-		particle:Activate()
-		particle:Fire("Start")
-		particle:Fire("Kill", "", 0.1)
-	else
-		if dmginfo:IsBulletDamage() then
-			if self.HasSounds == true && self.HasImpactSounds == true then
-				VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1, 10)..".wav", 70)
+local bit_band = bit.band
+--
+function ENT:OnDamaged(dmginfo, hitgroup, status)
+	if status == "PreDamage" then
+		if hitgroup == 100 then
+			dmginfo:ScaleDamage(0.1) -- Shield
+		elseif hitgroup == 101 then
+			dmginfo:ScaleDamage(0) -- Gun
+		elseif hitgroup == 1 then
+			dmginfo:ScaleDamage(2)
+			local pos = dmginfo:GetDamagePosition()
+			if pos == defPos then pos = self:GetPos() + self:OBBCenter() end
+			
+			local particle = ents.Create("info_particle_system")
+			particle:SetKeyValue("effect_name", "vj_impact1_red")
+			particle:SetPos(pos)
+			particle:Spawn()
+			particle:Activate()
+			particle:Fire("Start")
+			particle:Fire("Kill", "", 0.1)
+		else
+			if dmginfo:IsBulletDamage() then
+				if self.HasSounds == true && self.HasImpactSounds == true then
+					VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1, 10)..".wav", 70)
+				end
+				if math.random(1, 3) == 1 then
+					dmginfo:ScaleDamage(0.50)
+					local effectData = EffectData()
+					effectData:SetOrigin(dmginfo:GetDamagePosition())
+					effectData:SetNormal(dmginfo:GetDamageForce():GetNormalized())
+					effectData:SetMagnitude(3)
+					effectData:SetScale(1)
+					util.Effect("ElectricSpark", effectData)
+				else
+					dmginfo:ScaleDamage(0.80)
+				end
 			end
-			if math.random(1, 3) == 1 then
-				dmginfo:ScaleDamage(0.50)
-				local effectData = EffectData()
-				effectData:SetOrigin(dmginfo:GetDamagePosition())
-				effectData:SetNormal(dmginfo:GetDamageForce():GetNormalized())
-				effectData:SetMagnitude(3)
-				effectData:SetScale(1)
-				util.Effect("ElectricSpark", effectData)
-			else
-				dmginfo:ScaleDamage(0.80)
-			end
+		end
+	elseif status == "PostDamage" then
+		local explosion = dmginfo:IsExplosionDamage()
+		if self:Health() > 0 && (explosion or bit_band(dmginfo:GetDamageType(),DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
+			local dmgAng = ((explosion && dmginfo:GetDamagePosition() or dmginfo:GetAttacker():GetPos()) -self:GetPos()):Angle()
+			dmgAng.p = 0
+			dmgAng.r = 0
+			self:TaskComplete()
+			self:StopMoving()
+			self:ClearSchedule()
+			self:ClearGoal()
+			self:SetAngles(dmgAng)
+			self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
+			local _,dur = self:VJ_ACT_PLAYACTIVITY("physfall",true,false,false,0,{OnFinish=function(interrupted)
+				self:VJ_ACT_PLAYACTIVITY("physgetup",true,false,false,0,{OnFinish=function(interrupted)
+					self:SetState()
+				end})
+			end})
+			self.NextKnockdownT = CurTime() +(dur *2)
+			self.NextCallForBackUpOnDamageT = CurTime() +dur
 		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-local bit_band = bit.band
---
-function ENT:CustomOnTakeDamage_AfterDamage(dmginfo,hitgroup)
-	local explosion = dmginfo:IsExplosionDamage()
-	if self:Health() > 0 && (explosion or bit_band(dmginfo:GetDamageType(),DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
-		local dmgAng = ((explosion && dmginfo:GetDamagePosition() or dmginfo:GetAttacker():GetPos()) -self:GetPos()):Angle()
-		dmgAng.p = 0
-		dmgAng.r = 0
-		self:TaskComplete()
-		self:StopMoving()
-		self:ClearSchedule()
-		self:ClearGoal()
-		self:SetAngles(dmgAng)
-		self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
-		local _,dur = self:VJ_ACT_PLAYACTIVITY("physfall",true,false,false,0,{OnFinish=function(interrupted)
-			self:VJ_ACT_PLAYACTIVITY("physgetup",true,false,false,0,{OnFinish=function(interrupted)
-				self:SetState()
-			end})
-		end})
-		self.NextKnockdownT = CurTime() +(dur *2)
-		self.NextCallForBackUpOnDamageT = CurTime() +dur
+function ENT:OnDeath(dmginfo, hitgroup, status)
+	if status == "Initial" then
+		local explosion = dmginfo:IsExplosionDamage()
+		if (explosion or bit_band(dmginfo:GetDamageType(),DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
+			self.HasDeathAnimation = true
+			self.AnimTbl_Death = "physfall"
+			self.DeathDelayTime = self:DecideAnimationLength("physfall",false) + self:DecideAnimationLength("physdeath",false) - 1
+			timer.Simple(self:DecideAnimationLength("physfall",false),function()
+				if IsValid(self) then
+					self:VJ_ACT_PLAYACTIVITY("physdeath",true,false,false)
+				end
+			end)
+		end
+	elseif status == "Finish" then
+		self:SetBodygroup(1, 1)
 	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
-	local explosion = dmginfo:IsExplosionDamage()
-	if (explosion or bit_band(dmginfo:GetDamageType(),DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
-		self.HasDeathAnimation = true
-		self.AnimTbl_Death = "physfall"
-		self.WaitBeforeDeathTime = self:DecideAnimationLength("physfall",false) +self:DecideAnimationLength("physdeath",false) -1
-		timer.Simple(self:DecideAnimationLength("physfall",false),function()
-			if IsValid(self) then
-				self:VJ_ACT_PLAYACTIVITY("physdeath",true,false,false)
-			end
-		end)
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnKilled(dmginfo, hitgroup)
-	self:SetBodygroup(1,1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DoTrace(tPos)

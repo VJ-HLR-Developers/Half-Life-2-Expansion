@@ -27,7 +27,6 @@ ENT.CanFlinch = 1
 ENT.FlinchChance = 8
 ENT.NextFlinchTime = 5
 ENT.AnimTbl_Flinch = ACT_FLINCH_PHYSICS
-ENT.HitGroupFlinching_DefaultWhenNotHit = true
 ENT.HitGroupFlinching_Values = {
 	{HitGroup = {HITGROUP_LEFTLEG}, Animation = {ACT_FLINCH_LEFTLEG}},
 	{HitGroup = {HITGROUP_RIGHTLEG}, Animation = {ACT_FLINCH_RIGHTLEG}}
@@ -74,13 +73,13 @@ function ENT:SetSlump(doSlump)
 	self.CanFlinch = doSlump && 0 or 1
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	if self.IsSlumped then
 		self:SetSlump(false)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	local zType = self.ZombieType or math.random(0,3)
 	self.SlumpAnimation = ACT_IDLE
 
@@ -102,14 +101,10 @@ function ENT:CustomOnInitialize()
 		self:SetSkin(zType)
 	end
 
-	if self.OnInit then
-		self:OnInit()
-	end
-
 	self:SetBodygroup(1,1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
 	elseif key == "pin" then
@@ -139,7 +134,7 @@ function ENT:CustomAttack(ent,vis)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	if self.IsSlumped then
 		self.NextIdleSoundT_RegularChange = CurTime() +math.random(4,8)
 	else
@@ -178,7 +173,7 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, ent)
+function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 	if self:GetBodygroup(1) == 0 then
 		return false
 	end
@@ -288,30 +283,32 @@ function ENT:CreateGrenade()
 	-- grenent.VJHumanTossingAway = true // Soldiers kept stealing their grenades xD
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	if hitgroup == HITGROUP_HEAD then return end
-	if dmginfo:IsBulletDamage() then
-		if self.HasSounds == true && self.HasImpactSounds == true then VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1,10)..".wav", 70) end
-		if math.random(1, 3) == 1 then
-			dmginfo:ScaleDamage(0.50)
-			local spark = ents.Create("env_spark")
-			spark:SetKeyValue("Magnitude","1")
-			spark:SetKeyValue("Spark Trail Length","1")
-			spark:SetPos(dmginfo:GetDamagePosition())
-			spark:SetAngles(self:GetAngles())
-			spark:SetParent(self)
-			spark:Spawn()
-			spark:Activate()
-			spark:Fire("StartSpark", "", 0)
-			spark:Fire("StopSpark", "", 0.001)
-			self:DeleteOnRemove(spark)
-		else
-			dmginfo:ScaleDamage(0.80)
+function ENT:OnDamaged(dmginfo, hitgroup, status)
+	if status == "PreDamage" then
+		if hitgroup == HITGROUP_HEAD then return end
+		if dmginfo:IsBulletDamage() then
+			if self.HasSounds == true && self.HasImpactSounds == true then VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1,10)..".wav", 70) end
+			if math.random(1, 3) == 1 then
+				dmginfo:ScaleDamage(0.50)
+				local spark = ents.Create("env_spark")
+				spark:SetKeyValue("Magnitude","1")
+				spark:SetKeyValue("Spark Trail Length","1")
+				spark:SetPos(dmginfo:GetDamagePosition())
+				spark:SetAngles(self:GetAngles())
+				spark:SetParent(self)
+				spark:Spawn()
+				spark:Activate()
+				spark:Fire("StartSpark", "", 0)
+				spark:Fire("StopSpark", "", 0.001)
+				self:DeleteOnRemove(spark)
+			else
+				dmginfo:ScaleDamage(0.80)
+			end
 		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)
+function ENT:OnBleed(dmginfo, hitgroup)
 	if self.IsSlumped then
 		self:SetSlump(false)
 	else

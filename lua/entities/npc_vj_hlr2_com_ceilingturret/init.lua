@@ -7,12 +7,12 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/vj_hlr/hl2/ceiling_turret.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
-ENT.HasDeathRagdoll = false
+ENT.HasDeathCorpse = false
 ENT.StartHealth = 250
 ENT.SightDistance = 2200 -- How far it can see
 ENT.PoseParameterLooking_TurningSpeed = 25
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(13, 13, 0), Vector(-13, -13, -40))
 	self:SetPos(self:GetPos() +Vector(0,0,32))
 	self.RangeDistance = self.SightDistance
@@ -33,7 +33,7 @@ function ENT:CustomOnInitialize()
 	self:DeleteOnRemove(self.Turret_Sprite)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	if IsValid(self:GetEnemy()) or self.Alerted == true then
 		self.Turret_StandDown = false
 		self.AnimTbl_IdleStand = {"idlealert"}

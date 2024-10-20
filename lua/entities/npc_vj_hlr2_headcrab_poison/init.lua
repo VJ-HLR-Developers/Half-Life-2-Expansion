@@ -98,7 +98,7 @@ ENT.GeneralSoundPitch1 = 100
 
 ENT.AnimationSet = 0 -- 0 = Default, 1 = Scurry, 2 = Custom
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(14,14,15), Vector(-14,-14,0))
 
 	self.ScurryAnimation = VJ.SequenceToActivity(self,"Scurry")
@@ -116,13 +116,13 @@ function ENT:RangeAttackProjVelocity(projectile)
 	return self:CalculateProjectile("Curve", projectile:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 1200)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnFlinch_BeforeFlinch(dmginfo, hitgroup)
-	if self.AttackState == VJ.ATTACK_STATE_STARTED then -- Since for some reason StopAttacks() doesn't stop the velocity code from running
+function ENT:OnFlinch(dmginfo, hitgroup, status)
+	if status == "PriorExecution" && self.AttackState == VJ.ATTACK_STATE_STARTED then -- Since for some reason StopAttacks() doesn't stop the velocity code from running
 		return false
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	if self.CanAlertCrab != true then return end
 
 	VJ.STOPSOUND(self.CurrentIdleSound)
@@ -150,7 +150,7 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	local animSet = self.AnimationSet
 	if self.WasThrown then
 		if self:IsOnGround() then

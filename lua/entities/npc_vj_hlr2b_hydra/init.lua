@@ -15,12 +15,12 @@ ENT.VJ_NPC_Class = {"CLASS_HYDRA"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.BloodColor = "Blue" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
-ENT.AnimTbl_MeleeAttack = {"vjges_strike"} -- Melee Attack Animations
+ENT.AnimTbl_MeleeAttack = {"vjges_strike"}
 ENT.MeleeAttackDistance = 180 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.MeleeAttackDamageDistance = 210 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 60
-ENT.HasDeathRagdoll = false -- Should the NPC spawn a corpse when it dies?
+ENT.HasDeathCorpse = false -- Should a corpse spawn when it's killed?
 
 ENT.VJC_Data = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
@@ -65,7 +65,7 @@ ENT.SoundTbl_Pain = {
 -- CHAIN_LINKS = 32
 -- BONE_COUNT = 47
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(20, 20, 250), Vector(-20, -20, 0))
 	self.HeartBeatSnd = "vj_hlr/hl2_npc/hydra/hydra_heartloop" .. math.random(1,2) .. ".wav"
 	self.HeartBeat = CreateSound(self,self.HeartBeatSnd)
@@ -169,13 +169,13 @@ function ENT:MoveHead(pos,rate,bones)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key)
+function ENT:OnInput(key)
 	if key == "melee" then
 		self:MeleeAttackCode()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	if CurTime() > self.NextHeartBeatT then
 		self.HeartBeat:Stop()
 		self.HeartBeat:Play()

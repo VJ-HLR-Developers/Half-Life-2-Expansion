@@ -50,7 +50,7 @@ ENT.Medic_HealthAmount = 50
 ENT.Medic_SpawnPropOnHeal = false
 
 ENT.CanFlinch = 1
-ENT.FlinchChance = 15
+ENT.FlinchChance = 1
 ENT.NextFlinchTime = 3
 ENT.AnimTbl_Flinch = {"vjges_flinch_01","vjges_flinch_02","vjges_flinch_03"}
 
@@ -237,7 +237,7 @@ ENT.SoundTbl_Pain = {
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.Vort_AnimationCache = {} -- Should we use this? Better than converting these everytime theyre needed ig
 --
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:CapabilitiesAdd(bit.bor(CAP_ANIMATEDFACE))
 
 	if !self.Vort_AnimationCache["Defend"] then
@@ -255,9 +255,9 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local getEventName = util.GetAnimEventNameByID
 --
-function ENT:CustomOnHandleAnimEvent(ev, evTime, evCycle, evType, evOptions)
+function ENT:OnAnimEvent(ev, evTime, evCycle, evType, evOptions)
 	local event = getEventName(ev)
-	-- print("OnHandleAnimEvent", "eventName", event, "ev", ev, "evTime", evTime, "evCycle", evCycle, "evType", evType, "evOptions", evOptions)
+	-- print("OnAnimEvent: ", "eventName", event, "ev", ev, "evTime", evTime, "evCycle", evCycle, "evType", evType, "evOptions", evOptions)
 	if event == "AE_VORTIGAUNT_ZAP_POWERUP" or event == "AE_VORTIGAUNT_DEFEND_BEAMS" or event == "AE_VORTIGAUNT_HEAL_STARTBEAMS" then
 		local short = event == "AE_VORTIGAUNT_DEFEND_BEAMS"
 		local noElec = event == "AE_VORTIGAUNT_HEAL_STARTBEAMS"
@@ -396,7 +396,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local alertAntlions = {"vj_hlr/hl2_npc/vort/vo/alert_antlions.wav"}
 --
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	if math.random(1,2) == 1 && ent:IsNPC() then
 		for _,v in ipairs(ent.VJ_NPC_Class or {1}) do
 			if v == "CLASS_ANTLION" or ent:Classify() == CLASS_ANTLION then
@@ -407,11 +407,13 @@ function ENT:CustomOnAlert(ent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnMedic_OnHeal(ent)
-	if ent:IsPlayer() then
-		ent:SetArmor(math.Clamp(ent:Armor() +25, 0, 100))
+function ENT:OnMedicBehavior(status, statusData)
+	if status == "OnHeal" then
+		if statusData:IsPlayer() then
+			statusData:SetArmor(math.Clamp(statusData:Armor() + 25, 0, 100))
+		end
+		return true
 	end
-	return true
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:TranslateActivity(act)
@@ -466,21 +468,25 @@ function ENT:CustomAttack(ent,vis)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_AfterDamage(dmginfo, hitgroup)
-	if self.VJ_IsBeingControlled then return end
-	if math.random(1,dmginfo:IsBulletDamage() && 3 or 6) == 1 then
-		self.Vort_RunAway = true
-	elseif !self.Vort_RunAway && math.random(1,4) == 1 && !dmginfo:IsBulletDamage() && CurTime() > self.Vort_DispelT then
-		local _,dur = self:VJ_ACT_PLAYACTIVITY("dispel",true,false,false)
-		self.NextDoAnyAttackT = CurTime() +dur
-		self.NextRandMoveT = CurTime() +dur
-		self.Vort_DispelT = CurTime() +dur +math.random(1,4)
+function ENT:OnDamaged(dmginfo, hitgroup, status)
+	if status == "PostDamage" then
+		if self.VJ_IsBeingControlled then return end
+		if math.random(1,dmginfo:IsBulletDamage() && 3 or 6) == 1 then
+			self.Vort_RunAway = true
+		elseif !self.Vort_RunAway && math.random(1,4) == 1 && !dmginfo:IsBulletDamage() && CurTime() > self.Vort_DispelT then
+			local _,dur = self:VJ_ACT_PLAYACTIVITY("dispel",true,false,false)
+			self.NextDoAnyAttackT = CurTime() +dur
+			self.NextRandMoveT = CurTime() +dur
+			self.Vort_DispelT = CurTime() +dur +math.random(1,4)
+		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnFlinch_AfterFlinch(dmginfo, hitgroup)
-	self:StopParticles()
-	VJ.STOPSOUND(self.Vort_ZapPowerUp)
+function ENT:OnFlinch(dmginfo, hitgroup, status)
+	if status == "Execute" then
+		self:StopParticles()
+		VJ.STOPSOUND(self.Vort_ZapPowerUp)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnChangeActivity(newAct)

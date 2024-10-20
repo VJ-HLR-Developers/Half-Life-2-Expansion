@@ -67,7 +67,7 @@ function ENT:GetSightDirection()
 	return !self.HLR_IsClawScanner && self:GetAttachment(self:LookupAttachment("eyes")).Ang:Forward() or self:GetForward()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(12,12,15), Vector(-12,-12,-15))
 
 	self.DoingCameraAttack = false
@@ -137,7 +137,7 @@ function ENT:CustomOnInitialize()
 -- flex_horz: 0.5 ( -20, 20 )
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	-- local vel = self:GetVelocity()
 	-- self:SetPoseParameter("flex_vert",vel.z)
 	-- self:SetPoseParameter("flex_horz",-vel.x)
@@ -204,7 +204,7 @@ function ENT:CustomAttack(ent, visible)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAlert(ent)
+function ENT:OnAlert(ent)
 	self.ScanLoop:Stop()
 	self.ScanLoop:Play()
 	if self.HLR_IsClawScanner then
@@ -221,12 +221,13 @@ function ENT:OnResetEnemy()
 	self.ScanLoop:Stop()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnPriorToKilled(dmginfo, hitgroup)
-	ParticleEffect("explosion_turret_break",self:GetPos(),Angle(0,0,0),nil)
-	ParticleEffect("electrical_arc_01_system",self:GetPos(),Angle(0,0,0),nil)
-	util.BlastDamage(self,self,self:GetPos(),80,20)
-
-	VJ.EmitSound(self,"npc/scanner/scanner_electric2.wav",80)
+function ENT:OnDeath(dmginfo, hitgroup, status)
+	if status == "Initial" then
+		ParticleEffect("explosion_turret_break",self:GetPos(),Angle(0,0,0),nil)
+		ParticleEffect("electrical_arc_01_system",self:GetPos(),Angle(0,0,0),nil)
+		util.BlastDamage(self,self,self:GetPos(),80,20)
+		VJ.EmitSound(self,"npc/scanner/scanner_electric2.wav",80)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()

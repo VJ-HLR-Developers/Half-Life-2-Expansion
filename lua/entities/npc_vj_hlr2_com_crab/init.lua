@@ -46,17 +46,17 @@ ENT.SoundTbl_Pain = "vj_hlr/hl2_npc/crab/pain1.wav"
 ENT.SoundTbl_MeleeAttackExtra = "vj_hlr/hl2_npc/crab/stab.wav"
 ENT.SoundTbl_MeleeAttackMiss = "vj_hlr/hl2_npc/crab/step2.wav"
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(45,45,100), Vector(-45,-45,0))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Controller_Initialize(ply,controlEnt)
-	function controlEnt:CustomOnThink()
+	function controlEnt:OnThink()
 		self.VJC_BullseyeTracking = self.VJCE_NPC:GetIdealActivity() == ACT_WALK
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	-- print(key)
 	if key == "step" then
 		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/step2.wav", 75)
@@ -123,7 +123,7 @@ function ENT:MeleeAttackKnockbackVelocity()
 	return self:GetForward() *125 +self:GetRight() *-450 +self:GetUp() *150
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	self.ConstantlyFaceEnemy = self:GetIdealActivity() == ACT_WALK
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -138,28 +138,30 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
-	if hitgroup == 15 then
-		self.HasBloodParticle = true
-		self.HasBloodDecal = true
-		dmginfo:SetDamage(dmginfo:GetDamage() *4.5)
-		VJ.EmitSound(self,"ambient/energy/zap"..math.random(1,9)..".wav",70)
-		local spark = ents.Create("env_spark")
-		spark:SetKeyValue("Magnitude","1")
-		spark:SetKeyValue("Spark Trail Length","1")
-		spark:SetPos(dmginfo:GetDamagePosition())
-		spark:SetAngles(self:GetAngles())
-		spark:SetParent(self)
-		spark:Spawn()
-		spark:Activate()
-		spark:Fire("StartSpark", "", 0)
-		spark:Fire("StopSpark", "", 0.001)
-		self:DeleteOnRemove(spark)
-	else
-		self.HasBloodParticle = false
-		self.HasBloodDecal = false
-		if dmginfo:IsBulletDamage() then
-			dmginfo:ScaleDamage(0.35)
+function ENT:OnDamaged(dmginfo, hitgroup, status)
+	if status == "PreDamage" then
+		if hitgroup == 15 then
+			self.HasBloodParticle = true
+			self.HasBloodDecal = true
+			dmginfo:SetDamage(dmginfo:GetDamage() *4.5)
+			VJ.EmitSound(self,"ambient/energy/zap"..math.random(1,9)..".wav",70)
+			local spark = ents.Create("env_spark")
+			spark:SetKeyValue("Magnitude","1")
+			spark:SetKeyValue("Spark Trail Length","1")
+			spark:SetPos(dmginfo:GetDamagePosition())
+			spark:SetAngles(self:GetAngles())
+			spark:SetParent(self)
+			spark:Spawn()
+			spark:Activate()
+			spark:Fire("StartSpark", "", 0)
+			spark:Fire("StopSpark", "", 0.001)
+			self:DeleteOnRemove(spark)
+		else
+			self.HasBloodParticle = false
+			self.HasBloodDecal = false
+			if dmginfo:IsBulletDamage() then
+				dmginfo:ScaleDamage(0.35)
+			end
 		end
 	end
 end

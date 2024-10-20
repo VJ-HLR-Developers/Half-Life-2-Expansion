@@ -186,7 +186,7 @@ function ENT:Think()
     self.TargetPos = self:GetPos() +self:GetForward() *-50
     self.HandlePos = self:GetPos() +self:GetForward() *-40 +self:GetUp() *-31
     if !IsValid(operator) then
-        self:DoPoseParameterLooking(true)
+        self:UpdatePoseParamTracking(true)
         local possibleOperator = self.DetectedOperator
         if !IsValid(possibleOperator) then
             for _,v in ipairs(ents.FindInSphere(self:GetPos(),500)) do
@@ -220,7 +220,7 @@ function ENT:Think()
                 end
             end
         end
-        self:DoPoseParameterLooking()
+        self:UpdatePoseParamTracking()
     end
     self:NextThink(curTime +0.065)
     return true
@@ -291,7 +291,7 @@ end
 
 local math_angDif = math.AngleDifference
 local math_angApproach = math.Approach
-function ENT:DoPoseParameterLooking(resetPoses)
+function ENT:UpdatePoseParamTracking(resetPoses)
 	if !IsValid(self.Operator) then return end
     local operator = self.Operator
     local turret = self.Emplacement

@@ -54,7 +54,7 @@ local LandingState = {
 	LANDING_LIFTOFF,
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self.AnimTbl = {
 		Idle = VJ.SequenceToActivity(self,"idle"),
 		Cargo = VJ.SequenceToActivity(self,"cargo_idle"),
@@ -266,7 +266,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local math_angApproach = math.ApproachAngle
 --
-function ENT:CustomOn_PoseParameterLookingCode(pitch, yaw, roll)
+function ENT:OnUpdatePoseParamTracking(pitch, yaw, roll)
 	if IsValid(self.Cargo) && self.CargoType == CRATE_TYPES.CRATE_SOLDIER then
 		self.Cargo:SetPoseParameter("weapon_pitch", math_angApproach(self.Cargo:GetPoseParameter("weapon_pitch"), -pitch, 10))
 		self.Cargo:SetPoseParameter("weapon_yaw", math_angApproach(self.Cargo:GetPoseParameter("weapon_yaw"), yaw, 10))
@@ -278,7 +278,7 @@ function ENT:TranslateActivity(act)
 	return state == (LandingState.LANDING_NO or LandingState.LANDING_LIFTOFF) && (IsValid(self.Cargo) && self.AnimTbl.Cargo or self.AnimTbl.Idle) or self.AnimTbl.Hover
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	self:Flight()
 
 	if timer.Exists("vj_timer_fire_" .. self:EntIndex()) then
@@ -510,7 +510,7 @@ function ENT:Flight()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpse)
+function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpse)
 	corpse:SetBodygroup(1,1)
 	local cargo = self.Cargo
 	if IsValid(cargo) && self.CargoType == CRATE_TYPES.CRATE_SOLDIER then

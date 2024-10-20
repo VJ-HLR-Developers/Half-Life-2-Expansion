@@ -25,7 +25,7 @@ ENT.HasBloodPool = false -- Does it have a blood pool?
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.MeleeAttackDamage = 80
 ENT.MeleeAttackDamageType = DMG_ALWAYSGIB -- Type of Damage
-ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1 -- Melee Attack Animations
+ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.NextAnyAttackTime_Melee = 10 -- How much time until it can use any attack again? | Counted in Seconds
 ENT.MeleeAttackDistance = 30 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
@@ -39,9 +39,9 @@ ENT.AlertFriendsOnDeath = true -- Should the NPC's allies get alerted while it's
 ENT.CallForBackUpOnDamage = false -- Should the SNPC call for help when damaged? (Only happens if the SNPC hasn't seen a enemy)
 ENT.CallForHelp = false -- Can the NPC request allies for help while in combat?
 ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
-ENT.AnimTbl_Flinch = ACT_SMALL_FLINCH -- If it uses normal based animation, use this
+ENT.AnimTbl_Flinch = ACT_SMALL_FLINCH -- The regular flinch animations to play
 ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
-ENT.AnimTbl_Death = ACT_DIESIMPLE -- Death Animations
+ENT.AnimTbl_Death = ACT_DIESIMPLE
 ENT.DeathCorpseEntityClass = "prop_vj_animatable" -- The entity class it creates | "UseDefaultBehavior" = Let the base automatically detect the type
 	-- ====== Sound Paths ====== --
 ENT.SoundTbl_Idle = {"vj_hlr/hl1_npc/barnacle/bcl_tongue1.wav"}
@@ -57,7 +57,7 @@ ENT.Barnacle_CurEntMoveType = MOVETYPE_WALK
 ENT.Barnacle_Status = 0
 ENT.Barnacle_NextPullSoundT = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
+function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpseEnt)
 	corpseEnt:DrawShadow(false)
 	corpseEnt:SetPoseParameter("tongue_height", self.Barnacle_LastHeight)
 	self:SetBoneController(0,self.Barnacle_LastHeight)
@@ -65,11 +65,11 @@ function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
 	corpseEnt:SetCycle(1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self:SetCollisionBounds(Vector(18,18,10),Vector(-18,-18,-50))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key, activator, caller, data)
+function ENT:OnInput(key, activator, caller, data)
 	//print(key)
 	if key == "melee_attack" then
 		self:MeleeAttackCode()
@@ -160,7 +160,7 @@ function ENT:Barnacle_ResetEnt()
 	self.Barnacle_CurEnt = NULL
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThinkActive()
 	if self.Dead then return end
 	local calc = self:Barnacle_CalculateTongue()
 	if calc == true && self.Barnacle_Status != 1 then
@@ -178,21 +178,21 @@ end
 	return IsValid(self.Barnacle_CurEnt)
 end*/
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDoKilledEnemy(ent, attacker, inflictor)
+function ENT:OnKilledEnemy(ent, inflictor, wasLast)
 	VJ.EmitSound(self, "vj_hlr/hl1_npc/barnacle/bcl_bite3.wav")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialKilled(dmginfo, hitgroup)
-	self:Barnacle_ResetEnt()
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_BeforeCorpseSpawned(dmginfo, hitgroup)
-	self:SetPos(self:GetPos() + self:GetUp()*-4)
+function ENT:OnDeath(dmginfo, hitgroup, status)
+	if status == "Initial" then
+		self:Barnacle_ResetEnt()
+	elseif status == "Finish" then
+		self:SetPos(self:GetPos() + self:GetUp()*-4)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
 	self.HasDeathSounds = false
-	if self.HasGibDeathParticles == true then
+	if self.HasGibOnDeathEffects == true then
 		local bloodeffect = EffectData()
 		bloodeffect:SetOrigin(self:GetPos() + self:OBBCenter())
 		bloodeffect:SetColor(VJ.Color2Byte(Color(130,19,10)))
