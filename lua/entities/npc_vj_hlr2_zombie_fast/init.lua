@@ -76,8 +76,8 @@ function ENT:OnAlert(ent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	if self.OnInit2 then
-		self:OnInit2()
+	if self.OnInit then
+		self:OnInit()
 	end
 	self.SlumpAnimation = ACT_IDLE
 

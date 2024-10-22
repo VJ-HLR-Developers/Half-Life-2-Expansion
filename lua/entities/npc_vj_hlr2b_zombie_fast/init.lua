@@ -7,7 +7,7 @@ include("shared.lua")
 -----------------------------------------------*/
 ENT.Model = {"models/vj_hlr/hl2b/zombie_fast.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnInit2()
+function ENT:OnInit()
 	self.SoundTbl_Idle = {"vj_hlr/hl2_npc/beta_zombiefast/breath1.wav","vj_hlr/hl2_npc/beta_zombiefast/breath2.wav"}
 	self.SoundTbl_DefBreath = {"vj_hlr/hl2_npc/beta_zombiefast/throat_loop1.wav","vj_hlr/hl2_npc/beta_zombiefast/tremble_loop1.wav"}
 

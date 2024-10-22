@@ -112,8 +112,8 @@ function ENT:Init()
 		self:SetSkin(zType)
 	end
 
-	if self.OnInit2 then
-		self:OnInit2()
+	if self.OnInit then
+		self:OnInit()
 	end
 
 	self:SetBodygroup(1,1)

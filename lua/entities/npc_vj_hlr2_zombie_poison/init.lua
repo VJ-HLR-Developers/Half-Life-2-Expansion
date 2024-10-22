@@ -72,8 +72,8 @@ function ENT:Init()
 	local zType = self.ZombieType or math.random(1,8)
 	self.SlumpAnimation = ACT_IDLE
 
-	if self.OnInit2 then
-		self:OnInit2()
+	if self.OnInit then
+		self:OnInit()
 	end
 
 	if self.Slump then

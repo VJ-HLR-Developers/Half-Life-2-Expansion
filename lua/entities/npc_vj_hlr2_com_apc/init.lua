@@ -142,7 +142,7 @@ ENT.APC_HasLOS = false
 ENT.APC_HasSpawnedSoldiers = false
 ENT.VJ_ForceRocketFollow = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomInitialize_CustomTank()
+function ENT:Tank_Init()
 	local phys = self:GetPhysicsObject()
 	if IsValid(phys) then
 		phys:Wake()
@@ -280,8 +280,6 @@ function ENT:Tank_OnThink()
 			end
 		end)
 	end
-
-	return true
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:GetNearDeathSparkPositions()
@@ -299,14 +297,15 @@ function ENT:GetNearDeathSparkPositions()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:Tank_CustomOnDeath_AfterCorpseSpawned(dmginfo, hitgroup, corpseEnt)
-	corpseEnt:SetAngles(self:GetAngles() +Angle(0,270,0))
-	self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib02.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
-	self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib03.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
-	self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib04.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
-	self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib05.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
-	self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib06.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
-	return true
+function ENT:Tank_OnDeathCorpse(dmginfo, hitgroup, corpseEnt, status, statusData)
+	if status == "Override" then
+		corpseEnt:SetAngles(self:GetAngles() +Angle(0,270,0))
+		self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib02.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib03.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib04.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib05.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib06.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
