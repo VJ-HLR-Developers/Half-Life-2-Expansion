@@ -34,7 +34,7 @@ ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time
 ENT.AnimTbl_TakingCover = {ACT_IDLE_ANGRY} -- The animation it plays when hiding in a covered position, leave empty to let the base decide
 ENT.AnimTbl_AlertFriendsOnDeath = {ACT_IDLE_ANGRY} -- Animations it plays when an ally dies that also has AlertFriendsOnDeath set to true
 
-ENT.HasItemDropsOnDeath = false
+ENT.DropDeathLoot = false
 
 ENT.SoundTbl_BeforeMeleeAttack = {"npc/metropolice/pain1.wav","npc/metropolice/pain2.wav","npc/metropolice/pain3.wav","npc/metropolice/pain4.wav"}
 ENT.SoundTbl_Pain = {"npc/combine_soldier/pain1.wav","npc/combine_soldier/pain2.wav","npc/combine_soldier/pain3.wav"}

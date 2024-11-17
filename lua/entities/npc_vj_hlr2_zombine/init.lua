@@ -20,8 +20,8 @@ ENT.MeleeAttackDistance = 35
 ENT.MeleeAttackDamageDistance = 75
 ENT.TimeUntilMeleeAttackDamage = false
 
-ENT.ItemDropsOnDeathChance = 10
-ENT.ItemDropsOnDeath_EntityList = {"weapon_frag"}
+ENT.DeathLootChance = 10
+ENT.DeathLoot = {"weapon_frag"}
 
 ENT.CanFlinch = 1
 ENT.FlinchChance = 8
@@ -96,7 +96,7 @@ function ENT:Init()
 			local hp = self.StartHealth *1.25
 			self:SetHealth(hp)
 			self:SetMaxHealth(hp)
-			self.ItemDropsOnDeath_EntityList = {"item_ammo_ar2_altfire"}
+			self.DeathLoot = {"item_ammo_ar2_altfire"}
 		end
 		self:SetSkin(zType)
 	end

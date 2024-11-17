@@ -27,16 +27,15 @@ SWEP.PrimaryEffects_SpawnShells 		= false
 SWEP.Primary.Force						= 5
 SWEP.Primary.Ammo						= "Pistol"
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnPrimaryAttackEffects()
+function SWEP:PrimaryAttackEffects(owner)
 	ParticleEffectAttach("vj_rifle_full",PATTACH_POINT_FOLLOW,self:GetOwner(),self.CurrentMuzzle == "left" && 1 or 2)
-	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnFireAnimationEvent(pos, ang, event, options)
+function SWEP:OnAnimEvent(pos, ang, event, options)
 	if event == 5001 then return true end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomBulletSpawnPosition()
+function SWEP:OnGetBulletPos()
 	local att = self.CurrentMuzzle == "left" && 1 or 2
 	return self:GetOwner():GetAttachment(att).Pos
 end

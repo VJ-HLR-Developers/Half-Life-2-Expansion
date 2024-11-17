@@ -94,11 +94,11 @@ function ENT:Init()
 			self:SetHealth(hp)
 			self:SetMaxHealth(hp)
 			if zType == 4 or zType == 5 then -- Is a Medic, perhaps drop a Medkit?
-				self.ItemDropsOnDeath_EntityList = {"item_healthvial"}
-				self.ItemDropsOnDeathChance = 3
+				self.DeathLoot = {"item_healthvial"}
+				self.DeathLootChance = 3
 			else
-				self.ItemDropsOnDeath_EntityList = {"weapon_frag"}
-				self.ItemDropsOnDeathChance = 12
+				self.DeathLoot = {"weapon_frag"}
+				self.DeathLootChance = 12
 				if zType == 6 then
 					self.SoundTbl_FootStep = {"vj_hlr/hl2_npc/zolice/gear1.wav","vj_hlr/hl2_npc/zolice/gear2.wav","vj_hlr/hl2_npc/zolice/gear3.wav"}
 					self.SoundTbl_Idle = {"vj_hlr/hl2_npc/zolice/idle1.wav","vj_hlr/hl2_npc/zolice/idle2.wav","vj_hlr/hl2_npc/zolice/idle3.wav","vj_hlr/hl2_npc/zolice/idle4.wav","vj_hlr/hl2_npc/zolice/idle5.wav","vj_hlr/hl2_npc/zolice/idle6.wav"}

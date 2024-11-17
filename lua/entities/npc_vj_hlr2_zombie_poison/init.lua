@@ -88,11 +88,11 @@ function ENT:Init()
 			self:SetHealth(hp)
 			self:SetMaxHealth(hp)
 			if (zType == 1 && zType == 3) or (zType >= 5 && zType <= 7) then
-				self.ItemDropsOnDeath_EntityList = {"weapon_frag"}
-				self.ItemDropsOnDeathChance = 12
+				self.DeathLoot = {"weapon_frag"}
+				self.DeathLootChance = 12
 			elseif zType == 8 then
-				self.ItemDropsOnDeath_EntityList = {"item_ammo_ar2_altfire"}
-				self.ItemDropsOnDeathChance = 6
+				self.DeathLoot = {"item_ammo_ar2_altfire"}
+				self.DeathLootChance = 6
 			end
 			if zType == 3 then
 				self.SoundTbl_FootStepAdd = {"vj_hlr/hl2_npc/zolice/gear1.wav","vj_hlr/hl2_npc/zolice/gear2.wav","vj_hlr/hl2_npc/zolice/gear3.wav"}
