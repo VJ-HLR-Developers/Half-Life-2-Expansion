@@ -55,7 +55,7 @@ if VJExists == true then
 		-- VJ.AddNPC("Overwatch Wasteland Scanner","npc_vj_hlr2b_com_scanner_waste",spawnCategory)
 		VJ.AddNPC("Overwatch Assassin","npc_vj_hlr2b_com_assassin",spawnCategory)
 		VJ.AddNPC("Overwatch Stalker","npc_vj_hlr2_com_stalker",spawnCategory)
-		-- VJ.AddNPC("Overwatch Manhack","npc_vj_hlr2_com_manhack",spawnCategory)
+		VJ.AddNPC("Overwatch Manhack","npc_vj_hlr2_com_manhack",spawnCategory)
 		VJ.AddNPC("Overwatch City Scanner","npc_vj_hlr2_com_scanner_city",spawnCategory)
 		VJ.AddNPC("Overwatch Shield Scanner","npc_vj_hlr2_com_scanner_shield",spawnCategory)
 		VJ.AddNPC("Overwatch Hunter Synth","npc_vj_hlr2_com_hunter",spawnCategory)
