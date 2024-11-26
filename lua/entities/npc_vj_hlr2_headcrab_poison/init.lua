@@ -163,9 +163,9 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnTouch(ent)
 	if self.WasThrown && !self.HasRanThrownDamage then
-		if (v:IsNPC() || (v:IsPlayer() && v:Alive())) && (self:Disposition(v) != D_LI) && (v != self) && (v:GetClass() != self:GetClass()) then
+		if (ent:IsNPC() || (ent:IsPlayer() && ent:Alive())) && (self:Disposition(ent) != D_LI) && (ent != self) && (ent:GetClass() != self:GetClass()) then
 			self.HasRanThrownDamage = true
-			self:DoPoisonHeadcrabDamage(v)
+			self:DoPoisonHeadcrabDamage(ent)
 		end
 	end
 end

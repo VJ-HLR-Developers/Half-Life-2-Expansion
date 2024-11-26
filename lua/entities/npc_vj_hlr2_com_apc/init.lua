@@ -265,7 +265,7 @@ function ENT:Tank_OnThink()
 						combine:SetAngles(Angle(0, self:GetAngles().y + 180, 0))
 						combine:Spawn()
 						combine:Give(VJ.PICK({"weapon_vj_9mmpistol","weapon_vj_smg1"}))
-						combine:VJ_DoSetEnemy(ene, true)
+						combine:ForceSetEnemy(ene, true)
 						combine:SetState(VJ_STATE_FREEZE)
 						timer.Simple(0.2, function()
 							if IsValid(combine) then

@@ -193,7 +193,7 @@ function ENT:CustomAttack(ent, visible)
 			VJ.CreateSound(self,"npc/scanner/scanner_photo1.wav",75)
 			for _,v in pairs(ents.FindByClass("npc_vj_hlr2_com_strider")) do
 				if v:CheckRelationship(v) == D_LI && !IsValid(v:GetEnemy()) && !v:IsBusy() then
-					v:VJ_DoSetEnemy(self,true)
+					v:ForceSetEnemy(self,true)
 					v:VJ_TASK_CHASE_ENEMY(true)
 				end
 			end
@@ -225,7 +225,7 @@ function ENT:OnAlert(ent)
 	if self.HLR_IsClawScanner then
 		for _,v in pairs(ents.FindByClass("npc_vj_hlr2_com_strider")) do
 			if v:CheckRelationship(v) == D_LI && !IsValid(v:GetEnemy()) && !v:IsBusy() then
-				v:VJ_DoSetEnemy(self,true)
+				v:ForceSetEnemy(self,true)
 				v:VJ_TASK_CHASE_ENEMY(true)
 			end
 		end
