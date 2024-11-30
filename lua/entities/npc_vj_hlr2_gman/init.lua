@@ -76,7 +76,7 @@ function ENT:FreemanSpeech(ent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnMaintainRelationships(ent,entFri,entDist)
+function ENT:OnMaintainRelationships(ent,calculatedDisp,entDist)
 	if ent.VJ_HLR_Freeman then
 		self:FreemanSpeech(ent)
 	end
