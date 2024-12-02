@@ -265,7 +265,7 @@ function ENT:OnUpdatePoseParamTracking(pitch, yaw, roll)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
-	if IsValid(self:GetEnemy()) or self.Alerted == true then
+	if IsValid(self:GetEnemy()) or self.Alerted then
 		self.Turret_StandDown = false
 		self.AnimTbl_IdleStand = {"idlealert"}
 		
@@ -306,7 +306,7 @@ function ENT:OnThinkActive()
 		end
 	else
 		-- Play the retracting sequence and sound
-		if self.Alerted == false && self.Turret_StandDown == false then
+		if !self.Alerted && self.Turret_StandDown == false then
 			self.Turret_StandDown = true
 			self:VJ_ACT_PLAYACTIVITY({"retire"}, true, 1)
 			VJ.EmitSound(self,{"npc/turret_floor/retract.wav"}, 70, 100)
