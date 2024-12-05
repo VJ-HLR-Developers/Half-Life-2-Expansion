@@ -7,7 +7,7 @@ include("shared.lua")
 -----------------------------------------------*/
 ENT.Model = {"models/vj_hlr/hl2b/combine_guard.mdl"}
 ENT.StartHealth = 500
-ENT.SightAngle = 95
+ENT.SightAngle = 190
 ENT.HullType = HULL_HUMAN
 
 ENT.VJC_Data = {

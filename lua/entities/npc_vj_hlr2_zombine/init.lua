@@ -59,14 +59,14 @@ function ENT:SetSlump(doSlump)
 		self.SlumpSet = tr.Hit && "a" or "b"
 		self.SlumpAnimation = VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)
 		self:SetMaxLookDistance(150)
-		self.SightAngle = 180
+		self.SightAngle = 360
 		self:AddFlags(FL_NOTARGET)
 	else
 		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. self.SlumpSet, true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
 		self:SetMaxLookDistance(10000)
-		self.SightAngle = 80
+		self.SightAngle = 156
 		self:RemoveFlags(FL_NOTARGET)
 	end
 	self.IsSlumped = doSlump

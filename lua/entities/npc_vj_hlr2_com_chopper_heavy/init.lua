@@ -8,8 +8,8 @@ include("shared.lua")
 ENT.VJTag_ID_Boss = true
 ENT.Model = {"models/vj_hlr/hl2/combine_heavychopper.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 4000
+ENT.SightAngle = 360
 ENT.HullType = HULL_LARGE
-ENT.SightAngle = 180 -- The sight angle | Example: 180 would make the it see all around it | Measured in degrees and then converted to radians
 ENT.TurningSpeed = 2 -- How fast it can turn
 
 ENT.PoseParameterLooking_Names = {pitch={"l_aim_pitch","r_aim_pitch"}, yaw={"l_aim_yaw","r_aim_yaw"}, roll={}}
@@ -27,7 +27,6 @@ ENT.AA_MoveDecelerate = 4 -- The NPC will slow down as it approaches its destina
 ENT.PoseParameterLooking_InvertPitch = true -- Inverts the pitch pose parameters (X)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
-ENT.FindEnemy_UseSphere = true
 
 ENT.Bleeds = false
 ENT.Immune_AcidPoisonRadiation = true -- Immune to Acid, Poison and Radiation

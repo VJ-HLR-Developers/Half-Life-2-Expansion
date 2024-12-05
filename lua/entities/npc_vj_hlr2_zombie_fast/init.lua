@@ -55,14 +55,14 @@ function ENT:SetSlump(doSlump)
 		self.SlumpSet = math.random(1,2) == 1 && "a" or "b"
 		self.SlumpAnimation = VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)
 		self:SetMaxLookDistance(150)
-		self.SightAngle = 180
+		self.SightAngle = 360
 		self:AddFlags(FL_NOTARGET)
 	else
 		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. (self.SlumpSet == "a" && VJ.PICK({"a","c"}) or self.SlumpSet), true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
 		self:SetMaxLookDistance(10000)
-		self.SightAngle = 80
+		self.SightAngle = 156
 		self:RemoveFlags(FL_NOTARGET)
 		self.SoundTbl_Breath = self.SoundTbl_DefBreath
 	end

@@ -12,7 +12,7 @@ include("shared.lua")
 -- ENT.Model = {"models/barnacle.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.Model = {"models/vj_hlr/hl2/barnacle.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.SightDistance = 1024 -- How far it can see
-ENT.SightAngle = 180 -- The sight angle | Example: 180 would make the it see all around it | Measured in degrees and then converted to radians
+ENT.SightAngle = 360
 ENT.StartHealth = 30
 ENT.MovementType = VJ_MOVETYPE_STATIONARY -- How the NPC moves around
 ENT.CanTurnWhileStationary = false -- If set to true, the SNPC will be able to turn while it's a stationary SNPC

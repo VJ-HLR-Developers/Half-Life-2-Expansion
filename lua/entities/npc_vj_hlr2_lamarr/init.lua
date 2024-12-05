@@ -45,7 +45,7 @@ function ENT:OnThinkActive()
 			self.Headcrab_Sleeping = false
 			self.Headcrab_NextSleepT = CurTime() + math.Rand(15, 45)
 			self:SetMaxLookDistance(10000)
-			self.SightAngle = 80
+			self:SetFOV(160)
 		end
 		return
 	end
@@ -57,6 +57,6 @@ function ENT:OnThinkActive()
 		self.Headcrab_WakeUpT = CurTime() +math.Rand(15, 30)
 		self:SetState(VJ_STATE_ONLY_ANIMATION)
 		self:SetMaxLookDistance(325)
-		self.SightAngle = 180
+		self:SetFOV(360)
 	end
 end

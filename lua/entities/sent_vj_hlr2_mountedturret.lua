@@ -210,7 +210,7 @@ function ENT:Think()
         operator:SetAngles(self:GetAngles())
         if IsValid(operator:GetEnemy()) then
             local ene = operator:GetEnemy()
-            if (turret:GetForward():Dot((ene:GetPos() -turret:GetPos()):GetNormalized()) > math.cos(math.rad(operator.SightAngle))) && (ene:GetPos():Distance(self:GetPos()) < 3500) then
+            if (turret:GetForward():Dot((ene:GetPos() -turret:GetPos()):GetNormalized()) > math.cos(math.rad(operator:GetFOV() / 2))) && (ene:GetPos():Distance(self:GetPos()) < 3500) then
                 if self:Visible(ene) then
                     self:FireEmplacement()
                 end

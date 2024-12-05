@@ -33,7 +33,7 @@ function ENT:Init()
 	self:SetCollisionBounds(Vector(8, 12, 22), Vector(-8, -12, 0))
 	self.RangeDistance = self.SightDistance
 	self.RangeAttackAngleRadius = 75
-	self.SightAngle = 70
+	self.SightAngle = 140
 
 	if self.SideTurret then return end
 
