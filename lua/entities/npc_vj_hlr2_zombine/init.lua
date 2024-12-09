@@ -62,7 +62,7 @@ function ENT:SetSlump(doSlump)
 		self.SightAngle = 360
 		self:AddFlags(FL_NOTARGET)
 	else
-		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. self.SlumpSet, true, false, false, 0, {OnFinish=function(interrupted, anim)
+		self:PlayAnim("slumprise_" .. self.SlumpSet, true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
 		self:SetMaxLookDistance(10000)
@@ -130,7 +130,7 @@ function ENT:CustomAttack(ent,vis)
 		self.GrenadePulled = true
 		self.GrenadeTime = CurTime() +20
 		VJ.CreateSound(self,"npc/zombine/zombine_readygrenade" .. math.random(1,2) .. ".wav",80,100)
-		self:VJ_ACT_PLAYACTIVITY("pullGrenade",true,false,true)
+		self:PlayAnim("pullGrenade",true,false,true)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

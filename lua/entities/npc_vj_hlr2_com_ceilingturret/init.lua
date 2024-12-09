@@ -87,7 +87,7 @@ function ENT:OnThinkActive()
 			self.Turret_Sprite:Fire("Color","0 150 0") -- Green
 			self.Turret_Sprite:Fire("ShowSprite")
 			self.Turret_StandDown = true
-			self:VJ_ACT_PLAYACTIVITY({"retract"}, true, false)
+			self:PlayAnim({"retract"}, true, false)
 			VJ.EmitSound(self,{"npc/turret_floor/retract.wav"}, 70, 100)
 		end
 		if self.Turret_StandDown == true then

@@ -83,7 +83,7 @@ function ENT:Init()
 		self.IsDiging = true
 		self:SetNoDraw(true)
 		timer.Simple(0.000001,function()
-			self:VJ_ACT_PLAYACTIVITY("floor_break",true,VJ.AnimDuration(self,"floor_break"),false)
+			self:PlayAnim("floor_break",true,VJ.AnimDuration(self,"floor_break"),false)
 			self.HasMeleeAttack = false
 			timer.Simple(0.5,function()
 				if IsValid(self) then
@@ -251,7 +251,7 @@ end
 function ENT:SummonAllies(anim)
 	if self:BusyWithActivity() or self.Charging then return end
 	local anim = anim or "bark"
-	self:VJ_ACT_PLAYACTIVITY(anim,true,false,false)
+	self:PlayAnim(anim,true,false,false)
 	timer.Simple(0.5,function()
 		if IsValid(self) then
 			VJ.CreateSound(self,"npc/antlion_guard/angry2.wav",95,100)
@@ -328,7 +328,7 @@ function ENT:CustomAttack(ent,vis)
 			self.DisableChasingEnemy = false
 			self.HasMeleeAttack = true
 			self:CapabilitiesAdd(CAP_MOVE_JUMP)
-			self:VJ_ACT_PLAYACTIVITY("charge_stop",true,false,false)
+			self:PlayAnim("charge_stop",true,false,false)
 			self.ChargeBreath:Stop()
 			return
 		end
@@ -345,7 +345,7 @@ function ENT:CustomAttack(ent,vis)
 			maxs = self:OBBMaxs() *0.85,
 		})
 		self:SetLastPosition(tr.HitPos +tr.HitNormal *200)
-		self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+		self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
 		if self:OnGround() then
 			self:SetVelocity(self:GetMoveVelocity() *1.01)
 		end
@@ -360,11 +360,11 @@ function ENT:CustomAttack(ent,vis)
 			self:SetState()
 			self.ChargeBreath:Stop()
 			if tr.HitWorld then
-				self:VJ_ACT_PLAYACTIVITY({"charge_crash","charge_crash02","charge_crash03"},true,false,false)
+				self:PlayAnim({"charge_crash","charge_crash02","charge_crash03"},true,false,false)
 				util.ScreenShake(self:GetPos(),1000,100,1,500)
 				VJ.CreateSound(self,"npc/antlion_guard/shove1.wav",75)
 			else
-				self:VJ_ACT_PLAYACTIVITY("charge_stop",true,false,false)
+				self:PlayAnim("charge_stop",true,false,false)
 				local gest = self:AddGestureSequence(self:LookupSequence("charge_hit"))
 				self:SetLayerPriority(gest,1)
 				self:SetLayerPlaybackRate(gest,0.5)
@@ -405,7 +405,7 @@ function ENT:CustomAttack(ent,vis)
 		VJ.CreateSound(self,{"npc/antlion_guard/angry1.wav","npc/antlion_guard/angry2.wav","npc/antlion_guard/angry3.wav"},72)
 		self.ChargeBreath:Play()
 		self.ChargeBreath:ChangeVolume(1,1)
-		self:VJ_ACT_PLAYACTIVITY("charge_startfast",true,false,true, 0, {OnFinish=function(interrupted, anim)
+		self:PlayAnim("charge_startfast",true,false,true, 0, {OnFinish=function(interrupted, anim)
 			if interrupted then
 				return
 			end

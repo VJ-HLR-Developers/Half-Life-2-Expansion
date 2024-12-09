@@ -91,7 +91,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnAlert(ent)
 	if math.random(1,2) == 1 then
-		self:VJ_ACT_PLAYACTIVITY({"vjseq_madidle1","vjseq_madidle2","vjseq_madidle3"},true,false,true)
+		self:PlayAnim({"vjseq_madidle1","vjseq_madidle2","vjseq_madidle3"},true,false,true)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

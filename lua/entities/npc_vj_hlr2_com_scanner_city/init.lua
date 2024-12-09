@@ -167,7 +167,7 @@ function ENT:CustomAttack(ent, visible)
 		self.DoingCameraAttack = true
 		VJ.CreateSound(self,"npc/scanner/scanner_blip1.wav",75)
 		if !self.HLR_IsClawScanner then
-			self:VJ_ACT_PLAYACTIVITY("flare",true,false,false,0,{OnFinish=function(interrupted,anim)
+			self:PlayAnim("flare",true,false,false,0,{OnFinish=function(interrupted,anim)
 				VJ.CreateSound(self,"npc/scanner/scanner_photo1.wav",75)
 				for _,v in pairs(ents.FindInSphere(self:GetPos() +self:GetForward(),175)) do
 					if v:IsPlayer() then
@@ -184,7 +184,7 @@ function ENT:CustomAttack(ent, visible)
 				local effectdata = EffectData()
 				effectdata:SetOrigin(tr.HitPos)
 				util.Effect("camera_flash",effectdata,true)
-				self:VJ_ACT_PLAYACTIVITY("retract",true,false,false,0,{OnFinish=function(interrupted,anim)
+				self:PlayAnim("retract",true,false,false,0,{OnFinish=function(interrupted,anim)
 					self.DoingCameraAttack = false
 					self.NextCameraAttackT = CurTime() +10
 				end})
@@ -194,7 +194,7 @@ function ENT:CustomAttack(ent, visible)
 			for _,v in pairs(ents.FindByClass("npc_vj_hlr2_com_strider")) do
 				if v:CheckRelationship(v) == D_LI && !IsValid(v:GetEnemy()) && !v:IsBusy() then
 					v:ForceSetEnemy(self,true)
-					v:VJ_TASK_CHASE_ENEMY(true)
+					v:SCHEDULE_ALERT_CHASE(true)
 				end
 			end
 			for _,v in pairs(ents.FindInSphere(self:GetPos() +self:GetForward(),175)) do
@@ -226,7 +226,7 @@ function ENT:OnAlert(ent)
 		for _,v in pairs(ents.FindByClass("npc_vj_hlr2_com_strider")) do
 			if v:CheckRelationship(v) == D_LI && !IsValid(v:GetEnemy()) && !v:IsBusy() then
 				v:ForceSetEnemy(self,true)
-				v:VJ_TASK_CHASE_ENEMY(true)
+				v:SCHEDULE_ALERT_CHASE(true)
 			end
 		end
 	end

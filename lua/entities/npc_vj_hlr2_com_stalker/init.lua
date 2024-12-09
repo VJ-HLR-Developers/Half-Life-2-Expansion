@@ -103,14 +103,14 @@ function ENT:OnThink()
 	self.DisableChasingEnemy = self.IsLaserAttacking
 	if self.IsLaserAttacking then
 		-- if CurTime() > self.NextLAnimT then
-			-- self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,true)
+			-- self:PlayAnim(ACT_RANGE_ATTACK1,true,false,true)
 			-- self.NextLAnimT = CurTime() +self:SequenceDuration(self:LookupSequence("rangeattack")) -0.1
 		-- end
 		local moveCheck = VJ.PICK(self:VJ_CheckAllFourSides(math.random(150,400),true,"0111"))
 		if moveCheck && math.random(1,50) == 1 then
 			self:StopMoving()
 			self:SetLastPosition(moveCheck)
-			self:VJ_TASK_GOTO_LASTPOS(math.random(1, 2) == 1 and "TASK_RUN_PATH" or "TASK_WALK_PATH", function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+			self:SCHEDULE_GOTO_POSITION(math.random(1, 2) == 1 and "TASK_RUN_PATH" or "TASK_WALK_PATH", function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
 		end
 		self:SetTurnTarget("Enemy")
 		self:FireLaser()

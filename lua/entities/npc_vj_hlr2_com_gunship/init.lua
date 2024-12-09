@@ -112,13 +112,13 @@ function ENT:BarrageFire()
 			self:DeleteOnRemove(FireLight1)
 			if i == 20 then
 				VJ.CreateSound(self,"npc/combine_gunship/attack_stop2.wav",100)
-				self:VJ_ACT_PLAYACTIVITY(ACT_VM_RELOAD,false,false,false)
+				self:PlayAnim(ACT_VM_RELOAD,false,false,false)
 			end
 		else
 			timer.Remove("vj_timer_fire_" .. self:EntIndex())
 			self.NextFireT = CurTime() +1
 			VJ.CreateSound(self,"npc/combine_gunship/attack_stop2.wav",100)
-			self:VJ_ACT_PLAYACTIVITY(ACT_VM_RELOAD,false,false,false)
+			self:PlayAnim(ACT_VM_RELOAD,false,false,false)
 		end
 	end)
 end

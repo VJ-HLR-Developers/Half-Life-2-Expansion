@@ -199,7 +199,7 @@ function ENT:Think()
             end
         else
             possibleOperator:SetLastPosition(self.TargetPos)
-            possibleOperator:VJ_TASK_GOTO_LASTPOS(possibleOperator.Alerted && "TASK_RUN_PATH" or "TASK_WALK_PATH")
+            possibleOperator:SCHEDULE_GOTO_POSITION(possibleOperator.Alerted && "TASK_RUN_PATH" or "TASK_WALK_PATH")
             if possibleOperator:GetPos():Distance(self.TargetPos) <= 50 then
                 possibleOperator:SetPos(self.TargetPos)
                 self:ManGun(possibleOperator)

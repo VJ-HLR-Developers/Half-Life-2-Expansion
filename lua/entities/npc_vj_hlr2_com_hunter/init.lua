@@ -125,7 +125,7 @@ function ENT:OnCallForHelp(ally)
 		if !ally:BusyWithActivity() && !IsValid(ally:GetEnemy()) then
 			ally:PlaySoundSystem("CallForHelp")
 			local pickanim = VJ.PICK(ally.AnimTbl_CallForHelp)
-			ally:VJ_ACT_PLAYACTIVITY(pickanim,ally.CallForHelpStopAnimations,ally:DecideAnimationLength(pickanim,ally.CallForHelpStopAnimationsTime),ally.CallForHelpAnimationFaceEnemy,0,{PlayBackRateCalculated=true})
+			ally:PlayAnim(pickanim,ally.CallForHelpStopAnimations,ally:DecideAnimationLength(pickanim,ally.CallForHelpStopAnimationsTime),ally.CallForHelpAnimationFaceEnemy,0,{PlayBackRateCalculated=true})
 			ally.NextCallForHelpAnimationT = CurTime() +ally.NextCallForHelpAnimationTime
 		end
 	end
@@ -265,7 +265,7 @@ function ENT:OnThinkActive()
 			self.HasMeleeAttack = true
 			self:CapabilitiesAdd(CAP_MOVE_JUMP)
 			self:SetState()
-			self:VJ_ACT_PLAYACTIVITY("charge_miss_slide",true,false,false)
+			self:PlayAnim("charge_miss_slide",true,false,false)
 			return
 		end
 
@@ -281,7 +281,7 @@ function ENT:OnThinkActive()
 			maxs = self:OBBMaxs() *0.85,
 		})
 		self:SetLastPosition(tr.HitPos +tr.HitNormal *200)
-		self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+		self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
 		if self:OnGround() then
 			self:SetVelocity(self:GetMoveVelocity() *1.01)
 		end
@@ -294,10 +294,10 @@ function ENT:OnThinkActive()
 			self:CapabilitiesAdd(CAP_MOVE_JUMP)
 			self:SetState()
 			if tr.HitWorld then
-				self:VJ_ACT_PLAYACTIVITY("charge_crash",true,false,false)
+				self:PlayAnim("charge_crash",true,false,false)
 				util.ScreenShake(self:GetPos(),1000,100,1,500)
 			else
-				self:VJ_ACT_PLAYACTIVITY("charge_miss_slide",true,false,false)
+				self:PlayAnim("charge_miss_slide",true,false,false)
 				local ent = tr.Entity
 				local isProp = IsValid(ent) && VJ.IsProp(ent) or false
 				if IsValid(ent) && (isProp or self:CheckRelationship(ent) == D_HT) then
@@ -333,7 +333,7 @@ function ENT:OnThinkActive()
 			self.DoRangeAttack = false
 			self.IsPlanted = false
 			self.HasMeleeAttack = true
-			self:VJ_ACT_PLAYACTIVITY("vjseq_unplant",true,false,true, 0, {OnFinish=function(interrupted, anim)
+			self:PlayAnim("vjseq_unplant",true,false,true, 0, {OnFinish=function(interrupted, anim)
 				if interrupted then
 					return
 				end
@@ -343,7 +343,7 @@ function ENT:OnThinkActive()
 		end
 		if !self.IsPlanted && !self:IsBusy() then
 			self:SetState(VJ_STATE_ONLY_ANIMATION)
-			self:VJ_ACT_PLAYACTIVITY("vjseq_plant",true,false,true, 0, {OnFinish=function(interrupted, anim)
+			self:PlayAnim("vjseq_plant",true,false,true, 0, {OnFinish=function(interrupted, anim)
 				if interrupted then
 					return
 				end
@@ -372,14 +372,14 @@ function ENT:CustomAttack(ent,vis)
 			if pickmove == "Right" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
 			if pickmove == "Left" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
 			if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
-				self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+				self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
 				self.NextRandMoveT = CurTime() +math.Rand(2,3)
 				return
 			end
 		end
 
 		if dist > 500 && dist <= 2500 && !self.IsCharging && !self:IsBusy() && !self.DoRangeAttack && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or !self.VJ_IsBeingControlled && math.random(1,50) == 1) && math.abs(self:GetPos().z -ent:GetPos().z) <= 128 then
-			self:VJ_ACT_PLAYACTIVITY("charge_start",true,false,true, 0, {OnFinish=function(interrupted, anim)
+			self:PlayAnim("charge_start",true,false,true, 0, {OnFinish=function(interrupted, anim)
 				if interrupted then
 					return
 				end

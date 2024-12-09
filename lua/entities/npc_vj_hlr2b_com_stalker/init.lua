@@ -136,7 +136,7 @@ end
 function ENT:OnThink()
 	if self.IsLaserAttacking then
 		if CurTime() > self.NextLAnimT then
-			self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,true)
+			self:PlayAnim(ACT_RANGE_ATTACK1,true,false,true)
 			self.NextLAnimT = CurTime() +self:SequenceDuration(self:LookupSequence("rangeattack")) -0.1
 		end
 		self:FireLaser()
@@ -185,7 +185,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 	if status == "PostDamage" && CurTime() > self.NextRunAwayT && !self.VJ_IsBeingControlled then
 		self:LaserReset()
 		VJ.CreateSound(self,self.SoundTbl_Scramble,80,100)
-		self:VJ_TASK_COVER_FROM_ENEMY("TASK_RUN_PATH",function(x) x.RunCode_OnFail = function() self.NextRunAwayT = 0 end end)
+		self:SCHEDULE_COVER_ENEMY("TASK_RUN_PATH",function(x) x.RunCode_OnFail = function() self.NextRunAwayT = 0 end end)
 		self.NextRunAwayT = CurTime() + 5
 	end
 end

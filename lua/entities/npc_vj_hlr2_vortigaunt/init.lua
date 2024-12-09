@@ -433,7 +433,7 @@ function ENT:SelectSchedule()
 	self.BaseClass.SelectSchedule(self)
 	if !self.Dead && self.Vort_RunAway && !self:IsBusy() && !self.VJ_IsBeingControlled then
 		self.Vort_RunAway = false
-		self:VJ_TASK_COVER_FROM_ENEMY("TASK_RUN_PATH", function(x) x.RunCode_OnFail = function() self.NextDoAnyAttackT = 0 end end)
+		self:SCHEDULE_COVER_ENEMY("TASK_RUN_PATH", function(x) x.RunCode_OnFail = function() self.NextDoAnyAttackT = 0 end end)
 		self.NextDoAnyAttackT = CurTime() + 5
 		self.NextRandMoveT = CurTime() + 5
 	end
@@ -453,14 +453,14 @@ function ENT:CustomAttack(ent,vis)
 			if pickmove == "Right" then self:SetLastPosition(self:GetPos() +self:GetRight() *1000) end
 			if pickmove == "Left" then self:SetLastPosition(self:GetPos() +self:GetRight() *1000) end
 			if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
-				self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+				self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
 				self.NextRandMoveT = CurTime() +math.Rand(3,6)
 			end
 		end
 	else
 		local ply = self.VJ_TheController
 		if ply:KeyDown(IN_JUMP) && CurTime() > self.Vort_DispelT && !self:IsBusy() then
-			local _,dur = self:VJ_ACT_PLAYACTIVITY("dispel",true,false,false)
+			local _,dur = self:PlayAnim("dispel",true,false,false)
 			self.NextDoAnyAttackT = CurTime() +dur
 			self.NextRandMoveT = CurTime() +dur
 			self.Vort_DispelT = CurTime() +dur
@@ -474,7 +474,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 		if math.random(1,dmginfo:IsBulletDamage() && 3 or 6) == 1 then
 			self.Vort_RunAway = true
 		elseif !self.Vort_RunAway && math.random(1,4) == 1 && !dmginfo:IsBulletDamage() && CurTime() > self.Vort_DispelT then
-			local _,dur = self:VJ_ACT_PLAYACTIVITY("dispel",true,false,false)
+			local _,dur = self:PlayAnim("dispel",true,false,false)
 			self.NextDoAnyAttackT = CurTime() +dur
 			self.NextRandMoveT = CurTime() +dur
 			self.Vort_DispelT = CurTime() +dur +math.random(1,4)

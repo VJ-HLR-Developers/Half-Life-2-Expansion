@@ -124,11 +124,11 @@ function ENT:OnThink()
 			self.Assassin_OffGround = false
 			self:ClearSchedule()
 			self:StopMoving()
-			self:VJ_ACT_PLAYACTIVITY(ACT_LAND,true,false,false)
+			self:PlayAnim(ACT_LAND,true,false,false)
 			self.AnimTbl_IdleStand = {ACT_IDLE}
 		else
 			if self:GetActivity() != ACT_GLIDE then
-				self:VJ_ACT_PLAYACTIVITY(ACT_GLIDE,true,false,false)
+				self:PlayAnim(ACT_GLIDE,true,false,false)
 			end
 		end
 	end
@@ -152,9 +152,9 @@ function ENT:OnThink()
 			self:SetLocalVelocity(((self:GetPos() + self:GetRight()*-100) - (self:GetPos() + self:OBBCenter())):GetNormal()*200 +self:GetForward()*1 +self:GetUp()*600 + self:GetRight()*1)
 		end
 		self.AnimTbl_IdleStand = {ACT_GLIDE}
-		self:VJ_ACT_PLAYACTIVITY(ACT_JUMP,true,false,true,0,{},function(sched)
+		self:PlayAnim(ACT_JUMP,true,false,true,0,{},function(sched)
 			self.Assassin_OffGround = true
-			self:VJ_ACT_PLAYACTIVITY(ACT_GLIDE,true,false,false)
+			self:PlayAnim(ACT_GLIDE,true,false,false)
 		end)
 		self.Assassin_NextJumpT = CurTime() + 8
 	end
@@ -164,7 +164,7 @@ function ENT:Dodge()
 	if !self:IsBusy() then
 		if self.VJ_IsBeingControlled then
 			local ply = self.VJ_TheController
-			self:VJ_ACT_PLAYACTIVITY((ply:KeyDown(IN_MOVELEFT) && "FlipLeft") or (ply:KeyDown(IN_MOVERIGHT) && "FlipRight") or (ply:KeyDown(IN_FORWARD) && "FlipForwardB") or "flipback",true,false,true)
+			self:PlayAnim((ply:KeyDown(IN_MOVELEFT) && "FlipLeft") or (ply:KeyDown(IN_MOVERIGHT) && "FlipRight") or (ply:KeyDown(IN_FORWARD) && "FlipForwardB") or "flipback",true,false,true)
 			self.Assassin_NextDodgeT = CurTime() +math.Rand(2,6)
 		else
 			local checkdist = self:VJ_CheckAllFourSides(400)
@@ -182,7 +182,7 @@ function ENT:Dodge()
 				anim = VJ.PICK({"flipback","FlipRight","FlipLeft","FlipForwardB"})
 			end
 			if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
-				self:VJ_ACT_PLAYACTIVITY(anim,true,false,true)
+				self:PlayAnim(anim,true,false,true)
 				self.Assassin_NextDodgeT = CurTime() +math.Rand(2,6)
 			end
 		end

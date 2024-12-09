@@ -50,7 +50,7 @@ function ENT:SetSlump(doSlump)
 		self.SightAngle = 360
 		self:AddFlags(FL_NOTARGET)
 	else
-		self:VJ_ACT_PLAYACTIVITY("slumprise_a", true, false, false, 0, {OnFinish=function(interrupted, anim)
+		self:PlayAnim("slumprise_a", true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
 		self:SetMaxLookDistance(10000)
@@ -174,14 +174,14 @@ function ENT:CustomAttack(ent,vis)
 
 	if headcrabs > 0 && ((self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2)) or (!self.VJ_IsBeingControlled && dist <= 700 && dist > 250 && math.random(1,50) == 1 && vis && CurTime() > self.NextThrowT && !self:IsBusy())) then
 		if dist <= 350 then
-			self:VJ_ACT_PLAYACTIVITY("headcrab2Leap",true,false,true)
+			self:PlayAnim("headcrab2Leap",true,false,true)
 		else
 			VJ.CreateSound(self,self.SoundTbl_Warn,80)
-			self:VJ_ACT_PLAYACTIVITY("ThrowWarning",true,false,true, 0, {OnFinish=function(interrupted, anim)
+			self:PlayAnim("ThrowWarning",true,false,true, 0, {OnFinish=function(interrupted, anim)
 				if interrupted then
 					return
 				end
-				self:VJ_ACT_PLAYACTIVITY("Throw",true,false,true)
+				self:PlayAnim("Throw",true,false,true)
 				VJ.CreateSound(self,self.SoundTbl_Throw,80)
 			end})
 		end

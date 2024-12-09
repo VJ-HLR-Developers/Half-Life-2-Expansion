@@ -77,7 +77,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnMeleeAttack_AfterChecks(v, isProp)
 	self:SetHealth(math.Clamp(self:Health() + ((self.MeleeAttackDamage > v:Health() && v:Health()) or self.MeleeAttackDamage), self:Health(), self:GetMaxHealth()*2))
-	self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1_LOW,true,false,true)
+	self:PlayAnim(ACT_RANGE_ATTACK1_LOW,true,false,true)
 	if v:IsPlayer() then
 		v:ScreenFade(SCREENFADE.IN,Color(64,0,0),0.5,0)
 	end
@@ -85,7 +85,7 @@ function ENT:CustomOnMeleeAttack_AfterChecks(v, isProp)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnMeleeAttack_Miss()
-	self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK2_LOW,true,false,false)
+	self:PlayAnim(ACT_RANGE_ATTACK2_LOW,true,false,false)
 	VJ.CreateSound(self,"npc/ichthyosaur/snap_miss.wav",75)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

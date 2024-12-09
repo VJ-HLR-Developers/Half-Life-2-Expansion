@@ -154,11 +154,11 @@ function ENT:OnInput(key, activator, caller, data)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRangeAttack_AfterStartTimer(seed)
-	-- self:VJ_ACT_PLAYACTIVITY("idleact",true,false,true,0,{OnFinish=function(interrupted,anim)
+	-- self:PlayAnim("idleact",true,false,true,0,{OnFinish=function(interrupted,anim)
 	-- 	if interrupted then return end
-	-- 	self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,false)
+	-- 	self:PlayAnim(ACT_RANGE_ATTACK1,true,false,false)
 	-- end})
-	self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,false)
+	self:PlayAnim(ACT_RANGE_ATTACK1,true,false,false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local bit_band = bit.band
@@ -211,8 +211,8 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 			self:ClearGoal()
 			self:SetAngles(dmgAng)
 			self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
-			local _,dur = self:VJ_ACT_PLAYACTIVITY("physfall",true,false,false,0,{OnFinish=function(interrupted)
-				self:VJ_ACT_PLAYACTIVITY("physgetup",true,false,false,0,{OnFinish=function(interrupted)
+			local _,dur = self:PlayAnim("physfall",true,false,false,0,{OnFinish=function(interrupted)
+				self:PlayAnim("physgetup",true,false,false,0,{OnFinish=function(interrupted)
 					self:SetState()
 				end})
 			end})
@@ -231,7 +231,7 @@ function ENT:OnDeath(dmginfo, hitgroup, status)
 			self.DeathDelayTime = self:DecideAnimationLength("physfall",false) + self:DecideAnimationLength("physdeath",false) - 1
 			timer.Simple(self:DecideAnimationLength("physfall",false),function()
 				if IsValid(self) then
-					self:VJ_ACT_PLAYACTIVITY("physdeath",true,false,false)
+					self:PlayAnim("physdeath",true,false,false)
 				end
 			end)
 		end

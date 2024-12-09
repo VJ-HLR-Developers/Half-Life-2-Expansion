@@ -164,10 +164,10 @@ end
 function ENT:OnAlert(ent)
 	if self:WaterLevel() < 2 then
 		if ent.VJTag_ID_Headcrab && math.random(1,2) == 1 then
-			self:VJ_ACT_PLAYACTIVITY("hc_spot",true,false,true)
+			self:PlayAnim("hc_spot",true,false,true)
 		else
 			if math.random(1,3) == 1 then
-				self:VJ_ACT_PLAYACTIVITY(ACT_HOP,true,false,true)
+				self:PlayAnim(ACT_HOP,true,false,true)
 			end
 		end
 	end

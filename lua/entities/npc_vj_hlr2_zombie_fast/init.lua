@@ -58,7 +58,7 @@ function ENT:SetSlump(doSlump)
 		self.SightAngle = 360
 		self:AddFlags(FL_NOTARGET)
 	else
-		self:VJ_ACT_PLAYACTIVITY("slumprise_" .. (self.SlumpSet == "a" && VJ.PICK({"a","c"}) or self.SlumpSet), true, false, false, 0, {OnFinish=function(interrupted, anim)
+		self:PlayAnim("slumprise_" .. (self.SlumpSet == "a" && VJ.PICK({"a","c"}) or self.SlumpSet), true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
 		self:SetMaxLookDistance(10000)
@@ -108,7 +108,7 @@ function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt)
 	self.LastHitT = CurTime() +0.6
 	if self.TotalHits >= 8 then
 		VJ.CreateSound(self,"npc/fast_zombie/fz_frenzy1.wav",80)
-		self:VJ_ACT_PLAYACTIVITY("BR2_Roar",true,false,true)
+		self:PlayAnim("BR2_Roar",true,false,true)
 	end
 	return false
 end

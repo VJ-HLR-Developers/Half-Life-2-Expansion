@@ -48,19 +48,19 @@ function ENT:FreemanSpeech(ent)
 	if CurTime() > self.NextDialogueTreeT then
 		self.Freeman = ent
 		self.Dialogue1 = VJ.CreateSound(self,"vo/gman_misc/gman_riseshine.wav",75)
-		self:VJ_ACT_PLAYACTIVITY({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
+		self:PlayAnim({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
 		timer.Simple(dur1,function()
 			if IsValid(self) && IsValid(ent) then
 				self.Dialogue2 = VJ.CreateSound(self,"vo/gman_misc/gman_02.wav",75)
-				self:VJ_ACT_PLAYACTIVITY({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
+				self:PlayAnim({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
 				timer.Simple(dur2,function()
 					if IsValid(self) && IsValid(ent) then
 						self.Dialogue3 = VJ.CreateSound(self,"vo/gman_misc/gman_03.wav",75)
-						self:VJ_ACT_PLAYACTIVITY({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
+						self:PlayAnim({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
 						timer.Simple(dur3,function()
 							if IsValid(self) && IsValid(ent) then
 								self.Dialogue4 = VJ.CreateSound(self,"vo/gman_misc/gman_04.wav",75)
-								self:VJ_ACT_PLAYACTIVITY({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
+								self:PlayAnim({"vjges_G_tiefidget","vjges_G_lefthand_palmout","vjges_G_lefthand_punct"},false,false,false)
 								timer.Simple(dur4,function()
 									if IsValid(self) && IsValid(ent) then
 										self.Freeman = NULL
@@ -95,7 +95,7 @@ function ENT:OnThink()
 		else
 			self:SetState()
 			self:SetTarget(freeman)
-			self:VJ_TASK_GOTO_TARGET("TASK_WALK_PATH", function(y) y.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+			self:SCHEDULE_GOTO_TARGET("TASK_WALK_PATH", function(y) y.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
 		end
 	else
 		if self:GetState() == VJ_STATE_ONLY_ANIMATION then

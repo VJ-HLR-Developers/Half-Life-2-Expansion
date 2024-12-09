@@ -193,7 +193,7 @@ function ENT:CustomRangeAttackCode()
 	VJ.ApplyRadiusDamage(self,self,attackpos,80,50,bit.bor(DMG_BLAST,DMG_BURN,DMG_DISSOLVE,DMG_AIRBOAT),true,false,{Force = 150})
 	
 	VJ.EmitSound(self,self.Turret_FireSound,120,self:VJ_DecideSoundPitch(100,110))
-	self:VJ_ACT_PLAYACTIVITY("vjseq_fire",true,0.15)
+	self:PlayAnim("vjseq_fire",true,0.15)
 	local gest = self:AddGestureSequence(self:LookupSequence("fire"))
 	self:SetLayerPriority(gest,1)
 	self:SetLayerPlaybackRate(gest,0.5)
@@ -221,7 +221,7 @@ function ENT:OnAlert(ent)
 			self.HasPoseParameterLooking = true
 		end
 	end)
-	self:VJ_ACT_PLAYACTIVITY({"deploy"}, true, false)
+	self:PlayAnim({"deploy"}, true, false)
 	VJ.EmitSound(self,{"npc/turret_floor/click1.wav"}, 70, 100)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -308,7 +308,7 @@ function ENT:OnThinkActive()
 		-- Play the retracting sequence and sound
 		if !self.Alerted && self.Turret_StandDown == false then
 			self.Turret_StandDown = true
-			self:VJ_ACT_PLAYACTIVITY({"retire"}, true, 1)
+			self:PlayAnim({"retire"}, true, 1)
 			VJ.EmitSound(self,{"npc/turret_floor/retract.wav"}, 70, 100)
 		end
 		if self.Turret_StandDown == true then

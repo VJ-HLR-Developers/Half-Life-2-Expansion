@@ -41,7 +41,7 @@ ENT.SoundTbl_Death = "npc/manhack/gib.wav"
 function ENT:Init()
 	timer.Simple(0,function()
 		if IsValid(self:GetOwner()) then
-			self:VJ_ACT_PLAYACTIVITY("Deploy", true, false, true)
+			self:PlayAnim("Deploy", true, false, true)
 			self:SetVelocity(self:GetUp() *100)
 		else
 			self:SetPos(self:GetPos() +self:GetUp() *45)

@@ -227,7 +227,7 @@ function ENT:CustomAttack()
 							if selfValid && IsValid(self:GetEnemy()) then -- We check self here, in case self is removed, we will reset the props at least
 								local force = phys:GetMass() *math.random(3,8)
 								phys:SetVelocity(self:CalculateProjectile("Line", v:GetPos(), self:GetEnemy():GetPos(), math.Clamp(force,3000,force)))
-								-- self:VJ_ACT_PLAYACTIVITY(ACT_MELEE_ATTACK1, true, false, false)
+								-- self:PlayAnim(ACT_MELEE_ATTACK1, true, false, false)
 							end
 						end
 					end

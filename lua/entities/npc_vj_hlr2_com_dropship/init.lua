@@ -235,9 +235,9 @@ function ENT:DropOffCargo()
 					soldier:SetOwner(cargo)
 					timer.Simple(0,function()
 						if IsValid(soldier) then
-							local _,dur = soldier:VJ_ACT_PLAYACTIVITY("vjseq_Dropship_Deploy",true,false,false,0,{OnFinish=function()
+							local _,dur = soldier:PlayAnim("vjseq_Dropship_Deploy",true,false,false,0,{OnFinish=function()
 								soldier:SetLastPosition(soldier:GetPos() +soldier:GetForward() *math.random(200,400) +soldier:GetRight() *math.random(-400,400) +soldier:GetUp() *math.random(0,25))
-								soldier:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x)
+								soldier:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x)
 									x.CanShootWhenMoving = true
 									x.ConstantlyFaceEnemyVisible = true
 								end)

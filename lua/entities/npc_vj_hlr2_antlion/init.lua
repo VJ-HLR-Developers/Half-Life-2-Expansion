@@ -108,7 +108,7 @@ function ENT:Dig(ignoreDirt)
 				VJ.EmitSound(self,"npc/antlion/digup1.wav",75,100)
 				ParticleEffect("advisor_plat_break",self:GetPos(),self:GetAngles(),self)
 				ParticleEffect("strider_impale_ground",self:GetPos(),self:GetAngles(),self)
-				self:VJ_ACT_PLAYACTIVITY("digout",true,VJ.AnimDuration(self,"digout"),false)
+				self:PlayAnim("digout",true,VJ.AnimDuration(self,"digout"),false)
 				self.HasMeleeAttack = false
 				timer.Simple(0.15,function() if IsValid(self) then self:SetNoDraw(false) end end)
 				timer.Simple(VJ.AnimDuration(self,"digout"),function() if IsValid(self) then self.HasMeleeAttack = true self.IsDigging = false end end)
@@ -144,7 +144,7 @@ end
 function ENT:OnThinkActive()
 	if self.Antlion_StartedLeapAttack && self:OnGround() then
 		self.Antlion_StartedLeapAttack = false
-		self:VJ_ACT_PLAYACTIVITY("jump_stop",true,false,false)
+		self:PlayAnim("jump_stop",true,false,false)
 	end
 	if self.FlyLoop:IsPlaying() then
 		if self:GetSequenceActivity(self:GetSequence()) == 27 or self:GetSequenceActivity(self:GetSequence()) == 30 then
@@ -159,7 +159,7 @@ function ENT:OnAlert(ent)
 	if self.IsDiging == true then return end
 	if math.random(1,6) == 1 then
 		local tbl = VJ.PICK({"distract","roar"})
-		self:VJ_ACT_PLAYACTIVITY(tbl,true,VJ.AnimDuration(self,tbl),false)
+		self:PlayAnim(tbl,true,VJ.AnimDuration(self,tbl),false)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

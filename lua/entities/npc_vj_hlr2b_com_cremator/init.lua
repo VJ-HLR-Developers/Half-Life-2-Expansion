@@ -175,7 +175,7 @@ function ENT:OnEat(status, statusData)
 	if status == "CheckFood" then
 		return statusData.owner.BloodData && statusData.owner.BloodData.Color != "Oil"
 	elseif status == "BeginEating" then
-		return select(2, self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK2, true, false))
+		return select(2, self:PlayAnim(ACT_RANGE_ATTACK2, true, false))
 	elseif status == "Eat" then
 		return 999
 	elseif status == "StopEating" then

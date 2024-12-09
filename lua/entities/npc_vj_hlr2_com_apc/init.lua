@@ -271,7 +271,7 @@ function ENT:Tank_OnThink()
 							if IsValid(combine) then
 								combine:SetState(VJ_STATE_NONE)
 								combine:SetLastPosition(combine:GetPos() + combine:GetForward()*200 + combine:GetRight()*opSide)
-								combine:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH")
+								combine:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH")
 							end
 						end)
 						self.APC_DeployedUnits[#self.APC_DeployedUnits + 1] = combine -- Register the grunt
