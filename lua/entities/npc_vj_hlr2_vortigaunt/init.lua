@@ -44,7 +44,7 @@ ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance"
 ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance"
 ENT.NoChaseAfterCertainRange_Type = "OnlyRange"
 
-ENT.IsMedicSNPC = true
+ENT.IsMedic = true
 ENT.Medic_HealDistance = 256
 ENT.Medic_HealthAmount = 50
 ENT.Medic_SpawnPropOnHeal = false
