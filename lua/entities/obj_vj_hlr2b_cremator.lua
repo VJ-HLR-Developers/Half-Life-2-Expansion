@@ -24,20 +24,15 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if !SERVER then return end
 
-ENT.Model = {"models/spitball_medium.mdl"}
+ENT.Model = "models/spitball_medium.mdl"
+ENT.ProjectileType = VJ.PROJ_TYPE_GRAVITY
 ENT.DoesRadiusDamage = true
 ENT.RadiusDamageRadius = 200
 ENT.RadiusDamage = 45
 ENT.RadiusDamageUseRealisticRadius = true
-ENT.RadiusDamageType = bit.bor(DMG_BURN,DMG_DISSOLVE,DMG_ENERGYBEAM)
+ENT.RadiusDamageType = bit.bor(DMG_BURN,DMG_DISSOLVE, DMG_ENERGYBEAM)
 ENT.SoundTbl_Idle = "vj_hlr/hl1_npc/kingpin/kingpin_move.wav"
 ENT.SoundTbl_OnCollide = "vj_hlr/hl2_npc/cremator/plasma_stop.wav"
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomPhysicsObjectOnInitialize(phys)
-	phys:Wake()
-	phys:SetBuoyancyRatio(0)
-	phys:EnableDrag(false)
-end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetNoDraw(true)
@@ -51,6 +46,6 @@ function ENT:OnThink()
 	sound.EmitHint(SOUND_DANGER, self:GetPos() +self:GetVelocity(), self.RadiusDamageRadius, 1, self)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:DeathEffects(data, phys)
-	ParticleEffect("vj_hlr_cremator_projectile_impact",data.HitPos,Angle(0,0,0),nil)
+function ENT:OnDestroy(data, phys)
+	ParticleEffect("vj_hlr_cremator_projectile_impact",data.HitPos,Angle(0,0,0))
 end

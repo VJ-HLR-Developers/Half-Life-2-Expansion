@@ -24,11 +24,10 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if !SERVER then return end
 
-ENT.Model = {"models/vj_hlr/hl2/projectiles/hunter_flechette.mdl"} -- The models it should spawn with | Picks a random one from the table
-ENT.CollideCodeWithoutRemoving = true
-
-ENT.DecalTbl_DeathDecals = {"Impact.Concrete"}
-ENT.SoundTbl_Idle = {"weapons/fx/nearmiss/bulletltor03.wav"}
+ENT.Model = "models/vj_hlr/hl2/projectiles/hunter_flechette.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.CollisionBehavior = VJ.PROJ_COLLISION_PERSIST
+ENT.CollisionDecals = "Impact.Concrete"
+ENT.SoundTbl_Idle = "weapons/fx/nearmiss/bulletltor03.wav"
 ENT.SoundTbl_OnCollide = {
 	"vj_hlr/hl2_npc/ministrider/flechette_impact_stick1.wav",
 	"vj_hlr/hl2_npc/ministrider/flechette_impact_stick2.wav",
@@ -40,17 +39,10 @@ ENT.SoundTbl_OnCollide = {
 ENT.IdleSoundLevel = 60
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	ParticleEffectAttach("hunter_flechette_trail",PATTACH_POINT_FOLLOW,self,1)
+	ParticleEffectAttach("hunter_flechette_trail", PATTACH_POINT_FOLLOW, self, 1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomPhysicsObjectOnInitialize(phys)
-	phys:SetMass(1)
-	phys:EnableGravity(false)
-	phys:EnableDrag(false)
-	phys:SetBuoyancyRatio(0)
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnCollideWithoutRemove(data, phys)
+function ENT:OnCollisionPersist(data, phys)
 	local owner = self:GetOwner()
 	local hitEnt = NULL
 	local dmgPos = (data != nil and data.HitPos) or self:GetPos()
@@ -84,8 +76,7 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
 			VJ.DamageSpecialEnts(self, hitEnt, dmgInfo)
 			hitEnt:TakeDamageInfo(dmgInfo, self)
 		end
-		self:SetDeathVariablesTrue(data, phys, true)
-		self:Remove()
+		self:Destroy(data, phys)
 	else
 		local fakeEnt = ents.Create("prop_vj_animatable")
 		fakeEnt:SetModel(self:GetModel())
@@ -105,7 +96,6 @@ function ENT:CustomOnCollideWithoutRemove(data, phys)
 				fakeEnt:Remove()
 			end
 		end)
-		self:SetDeathVariablesTrue(data, phys, true)
-		self:Remove()
+		self:Destroy(data, phys)
 	end
 end

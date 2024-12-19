@@ -310,8 +310,6 @@ function ENT:OnThinkActive()
 			ParticleEffect("aurora_shockwave",v:GetPos(),Angle(0,0,0),nil)
 			ParticleEffect("electrical_arc_01_system",v:GetPos(),Angle(0,0,0),nil)
 			VJ.EmitSound(v,"ambient/energy/whiteflash.wav",90)
-			-- if v.SetDeathVariablesTrue then v:SetDeathVariablesTrue({HitPos=v:GetPos()},nil,true) end
-			-- v:Fire("Kill")
 			SafeRemoveEntity(v)
 		end
 	end

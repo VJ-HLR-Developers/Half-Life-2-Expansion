@@ -5,23 +5,16 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/items/combine_rifle_ammo01.mdl"} -- The models it should spawn with | Picks a random one from the table
-ENT.DoesRadiusDamage = true -- Should it do a blast damage when it hits something?
-ENT.RadiusDamageRadius = 200 -- How far the damage go? The farther away it's from its enemy, the less damage it will do | Counted in world units
-ENT.RadiusDamage = 40 -- How much damage should it deal? Remember this is a radius damage, therefore it will do less damage the farther away the entity is from its enemy
-ENT.RadiusDamageUseRealisticRadius = true -- Should the damage decrease the farther away the enemy is from the position that the projectile hit?
-ENT.RadiusDamageType = DMG_DISSOLVE -- Damage type
-ENT.DecalTbl_DeathDecals = {"Scorch"}
-ENT.SoundTbl_Idle = {"vj_hlr/hl2_npc/combot/cbot_energyball_loop1.wav"}
-ENT.SoundTbl_OnCollide = {"vj_hlr/hl2_npc/mortarsynth/grenade_fire.wav"}
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomPhysicsObjectOnInitialize(phys)
-	phys:Wake()
-	phys:SetBuoyancyRatio(0)
-	phys:EnableDrag(false)
-	self:SetNoDraw(true)
-	self:DrawShadow(false)
-end
+ENT.Model = "models/items/combine_rifle_ammo01.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.ProjectileType = VJ.PROJ_TYPE_GRAVITY
+ENT.DoesRadiusDamage = true -- Should it deal radius damage when it collides with something?
+ENT.RadiusDamageRadius = 200
+ENT.RadiusDamage = 40
+ENT.RadiusDamageUseRealisticRadius = true -- Should the damage decrease the farther away the hit entity is from the radius origin?
+ENT.RadiusDamageType = DMG_DISSOLVE
+ENT.CollisionDecals = "Scorch"
+ENT.SoundTbl_Idle = "vj_hlr/hl2_npc/combot/cbot_energyball_loop1.wav"
+ENT.SoundTbl_OnCollide = "vj_hlr/hl2_npc/mortarsynth/grenade_fire.wav"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()
 	ParticleEffectAttach("electrical_arc_01_system",PATTACH_POINT_FOLLOW,self,0)
@@ -30,11 +23,13 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	-- ParticleEffectAttach("electrical_arc_01_system",PATTACH_POINT_FOLLOW,self,0)
+	self:SetNoDraw(true)
+	self:DrawShadow(false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDoDamage(data, phys, hitEnt)
-	if hitEnt then
-		for _,v in pairs(hitEnt) do
+function ENT:OnDealDamage(data, phys, hitEnts)
+	if hitEnts then
+		for _,v in pairs(hitEnts) do
 			v:EmitSound("ambient/energy/weld"..math.random(1,2)..".wav",60,100)
 			if IsValid(v) then
 				local zapEnt = v
@@ -92,7 +87,7 @@ function ENT:CustomOnDoDamage(data, phys, hitEnt)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:DeathEffects(data, phys)
+function ENT:OnDestroy(data, phys)
 	for i = 1,5 do
 		ParticleEffect("aurora_shockwave",self:GetPos(),Angle(0,0,0),nil)
 		ParticleEffect("electrical_arc_01_system",self:GetPos(),Angle(0,0,0),nil)
