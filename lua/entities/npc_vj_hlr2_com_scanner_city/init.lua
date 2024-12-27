@@ -63,10 +63,6 @@ ENT.SoundTbl_Pain = {
 	"npc/scanner/scanner_pain2.wav"
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:GetSightDirection()
-	return !self.HLR_IsClawScanner && self:GetAttachment(self:LookupAttachment("eyes")).Ang:Forward() or self:GetForward()
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetCollisionBounds(Vector(12,12,15), Vector(-12,-12,-15))
 

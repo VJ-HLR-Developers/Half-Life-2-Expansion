@@ -122,10 +122,6 @@ function ENT:Init()
 	self.NextKnockdownT = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:GetSightDirection()
-	return self:GetAttachment(self:LookupAttachment("eyes")).Ang:Forward()
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:TranslateActivity(act)
 	if act == ACT_IDLE && self.Alerted then
 		return ACT_IDLE_ANGRY

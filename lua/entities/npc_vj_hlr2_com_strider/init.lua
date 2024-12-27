@@ -104,10 +104,6 @@ ENT.SoundTbl_Death = {
 ENT.MinigunDelay = 0.1
 ENT.MinigunSpread = 15
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:GetSightDirection()
-	return self:GetAttachment(self:LookupAttachment("eyes")).Ang:Forward()
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	-- self:SetCollisionBounds(Vector(35,35,42),Vector(-35,-35,-500)) // For default strider model
 	self:SetCollisionBounds(Vector(35, 35, 500),Vector(-35, -35, 0))
