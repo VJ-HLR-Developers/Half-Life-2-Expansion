@@ -222,7 +222,7 @@ function ENT:CustomAttack()
 		bullet.AmmoType = "AR2"
 		self:FireBullets(bullet)
 		
-		VJ.EmitSound(self,self.SoundTbl_Fire,90,self:VJ_DecideSoundPitch(100,110))
+		VJ.EmitSound(self,self.SoundTbl_Fire,90,math.random(100,110))
 		
 		ParticleEffect("vj_rifle_full_blue",startpos,self:GetAngles(),self)
 		local FireLight1 = ents.Create("light_dynamic")

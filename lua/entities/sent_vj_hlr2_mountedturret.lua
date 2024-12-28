@@ -249,7 +249,7 @@ function ENT:FireEmplacement()
     bullet.Tracer = 1
     bullet.TracerName = "AirboatGunTracer"
     bullet.Force = 3
-    bullet.Damage = self.Operator:VJ_GetDifficultyValue(7)
+    bullet.Damage = self.Operator:ScaleByDifficulty(7)
     bullet.AmmoType = "SMG1"
     turret:FireBullets(bullet)
     self.LastShotT = CurTime() +6

@@ -186,7 +186,7 @@ function ENT:OnEat(status, statusData)
 	return 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:EatingReset(statusData)
+function ENT:ResetEatingBehavior(statusData)
 	local eatingData = self.EatingData
 	self:SetState(VJ_STATE_NONE)
 	self:OnEat("StopEating", statusData)

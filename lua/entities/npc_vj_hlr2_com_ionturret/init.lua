@@ -192,7 +192,7 @@ function ENT:CustomRangeAttackCode()
 	sound.Play("weapons/mortar/mortar_explode3.wav",attackpos,80,100)
 	VJ.ApplyRadiusDamage(self,self,attackpos,80,50,bit.bor(DMG_BLAST,DMG_BURN,DMG_DISSOLVE,DMG_AIRBOAT),true,false,{Force = 150})
 	
-	VJ.EmitSound(self,self.Turret_FireSound,120,self:VJ_DecideSoundPitch(100,110))
+	VJ.EmitSound(self,self.Turret_FireSound,120,math.random(100,110))
 	self:PlayAnim("vjseq_fire",true,0.15)
 	local gest = self:AddGestureSequence(self:LookupSequence("fire"))
 	self:SetLayerPriority(gest,1)

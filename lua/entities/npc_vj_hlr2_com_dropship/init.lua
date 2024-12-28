@@ -128,7 +128,7 @@ function ENT:BarrageFire(cargo)
 			bullet.Tracer = 1
 			bullet.TracerName = "AirboatGunTracer"
 			bullet.Force = 3
-			bullet.Damage = self:VJ_GetDifficultyValue(9)
+			bullet.Damage = self:ScaleByDifficulty(9)
 			bullet.AmmoType = "AR2"
 			self:FireBullets(bullet)
 

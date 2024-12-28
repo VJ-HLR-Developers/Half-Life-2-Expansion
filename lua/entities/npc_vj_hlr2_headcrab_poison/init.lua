@@ -117,8 +117,8 @@ function ENT:RangeAttackProjVelocity(projectile)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnFlinch(dmginfo, hitgroup, status)
-	if status == "PriorExecution" && self.AttackState == VJ.ATTACK_STATE_STARTED then -- Since for some reason StopAttacks() doesn't stop the velocity code from running
-		return false
+	if status == "PriorExecution" && self.AttackState == VJ.ATTACK_STATE_STARTED then -- Since StopAttacks() doesn't stop the velocity code from running
+		return true
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -127,7 +127,7 @@ function ENT:OnAlert(ent)
 
 	VJ.STOPSOUND(self.CurrentIdleSound)
 	self.NextIdleSoundT = self.NextIdleSoundT + 2
-	self.CurrentSpeechSound = VJ.CreateSound(self,VJ.PICK(self.SoundTbl_AlertAnim),self.AlertSoundLevel,self:VJ_DecideSoundPitch(self.AlertSoundPitch.a,self.AlertSoundPitch.b))
+	self.CurrentSpeechSound = VJ.CreateSound(self,VJ.PICK(self.SoundTbl_AlertAnim),self.AlertSoundLevel,self:GetSoundPitch(self.AlertSoundPitch.a,self.AlertSoundPitch.b))
 	self:PlayAnim("Threatdisplay",true,VJ.AnimDuration(self,"Threatdisplay"),false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -187,7 +187,7 @@ function ENT:DoPoisonHeadcrabDamage(v)
 		v:TakeDamageInfo(poisonDMG, self)
 	else
 		local normalDMG = DamageInfo()
-		normalDMG:SetDamage(self:VJ_GetDifficultyValue(40))
+		normalDMG:SetDamage(self:ScaleByDifficulty(40))
 		normalDMG:SetInflictor(self)
 		normalDMG:SetDamageType(DMG_SLASH)
 		normalDMG:SetAttacker(self)

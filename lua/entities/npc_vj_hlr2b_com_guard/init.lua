@@ -275,7 +275,7 @@ function ENT:WarpCannon(tPos)
 	end)
 	timer.Simple(0.49,function()
 		if IsValid(self) then
-			VJ.EmitSound(self,"^npc/strider/fire.wav",130,self:VJ_DecideSoundPitch(100,110))
+			VJ.EmitSound(self,"^npc/strider/fire.wav",130,math.random(100,110))
 
 			ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,2)
 			timer.Simple(0.2,function() if IsValid(self) then self:StopParticles() end end)

@@ -94,7 +94,7 @@ function ENT:BarrageFire()
 			bullet.Tracer = 1
 			bullet.TracerName = "AirboatGunTracer"
 			bullet.Force = 3
-			bullet.Damage = self:VJ_GetDifficultyValue(9)
+			bullet.Damage = self:ScaleByDifficulty(9)
 			bullet.AmmoType = "AR2"
 			self:FireBullets(bullet)
 
@@ -378,7 +378,7 @@ function ENT:WarpCannon()
 	end)
 	timer.Simple(0.5,function()
 		if IsValid(self) then
-			VJ.EmitSound(self,"npc/strider/fire.wav",130,self:VJ_DecideSoundPitch(100,110))
+			VJ.EmitSound(self,"npc/strider/fire.wav",130,math.random(100,110))
 			self.CarpetBombing = false
 
 			ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,2)

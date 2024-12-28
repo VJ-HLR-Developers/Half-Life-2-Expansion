@@ -135,7 +135,7 @@ function ENT:FireBullet()
 		bullet.Tracer = 1
 		bullet.TracerName = "AirboatGunTracer"
 		bullet.Force = 5
-		bullet.Damage = self:VJ_GetDifficultyValue(7)
+		bullet.Damage = self:ScaleByDifficulty(7)
 		bullet.AmmoType = "AR2"
 		bullet.IgnoreEntity = ent
 		bullet.Attacker = self
@@ -171,7 +171,7 @@ function ENT:FireBullet()
 		bullet.Tracer = 1
 		bullet.TracerName = "AirboatGunTracer"
 		bullet.Force = 5
-		bullet.Damage = self:VJ_GetDifficultyValue(7)
+		bullet.Damage = self:ScaleByDifficulty(7)
 		bullet.AmmoType = "AR2"
 		bullet.IgnoreEntity = ent
 		bullet.Attacker = self

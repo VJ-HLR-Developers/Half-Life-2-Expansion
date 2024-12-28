@@ -110,7 +110,7 @@ function ENT:OnInput(key, activator, caller, data)
 			bullet.Tracer = 1
 			bullet.TracerName = "AirboatGunTracer"
 			bullet.Force = 3
-			bullet.Damage = self:VJ_GetDifficultyValue(13)
+			bullet.Damage = self:ScaleByDifficulty(13)
 			bullet.AmmoType = "AR2"
 			self:FireBullets(bullet)
 		end

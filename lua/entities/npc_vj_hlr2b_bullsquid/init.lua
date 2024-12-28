@@ -212,7 +212,7 @@ end
 	
 -- 	local vel_for = 1
 -- 	local vel_stop = false
--- 	local nearpos = self:VJ_GetNearestPointToEntity(Ent)
+-- 	local nearpos = self:FindNearestPositions(Ent)
 -- 	local startpos = nearpos.MyPosition // self:GetPos()
 -- 	local endpos = nearpos.EnemyPosition // Ent:GetPos()+Ent:OBBCenter()
 -- 	local tr = util.TraceHull({
