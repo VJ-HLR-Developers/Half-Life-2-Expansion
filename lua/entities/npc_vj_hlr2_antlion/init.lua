@@ -11,6 +11,12 @@ ENT.HullType = HULL_HUMAN
 
 ENT.VJ_NPC_Class = {"CLASS_ANTLION"}
 
+ENT.JumpVars = {
+	MaxRise = 1000,
+	MaxDrop = 1500,
+	MaxDistance = 1500
+}
+
 ENT.VJC_Data = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
@@ -18,7 +24,7 @@ ENT.VJC_Data = {
     FirstP_Offset = Vector(15, 0, 2),
 }
 
-ENT.BloodColor = "Yellow"
+ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
 
 ENT.HasMeleeAttack = true
@@ -74,7 +80,6 @@ ENT.SoundTbl_Death = {
 	"npc/antlion/pain2.wav",
 }
 
-ENT.MaxJumpLegalDistance = VJ.SET(1000,1500)
 ENT.Antlion_StartedLeapAttack = false
 -- ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:GetLeapAttackVelocity()

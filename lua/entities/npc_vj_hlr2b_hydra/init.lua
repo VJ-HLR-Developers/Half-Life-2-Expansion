@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2b/hydra.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2b/hydra.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 500
 ENT.HullType = HULL_HUMAN
 ENT.MovementType = VJ_MOVETYPE_STATIONARY -- How the NPC moves around
@@ -13,13 +13,15 @@ ENT.TurningSpeed = 2
 
 ENT.VJ_NPC_Class = {"CLASS_HYDRA"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.BloodColor = "Blue" -- The blood type, this will determine what it should use (decal, particle, etc.)
+ENT.BloodColor = VJ.BLOOD_COLOR_BLUE -- The blood type, this will determine what it should use (decal, particle, etc.)
+
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
-ENT.AnimTbl_MeleeAttack = {"vjges_strike"}
+ENT.AnimTbl_MeleeAttack = "vjges_strike"
 ENT.MeleeAttackDistance = 180 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.MeleeAttackDamageDistance = 210 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 60
+
 ENT.HasDeathCorpse = false -- Should a corpse spawn when it's killed?
 
 ENT.VJC_Data = {

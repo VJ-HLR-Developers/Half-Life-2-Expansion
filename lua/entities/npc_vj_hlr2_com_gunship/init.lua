@@ -294,7 +294,6 @@ function ENT:OnDeath(dmginfo, hitgroup, status)
 				undo.ReplaceEntity(self, self.Corpse)
 			else
 				VJ.Corpse_Add(self.Corpse)
-				//hook.Call("VJ_CreateSNPCCorpse", nil, self.Corpse, self)
 				if GetConVar("vj_npc_undocorpse"):GetInt() == 1 then undo.ReplaceEntity(self, self.Corpse) end -- Undoable
 			end
 			cleanup.ReplaceEntity(self, self.Corpse)

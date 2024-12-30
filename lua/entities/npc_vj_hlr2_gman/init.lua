@@ -16,7 +16,7 @@ ENT.Passive_RunOnDamage = false -- Should it run when it's damaged? | This doesn
 ENT.DisableFindEnemy = true
 
 ENT.GodMode = true -- Immune to everything
-ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
+ENT.BloodColor = VJ.BLOOD_COLOR_RED -- The blood type, this will determine what it should use (decal, particle, etc.)
 
 ENT.HasMeleeAttack = false -- Can this NPC melee attack?
 

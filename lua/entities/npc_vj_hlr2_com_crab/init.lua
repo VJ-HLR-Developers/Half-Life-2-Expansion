@@ -11,7 +11,7 @@ ENT.HullType = HULL_HUMAN
 ENT.TurningSpeed = 12
 
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
-ENT.BloodColor = "Blue"
+ENT.BloodColor = VJ.BLOOD_COLOR_BLUE
 
 ENT.PoseParameterLooking_InvertPitch = true
 

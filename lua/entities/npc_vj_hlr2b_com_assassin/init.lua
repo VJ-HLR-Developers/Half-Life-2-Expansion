@@ -5,13 +5,17 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2b/combine_assassin.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2b/combine_assassin.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 65
 ENT.HullType = HULL_HUMAN
-ENT.MaxJumpLegalDistance = VJ.SET(520,620)
+ENT.JumpVars = {
+	MaxRise = 620,
+	MaxDrop = 620,
+	MaxDistance = 620
+}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
+ENT.BloodColor = VJ.BLOOD_COLOR_RED -- The blood type, this will determine what it should use (decal, particle, etc.)
 
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.MeleeAttackDamage = 10

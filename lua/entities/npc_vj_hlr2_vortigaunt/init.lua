@@ -21,7 +21,7 @@ ENT.FriendsWithAllPlayerAllies = true
 ENT.HasOnPlayerSight = true
 ENT.BecomeEnemyToPlayer = true
 
-ENT.BloodColor = "Yellow"
+ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
 
 ENT.MeleeAttackDamage = 10

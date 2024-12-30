@@ -18,7 +18,7 @@ ENT.VJC_Data = {
     FirstP_Offset = Vector(3, 0, -1), -- The offset for the controller when the camera is in first person
 }
 
-ENT.BloodColor = "Yellow"
+ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
 
 ENT.HasMeleeAttack = false

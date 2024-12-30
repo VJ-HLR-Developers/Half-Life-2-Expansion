@@ -12,7 +12,7 @@ ENT.TurningSpeed = 12
 ENT.CanEat = true
 
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
-ENT.BloodColor = "Red"
+ENT.BloodColor = VJ.BLOOD_COLOR_RED
 
 ENT.CanFlinch = 1
 ENT.FlinchChance = 35

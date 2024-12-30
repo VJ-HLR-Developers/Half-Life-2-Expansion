@@ -5,24 +5,26 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/mortarsynth.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2/mortarsynth.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 80
 ENT.HullType = HULL_TINY
 ENT.MovementType = VJ_MOVETYPE_AERIAL -- How the NPC moves around
 ENT.Aerial_FlyingSpeed_Calm = 180 -- The speed it should fly with, when it's wandering, moving slowly, etc. | Basically walking compared to ground NPCs
 ENT.Aerial_FlyingSpeed_Alerted = 250
-ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it's wandering around while idle
-ENT.Aerial_AnimTbl_Alerted = {"mortar_forward"} -- Animations it plays when it's moving while alerted
+ENT.Aerial_AnimTbl_Calm = ACT_IDLE -- Animations it plays when it's wandering around while idle
+ENT.Aerial_AnimTbl_Alerted = "mortar_forward" -- Animations it plays when it's moving while alerted
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = "Blue" -- The blood type, this will determine what it should use (decal, particle, etc.)
+ENT.BloodColor = VJ.BLOOD_COLOR_BLUE -- The blood type, this will determine what it should use (decal, particle, etc.)
+
 ENT.HasMeleeAttack = false -- Can this NPC melee attack?
--- ENT.AnimTbl_MeleeAttack = ACT_RANGE_ATTACK1
--- ENT.MeleeAttackDistance = 60 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
--- ENT.MeleeAttackDamageDistance = 80 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
--- ENT.TimeUntilMeleeAttackDamage = 0.7 -- This counted in seconds | This calculates the time until it hits something
--- ENT.NextAnyAttackTime_Melee = 1.3 -- How much time until it can use any attack again? | Counted in Seconds
--- ENT.MeleeAttackDamage = 30
+//ENT.AnimTbl_MeleeAttack = ACT_RANGE_ATTACK1
+//ENT.MeleeAttackDistance = 60 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
+//ENT.MeleeAttackDamageDistance = 80 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
+//ENT.TimeUntilMeleeAttackDamage = 0.7 -- This counted in seconds | This calculates the time until it hits something
+//ENT.NextAnyAttackTime_Melee = 1.3 -- How much time until it can use any attack again? | Counted in Seconds
+//ENT.MeleeAttackDamage = 30
+
 ENT.HasDeathCorpse = false -- Should a corpse spawn when it's killed?
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
 

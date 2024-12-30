@@ -9,7 +9,7 @@ ENT.Model = {"models/vj_hlr/hl2b/bullsquid.mdl"}
 ENT.StartHealth = 80
 
 ENT.VJ_NPC_Class = {"CLASS_XEN"}
-ENT.BloodColor = "Yellow"
+ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
 ENT.Immune_AcidPoisonRadiation = true
 

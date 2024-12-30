@@ -10,7 +10,7 @@ ENT.StartHealth = 500
 ENT.VJTag_ID_Boss = true
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 
-ENT.BloodColor = "White"
+ENT.BloodColor = VJ.BLOOD_COLOR_WHITE
 ENT.Immune_Bullet = true
 
 ENT.DisableWandering = true

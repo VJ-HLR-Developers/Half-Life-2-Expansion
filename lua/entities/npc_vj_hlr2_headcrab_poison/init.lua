@@ -20,7 +20,7 @@ ENT.VJC_Data = {
 
 ENT.AnimTbl_IdleStand = {ACT_IDLE,"IdleSumo","IdleSniff"}
 
-ENT.BloodColor = "Yellow"
+ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
 
 ENT.HasMeleeAttack = false

@@ -11,7 +11,7 @@ ENT.HullType = HULL_HUMAN
 
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
-ENT.BloodColor = "Yellow"
+ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.CustomBlood_Particle = {"blood_impact_green_01"}
 
 ENT.MeleeAttackDamage = 6

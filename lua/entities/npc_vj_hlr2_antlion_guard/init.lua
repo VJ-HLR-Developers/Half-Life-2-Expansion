@@ -18,7 +18,7 @@ ENT.VJC_Data = {
 }
 
 ENT.VJ_NPC_Class = {"CLASS_ANTLION"}
-ENT.BloodColor = "Yellow"
+ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
 
 ENT.HasMeleeAttack = true
@@ -336,7 +336,7 @@ function ENT:CustomAttack(ent,vis)
 		self.DisableChasingEnemy = true
 		self.HasMeleeAttack = false
 		self:SetMaxYawSpeed(2)
-		self:FaceCertainEntity(ent,true)
+		self:SetTurnTarget(ent, -1)
 		local tr = util.TraceHull({
 			start = self:GetPos() +self:OBBCenter(),
 			endpos = self:GetPos() +self:OBBCenter() +self:GetForward() *100,
@@ -368,7 +368,7 @@ function ENT:CustomAttack(ent,vis)
 				local gest = self:AddGestureSequence(self:LookupSequence("charge_hit"))
 				self:SetLayerPriority(gest,1)
 				self:SetLayerPlaybackRate(gest,0.5)
-				local ent = tr.Entity
+				ent = tr.Entity
 				local isProp = IsValid(ent) && VJ.IsProp(ent) or false
 				if IsValid(ent) && (isProp or self:CheckRelationship(ent) == D_HT) then
 					if isProp then
