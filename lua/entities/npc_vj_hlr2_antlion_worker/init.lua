@@ -24,8 +24,8 @@ ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance"
 ENT.NoChaseAfterCertainRange_Type = "OnlyRange"
 
 ENT.HasDeathAnimation = true
-ENT.AnimTbl_Death = {"explode"}
-ENT.GibOnDeathDamagesTable = {"All"}
+ENT.AnimTbl_Death = "explode"
+ENT.GibOnDeathFilter = false
 ENT.SoundTbl_Death = {
 	"npc/antlion/antlion_preburst_scream1.wav",
 	"npc/antlion/antlion_preburst_scream2.wav",
@@ -35,7 +35,7 @@ function ENT:RangeAttackProjSpawnPos(projectile)
 	return self:GetPos() + self:GetUp() * 20 + self:GetForward() * 30
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
+function ENT:HandleGibOnDeath(dmginfo, hitgroup)
 	timer.Simple(0.89999995708466,function()
 		if IsValid(self) then
 			VJ.EmitSound(self,"npc/antlion/antlion_burst" .. math.random(1,2) .. ".wav",75,100)
@@ -45,9 +45,9 @@ function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
 
 			local head = self:GetPos() +self:GetForward() *50 +self:GetRight() *0 +self:GetUp() *30
 			local lF = self:GetPos() +self:GetForward() *40 +self:GetRight() *-15 +self:GetUp() *30
-			local lB = self:GetPos() +self:GetForward() *-45 +self:GetRight() *-15 +self:GetUp() *30
+			//local lB = self:GetPos() +self:GetForward() *-45 +self:GetRight() *-15 +self:GetUp() *30
 			local rF = self:GetPos() +self:GetForward() *40 +self:GetRight() *15 +self:GetUp() *30
-			local rB = self:GetPos() +self:GetForward() *-45 +self:GetRight() *15 +self:GetUp() *30
+			//local rB = self:GetPos() +self:GetForward() *-45 +self:GetRight() *15 +self:GetUp() *30
 			self:CreateGibEntity("prop_ragdoll","models/gibs/antlion_worker_gibs_backlegl.mdl",{BloodType="Yellow",Pos=lF})
 			self:CreateGibEntity("prop_ragdoll","models/gibs/antlion_worker_gibs_backlegr.mdl",{BloodType="Yellow",Pos=rF})
 			self:CreateGibEntity("prop_ragdoll","models/gibs/antlion_worker_gibs_frontlegl.mdl",{BloodType="Yellow",Pos=lF})
@@ -55,5 +55,5 @@ function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
 			self:CreateGibEntity("obj_vj_gib","models/gibs/antlion_worker_gibs_head.mdl",{BloodType="Yellow",Pos=head})
 		end
 	end)
-	return true, {DeathAnim=true}
+	return true, {AllowAnim = true}
 end

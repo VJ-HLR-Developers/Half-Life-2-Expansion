@@ -15,9 +15,9 @@ ENT.Turret_BulletAttachment = "muzzle"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.001 -- How much time until the projectile code is ran?
 ENT.NextRangeAttackTime = 1.2 -- How much time until it can use a range attack?
 ENT.NextAnyAttackTime_Range = 1.2 -- How much time until it can use any attack again? | Counted in Seconds
-ENT.Turret_FireSound = {"^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot1.wav","^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot2.wav","^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot3.wav"}
+ENT.Turret_FireSound = {"^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot1.wav", "^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot2.wav", "^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot3.wav"}
 
-ENT.GibOnDeathDamagesTable = {"All"}
+ENT.GibOnDeathFilter = false
 ENT.GeneratorHealth = 100
 
 ENT.VJC_Data = {
@@ -343,7 +343,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local sdGibCollide = {"physics/metal/metal_box_impact_hard1.wav", "physics/metal/metal_box_impact_hard2.wav", "physics/metal/metal_box_impact_hard3.wav"}
 --
-function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
+function ENT:HandleGibOnDeath(dmginfo, hitgroup)
 	self.HasDeathSounds = false
 	local function gibs(ent)
 		ent = ent or self
@@ -362,5 +362,5 @@ function ENT:SetUpGibesOnDeath(dmginfo, hitgroup)
 	gibs(self.Turret1)
 	gibs(self.Turret2)
 
-	return true -- Return to true if it gibbed!
+	return true
 end
