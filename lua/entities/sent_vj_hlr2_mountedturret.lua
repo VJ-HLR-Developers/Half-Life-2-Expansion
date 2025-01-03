@@ -264,7 +264,7 @@ function ENT:FireEmplacement()
                 end
             end)
         end
-        ParticleEffectAttach("Advisor_Pod_Steam_Continuous",PATTACH_POINT_FOLLOW,turret,1)
+        ParticleEffectAttach("vj_steam_narrow_continuous",PATTACH_POINT_FOLLOW,turret,1)
         turret.Loop = CreateSound(turret,"ambient/gas/steam2.wav")
         turret.Loop:SetSoundLevel(72)
         turret.Loop:Play()

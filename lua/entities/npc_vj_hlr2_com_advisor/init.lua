@@ -137,9 +137,9 @@ function ENT:ShieldCode(bEnable)
 		self.CustomBlood_Particle = {"hunter_shield_impact"}
 		return
 	end
-	self.CustomBlood_Particle = {"vj_impact1_yellow"}
+	self.CustomBlood_Particle = {"vj_blood_impact_yellow"}
 	self:StopParticles()
-	ParticleEffect("aurora_shockwave",self:GetPos() + self:OBBCenter(),Angle(0,0,0),nil)
+	ParticleEffect("vj_aurora_shockwave",self:GetPos() + self:OBBCenter(),Angle(0,0,0),nil)
 	ParticleEffect("electrical_arc_01_system",self:GetPos() + self:OBBCenter(),Angle(0,0,0),nil)
 	VJ.CreateSound(self,"ambient/energy/whiteflash.wav",120)
 	for _, v in ipairs(ents.FindInSphere(self:GetPos(),8000)) do
@@ -297,7 +297,7 @@ function ENT:CreateAlly()
 		ally:GetActiveWeapon():Equip(ally)
 	end
 	
-	ParticleEffect("aurora_shockwave",ally:GetPos(),Angle(0,0,0),nil)
+	ParticleEffect("vj_aurora_shockwave",ally:GetPos(),Angle(0,0,0),nil)
 	ParticleEffect("electrical_arc_01_system",ally:GetPos(),Angle(0,0,0),nil)
 	VJ.EmitSound(ally,"ambient/energy/whiteflash.wav",90)
 	return ally
@@ -307,7 +307,7 @@ function ENT:OnThinkActive()
 	if self.Dead then return end
 	for _,v in pairs(ents.FindInSphere(self:GetPos(),300)) do
 		if string.find(v:GetClass(),"rocket") or string.find(v:GetClass(),"missile") then
-			ParticleEffect("aurora_shockwave",v:GetPos(),Angle(0,0,0),nil)
+			ParticleEffect("vj_aurora_shockwave",v:GetPos(),Angle(0,0,0),nil)
 			ParticleEffect("electrical_arc_01_system",v:GetPos(),Angle(0,0,0),nil)
 			VJ.EmitSound(v,"ambient/energy/whiteflash.wav",90)
 			SafeRemoveEntity(v)

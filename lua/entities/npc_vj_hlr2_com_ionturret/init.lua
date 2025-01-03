@@ -185,7 +185,7 @@ end
 function ENT:CustomRangeAttackCode()
 	local attackpos = self:DoTrace()
 	util.ParticleTracerEx("weapon_combine_ion_cannon",self:GetPos(),attackpos,false,self:EntIndex(),1)
-	ParticleEffect("aurora_shockwave",attackpos,Angle(math.random(0,360),math.random(0,360),math.random(0,360)),nil)
+	ParticleEffect("vj_aurora_shockwave",attackpos,Angle(math.random(0,360),math.random(0,360),math.random(0,360)),nil)
 	ParticleEffect("Weapon_Combine_Ion_Cannon_Exlposion_c",attackpos +Vector(0,0,-35),Angle(math.random(0,360),math.random(0,360),math.random(0,360)),nil)
 	util.ScreenShake(attackpos, 16, 200, 2, 1500)
 	util.ScreenShake(self:GetPos(),12,100,0.4,800)

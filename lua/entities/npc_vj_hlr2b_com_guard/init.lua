@@ -171,7 +171,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 			if pos == defPos then pos = self:GetPos() + self:OBBCenter() end
 			
 			local particle = ents.Create("info_particle_system")
-			particle:SetKeyValue("effect_name", "vj_impact1_red")
+			particle:SetKeyValue("effect_name", "vj_blood_impact_red")
 			particle:SetPos(pos)
 			particle:Spawn()
 			particle:Activate()

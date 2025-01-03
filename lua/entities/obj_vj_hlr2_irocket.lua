@@ -55,8 +55,8 @@ ENT.SoundTbl_OnCollide = {"ambient/explosions/explode_8.wav"}
 ENT.Rocket_Follow = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	-- ParticleEffectAttach("vj_rpg1_smoke", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	-- ParticleEffectAttach("vj_rpg2_smoke2", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+	-- ParticleEffectAttach("vj_rocket_idle1_smoke", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+	-- ParticleEffectAttach("vj_rocket_idle2_smoke2", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 	ParticleEffectAttach("electrical_arc_01_system",PATTACH_POINT_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ function ENT:OnDestroy(data, phys)
 	self:DeleteOnRemove(self.ExplosionLight1)
 
 	for i = 1,math.random(3,5) do
-		ParticleEffect("aurora_shockwave",self:GetPos(),Angle(0,0,0),nil)
+		ParticleEffect("vj_aurora_shockwave",self:GetPos(),Angle(0,0,0),nil)
 		ParticleEffect("electrical_arc_01_system",self:GetPos(),Angle(0,0,0),nil)
 	end
 end

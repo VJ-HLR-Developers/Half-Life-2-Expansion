@@ -160,7 +160,7 @@ function ENT:OnInput(key, activator, caller, data)
 			VJ.EmitSound(self,"vj_hlr/hl1_npc/bullchicken/bc_spithit3.wav")
 
 			local pos,ang = self:GetBonePosition(53)
-			ParticleEffect("antlion_gib_01",pos,ang,nil)
+			ParticleEffect("vj_acid_impact2",pos,ang,nil)
 		end
 	elseif key == "throw" then
 		local ent = self:GetEnemy()
