@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/spitball_small.mdl", "models/spitball_medium.mdl", "models/spitball_medium.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = {"models/vj_base/projectiles/spit_acid_small.mdl", "models/vj_base/projectiles/spit_acid_medium.mdl", "models/vj_base/projectiles/spit_acid_medium.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.ProjectileType = VJ.PROJ_TYPE_GRAVITY
 ENT.DoesRadiusDamage = true -- Should it deal radius damage when it collides with something?
 ENT.RadiusDamageRadius = 40
