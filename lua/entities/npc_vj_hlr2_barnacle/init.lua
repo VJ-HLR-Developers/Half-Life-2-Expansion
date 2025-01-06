@@ -5,7 +5,7 @@ include("shared.lua")
 	parameters and it has events, so have fun.
 */
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2024 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2025 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -112,7 +112,7 @@ function ENT:Barnacle_CalculateTongue()
 	self.Barnacle_LastHeight = math.Clamp(height,128,1024)
 	self:SetPoseParameter("tongue_height",-math.Clamp(height,-128,1024))
 
-	if IsValid(trent) && (trent:IsNPC() or trent:IsPlayer()) && self:CheckRelationship(trent) == D_HT && trent.VJTag_ID_Boss != true then
+	if IsValid(trent) && (trent:IsNPC() or trent:IsPlayer()) && self:CheckRelationship(trent) == D_HT && trent.VJ_ID_Boss != true then
 		-- If the grabbed enemy is a new enemy then reset the enemy values
 		if self.Barnacle_CurEnt != trent then
 			self:Barnacle_ResetEnt()

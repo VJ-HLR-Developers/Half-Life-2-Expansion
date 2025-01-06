@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2024 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2025 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -190,12 +190,12 @@ function ENT:ResetEatingBehavior(statusData)
 	local eatingData = self.EatingData
 	self:SetState(VJ_STATE_NONE)
 	self:OnEat("StopEating", statusData)
-	self.VJTag_IsEating = false
+	self.VJ_ST_Eating = false
 	local food = eatingData.Ent
 	if IsValid(food) then
 		local foodData = food.FoodData
 		if foodData.NumConsumers <= 1 then
-			food.VJTag_IsBeingEaten = false
+			food.VJ_ST_BeingEaten = false
 			foodData.NumConsumers = 0
 			foodData.SizeRemaining = foodData.Size
 		else

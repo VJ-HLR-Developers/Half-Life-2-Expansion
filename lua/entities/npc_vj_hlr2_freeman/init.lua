@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2024 by DrVrej, All rights reserved. ***
+	*** Copyright (c) 2012-2025 by DrVrej, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -66,7 +66,7 @@ function ENT:Init()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnAlert(ent)
-	if math.random(1, 2) == 1 && ent:IsNPC() && ent.VJTag_ID_Headcrab then
+	if math.random(1, 2) == 1 && ent:IsNPC() && ent.VJ_ID_Headcrab then
 		self:DoChangeWeapon("weapon_vj_crowbar", true)
 		return
 	end
