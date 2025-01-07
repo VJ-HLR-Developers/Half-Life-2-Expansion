@@ -12,7 +12,7 @@ ENT.RadiusDamageRadius = 200
 ENT.RadiusDamage = 40
 ENT.RadiusDamageUseRealisticRadius = true -- Should the damage decrease the farther away the hit entity is from the radius origin?
 ENT.RadiusDamageType = DMG_DISSOLVE
-ENT.CollisionDecals = "Scorch"
+ENT.CollisionDecal = "Scorch"
 ENT.SoundTbl_Idle = "vj_hlr/hl2_npc/combot/cbot_energyball_loop1.wav"
 ENT.SoundTbl_OnCollide = "vj_hlr/hl2_npc/mortarsynth/grenade_fire.wav"
 ---------------------------------------------------------------------------------------------------------------------------------------------

@@ -99,7 +99,7 @@ function ENT:CustomOnMeleeAttack_BeforeChecks()
 	effects.BeamRingPoint(self:GetPos() +Vector(0,0,5),0.3,2,400,16,0,Color(248,0,35),{material="vj_hl/sprites/shockwave",framerate=20,flags=0})
 	effects.BeamRingPoint(self:GetPos() +Vector(0,0,5),0.3,2,200,16,0,Color(248,0,35),{material="vj_hl/sprites/shockwave",framerate=20,flags=0})
 
-	if self.HasSounds == true && GetConVarNumber("vj_npc_sd_meleeattack") == 0 then
+	if self.HasSounds && self.HasMeleeAttackSounds then
 		VJ.EmitSound(self,"vj_hlr/hl2_npc/houndeye/he_blast"..math.random(1,3)..".wav",100,math.random(80,100))
 	end
 

@@ -47,7 +47,7 @@ ENT.RadiusDamage = 100
 ENT.RadiusDamageUseRealisticRadius = true -- Should the damage decrease the farther away the hit entity is from the radius origin?
 ENT.RadiusDamageType = bit.bor(DMG_BLAST,DMG_SHOCK,DMG_DISSOLVE)
 ENT.RadiusDamageForce = 90 -- Damage force to apply to the hit entity | false = Don't apply any force
-ENT.CollisionDecals = {"Scorch"}
+ENT.CollisionDecal = {"Scorch"}
 ENT.SoundTbl_Idle = {"weapons/rpg/rocket1.wav"}
 ENT.SoundTbl_OnCollide = {"ambient/explosions/explode_8.wav"}
 

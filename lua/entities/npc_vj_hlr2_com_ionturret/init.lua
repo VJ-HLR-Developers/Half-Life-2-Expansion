@@ -348,11 +348,11 @@ function ENT:HandleGibOnDeath(dmginfo, hitgroup)
 	local function gibs(ent)
 		ent = ent or self
 		if !IsValid(ent) then return end
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib1.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,40)), CollideSound=sdGibCollide})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib2.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,20)), CollideSound=sdGibCollide})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib3.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,30)), CollideSound=sdGibCollide})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib4.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,35)), CollideSound=sdGibCollide})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib5.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,35)), CollideSound=sdGibCollide})
+		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib1.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,40)), CollisionSound=sdGibCollide})
+		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib2.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,20)), CollisionSound=sdGibCollide})
+		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib3.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,30)), CollisionSound=sdGibCollide})
+		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib4.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,35)), CollisionSound=sdGibCollide})
+		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hl2/Floor_turret_gib5.mdl", {BloodType="",Pos=ent:LocalToWorld(Vector(0,0,35)), CollisionSound=sdGibCollide})
 	end
 
 	gibs(self)
