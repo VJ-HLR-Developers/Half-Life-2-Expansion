@@ -7,7 +7,7 @@ AddCSLuaFile()
 
 ENT.Base 			= "base_gmodentity"
 ENT.Type 			= "anim"
-ENT.PrintName 		= ""
+ENT.PrintName 		= "Blob"
 ENT.Author 			= ""
 ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
 ENT.Purpose 		= ""
@@ -20,12 +20,7 @@ local BLOB_HEIGHTVEC = Vector(0,0,8)
 local BLOB_VEC0 = Vector(0,0,0)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then
-	local killName = "Blob"
-	local className = "sent_vj_hlr2_metaball"
-	language.Add(className, killName)
-	killicon.Add(className,"HUD/killicons/default",Color(255,80,0,255))
-	language.Add("#" .. className, killName)
-	killicon.Add("#" .. className,"HUD/killicons/default",Color(255,80,0,255))
+	VJ.AddKillIcon("sent_vj_hlr2_metaball", ENT.PrintName)
 
 	function ENT:Draw()
 		self:DrawModel()

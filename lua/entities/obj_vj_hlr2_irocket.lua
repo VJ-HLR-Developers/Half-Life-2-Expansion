@@ -14,12 +14,7 @@ ENT.Information		= "Projectile, usually used for NPCs & Weapons"
 ENT.Category		= "Projectiles"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 if (CLIENT) then
-	local Name = "Combine Rocket"
-	local LangName = "obj_vj_hlr2_irocket"
-	language.Add(LangName, Name)
-	killicon.Add(LangName,"HUD/killicons/default",Color(255,80,0,255))
-	language.Add("#"..LangName, Name)
-	killicon.Add("#"..LangName,"HUD/killicons/default",Color(255,80,0,255))
+	VJ.AddKillIcon("obj_vj_hlr2_irocket", ENT.PrintName, VJ.KILLICON_PROJECTILE)
 
 	function ENT:Think()
 		if self:IsValid() then
