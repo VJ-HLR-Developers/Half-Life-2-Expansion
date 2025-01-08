@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/gordon_freeman.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table 
+ENT.Model = "models/vj_hlr/hl2/gordon_freeman.mdl" -- Model(s) to spawn with | Picks a random one if it's a table 
 ENT.StartHealth = 100
 ENT.HasHealthRegeneration = true -- Can the NPC regenerate its health?
 ENT.HealthRegenerationAmount = 2 -- How much should the health increase after every delay?
@@ -17,8 +17,6 @@ ENT.FriendsWithAllPlayerAllies = true -- Should this NPC be friends with other p
 ENT.BloodColor = VJ.BLOOD_COLOR_RED -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.AnimTbl_MeleeAttack = {"vjseq_MeleeAttack01"}
 ENT.TimeUntilMeleeAttackDamage = 0.7 -- This counted in seconds | This calculates the time until it hits something
-ENT.FootStepTimeRun = 0.25 -- Delay between footstep sounds while it is running | false = Disable while running
-ENT.FootStepTimeWalk = 0.5 -- Delay between footstep sounds while it is walking | false = Disable while walking
 
 ENT.HasGrenadeAttack = true -- Should the NPC have a grenade attack?
 ENT.GrenadeAttackModel = "models/weapons/w_npcnade.mdl" -- Overrides the model of the grenade | Can be nil, string, and table | Does NOT apply to picked up grenades and forced grenade attacks with custom entity
@@ -125,7 +123,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 	if status == "PreDamage" then
 		-- Absorb bullet damage
 		if dmginfo:IsBulletDamage() then
-			if self.HasSounds == true && self.HasImpactSounds == true then VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1,10)..".wav", 70) end
+			if self.HasSounds && self.HasImpactSounds then VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1,10)..".wav", 70) end
 			if math.random(1,3) == 1 then
 				dmginfo:ScaleDamage(0.50)
 				local spark = ents.Create("env_spark")

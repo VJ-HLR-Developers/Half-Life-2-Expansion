@@ -179,7 +179,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 			particle:Fire("Kill", "", 0.1)
 		else
 			if dmginfo:IsBulletDamage() then
-				if self.HasSounds == true && self.HasImpactSounds == true then
+				if self.HasSounds && self.HasImpactSounds then
 					VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1, 10)..".wav", 70)
 				end
 				if math.random(1, 3) == 1 then
