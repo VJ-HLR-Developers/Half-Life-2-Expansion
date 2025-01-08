@@ -70,7 +70,7 @@ function ENT:Init()
 	self.NextCameraAttackT = 0
 
 	self.EyeSprite = ents.Create("env_sprite")
-	self.EyeSprite:SetKeyValue("model","vj_base/sprites/vj_glow1.vmt")
+	self.EyeSprite:SetKeyValue("model","vj_base/sprites/glow.vmt")
 	self.EyeSprite:SetKeyValue("scale","0.1")
 	self.EyeSprite:SetKeyValue("rendermode","9")
 	self.EyeSprite:SetKeyValue("rendercolor","255 110 0")

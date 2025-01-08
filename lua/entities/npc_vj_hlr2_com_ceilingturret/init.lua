@@ -20,7 +20,7 @@ function ENT:Init()
 	self.SightAngle = 90
 	
 	self.Turret_Sprite = ents.Create("env_sprite")
-	self.Turret_Sprite:SetKeyValue("model","vj_base/sprites/vj_glow1.vmt")
+	self.Turret_Sprite:SetKeyValue("model","vj_base/sprites/glow.vmt")
 	self.Turret_Sprite:SetKeyValue("scale","0.1")
 	self.Turret_Sprite:SetKeyValue("rendermode","5")
 	self.Turret_Sprite:SetKeyValue("rendercolor","255 0 0")
