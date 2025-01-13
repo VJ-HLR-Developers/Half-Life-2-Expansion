@@ -18,11 +18,12 @@
 			"texturescrollrate" 0.6
 			"texturescrollangle" 75
 		}
-		"TextureScroll"
-		{
-			"texturescrollvar" "$texture2transform"
-			"texturescrollrate" 1
-			"texturescrollangle" 150
-		}
+		// Creates error: "Error: Material "vj_hl/renderfx/render_advisor" : proxy "TextureScroll" unable to initialize!"
+		//"TextureScroll"
+		//{
+		//	"texturescrollvar" "$texture2transform"
+		//	"texturescrollrate" 1
+		//	"texturescrollangle" 150
+		//}
 	}
 }
