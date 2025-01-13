@@ -122,13 +122,12 @@ ENT.Tank_SoundTbl_DrivingEngine = {"vehicles/apc/apc_firstgear_loop1.wav"}
 ENT.Tank_SoundTbl_Track = false
 ENT.Tank_DefaultSoundTbl_Track = false
 
-ENT.Tank_SeeClose = 500 -- If the enemy is closer than this number, than move by either running over them or moving away for the gunner to fire
-ENT.Tank_SeeFar = 2000 -- If the enemy is higher than this number, than move towards the enemy
-ENT.Tank_DistRanOver = 400 -- If the enemy is within self.Tank_SeeClose & this number & not high up, then run over them!
+ENT.Tank_DriveAwayDistance = 500 -- If the enemy is closer than this number, than move by either running over them or moving away for the gunner to fire
+ENT.Tank_DriveTowardsDistance = 2000 -- If the enemy is higher than this number, than move towards the enemy
+ENT.Tank_RanOverDistance = 400
 ENT.Tank_TurningSpeed = 5 -- How fast the chassis moves as it's driving
 ENT.Tank_DrivingSpeed = 800 -- How fast the tank drives
 
-ENT.Tank_AngleDiffuseNumber = 0
 ENT.Tank_CollisionBoundSize = 90
 ENT.Tank_CollisionBoundUp = 130
 ENT.Tank_DeathSoldierModels = {"models/police.mdl"} -- The corpses it will spawn on death (Example: A soldier) | false = Don't spawn anything

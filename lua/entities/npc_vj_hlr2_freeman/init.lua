@@ -123,8 +123,8 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 	if status == "PreDamage" then
 		-- Absorb bullet damage
 		if dmginfo:IsBulletDamage() then
-			if self.HasSounds && self.HasImpactSounds then VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1,10)..".wav", 70) end
-			if math.random(1,3) == 1 then
+			if self.HasSounds && self.HasImpactSounds then VJ.EmitSound(self, "VJ.Impact.Armor") end
+			if math.random(1, 3) == 1 then
 				dmginfo:ScaleDamage(0.50)
 				local spark = ents.Create("env_spark")
 				spark:SetKeyValue("Magnitude","1")

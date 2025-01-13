@@ -110,7 +110,7 @@ ENT.SoundTbl_Death = {
 	"vj_hlr/hl2_npc/combine_guard/die2.wav",
 	"vj_hlr/hl2_npc/combine_guard/die3.wav",
 }
-ENT.SoundTbl_MeleeAttackExtra = {"vj_base/impact/metal_crush1.wav","vj_base/impact/metal_crush2.wav","vj_base/impact/metal_crush3.wav"}
+ENT.SoundTbl_MeleeAttackExtra = "VJ.Impact.Metal_Crush"
 
 ENT.GeneralSoundPitch1 = 100
 ENT.DisableFootStepSoundTimer = true
@@ -180,7 +180,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 		else
 			if dmginfo:IsBulletDamage() then
 				if self.HasSounds && self.HasImpactSounds then
-					VJ.EmitSound(self, "vj_base/impact/armor"..math.random(1, 10)..".wav", 70)
+					VJ.EmitSound(self, "VJ.Impact.Armor")
 				end
 				if math.random(1, 3) == 1 then
 					dmginfo:ScaleDamage(0.50)
