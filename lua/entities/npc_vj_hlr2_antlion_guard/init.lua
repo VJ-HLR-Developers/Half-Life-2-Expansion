@@ -19,7 +19,7 @@ ENT.VJC_Data = {
 
 ENT.VJ_NPC_Class = {"CLASS_ANTLION"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
+ENT.BloodParticle = {"blood_impact_yellow_01"}
 
 ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1

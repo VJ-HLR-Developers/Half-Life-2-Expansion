@@ -17,8 +17,8 @@ ENT.Aquatic_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it's wandering
 ENT.Aquatic_AnimTbl_Alerted = {ACT_IDLE} -- Animations it plays when it's moving while alerted
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_XEN"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.HasBloodPool = false -- Does it have a blood pool?
+ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
+ENT.HasBloodPool = false
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.MeleeAttackDamage = 1
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1

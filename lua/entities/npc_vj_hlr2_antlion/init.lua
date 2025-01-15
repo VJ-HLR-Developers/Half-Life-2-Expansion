@@ -25,7 +25,7 @@ ENT.VJC_Data = {
 }
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
+ENT.BloodParticle = {"blood_impact_yellow_01"}
 
 ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1,"pounce","pounce2"}

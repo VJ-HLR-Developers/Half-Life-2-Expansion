@@ -10,7 +10,7 @@ ENT.StartHealth = 80
 
 ENT.VJ_NPC_Class = {"CLASS_XEN"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
+ENT.BloodParticle = {"blood_impact_yellow_01"}
 ENT.Immune_AcidPoisonRadiation = true
 
 ENT.VJC_Data = {

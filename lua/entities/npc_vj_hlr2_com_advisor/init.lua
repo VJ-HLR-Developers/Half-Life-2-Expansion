@@ -17,7 +17,7 @@ ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it's wandering 
 ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE_ANGRY} -- Animations it plays when it's moving while alerted
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW -- The blood type, this will determine what it should use (decal, particle, etc.)
+ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
@@ -134,10 +134,10 @@ function ENT:ShieldCode(bEnable)
 	if bEnable then
 		ParticleEffectAttach("advisor_psychic_shield_idle",PATTACH_ABSORIGIN_FOLLOW,self,0)
 		self.ShieldHealth = 1500
-		self.CustomBlood_Particle = {"hunter_shield_impact"}
+		self.BloodParticle = {"hunter_shield_impact"}
 		return
 	end
-	self.CustomBlood_Particle = {"vj_blood_impact_yellow"}
+	self.BloodParticle = {"vj_blood_impact_yellow"}
 	self:StopParticles()
 	ParticleEffect("vj_aurora_shockwave",self:GetPos() + self:OBBCenter(),Angle(0,0,0),nil)
 	ParticleEffect("electrical_arc_01_system",self:GetPos() + self:OBBCenter(),Angle(0,0,0),nil)

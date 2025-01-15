@@ -8,7 +8,7 @@ include("shared.lua")
 ENT.Model = "models/vj_hlr/hl2/antlion_worker.mdl"
 ENT.StartHealth = 60
 
-ENT.CustomBlood_Particle = {"vj_acid_impact1_small_splat"}
+ENT.BloodParticle = {"vj_acid_impact1_small_splat"}
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1

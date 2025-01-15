@@ -10,8 +10,8 @@ ENT.StartHealth = 80
 ENT.HullType = HULL_WIDE_SHORT
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_XEN"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.CustomBlood_Particle = {"vj_hlr_blood_yellow"}
+ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
+ENT.BloodParticle = {"vj_hlr_blood_yellow"}
 ENT.Immune_Sonic = true -- Immune to sonic damage
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.AnimTbl_MeleeAttack = ACT_RANGE_ATTACK1

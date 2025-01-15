@@ -13,7 +13,7 @@ ENT.TurningSpeed = 2
 
 ENT.VJ_NPC_Class = {"CLASS_HYDRA"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.BloodColor = VJ.BLOOD_COLOR_BLUE -- The blood type, this will determine what it should use (decal, particle, etc.)
+ENT.BloodColor = VJ.BLOOD_COLOR_BLUE
 
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.AnimTbl_MeleeAttack = "vjges_strike"

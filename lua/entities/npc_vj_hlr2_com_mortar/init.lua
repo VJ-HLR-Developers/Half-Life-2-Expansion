@@ -15,7 +15,7 @@ ENT.Aerial_AnimTbl_Calm = ACT_IDLE -- Animations it plays when it's wandering ar
 ENT.Aerial_AnimTbl_Alerted = "mortar_forward" -- Animations it plays when it's moving while alerted
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = VJ.BLOOD_COLOR_BLUE -- The blood type, this will determine what it should use (decal, particle, etc.)
+ENT.BloodColor = VJ.BLOOD_COLOR_BLUE
 
 ENT.HasMeleeAttack = false -- Can this NPC melee attack?
 //ENT.AnimTbl_MeleeAttack = ACT_RANGE_ATTACK1

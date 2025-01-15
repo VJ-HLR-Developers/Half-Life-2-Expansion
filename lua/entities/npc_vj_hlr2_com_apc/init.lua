@@ -130,7 +130,7 @@ ENT.Tank_DrivingSpeed = 800 -- How fast the tank drives
 
 ENT.Tank_CollisionBoundSize = 90
 ENT.Tank_CollisionBoundUp = 130
-ENT.Tank_DeathSoldierModels = {"models/police.mdl"} -- The corpses it will spawn on death (Example: A soldier) | false = Don't spawn anything
+ENT.Tank_DeathDriverCorpse = "models/police.mdl"
 
 util.AddNetworkString("vj_hlr2_apc_moveeffects")
 

@@ -27,8 +27,8 @@ ENT.VJC_Data = {
 
 ENT.VJ_NPC_Class = {"CLASS_XEN"} -- NPCs with the same class with be allied to each other
 
-ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.HasBloodPool = false -- Does it have a blood pool?
+ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
+ENT.HasBloodPool = false
 
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.MeleeAttackDamage = 35

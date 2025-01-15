@@ -10,7 +10,7 @@ ENT.StartHealth = 210
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = VJ.BLOOD_COLOR_WHITE -- The blood type, this will determine what it should use (decal, particle, etc.)
+ENT.BloodColor = VJ.BLOOD_COLOR_WHITE
 
 ENT.CallForHelpDistance = 6000
 ENT.AnimTbl_CallForHelp = {"hunter_respond_1","hunter_respond_3"}

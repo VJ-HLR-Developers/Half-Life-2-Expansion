@@ -19,8 +19,8 @@ ENT.CanTurnWhileStationary = false -- If set to true, the SNPC will be able to t
 ENT.HullType = HULL_SMALL_CENTERED
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_XEN"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = VJ.BLOOD_COLOR_RED -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.HasBloodPool = false -- Does it have a blood pool?
+ENT.BloodColor = VJ.BLOOD_COLOR_RED
+ENT.HasBloodPool = false
 
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
 ENT.MeleeAttackDamage = 80

@@ -19,10 +19,10 @@ ENT.JumpVars = {
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY","CLASS_VORTIGAUNT"}
 ENT.FriendsWithAllPlayerAllies = true
 ENT.HasOnPlayerSight = true
-ENT.BecomeEnemyToPlayer = true
+ENT.BecomeEnemyToPlayer = 2
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.CustomBlood_Particle = {"blood_impact_yellow_01"}
+ENT.BloodParticle = {"blood_impact_yellow_01"}
 
 ENT.MeleeAttackDamage = 10
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
