@@ -41,8 +41,8 @@ ENT.ConstantlyFaceEnemyDistance = 1000
 
 ENT.DisableFootStepSoundTimer = true
 ENT.GeneralSoundPitch1 = 100
-ENT.PainSoundPitch = VJ_Set(40, 55)
-ENT.OnKilledEnemySoundPitch = VJ_Set(65, 70)
+ENT.PainSoundPitch = VJ.SET(40, 55)
+ENT.OnKilledEnemySoundPitch = VJ.SET(65, 70)
 
 ENT.SoundTbl_FootStep = {"vj_hlr/hl2_npc/cremator/foot1.wav","vj_hlr/hl2_npc/cremator/foot2.wav","vj_hlr/hl2_npc/cremator/foot3.wav"}
 ENT.SoundTbl_Alert = {"vj_hlr/hl2_npc/cremator/alert_object.wav","vj_hlr/hl2_npc/cremator/alert_player.wav"}
