@@ -328,13 +328,13 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpseEnt)
 	VJ.EmitSound(self,"vj_base/ambience/explosion3.wav",100,100)
 	util.BlastDamage(self,self,corpseEnt:GetPos(),200,40)
 	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
-	if self.HasGibOnDeathEffects == true then ParticleEffect("vj_explosion2",corpseEnt:GetPos(),Angle(0,0,0),nil) end
+	if self.HasGibOnDeathEffects then ParticleEffect("vj_explosion2",corpseEnt:GetPos(),Angle(0,0,0),nil) end
 
 	if math.random(1,3) == 1 then
 		self:CreateExtraDeathCorpse("prop_ragdoll","models/combine_soldier.mdl",{Pos=corpseEnt:GetPos()+corpseEnt:GetUp()*90+corpseEnt:GetRight()*-30,Vel=Vector(math.Rand(-600,600), math.Rand(-600,600),500)},function(extraent) extraent:Ignite(math.Rand(8,10),0); extraent:SetColor(Color(90,90,90)) end)
 	end
 
-	if self.HasGibOnDeathEffects == true then
+	if self.HasGibOnDeathEffects then
 		ParticleEffect("vj_explosion3",corpseEnt:GetPos(),Angle(0,0,0),nil)
 		ParticleEffect("vj_explosion2",corpseEnt:GetPos() +corpseEnt:GetForward()*-130,Angle(0,0,0),nil)
 		ParticleEffect("vj_explosion2",corpseEnt:GetPos() +corpseEnt:GetForward()*130,Angle(0,0,0),nil)
