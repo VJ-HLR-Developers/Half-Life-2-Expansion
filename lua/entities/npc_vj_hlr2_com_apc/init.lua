@@ -132,8 +132,6 @@ ENT.Tank_CollisionBoundSize = 90
 ENT.Tank_CollisionBoundUp = 130
 ENT.Tank_DeathDriverCorpse = "models/police.mdl"
 
-util.AddNetworkString("vj_hlr2_apc_moveeffects")
-
 -- Custom
 ENT.APC_DmgForce = 0
 ENT.APC_DoorOpen = false
@@ -165,10 +163,14 @@ function ENT:Controller_Initialize(ply, controlEnt)
 	ply:ChatPrint("JUMP: Deploy Civil-Protection Squad (1 time)")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:StartMoveEffects()
-	net.Start("vj_hlr2_apc_moveeffects")
-		net.WriteEntity(self)
-	net.Broadcast()
+function ENT:UpdateMoveParticles()
+	local effectData = EffectData()
+	effectData:SetScale(1)
+	effectData:SetEntity(self)
+	effectData:SetOrigin(self:GetPos() + self:GetRight() * -130 + self:GetForward() * 58)
+	util.Effect("VJ_VehicleMove", effectData, true, true)
+	effectData:SetOrigin(self:GetPos() + self:GetRight() * -130 + self:GetForward() * -58)
+	util.Effect("VJ_VehicleMove", effectData, true, true)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnUpdatePoseParamTracking(pitch, yaw, roll)
