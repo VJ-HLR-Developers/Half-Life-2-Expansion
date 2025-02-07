@@ -144,7 +144,7 @@ function ENT:OnThinkActive()
 		local att = self:GetAttachment(self:LookupAttachment("muzzle"))
 		local pos,ang = att.Pos,att.Ang
 		sound.EmitHint(SOUND_DANGER, pos +ang:Forward() *(self.Cremator_FlameRange /2), self.Cremator_FlameRange *2, 0.2, self)
-		VJ.ApplyRadiusDamage(self,self,(self:GetPos() +(self:GetForward() *self:OBBMaxs().y)),self.Cremator_FlameRange,self.Cremator_FlameDamage,dmgType,true,false,{UseCone=true,UseConeDegree=35,UseConeDirection=ang:Forward()},
+		VJ.ApplyRadiusDamage(self,self,(self:GetPos() +(self:GetForward() *self:OBBMaxs().y)),self.Cremator_FlameRange,self.Cremator_FlameDamage,dmgType,true,false,{UseConeDegree=35,UseConeDirection=ang:Forward()},
 		function(ent)
 			if (ent:IsPlayer() or ent:IsNPC() or ent:IsNextBot() or VJ.IsProp(ent)) then
 				if ent:IsPlayer() then

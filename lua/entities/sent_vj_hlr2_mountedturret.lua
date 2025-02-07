@@ -98,7 +98,7 @@ function ENT:ManGun(ent)
     ent:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
     ent:SetMoveType(MOVETYPE_NONE)
     ent:SetMaxYawSpeed(0)
-    ent:SetWeaponState(VJ.NPC_WEP_STATE_HOLSTERED)
+    ent:SetWeaponState(VJ.WEP_STATE_HOLSTERED)
     local wep = ent:GetActiveWeapon()
     if IsValid(wep) then
         wep:SetNoDraw(true)

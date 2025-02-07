@@ -110,7 +110,7 @@ function ENT:OnThink()
 		if moveCheck && math.random(1,50) == 1 then
 			self:StopMoving()
 			self:SetLastPosition(moveCheck)
-			self:SCHEDULE_GOTO_POSITION(math.random(1, 2) == 1 and "TASK_RUN_PATH" or "TASK_WALK_PATH", function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+			self:SCHEDULE_GOTO_POSITION(math.random(1, 2) == 1 and "TASK_RUN_PATH" or "TASK_WALK_PATH", function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.FACE_ENEMY} end)
 		end
 		self:SetTurnTarget("Enemy")
 		self:FireLaser()

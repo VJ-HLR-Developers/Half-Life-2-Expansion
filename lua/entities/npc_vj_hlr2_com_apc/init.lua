@@ -153,7 +153,7 @@ function ENT:Tank_Init()
 	self.Ammo = 2
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnPlayCreateSound(sdData, sdFile)
+function ENT:OnCreateSound(sdData, sdFile)
 	if VJ.HasValue(self.SoundTbl_Fire,sdFile) or VJ.HasValue(self.SoundTbl_FireRocket,sdFile) or VJ.HasValue(self.SoundTbl_Breath,sdFile) or VJ.HasValue(self.Tank_SoundTbl_DrivingEngine,sdFile) or VJ.HasValue(self.Tank_SoundTbl_Track,sdFile) then return end
 	VJ.EmitSound(self, "npc/overwatch/radiovoice/on3.wav")
 	timer.Simple(SoundDuration(sdFile),function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self,"npc/overwatch/radiovoice/off2.wav") end end)

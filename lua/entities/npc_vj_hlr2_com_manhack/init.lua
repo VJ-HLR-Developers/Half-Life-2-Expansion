@@ -160,9 +160,9 @@ function ENT:Manhack_Displacement(angForce,velForce,velTime,ent)
 					endpos = self:GetPos() +self:GetForward() *512,
 					filter = self
 				})
-				self:SetAngles(self:GetFaceAngle(tr.HitNormal:Angle()))
+				self:SetAngles(self:GetTurnAngle(tr.HitNormal:Angle()))
 			else
-				self:SetAngles(-self:GetFaceAngle(((self:GetPos() +self:OBBCenter()) -(ent:GetPos() +ent:OBBCenter())):Angle()))
+				self:SetAngles(-self:GetTurnAngle(((self:GetPos() +self:OBBCenter()) -(ent:GetPos() +ent:OBBCenter())):Angle()))
 			end
 		else
 			self:SetAngles(self:GetAngles() + Angle(math.random(-angForce,angForce),math.random(-angForce,angForce),math.random(-angForce,angForce)))

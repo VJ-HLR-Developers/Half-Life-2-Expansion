@@ -235,7 +235,7 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnPlayCreateSound(sdData, sdFile)
+function ENT:OnCreateSound(sdData, sdFile)
 	if VJ.HasValue(self.SoundTbl_Pain,sdFile) or VJ.HasValue(self.DefaultSoundTbl_MeleeAttack,sdFile) then return end
 	VJ.EmitSound(self,"npc/combine_soldier/vo/on" .. math.random(1,2) .. ".wav")
 end

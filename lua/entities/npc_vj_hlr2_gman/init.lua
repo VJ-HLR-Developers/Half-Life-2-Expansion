@@ -95,7 +95,7 @@ function ENT:OnThink()
 		else
 			self:SetState()
 			self:SetTarget(freeman)
-			self:SCHEDULE_GOTO_TARGET("TASK_WALK_PATH", function(y) y.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+			self:SCHEDULE_GOTO_TARGET("TASK_WALK_PATH", function(y) y.FaceData = {Type = VJ.FACE_ENEMY} end)
 		end
 	else
 		if self:GetState() == VJ_STATE_ONLY_ANIMATION then

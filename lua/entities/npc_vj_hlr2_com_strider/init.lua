@@ -158,7 +158,7 @@ function ENT:OnThink()
 				if pickmove == "Right" then self:SetLastPosition(self:GetPos() +self:GetRight() *1000) end
 				if pickmove == "Left" then self:SetLastPosition(self:GetPos() +self:GetRight() *1000) end
 				if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
-					self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+					self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.FACE_ENEMY} end)
 					self.NextRandMoveT = CurTime() +math.Rand(2,4)
 				end
 			end

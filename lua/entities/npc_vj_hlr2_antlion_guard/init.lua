@@ -345,7 +345,7 @@ function ENT:CustomAttack(ent,vis)
 			maxs = self:OBBMaxs() *0.85,
 		})
 		self:SetLastPosition(tr.HitPos +tr.HitNormal *200)
-		self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+		self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.FACE_ENEMY} end)
 		if self:OnGround() then
 			self:SetVelocity(self:GetMoveVelocity() *1.01)
 		end

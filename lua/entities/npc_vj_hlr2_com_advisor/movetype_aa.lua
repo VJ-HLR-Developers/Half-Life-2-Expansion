@@ -84,7 +84,7 @@ function ENT:AAMove_FlyToPosition(Pos,isWander,ovSpeed)
 	local GoToPos = (Pos -self:GetPos()):GetNormal() *speed
 
 	-- if vel_stop == false then
-		self.AA_CurrentTurnAng = self:GetFaceAngle(self:GetFaceAngle((Pos):Angle()))
+		self.AA_CurrentTurnAng = self:GetTurnAngle(self:GetTurnAngle((Pos):Angle()))
 		self:SetLocalVelocity(GoToPos)
 		-- self:SetLocalVelocity(LerpVector(0.1,self:GetVelocity(),GoToPos))
 		-- self:AddVelocity(GoToPos)
