@@ -147,7 +147,7 @@ function ENT:OnThink()
 	if (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or validEnt && !self.VJ_IsBeingControlled && CurTime() > self.Assassin_NextDodgeT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 2200) && self:IsOnGround() then
 		self:Dodge()
 	end
-	if validEnt && self.DoingWeaponAttack_Standing == true && self.VJ_IsBeingControlled == false && CurTime() > self.Assassin_NextJumpT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 1400 then
+	if validEnt && self.WeaponAttackState == VJ.WEP_ATTACK_STATE_FIRE_STAND && self.VJ_IsBeingControlled == false && CurTime() > self.Assassin_NextJumpT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 1400 then
 		self:StopMoving()
 		self:SetGroundEntity(NULL)
 		if math.random(1,2) == 1 then
