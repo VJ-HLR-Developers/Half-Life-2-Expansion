@@ -121,13 +121,11 @@ ENT.GeneralSoundPitch1 = 100
 ENT.Flechette_Speed = 3000
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnCallForHelp(ally)
-	if ally:GetClass() == self:GetClass() then
-		if !ally:BusyWithActivity() && !IsValid(ally:GetEnemy()) then
-			ally:PlaySoundSystem("CallForHelp")
-			local pickanim = VJ.PICK(ally.AnimTbl_CallForHelp)
-			ally:PlayAnim(pickanim,ally.CallForHelpStopAnimations,ally:DecideAnimationLength(pickanim,ally.CallForHelpStopAnimationsTime),ally.CallForHelpAnimationFaceEnemy,0,{PlayBackRateCalculated=true})
-			ally.NextCallForHelpAnimationT = CurTime() +ally.NextCallForHelpAnimationTime
-		end
+	if ally:GetClass() == self:GetClass() && !ally:IsBusy("Activities") && !IsValid(ally:GetEnemy()) then
+		ally:PlaySoundSystem("CallForHelp")
+		local pickanim = VJ.PICK(ally.AnimTbl_CallForHelp)
+		ally:PlayAnim(pickanim,ally.CallForHelpStopAnimations,ally:DecideAnimationLength(pickanim,ally.CallForHelpStopAnimationsTime),ally.CallForHelpAnimationFaceEnemy,0,{PlayBackRateCalculated=true})
+		ally.NextCallForHelpAnimationT = CurTime() +ally.NextCallForHelpAnimationTime
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -281,7 +279,7 @@ function ENT:OnThinkActive()
 			maxs = self:OBBMaxs() *0.85,
 		})
 		self:SetLastPosition(tr.HitPos +tr.HitNormal *200)
-		self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.FACE_ENEMY} end)
+		self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.TurnData = {Type = VJ.FACE_ENEMY} end)
 		if self:OnGround() then
 			self:SetVelocity(self:GetMoveVelocity() *1.01)
 		end
@@ -372,7 +370,7 @@ function ENT:CustomAttack(ent,vis)
 			if pickmove == "Right" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
 			if pickmove == "Left" then self:SetLastPosition(self:GetPos() +self:GetRight() *400) end
 			if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
-				self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.FACE_ENEMY} end)
+				self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.TurnData = {Type = VJ.FACE_ENEMY} end)
 				self.NextRandMoveT = CurTime() +math.Rand(2,3)
 				return
 			end

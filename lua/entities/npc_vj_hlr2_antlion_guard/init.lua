@@ -249,7 +249,7 @@ function ENT:FindNodesNearPoint(checkPos,total,dist,minDist)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SummonAllies(anim)
-	if self:BusyWithActivity() or self.Charging then return end
+	if self:IsBusy("Activities") or self.Charging then return end
 	local anim = anim or "bark"
 	self:PlayAnim(anim,true,false,false)
 	timer.Simple(0.5,function()
@@ -283,7 +283,7 @@ function ENT:SummonAllies(anim)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnAlert(ent)
-	if self:BusyWithActivity() or self.Charging then return end
+	if self:IsBusy("Activities") or self.Charging then return end
 	self.NextChargeT = CurTime() +5
 	if math.random(1,3) == 1 && CurTime() > self.NextSummonT then
 		self:SummonAllies(VJ.PICK({"bark","roar"}))
@@ -345,7 +345,7 @@ function ENT:CustomAttack(ent,vis)
 			maxs = self:OBBMaxs() *0.85,
 		})
 		self:SetLastPosition(tr.HitPos +tr.HitNormal *200)
-		self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.FaceData = {Type = VJ.FACE_ENEMY} end)
+		self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.TurnData = {Type = VJ.FACE_ENEMY} end)
 		if self:OnGround() then
 			self:SetVelocity(self:GetMoveVelocity() *1.01)
 		end
