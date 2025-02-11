@@ -9,7 +9,7 @@ ENT.Model = {"models/headcrabclassic.mdl"} -- Model(s) to spawn with | Picks a r
 ENT.StartHealth = 1
 ENT.HullType = HULL_TINY
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_BLOB"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_BLOB"}
 ENT.HasMeleeAttack = false
 ENT.GodMode = true
 

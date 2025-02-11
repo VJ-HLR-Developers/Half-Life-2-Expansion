@@ -35,7 +35,7 @@ ENT.TimeUntilRangeAttackProjectileRelease = false
 ENT.NextRangeAttackTime = 5
 ENT.NextRangeAttackTime_DoRand = 9
 
-ENT.ConstantlyFaceEnemyDistance = 1750
+ENT.ConstantlyFaceEnemy_MinDistance = 1750
 
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true

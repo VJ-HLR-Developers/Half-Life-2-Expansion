@@ -9,7 +9,7 @@ include("shared.lua")
 ENT.Model = "models/vj_hlr/hl2/combine_cannon_gun.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
 ENT.StartHealth = 500
 ENT.Immune_Bullet = true
-ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.Turret_HasAlarm = false
 ENT.Turret_BulletAttachment = "muzzle"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.001 -- How much time until the projectile code is ran?
@@ -20,7 +20,7 @@ ENT.Turret_FireSound = {"^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot1.wav", "^vj_h
 ENT.GibOnDeathFilter = false
 ENT.GeneratorHealth = 100
 
-ENT.VJC_Data = {
+ENT.ControllerVars = {
     FirstP_Bone = "polySurface167", -- If left empty, the base will attempt to calculate a position for first person
     FirstP_Offset = Vector(-5, 1, 20), -- The offset for the controller when the camera is in first person
 	FirstP_ShrinkBone = false, -- Should the bone shrink? Useful if the bone is obscuring the player's view

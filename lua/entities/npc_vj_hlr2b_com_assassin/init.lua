@@ -14,7 +14,7 @@ ENT.JumpVars = {
 	MaxDistance = 620
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = VJ.BLOOD_COLOR_RED
 
 ENT.HasMeleeAttack = true -- Can this NPC melee attack?
@@ -29,12 +29,12 @@ ENT.Weapon_NoSpawnMenu = true -- If set to true, the NPC weapon setting in the s
 ENT.DisableWeaponFiringGesture = true -- If set to true, it will disable the weapon firing gestures
 ENT.Weapon_StrafeWhileFiring = false -- Should it move randomly while firing a weapon?
 
-ENT.HasCallForHelpAnimation = false -- if true, it will play the call for help animation
+ENT.AnimTbl_CallForHelp = false
 
 ENT.AnimTbl_ShootWhileMovingRun = {ACT_SPRINT} -- Animations it will play when shooting while running | NOTE: Weapon may translate the animation that they see fit!
 ENT.AnimTbl_ShootWhileMovingWalk = {ACT_RUN} -- Animations it will play when shooting while walking | NOTE: Weapon may translate the animation that they see fit!
 
-ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time system for the footstep sound code, allowing you to use other ways like model events
+ENT.DisableFootStepSoundTimer = true
 ENT.AnimTbl_TakingCover = {ACT_IDLE_ANGRY} -- The animation it plays when hiding in a covered position, leave empty to let the base decide
 
 ENT.DropDeathLoot = false

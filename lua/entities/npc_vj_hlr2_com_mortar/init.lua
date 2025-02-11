@@ -14,7 +14,7 @@ ENT.Aerial_FlyingSpeed_Alerted = 250
 ENT.Aerial_AnimTbl_Calm = ACT_IDLE -- Animations it plays when it's wandering around while idle
 ENT.Aerial_AnimTbl_Alerted = "mortar_forward" -- Animations it plays when it's moving while alerted
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = VJ.BLOOD_COLOR_BLUE
 
 ENT.HasMeleeAttack = false -- Can this NPC melee attack?

@@ -9,7 +9,7 @@ ENT.Model = {"models/vj_hlr/hl2/hunter.mdl"} -- Model(s) to spawn with | Picks a
 ENT.StartHealth = 210
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = VJ.BLOOD_COLOR_WHITE
 
 ENT.CallForHelpDistance = 6000
@@ -36,14 +36,14 @@ ENT.SlowPlayerOnMeleeAttack = true
 ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
 ENT.AnimTbl_Death = ACT_DIESIMPLE
 
-ENT.VJC_Data = {
+ENT.ControllerVars = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
     ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
     FirstP_Bone = "MiniStrider.body_joint", -- If left empty, the base will attempt to calculate a position for first person
     FirstP_Offset = Vector(18, 0, -5), -- The offset for the controller when the camera is in first person
 }
 
-ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time system for the footstep sound code, allowing you to use other ways like model events
+ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
 	-- ====== Sound Paths ====== --
 -- ENT.SoundTbl_Breath = {"npc/combine_gunship/gunship_engine_loop3.wav"}
@@ -199,7 +199,7 @@ end
 function ENT:OnInput(key, activator, caller, data)
 	-- print(key)
 	if key == "step" then
-		self:FootStepSoundCode()
+		self:PlayFootstepSound()
 	elseif key == "melee" then
 		self:MeleeAttackCode()
 	elseif key == "range" then
@@ -416,7 +416,7 @@ function ENT:Controller_Movement(cont, ply, bullseyePos)
 		local aimVector = ply:GetAimVector()
 		local FT = FrameTime() *(self.TurningSpeed *1.25)
 
-		self.VJC_Data.TurnAngle = self.VJC_Data.TurnAngle or defAng
+		self.ControllerVars.TurnAngle = self.ControllerVars.TurnAngle or defAng
 
 		if self.IsCharging then
 			return
@@ -433,8 +433,8 @@ function ENT:Controller_Movement(cont, ply, bullseyePos)
 				-- else
 				-- 	cont:StartMovement(aimVector, defAng)
 				-- end
-				self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, gerta_lef && angY45 or gerta_rig && angYN45 or defAng)
-				cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+				self.ControllerVars.TurnAngle = LerpAngle(FT, self.ControllerVars.TurnAngle, gerta_lef && angY45 or gerta_rig && angYN45 or defAng)
+				cont:StartMovement(aimVector, self.ControllerVars.TurnAngle)
 			end
 		elseif ply:KeyDown(IN_BACK) then
 			-- if gerta_lef then
@@ -444,16 +444,16 @@ function ENT:Controller_Movement(cont, ply, bullseyePos)
 			-- else
 			-- 	cont:StartMovement(aimVector*-1, defAng)
 			-- end
-			self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, gerta_lef && angY135 or gerta_rig && angYN135 or angY180)
-			cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+			self.ControllerVars.TurnAngle = LerpAngle(FT, self.ControllerVars.TurnAngle, gerta_lef && angY135 or gerta_rig && angYN135 or angY180)
+			cont:StartMovement(aimVector, self.ControllerVars.TurnAngle)
 		elseif gerta_lef then
 			-- cont:StartMovement(aimVector, angY90)
-			self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, angY90)
-			cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+			self.ControllerVars.TurnAngle = LerpAngle(FT, self.ControllerVars.TurnAngle, angY90)
+			cont:StartMovement(aimVector, self.ControllerVars.TurnAngle)
 		elseif gerta_rig then
 			-- cont:StartMovement(aimVector, angYN90)
-			self.VJC_Data.TurnAngle = LerpAngle(FT, self.VJC_Data.TurnAngle, angYN90)
-			cont:StartMovement(aimVector, self.VJC_Data.TurnAngle)
+			self.ControllerVars.TurnAngle = LerpAngle(FT, self.ControllerVars.TurnAngle, angYN90)
+			cont:StartMovement(aimVector, self.ControllerVars.TurnAngle)
 		else
 			self:StopMoving()
 			if self.MovementType == VJ_MOVETYPE_AERIAL or self.MovementType == VJ_MOVETYPE_AQUATIC then

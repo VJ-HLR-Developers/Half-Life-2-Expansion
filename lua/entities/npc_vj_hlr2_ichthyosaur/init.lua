@@ -18,14 +18,14 @@ ENT.Aquatic_SwimmingSpeed_Alerted = 500 -- The speed it should swim with, when i
 ENT.Aquatic_AnimTbl_Calm = {ACT_GLIDE} -- Animations it plays when it's wandering around while idle
 ENT.Aquatic_AnimTbl_Alerted = {ACT_SWIM} -- Animations it plays when it's moving while alerted
 
-ENT.VJC_Data = {
+ENT.ControllerVars = {
     ThirdP_Offset = Vector(-25, 0, 0), -- The offset for the controller when the camera is in third person
     FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
     FirstP_Offset = Vector(12, 0, 5), -- The offset for the controller when the camera is in first person
 	FirstP_ShrinkBone = false, -- Should the bone shrink? Useful if the bone is obscuring the player's view
 }
 
-ENT.VJ_NPC_Class = {"CLASS_XEN"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_XEN"}
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.HasBloodPool = false

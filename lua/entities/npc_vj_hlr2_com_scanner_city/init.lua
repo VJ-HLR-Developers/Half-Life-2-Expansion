@@ -28,7 +28,7 @@ ENT.Bleeds = false
 ENT.HasMeleeAttack = false
 
 ENT.ConstantlyFaceEnemy = true
-ENT.ConstantlyFaceEnemyDistance = 250
+ENT.ConstantlyFaceEnemy_MinDistance = 250
 
 ENT.NoChaseAfterCertainRange = true
 ENT.NoChaseAfterCertainRange_FarDistance = 250

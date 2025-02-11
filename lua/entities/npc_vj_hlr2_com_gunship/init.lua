@@ -21,7 +21,7 @@ ENT.HasRangeAttack = false -- Can this NPC range attack?
 ENT.HasDeathAnimation = false -- Does it play an animation when it dies?
 ENT.HasDeathCorpse = false
 
-ENT.VJC_Data = {
+ENT.ControllerVars = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
     ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
     FirstP_Bone = "Chopper.Blade_Hull", -- If left empty, the base will attempt to calculate a position for first person

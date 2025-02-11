@@ -46,7 +46,7 @@ ENT.NoChaseAfterCertainRange_Type = "OnlyRange"
 
 ENT.IsMedic = true
 ENT.Medic_HealDistance = 256
-ENT.Medic_HealthAmount = 50
+ENT.Medic_HealAmount = 50
 ENT.Medic_SpawnPropOnHeal = false
 
 ENT.CanFlinch = 1
@@ -157,7 +157,7 @@ ENT.SoundTbl_UnFollowPlayer = {
 	"vj_hlr/hl2_npc/vort/vo/mutual.wav",
 	"vj_hlr/hl2_npc/vort/vo/ourplacehere.wav",
 }
-ENT.SoundTbl_MoveOutOfPlayersWay = {
+ENT.SoundTbl_YieldToAlliedPlayer = {
 	"vj_hlr/hl2_npc/vort/vo/fmadvance.wav",
 	"vj_hlr/hl2_npc/vort/vo/fminway.wav",
 	"vj_hlr/hl2_npc/vort/vo/hastefm.wav",

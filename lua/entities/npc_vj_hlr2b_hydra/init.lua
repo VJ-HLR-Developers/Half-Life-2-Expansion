@@ -24,7 +24,7 @@ ENT.MeleeAttackDamage = 60
 
 ENT.HasDeathCorpse = false -- Should a corpse spawn when it's killed?
 
-ENT.VJC_Data = {
+ENT.ControllerVars = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
     ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
     FirstP_Bone = "Bone47", -- If left empty, the base will attempt to calculate a position for first person

@@ -9,7 +9,7 @@ ENT.Model = {"models/vj_hlr/hl2b/houndeye.mdl"} -- Model(s) to spawn with | Pick
 ENT.StartHealth = 80
 ENT.HullType = HULL_WIDE_SHORT
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_XEN"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_XEN"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.BloodParticle = {"vj_hlr_blood_yellow"}
 ENT.Immune_Sonic = true -- Immune to sonic damage
@@ -22,12 +22,12 @@ ENT.MeleeAttackDamageType = DMG_SONIC -- Type of Damage
 ENT.MeleeAttackDSPSoundType = 34 -- What type of DSP effect? | Search online for the types
 ENT.MeleeAttackDSPSoundUseDamage = false -- Should it only do the DSP effect if gets damaged x or greater amount
 ENT.DisableDefaultMeleeAttackDamageCode = true -- Disables the default mel	ee attack damage code
-ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time system for the footstep sound code, allowing you to use other ways like model events
+ENT.DisableFootStepSoundTimer = true
 	-- ====== Flinching Code ====== --
 ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
 ENT.AnimTbl_Flinch = {"vjseq_flinch_small"} -- The regular flinch animations to play
 
-ENT.VJC_Data = {
+ENT.ControllerVars = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
     ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
     FirstP_Bone = "HoundEye.Head", -- If left empty, the base will attempt to calculate a position for first person
@@ -82,7 +82,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
-		self:FootStepSoundCode()
+		self:PlayFootstepSound()
 	end
 	if key == "hunt" then
 		VJ.EmitSound(self,"vj_hlr/hl2_npc/houndeye/he_hunt"..math.random(1,4)..".wav")

@@ -10,7 +10,7 @@ ENT.StartHealth = 500
 ENT.HullType = HULL_LARGE
 ENT.VJ_ID_Boss = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_COMBINE"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 
 ENT.BloodColor = VJ.BLOOD_COLOR_WHITE
 ENT.Immune_Bullet = true
@@ -28,7 +28,7 @@ ENT.MeleeAttackDamageDistance = 100 -- How far does the damage go | false = Let 
 ENT.MeleeAttackDamage = 150
 ENT.TimeUntilMeleeAttackDamage = false
 
-ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time system for the footstep sound code, allowing you to use other ways like model events
+ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
 ENT.GeneralSoundPitch1 = 100
 ENT.IdleSoundVolume = 150
@@ -47,9 +47,9 @@ ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
 ENT.ConstantlyFaceEnemy_IfVisible = true -- Should it only face the enemy if it's visible?
 ENT.ConstantlyFaceEnemy_IfAttacking = false -- Should it face the enemy when attacking?
 ENT.ConstantlyFaceEnemy_Postures = "Both" -- "Both" = Moving or standing | "Moving" = Only when moving | "Standing" = Only when standing
-ENT.ConstantlyFaceEnemyDistance = 5000 -- How close does it have to be until it starts to face the enemy?
+ENT.ConstantlyFaceEnemy_MinDistance = 5000 -- How close does it have to be until it starts to face the enemy?
 
-ENT.VJC_Data = {
+ENT.ControllerVars = {
     CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
     ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
     FirstP_Bone = "Combine_Strider.Neck_Bone", -- If left empty, the base will attempt to calculate a position for first person
@@ -134,7 +134,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
-		self:FootStepSoundCode()
+		self:PlayFootstepSound()
 		util.ScreenShake(self:GetPos(), 14, 200, 0.6, 1024)
 	end
 	if key == "melee" then

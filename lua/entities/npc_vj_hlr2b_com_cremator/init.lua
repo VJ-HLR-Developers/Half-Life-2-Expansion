@@ -23,8 +23,7 @@ ENT.AnimTbl_MeleeAttack = {ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK2, ACT_RANGE_ATTAC
 ENT.TimeUntilMeleeAttackDamage = false
 ENT.MeleeAttackAnimationFaceEnemy = false
 ENT.MeleeAttackDistance = 300
-ENT.AttackProps = false
-ENT.PushProps = false
+ENT.PropInteraction = false
 
 -- ENT.HasRangeAttack = true
 -- ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2b_cremator"
@@ -37,7 +36,7 @@ ENT.PushProps = false
 -- ENT.NextRangeAttackTime = 12
 
 ENT.PoseParameterLooking_InvertYaw = true
-ENT.ConstantlyFaceEnemyDistance = 1000
+ENT.ConstantlyFaceEnemy_MinDistance = 1000
 
 ENT.DisableFootStepSoundTimer = true
 ENT.GeneralSoundPitch1 = 100
@@ -77,7 +76,7 @@ end
 function ENT:OnInput(key, activator, caller, data)
 	-- print(key)
 	if key == "step" then
-		self:FootStepSoundCode()
+		self:PlayFootstepSound()
 		VJ.EmitSound(self,"vj_hlr/hl2_npc/cremator/amb" .. math.random(1,3) .. ".wav",60)
 	elseif key == "fire_start" then
 		self.IsFlameActive = true

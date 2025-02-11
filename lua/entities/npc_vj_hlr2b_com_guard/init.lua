@@ -10,7 +10,7 @@ ENT.StartHealth = 500
 ENT.SightAngle = 190
 ENT.HullType = HULL_HUMAN
 
-ENT.VJC_Data = {
+ENT.ControllerVars = {
 	CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
 	ThirdP_Offset = Vector(0, 0, -40), -- The offset for the controller when the camera is in third person
 	FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
@@ -138,7 +138,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
-		self:FootStepSoundCode()
+		self:PlayFootstepSound()
 	elseif key == "melee" then
 		self:MeleeAttackCode()
 	elseif key == "charge" then

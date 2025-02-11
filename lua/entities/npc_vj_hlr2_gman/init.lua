@@ -9,7 +9,7 @@ ENT.Model = {"models/gman.mdl"} -- Model(s) to spawn with | Picks a random one i
 ENT.StartHealth = 999999
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
 ENT.Behavior = VJ_BEHAVIOR_PASSIVE -- Doesn't attack anything
 ENT.Passive_RunOnTouch = false -- Should it run away && make a alert sound when something collides with it?
 ENT.Passive_RunOnDamage = false -- Should it run when it's damaged? | This doesn't impact how self.Passive_AlliesRunOnDamage works
@@ -20,10 +20,10 @@ ENT.BloodColor = VJ.BLOOD_COLOR_RED
 
 ENT.HasMeleeAttack = false -- Can this NPC melee attack?
 
-ENT.MoveOutOfFriendlyPlayersWay = false -- Should the NPC move and give space to friendly players?
+ENT.YieldToAlliedPlayers = false
 
 ENT.HasOnPlayerSight = true -- Should do something when it sees the enemy? Example: Play a sound
-ENT.DisableFootStepSoundTimer = true -- If set to true, it will disable the time system for the footstep sound code, allowing you to use other ways like model events
+ENT.DisableFootStepSoundTimer = true
 
 -- ENT.SoundTbl_IdleDialogue = {"vo/gman_misc/gman_riseshine.wav"}
 -- ENT.SoundTbl_FollowPlayer = {"vo/gman_misc/gman_02.wav","vo/gman_misc/gman_03.wav"}

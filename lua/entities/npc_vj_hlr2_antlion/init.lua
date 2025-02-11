@@ -17,7 +17,7 @@ ENT.JumpVars = {
 	MaxDistance = 1500
 }
 
-ENT.VJC_Data = {
+ENT.ControllerVars = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Antlion.Head_Bone",
@@ -53,7 +53,7 @@ ENT.GeneralSoundPitch1 = 100
 
 ENT.ConstantlyFaceEnemy = true
 ENT.ConstantlyFaceEnemy_Postures = "Moving"
-ENT.ConstantlyFaceEnemyDistance = 500
+ENT.ConstantlyFaceEnemy_MinDistance = 500
 
 ENT.SoundTbl_FootStep = {"npc/antlion/foot1.wav","npc/antlion/foot2.wav","npc/antlion/foot3.wav","npc/antlion/foot4.wav"}
 ENT.SoundTbl_Idle = {
@@ -178,7 +178,7 @@ function ENT:OnInput(key, activator, caller, data)
 		self:MeleeAttackCode()
 	end
 	if key == "step" || key == "step_light" then
-		self:FootStepSoundCode()
+		self:PlayFootstepSound()
 	end
 	if key == "scream" then
 		VJ.EmitSound(self,"npc/antlion/antlion_preburst_scream" .. math.random(1,2) .. ".wav",75,100)
