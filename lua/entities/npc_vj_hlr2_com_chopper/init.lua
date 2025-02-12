@@ -6,68 +6,67 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.VJ_ID_Boss = true
-ENT.Model = {"models/vj_hlr/hl2/combine_helicopter.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2/combine_helicopter.mdl"
 ENT.StartHealth = 2000
 ENT.SightAngle = 360
 ENT.HullType = HULL_LARGE
-ENT.TurningSpeed = 2 -- How fast it can turn
+ENT.TurningSpeed = 2
 
-ENT.MovementType = VJ_MOVETYPE_AERIAL -- How the NPC moves around
-ENT.Aerial_FlyingSpeed_Alerted = 450 -- The speed it should fly with, when it's chasing an enemy, moving away quickly, etc. | Basically running compared to ground NPCs
-ENT.Aerial_FlyingSpeed_Calm = 400 -- The speed it should fly with, when it's wandering, moving slowly, etc. | Basically walking compared to ground NPCs
-ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it's wandering around while idle
-ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE} -- Animations it plays when it's moving while alerted
-ENT.AA_GroundLimit = 1200 -- If the NPC's distance from itself to the ground is less than this, it will attempt to move up
-ENT.AA_MinWanderDist = 1000 -- Minimum distance that the NPC should go to when wandering
-ENT.AA_MoveAccelerate = 8 -- The NPC will gradually speed up to the max movement speed as it moves towards its destination | Calculation = FrameTime * x
-ENT.AA_MoveDecelerate = 4 -- The NPC will slow down as it approaches its destination | Calculation = MaxSpeed / x
+ENT.MovementType = VJ_MOVETYPE_AERIAL
+ENT.Aerial_FlyingSpeed_Alerted = 450
+ENT.Aerial_FlyingSpeed_Calm = 400
+ENT.Aerial_AnimTbl_Calm = {ACT_IDLE}
+ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE}
+ENT.AA_GroundLimit = 1200
+ENT.AA_MinWanderDist = 1000
+ENT.AA_MoveAccelerate = 8
+ENT.AA_MoveDecelerate = 4
 
-ENT.PoseParameterLooking_InvertPitch = true -- Inverts the pitch pose parameters (X)
-ENT.PoseParameterLooking_InvertYaw = true -- Inverts the yaw pose parameters (Y)
+ENT.PoseParameterLooking_InvertPitch = true
+ENT.PoseParameterLooking_InvertYaw = true
 ENT.PoseParameterLooking_Names = {pitch={"weapon_pitch"},yaw={"weapon_yaw"},roll={}}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 
 ENT.Bleeds = false
-ENT.Immune_AcidPoisonRadiation = true -- Immune to Acid, Poison and Radiation
-ENT.Immune_Bullet = true -- Immune to bullet type damages
-ENT.Immune_Fire = true -- Immune to fire-type damages
+ENT.Immune_AcidPoisonRadiation = true
+ENT.Immune_Bullet = true
+ENT.Immune_Fire = true
 
-ENT.HasMeleeAttack = false -- Can this NPC melee attack?
+ENT.HasMeleeAttack = false
 
-ENT.HasRangeAttack = true -- Can this NPC range attack?
+ENT.HasRangeAttack = true
 ENT.DisableRangeAttackAnimation = true
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_rocket" -- Entities that it can spawn when range attacking | If set as a table, it picks a random entity
+ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_rocket"
 ENT.TimeUntilRangeAttackProjectileRelease = 0
-ENT.NextRangeAttackTime = 5 -- How much time until it can use a range attack?
-ENT.NextRangeAttackTime_DoRand = 10 -- How much time until it can use a range attack?
-ENT.RangeDistance = 7500 -- How far can it range attack?
-ENT.RangeToMeleeDistance = 0 -- How close does it have to be until it uses melee?
-ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachment?
+ENT.NextRangeAttackTime = 5
+ENT.NextRangeAttackTime_DoRand = 10
+ENT.RangeDistance = 7500
+ENT.RangeToMeleeDistance = 0
+ENT.RangeUseAttachmentForPos = true
 ENT.RangeAttackExtraTimers = {1}
 
-ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
+ENT.HasDeathAnimation = true
 ENT.AnimTbl_Death = ACT_DIESIMPLE
-ENT.DeathAnimationTime = false -- How long should the death animation play?
-ENT.DeathCorpseCollisionType = COLLISION_GROUP_NONE -- Collision type for the corpse | NPC Options Menu can only override this value if it's set to COLLISION_GROUP_DEBRIS!
+ENT.DeathAnimationTime = false
+ENT.DeathCorpseCollisionType = COLLISION_GROUP_NONE
 
-ENT.ControllerVars = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "Chopper.Blade_Hull", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(140, 0, -45), -- The offset for the controller when the camera is in first person
+ENT.ControllerParameters = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "Chopper.Blade_Hull",
+    FirstP_Offset = Vector(140, 0, -45),
 }
 
-ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
-ENT.ConstantlyFaceEnemy_IfVisible = true -- Should it only face the enemy if it"s visible?
-ENT.ConstantlyFaceEnemy_IfAttacking = false -- Should it face the enemy when attacking?
-ENT.ConstantlyFaceEnemy_Postures = "Both" -- "Both" = Moving or standing | "Moving" = Only when moving | "Standing" = Only when standing
+ENT.ConstantlyFaceEnemy = true
+ENT.ConstantlyFaceEnemy_IfVisible = true
+ENT.ConstantlyFaceEnemy_IfAttacking = false
+ENT.ConstantlyFaceEnemy_Postures = "Both"
 ENT.ConstantlyFaceEnemy_MinDistance = 7500
 
-ENT.NoChaseAfterCertainRange = true -- Should the SNPC not be able to chase when it"s between number x and y?
-ENT.NoChaseAfterCertainRange_FarDistance = 4000 -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_CloseDistance = 0 -- How near until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_Type = "Regular" -- "Regular" = Default behavior | "OnlyRange" = Only does it if it"s able to range attack
+ENT.LimitChaseDistance = true
+ENT.LimitChaseDistance_Max = 4000
+ENT.LimitChaseDistance_Min = 0
 	-- ====== Sound File Paths ====== --
 -- Leave blank if you don"t want any sounds to play
 ENT.SoundTbl_Alert = {"npc/attack_helicopter/aheli_megabomb_siren1.wav"}

@@ -5,24 +5,24 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/icky.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2/icky.mdl"
 ENT.StartHealth = 200
 ENT.HullType = HULL_LARGE_CENTERED
 
 ENT.IdleAlwaysWander = true
-ENT.TurningUseAllAxis = true -- If set to true, angles will not be restricted to y-axis, it will change all axes (plural axis)
-ENT.MovementType = VJ_MOVETYPE_AQUATIC -- How the NPC moves around
+ENT.TurningUseAllAxis = true
+ENT.MovementType = VJ_MOVETYPE_AQUATIC
 
-ENT.Aquatic_SwimmingSpeed_Calm = 150 -- The speed it should swim with, when it's wandering, moving slowly, etc. | Basically walking compared to ground NPCs
-ENT.Aquatic_SwimmingSpeed_Alerted = 500 -- The speed it should swim with, when it's chasing an enemy, moving away quickly, etc. | Basically running compared to ground NPCs
-ENT.Aquatic_AnimTbl_Calm = {ACT_GLIDE} -- Animations it plays when it's wandering around while idle
-ENT.Aquatic_AnimTbl_Alerted = {ACT_SWIM} -- Animations it plays when it's moving while alerted
+ENT.Aquatic_SwimmingSpeed_Calm = 150
+ENT.Aquatic_SwimmingSpeed_Alerted = 500
+ENT.Aquatic_AnimTbl_Calm = ACT_GLIDE
+ENT.Aquatic_AnimTbl_Alerted = ACT_SWIM
 
-ENT.ControllerVars = {
-    ThirdP_Offset = Vector(-25, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(12, 0, 5), -- The offset for the controller when the camera is in first person
-	FirstP_ShrinkBone = false, -- Should the bone shrink? Useful if the bone is obscuring the player's view
+ENT.ControllerParameters = {
+    ThirdP_Offset = Vector(-25, 0, 0),
+    FirstP_Bone = "Bip01 Head",
+    FirstP_Offset = Vector(12, 0, 5),
+	FirstP_ShrinkBone = false,
 }
 
 ENT.VJ_NPC_Class = {"CLASS_XEN"}
@@ -30,31 +30,31 @@ ENT.VJ_NPC_Class = {"CLASS_XEN"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.HasBloodPool = false
 
-ENT.HasMeleeAttack = true -- Can this NPC melee attack?
+ENT.HasMeleeAttack = true
 ENT.MeleeAttackDamage = 35
-ENT.MeleeAttackDamageType = DMG_ALWAYSGIB -- Type of Damage
+ENT.MeleeAttackDamageType = DMG_ALWAYSGIB
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
-ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDistance = 75 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.MeleeAttackDamageDistance = 120 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
+ENT.TimeUntilMeleeAttackDamage = false
+ENT.MeleeAttackDistance = 75
+ENT.MeleeAttackDamageDistance = 120
+ENT.HasDeathAnimation = true
 ENT.AnimTbl_Death = ACT_DIESIMPLE
 
-ENT.MeleeAttackBleedEnemy = true -- Should the enemy bleed when attacked by melee?
-ENT.MeleeAttackBleedEnemyChance = 1 -- Chance that the enemy bleeds | 1 = always
-ENT.MeleeAttackBleedEnemyDamage = 1 -- How much damage per repetition
-ENT.MeleeAttackBleedEnemyTime = 1 -- How much time until the next repetition?
-ENT.MeleeAttackBleedEnemyReps = 10 -- How many repetitions?
-ENT.SlowPlayerOnMeleeAttack = true -- If true, then the player will slow down
-ENT.SlowPlayerOnMeleeAttack_WalkSpeed = 100 -- Walking Speed when Slow Player is on
-ENT.SlowPlayerOnMeleeAttack_RunSpeed = 100 -- Running Speed when Slow Player is on
-ENT.SlowPlayerOnMeleeAttackTime = 10 -- How much time until player's Speed resets
+ENT.MeleeAttackBleedEnemy = true
+ENT.MeleeAttackBleedEnemyChance = 1
+ENT.MeleeAttackBleedEnemyDamage = 1
+ENT.MeleeAttackBleedEnemyTime = 1
+ENT.MeleeAttackBleedEnemyReps = 10
+ENT.SlowPlayerOnMeleeAttack = true
+ENT.SlowPlayerOnMeleeAttack_WalkSpeed = 100
+ENT.SlowPlayerOnMeleeAttack_RunSpeed = 100
+ENT.SlowPlayerOnMeleeAttackTime = 10
 
-ENT.SoundTbl_Breath = {"npc/ichthyosaur/water_breath.wav"}
-ENT.SoundTbl_Alert = {"npc/ichthyosaur/water_growl5.wav"}
-ENT.SoundTbl_CombatIdle = {"npc/ichthyosaur/water_growl5.wav"}
-ENT.SoundTbl_BeforeMeleeAttack = {"npc/ichthyosaur/attack_growl1.wav","npc/ichthyosaur/attack_growl2.wav","npc/ichthyosaur/attack_growl3.wav"}
-ENT.SoundTbl_MeleeAttack = {"npc/ichthyosaur/snap.wav"}
+ENT.SoundTbl_Breath = "npc/ichthyosaur/water_breath.wav"
+ENT.SoundTbl_Alert = "npc/ichthyosaur/water_growl5.wav"
+ENT.SoundTbl_CombatIdle = "npc/ichthyosaur/water_growl5.wav"
+ENT.SoundTbl_BeforeMeleeAttack = {"npc/ichthyosaur/attack_growl1.wav", "npc/ichthyosaur/attack_growl2.wav", "npc/ichthyosaur/attack_growl3.wav"}
+ENT.SoundTbl_MeleeAttack = "npc/ichthyosaur/snap.wav"
 
 ENT.GeneralSoundPitch1 = 100
 
@@ -66,7 +66,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "melee" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

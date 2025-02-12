@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/stalker_ep2.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = {"models/vj_hlr/hl2/stalker_ep2.mdl"}
 ENT.StartHealth = 50
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -14,13 +14,12 @@ ENT.BloodColor = VJ.BLOOD_COLOR_RED
 
 ENT.HasMeleeAttack = false
 
-ENT.NoChaseAfterCertainRange = true -- Should the NPC stop chasing when the enemy is within the given far and close distances?
-ENT.NoChaseAfterCertainRange_FarDistance = 1600 -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_CloseDistance = 0 -- How near until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_Type = "OnlyRange" -- "Regular" = Default behavior | "OnlyRange" = Only does it if it's able to range attack
+ENT.LimitChaseDistance = "OnlyRange"
+ENT.LimitChaseDistance_Max = 1600
+ENT.LimitChaseDistance_Min = 0
 ENT.DisableFootStepSoundTimer = true
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
-	-- ====== Sound Paths ====== --
+ENT.HasExtraMeleeAttackSounds = true
+
 ENT.SoundTbl_FootStep = {
 	"npc/stalker/stalker_footstep_left1.wav",
 	"npc/stalker/stalker_footstep_left2.wav",
@@ -123,7 +122,7 @@ function ENT:OnThink()
 	if !self.VJ_IsBeingControlled then
 		local ent = self:GetEnemy()
 		if IsValid(ent) then
-			if self:Visible(ent) && ent:GetPos():Distance(self:GetPos()) < self.NoChaseAfterCertainRange_FarDistance then
+			if self:Visible(ent) && ent:GetPos():Distance(self:GetPos()) < self.LimitChaseDistance_Max then
 				if !self.IsLaserAttacking then
 					self.IsLaserAttacking = true
 					VJ.EmitSound(self,"vj_hlr/hl2_npc/beta_stalker/laser_start.wav",70,100)

@@ -5,33 +5,33 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/vj_hlr/hl2/gordon_freeman.mdl" -- Model(s) to spawn with | Picks a random one if it's a table 
+ENT.Model = "models/vj_hlr/hl2/gordon_freeman.mdl"
 ENT.StartHealth = 100
-ENT.HasHealthRegeneration = true -- Can the NPC regenerate its health?
-ENT.HealthRegenerationAmount = 2 -- How much should the health increase after every delay?
-ENT.HealthRegenerationDelay = VJ.SET(0.1,0.1) -- How much time until the health increases
+ENT.HasHealthRegeneration = true
+ENT.HealthRegenerationAmount = 2
+ENT.HealthRegenerationDelay = VJ.SET(0.1,0.1)
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
 ENT.FriendsWithAllPlayerAllies = true
 ENT.BloodColor = VJ.BLOOD_COLOR_RED
 ENT.AnimTbl_MeleeAttack = {"vjseq_MeleeAttack01"}
-ENT.TimeUntilMeleeAttackDamage = 0.7 -- This counted in seconds | This calculates the time until it hits something
+ENT.TimeUntilMeleeAttackDamage = 0.7
 
-ENT.HasGrenadeAttack = true -- Should the NPC have a grenade attack?
-ENT.GrenadeAttackModel = "models/weapons/w_npcnade.mdl" -- Overrides the model of the grenade | Can be nil, string, and table | Does NOT apply to picked up grenades and forced grenade attacks with custom entity
+ENT.HasGrenadeAttack = true
+ENT.GrenadeAttackModel = "models/weapons/w_npcnade.mdl"
 ENT.AnimTbl_GrenadeAttack = {ACT_RANGE_ATTACK_THROW}
-ENT.TimeUntilGrenadeIsReleased = 0.87 -- Time until the grenade is released
-ENT.GrenadeAttackAttachment = "anim_attachment_RH" -- The attachment that the grenade will spawn at
+ENT.TimeUntilGrenadeIsReleased = 0.87
+ENT.GrenadeAttackAttachment = "anim_attachment_RH"
 
 ENT.BecomeEnemyToPlayer = 2
 
-ENT.WeaponInventory_AntiArmorList = {"weapon_vj_hlr2_rpg"} -- It will randomly be given one of these weapons
-ENT.WeaponInventory_MeleeList = {"weapon_vj_crowbar"} -- It will randomly be given one of these weapons
+ENT.WeaponInventory_AntiArmorList = {"weapon_vj_hlr2_rpg"}
+ENT.WeaponInventory_MeleeList = {"weapon_vj_crowbar"}
 
-ENT.SoundTbl_FootStep = {"NPC_Citizen.FootstepLeft","NPC_Citizen.FootstepRight"}
-ENT.SoundTbl_Breath = {"player/breathe1.wav"}
-ENT.SoundTbl_Pain = {"player/pl_pain5.wav","player/pl_pain6.wav","player/pl_pain7.wav"}
+ENT.SoundTbl_FootStep = {"NPC_Citizen.FootstepLeft", "NPC_Citizen.FootstepRight"}
+ENT.SoundTbl_Breath = "player/breathe1.wav"
+ENT.SoundTbl_Pain = {"player/pl_pain5.wav", "player/pl_pain6.wav", "player/pl_pain7.wav"}
 
 ENT.GeneralSoundPitch1 = 100
 ENT.BreathSoundLevel = 40
@@ -127,8 +127,8 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 			if math.random(1, 3) == 1 then
 				dmginfo:ScaleDamage(0.50)
 				local spark = ents.Create("env_spark")
-				spark:SetKeyValue("Magnitude","1")
-				spark:SetKeyValue("Spark Trail Length","1")
+				spark:SetKeyValue("Magnitude", "1")
+				spark:SetKeyValue("Spark Trail Length", "1")
 				spark:SetPos(dmginfo:GetDamagePosition())
 				spark:SetAngles(self:GetAngles())
 				spark:SetParent(self)

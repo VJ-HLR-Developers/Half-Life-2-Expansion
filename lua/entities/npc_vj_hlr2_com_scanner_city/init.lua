@@ -30,10 +30,9 @@ ENT.HasMeleeAttack = false
 ENT.ConstantlyFaceEnemy = true
 ENT.ConstantlyFaceEnemy_MinDistance = 250
 
-ENT.NoChaseAfterCertainRange = true
-ENT.NoChaseAfterCertainRange_FarDistance = 250
-ENT.NoChaseAfterCertainRange_CloseDistance = 1
-ENT.NoChaseAfterCertainRange_Type = "Regular"
+ENT.LimitChaseDistance = true
+ENT.LimitChaseDistance_Max = 250
+ENT.LimitChaseDistance_Min = 1
 
 ENT.SoundTbl_Breath = {"npc/scanner/cbot_fly_loop.wav"}
 ENT.SoundTbl_CombatIdle = {
@@ -159,7 +158,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttack(ent, visible)
 	local dist = self.NearestPointToEnemyDistance
-	if dist <= self.NoChaseAfterCertainRange_FarDistance && CurTime() > self.NextCameraAttackT && !self.DoingCameraAttack && math.random(1,20) == 1 then
+	if dist <= self.LimitChaseDistance_Max && CurTime() > self.NextCameraAttackT && !self.DoingCameraAttack && math.random(1,20) == 1 then
 		self.DoingCameraAttack = true
 		VJ.CreateSound(self,"npc/scanner/scanner_blip1.wav",75)
 		if !self.HLR_IsClawScanner then

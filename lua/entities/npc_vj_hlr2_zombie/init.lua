@@ -126,13 +126,13 @@ function ENT:OnInput(key, activator, caller, data)
 		VJ.EmitSound(self,"npc/zombie/foot_slide" .. math.random(1,3) .. ".wav",self.FootStepSoundLevel)
 	elseif key == "melee" or key == "swat" then
 		self.MeleeAttackDamage = 10
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 		if key == "swat" then
 			VJ.EmitSound(self,"npc/zombie/zombie_hit.wav",75)
 		end
 	elseif key == "melee_both" then
 		self.MeleeAttackDamage = 25
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

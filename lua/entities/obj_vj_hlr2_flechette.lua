@@ -19,7 +19,7 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if !SERVER then return end
 
-ENT.Model = "models/vj_hlr/hl2/projectiles/hunter_flechette.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2/projectiles/hunter_flechette.mdl"
 ENT.CollisionBehavior = VJ.PROJ_COLLISION_PERSIST
 ENT.CollisionDecal = "Impact.Concrete"
 ENT.SoundTbl_Idle = "weapons/fx/nearmiss/bulletltor03.wav"

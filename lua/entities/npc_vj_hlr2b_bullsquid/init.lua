@@ -13,7 +13,7 @@ ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.BloodParticle = {"blood_impact_yellow_01"}
 ENT.Immune_AcidPoisonRadiation = true
 
-ENT.ControllerVars = {
+ENT.ControllerParameters = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Bullsquid.Head_Bone1",
@@ -43,10 +43,9 @@ ENT.Aquatic_AnimTbl_Calm = {ACT_SWIM}
 ENT.Aquatic_AnimTbl_Alerted = {ACT_SWIM}
 ENT.AA_ConstantlyMove = true
 
-ENT.NoChaseAfterCertainRange = true
-ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance"
-ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance"
-ENT.NoChaseAfterCertainRange_Type = "OnlyRange"
+ENT.LimitChaseDistance = "OnlyRange"
+ENT.LimitChaseDistance_Max = "UseRangeDistance"
+ENT.LimitChaseDistance_Min = "UseRangeDistance"
 
 ENT.SoundTbl_FootStep = {"npc/zombie_poison/pz_left_foot1.wav"}
 ENT.SoundTbl_Idle = {
@@ -114,11 +113,11 @@ function ENT:OnInput(key, activator, caller, data)
 		self:PlayFootstepSound()
 	end
 	if key == "attack" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 	if key == "range" then
 		for i = 1,math.random(2,4) do
-			self:RangeAttackCode()
+			self:ExecuteRangeAttack()
 		end
 	end
 end

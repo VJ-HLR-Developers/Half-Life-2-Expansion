@@ -10,10 +10,10 @@ ENT.Model = "models/vortigaunt.mdl"
 ENT.StartHealth = 100
 ENT.HullType = HULL_HUMAN
 
-ENT.JumpVars = {
-	MaxRise = 80, -- How high it can jump up ((S -> A) AND (S -> E))
-	MaxDrop = 192, -- How low it can jump down (E -> S)
-	MaxDistance = 250, -- Maximum distance between Start and End
+ENT.JumpParameters = {
+	MaxRise = 80,
+	MaxDrop = 192,
+	MaxDistance = 250,
 }
 
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY","CLASS_VORTIGAUNT"}
@@ -39,10 +39,9 @@ ENT.NextRangeAttackTime = 3
 ENT.NextRangeAttackTime_DoRand = 6
 ENT.DisableDefaultRangeAttackCode = true
 
-ENT.NoChaseAfterCertainRange = true
-ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance"
-ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance"
-ENT.NoChaseAfterCertainRange_Type = "OnlyRange"
+ENT.LimitChaseDistance = "OnlyRange"
+ENT.LimitChaseDistance_Max = "UseRangeDistance"
+ENT.LimitChaseDistance_Min = "UseRangeDistance"
 
 ENT.IsMedic = true
 ENT.Medic_HealDistance = 256
@@ -327,13 +326,13 @@ function ENT:OnAnimEvent(ev, evTime, evCycle, evType, evOptions)
 		VJ.EmitSound(self,"vj_hlr/hl2_npc/vort/attack_shoot.wav",75)
 		VJ.EmitSound(self,"vj_hlr/hl2_npc/vort/vort_attack_shoot" .. math.random(1,2) .. ".wav",75)
 	elseif event == "AE_VORTIGAUNT_ZAP_SHOOT" then
-		self:RangeAttackCode()
+		self:ExecuteRangeAttack()
 	elseif event == "AE_VORTIGAUNT_ZAP_DONE" then
 		self:StopParticles()
 	elseif event == "AE_VORTIGAUNT_CLAW_LEFT" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	elseif event == "AE_VORTIGAUNT_CLAW_RIGHT" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	elseif event == "AE_VORTIGAUNT_START_DISPEL" then
 		VJ.EmitSound(self,"vj_hlr/hl2_npc/vort/vort_dispell.wav",75)
 	elseif event == "AE_VORTIGAUNT_ACCEL_DISPEL" then

@@ -5,46 +5,45 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/vj_hlr/hl2/mortarsynth.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2/mortarsynth.mdl"
 ENT.StartHealth = 80
 ENT.HullType = HULL_TINY
-ENT.MovementType = VJ_MOVETYPE_AERIAL -- How the NPC moves around
-ENT.Aerial_FlyingSpeed_Calm = 180 -- The speed it should fly with, when it's wandering, moving slowly, etc. | Basically walking compared to ground NPCs
+ENT.MovementType = VJ_MOVETYPE_AERIAL
+ENT.Aerial_FlyingSpeed_Calm = 180
 ENT.Aerial_FlyingSpeed_Alerted = 250
-ENT.Aerial_AnimTbl_Calm = ACT_IDLE -- Animations it plays when it's wandering around while idle
-ENT.Aerial_AnimTbl_Alerted = "mortar_forward" -- Animations it plays when it's moving while alerted
+ENT.Aerial_AnimTbl_Calm = ACT_IDLE
+ENT.Aerial_AnimTbl_Alerted = "mortar_forward"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = VJ.BLOOD_COLOR_BLUE
 
-ENT.HasMeleeAttack = false -- Can this NPC melee attack?
+ENT.HasMeleeAttack = false
 //ENT.AnimTbl_MeleeAttack = ACT_RANGE_ATTACK1
-//ENT.MeleeAttackDistance = 60 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-//ENT.MeleeAttackDamageDistance = 80 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-//ENT.TimeUntilMeleeAttackDamage = 0.7 -- This counted in seconds | This calculates the time until it hits something
-//ENT.NextAnyAttackTime_Melee = 1.3 -- How much time until it can use any attack again? | Counted in Seconds
+//ENT.MeleeAttackDistance = 60
+//ENT.MeleeAttackDamageDistance = 80
+//ENT.TimeUntilMeleeAttackDamage = 0.7
+//ENT.NextAnyAttackTime_Melee = 1.3
 //ENT.MeleeAttackDamage = 30
 
-ENT.HasDeathCorpse = false -- Should a corpse spawn when it's killed?
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
+ENT.HasDeathCorpse = false
+ENT.HasExtraMeleeAttackSounds = true
 
-ENT.HasRangeAttack = true -- Can this NPC range attack?
+ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar" -- Entities that it can spawn when range attacking | If set as a table, it picks a random entity
+ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.7
-ENT.NextRangeAttackTime = 3 -- How much time until it can use a range attack?
-ENT.RangeDistance = 2500 -- How far can it range attack?
-ENT.RangeToMeleeDistance = 1 -- How close does it have to be until it uses melee?
+ENT.NextRangeAttackTime = 3
+ENT.RangeDistance = 2500
+ENT.RangeToMeleeDistance = 1
 
-ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
-ENT.FlinchChance = 3 -- Chance of it flinching from 1 to x | 1 will make it always flinch
-ENT.NextFlinchTime = 2 -- How much time until it can flinch again?
+ENT.CanFlinch = 1
+ENT.FlinchChance = 3
+ENT.NextFlinchTime = 2
 ENT.AnimTbl_Flinch = {"Mortar_Flinch_Front"}
 
-ENT.NoChaseAfterCertainRange = true -- Should the NPC stop chasing when the enemy is within the given far and close distances?
-ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance" -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance" -- How near until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_Type = "Regular" -- "Regular" = Default behavior | "OnlyRange" = Only does it if it's able to range attack
+ENT.LimitChaseDistance = true
+ENT.LimitChaseDistance_Max = "UseRangeDistance"
+ENT.LimitChaseDistance_Min = "UseRangeDistance"
 
 ENT.SoundTbl_Breath = {"vj_hlr/hl2_npc/mortarsynth/hover.wav"}
 ENT.SoundTbl_Idle = {"vj_hlr/hl2_npc/combot/cbot_battletalk1.wav","vj_hlr/hl2_npc/combot/cbot_battletalk2.wav","vj_hlr/hl2_npc/combot/cbot_battletalk3.wav","vj_hlr/hl2_npc/combot/cbot_battletalk4.wav"}

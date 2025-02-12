@@ -5,24 +5,24 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/gman.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = {"models/gman.mdl"}
 ENT.StartHealth = 999999
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
-ENT.Behavior = VJ_BEHAVIOR_PASSIVE -- Doesn't attack anything
+ENT.Behavior = VJ_BEHAVIOR_PASSIVE
 ENT.Passive_RunOnTouch = false -- Should it run away && make a alert sound when something collides with it?
 ENT.Passive_RunOnDamage = false -- Should it run when it's damaged? | This doesn't impact how self.Passive_AlliesRunOnDamage works
 ENT.DisableFindEnemy = true
 
-ENT.GodMode = true -- Immune to everything
+ENT.GodMode = true
 ENT.BloodColor = VJ.BLOOD_COLOR_RED
 
-ENT.HasMeleeAttack = false -- Can this NPC melee attack?
+ENT.HasMeleeAttack = false
 
 ENT.YieldToAlliedPlayers = false
 
-ENT.HasOnPlayerSight = true -- Should do something when it sees the enemy? Example: Play a sound
+ENT.HasOnPlayerSight = true
 ENT.DisableFootStepSoundTimer = true
 
 -- ENT.SoundTbl_IdleDialogue = {"vo/gman_misc/gman_riseshine.wav"}

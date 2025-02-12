@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2b/stalker.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = {"models/vj_hlr/hl2b/stalker.mdl"}
 ENT.StartHealth = 50
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -14,24 +14,23 @@ ENT.BloodColor = VJ.BLOOD_COLOR_RED
 ENT.BloodParticle = {"blood_impact_red_01_mist"}
 
 ENT.MeleeAttackDamage = 15
-ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDistance = 40 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.MeleeAttackDamageDistance = 70 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
+ENT.TimeUntilMeleeAttackDamage = false
+ENT.MeleeAttackDistance = 40
+ENT.MeleeAttackDamageDistance = 70
 
-ENT.NoChaseAfterCertainRange = true -- Should the NPC stop chasing when the enemy is within the given far and close distances?
-ENT.NoChaseAfterCertainRange_FarDistance = 950 -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_CloseDistance = 200 -- How near until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_Type = "OnlyRange" -- "Regular" = Default behavior | "OnlyRange" = Only does it if it's able to range attack
+ENT.LimitChaseDistance = "OnlyRange"
+ENT.LimitChaseDistance_Max = 950
+ENT.LimitChaseDistance_Min = 200
 ENT.DisableFootStepSoundTimer = true
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
+ENT.HasExtraMeleeAttackSounds = true
 
-ENT.ControllerVars = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(1, 0, 1), -- The offset for the controller when the camera is in first person
+ENT.ControllerParameters = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "Bip01 Head",
+    FirstP_Offset = Vector(1, 0, 1),
 }
-	-- ====== Sound Paths ====== --
+
 ENT.SoundTbl_FootStep = {
 	"vj_hlr/hl2_npc/beta_stalker/stalker_footstep_left1.wav",
 	"vj_hlr/hl2_npc/beta_stalker/stalker_footstep_left2.wav",
@@ -98,7 +97,7 @@ function ENT:OnInput(key, activator, caller, data)
 		self:PlayFootstepSound()
 	end
 	if key == "melee" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -149,7 +148,7 @@ function ENT:OnThink()
 	if !self.VJ_IsBeingControlled then
 		local ent = self:GetEnemy()
 		if IsValid(ent) then
-			if self:Visible(ent) && (CurTime() > self.NextRunAwayT) && ent:GetPos():Distance(self:GetPos()) < self.NoChaseAfterCertainRange_FarDistance && ent:GetPos():Distance(self:GetPos()) > self.NoChaseAfterCertainRange_CloseDistance then
+			if self:Visible(ent) && (CurTime() > self.NextRunAwayT) && ent:GetPos():Distance(self:GetPos()) < self.LimitChaseDistance_Max && ent:GetPos():Distance(self:GetPos()) > self.LimitChaseDistance_Min then
 				if !self.IsLaserAttacking then
 					self.IsLaserAttacking = true
 					VJ.EmitSound(self,"vj_hlr/hl2_npc/beta_stalker/laser_start.wav",70,100)

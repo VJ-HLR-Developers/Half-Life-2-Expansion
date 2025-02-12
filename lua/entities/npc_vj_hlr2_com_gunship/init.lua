@@ -5,27 +5,27 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/combine_gunship.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = {"models/vj_hlr/hl2/combine_gunship.mdl"}
 ENT.StartHealth = 1000
 ENT.Aerial_FlyingSpeed_Calm = 520 -- The speed it should fly with, when it"s wandering, moving slowly, etc. | Basically walking compared to ground NPCs
 ENT.Aerial_FlyingSpeed_Alerted = 600
 ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it"s wandering around while idle
 ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE} -- Animations it plays when it"s moving while alerted
 
-ENT.PoseParameterLooking_InvertPitch = false -- Inverts the pitch pose parameters (X)
-ENT.PoseParameterLooking_InvertYaw = false -- Inverts the yaw pose parameters (Y)
+ENT.PoseParameterLooking_InvertPitch = false
+ENT.PoseParameterLooking_InvertYaw = false
 ENT.PoseParameterLooking_Names = {pitch={"flex_vert"},yaw={"flex_herz"},roll={"fin_accel"}}
 
-ENT.HasRangeAttack = false -- Can this NPC range attack?
+ENT.HasRangeAttack = false
 
-ENT.HasDeathAnimation = false -- Does it play an animation when it dies?
+ENT.HasDeathAnimation = false
 ENT.HasDeathCorpse = false
 
-ENT.ControllerVars = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "Chopper.Blade_Hull", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(140, 0, -45), -- The offset for the controller when the camera is in first person
+ENT.ControllerParameters = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "Chopper.Blade_Hull",
+    FirstP_Offset = Vector(140, 0, -45),
 }
 
 ENT.SoundTbl_Idle = {"npc/combine_gunship/ping_patrol.wav","npc/combine_gunship/ping_search.wav","npc/combine_gunship/gunship_ping_search.wav"}

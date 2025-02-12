@@ -18,10 +18,9 @@ ENT.NextRangeAttackTime = 1.5
 ENT.RangeDistance = 2000
 ENT.RangeToMeleeDistance = 400
 
-ENT.NoChaseAfterCertainRange = true
-ENT.NoChaseAfterCertainRange_FarDistance = "UseRangeDistance"
-ENT.NoChaseAfterCertainRange_CloseDistance = "UseRangeDistance"
-ENT.NoChaseAfterCertainRange_Type = "OnlyRange"
+ENT.LimitChaseDistance = "OnlyRange"
+ENT.LimitChaseDistance_Max = "UseRangeDistance"
+ENT.LimitChaseDistance_Min = "UseRangeDistance"
 
 ENT.HasDeathAnimation = true
 ENT.AnimTbl_Death = "explode"

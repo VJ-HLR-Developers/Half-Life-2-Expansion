@@ -5,32 +5,32 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/vj_hlr/hl2b/hydra.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2b/hydra.mdl"
 ENT.StartHealth = 500
 ENT.HullType = HULL_HUMAN
-ENT.MovementType = VJ_MOVETYPE_STATIONARY -- How the NPC moves around
+ENT.MovementType = VJ_MOVETYPE_STATIONARY
 ENT.TurningSpeed = 2
 
 ENT.VJ_NPC_Class = {"CLASS_HYDRA"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.BloodColor = VJ.BLOOD_COLOR_BLUE
 
-ENT.HasMeleeAttack = true -- Can this NPC melee attack?
+ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = "vjges_strike"
-ENT.MeleeAttackDistance = 180 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.MeleeAttackDamageDistance = 210 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
+ENT.MeleeAttackDistance = 180
+ENT.MeleeAttackDamageDistance = 210
+ENT.TimeUntilMeleeAttackDamage = false
 ENT.MeleeAttackDamage = 60
 
-ENT.HasDeathCorpse = false -- Should a corpse spawn when it's killed?
+ENT.HasDeathCorpse = false
 
-ENT.ControllerVars = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "Bone47", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(10, 0, 5), -- The offset for the controller when the camera is in first person
+ENT.ControllerParameters = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "Bone47",
+    FirstP_Offset = Vector(10, 0, 5),
 }
-	-- ====== Sound Paths ====== --
+
 ENT.SoundTbl_Alert = {
 	"vj_hlr/hl2_npc/hydra/hydra_alert1.wav",
 	"vj_hlr/hl2_npc/hydra/hydra_alert2.wav",
@@ -173,7 +173,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key)
 	if key == "melee" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

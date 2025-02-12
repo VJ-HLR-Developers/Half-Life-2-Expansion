@@ -11,11 +11,11 @@ ENT.HullType = HULL_TINY
 
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
-ENT.ControllerVars = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "HeadcrabClassic.SpineControl", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(3, 0, -1), -- The offset for the controller when the camera is in first person
+ENT.ControllerParameters = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "HeadcrabClassic.SpineControl",
+    FirstP_Offset = Vector(3, 0, -1),
 }
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW

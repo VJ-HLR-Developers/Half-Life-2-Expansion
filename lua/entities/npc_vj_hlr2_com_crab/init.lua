@@ -68,19 +68,19 @@ function ENT:OnInput(key, activator, caller, data)
 		self.HasMeleeAttackKnockBack = false
 		self.MeleeAttackBleedEnemy = false
 		self.SlowPlayerOnMeleeAttack = false
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	elseif key == "attack_stab" then
 		self.MeleeAttackDamage = 40
 		self.HasMeleeAttackKnockBack = false
 		self.MeleeAttackBleedEnemy = true
 		self.SlowPlayerOnMeleeAttack = true
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	elseif key == "attack_left" then
 		self.MeleeAttackDamage = 20
 		self.HasMeleeAttackKnockBack = true
 		self.MeleeAttackBleedEnemy = false
 		self.SlowPlayerOnMeleeAttack = false
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	elseif key == "gun_drop" then
 		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/flesh_rip.wav", 80)
 	elseif key == "gun_load" then

@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/vj_hlr/hl2/strider.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2/strider.mdl"
 ENT.StartHealth = 500
 ENT.HullType = HULL_LARGE
 ENT.VJ_ID_Boss = true
@@ -21,15 +21,15 @@ ENT.Immune_Fire = true
 ENT.PoseParameterLooking_InvertYaw = true
 ENT.PoseParameterLooking_Names = {pitch={"minigunPitch"},yaw={"minigunYaw"},roll={}}
 
-ENT.HasMeleeAttack = true -- Can this NPC melee attack?
+ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
-ENT.MeleeAttackDistance = 50 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.MeleeAttackDamageDistance = 100 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
+ENT.MeleeAttackDistance = 50
+ENT.MeleeAttackDamageDistance = 100
 ENT.MeleeAttackDamage = 150
 ENT.TimeUntilMeleeAttackDamage = false
 
 ENT.DisableFootStepSoundTimer = true
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
+ENT.HasExtraMeleeAttackSounds = true
 ENT.GeneralSoundPitch1 = 100
 ENT.IdleSoundVolume = 150
 ENT.IdleCombatSoundVolume = 150
@@ -38,30 +38,29 @@ ENT.BeforeMeleeAttackSoundVolume = 150
 ENT.PainSoundVolume = 150
 ENT.DeathSoundVolume = 150
 
-ENT.NoChaseAfterCertainRange = false -- Should the NPC stop chasing when the enemy is within the given far and close distances?
-ENT.NoChaseAfterCertainRange_FarDistance = 5000
-ENT.NoChaseAfterCertainRange_CloseDistance = 400
-ENT.NoChaseAfterCertainRange_Type = "Regular" -- "Regular" = Default behavior | "OnlyRange" = Only does it if it's able to range attack
+ENT.LimitChaseDistance = false
+ENT.LimitChaseDistance_Max = 5000
+ENT.LimitChaseDistance_Min = 400
 
-ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
-ENT.ConstantlyFaceEnemy_IfVisible = true -- Should it only face the enemy if it's visible?
-ENT.ConstantlyFaceEnemy_IfAttacking = false -- Should it face the enemy when attacking?
-ENT.ConstantlyFaceEnemy_Postures = "Both" -- "Both" = Moving or standing | "Moving" = Only when moving | "Standing" = Only when standing
-ENT.ConstantlyFaceEnemy_MinDistance = 5000 -- How close does it have to be until it starts to face the enemy?
+ENT.ConstantlyFaceEnemy = true
+ENT.ConstantlyFaceEnemy_IfVisible = true
+ENT.ConstantlyFaceEnemy_IfAttacking = false
+ENT.ConstantlyFaceEnemy_Postures = "Both"
+ENT.ConstantlyFaceEnemy_MinDistance = 5000
 
-ENT.ControllerVars = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "Combine_Strider.Neck_Bone", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(8, 0, -60), -- The offset for the controller when the camera is in first person
+ENT.ControllerParameters = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "Combine_Strider.Neck_Bone",
+    FirstP_Offset = Vector(8, 0, -60),
 }
 
-ENT.CanFlinch = 2 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
-ENT.FlinchDamageTypes = {DMG_BLAST} -- If it uses damage-based flinching, which types of damages should it flinch from?
+ENT.CanFlinch = 2
+ENT.FlinchDamageTypes = {DMG_BLAST}
 ENT.FlinchChance = 1
 ENT.NextFlinchTime = 2
-ENT.AnimTbl_Flinch = {"dodgeleft","dodgeright"} -- The regular flinch animations to play
--- ENT.AnimTbl_Flinch = {"vjges_flinch_gesture","vjges_flinch_gesture2","vjges_flinch_gesture_big"} -- The regular flinch animations to play
+ENT.AnimTbl_Flinch = {"dodgeleft","dodgeright"}
+-- ENT.AnimTbl_Flinch = {"vjges_flinch_gesture","vjges_flinch_gesture2","vjges_flinch_gesture_big"}
 
 ENT.SoundTbl_FootStep = {
 	"NPC_Strider.Footstep"
@@ -138,7 +137,7 @@ function ENT:OnInput(key, activator, caller, data)
 		util.ScreenShake(self:GetPos(), 14, 200, 0.6, 1024)
 	end
 	if key == "melee" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -374,7 +373,7 @@ function ENT:CustomAttack()
 			self:ControllAI(enemy,dist,cos)
 			return
 		end
-		if dist <= self.NoChaseAfterCertainRange_FarDistance && dist >= self.NoChaseAfterCertainRange_CloseDistance then
+		if dist <= self.LimitChaseDistance_Max && dist >= self.LimitChaseDistance_Min then
 			if enemy:Visible(self) && cos then
 				if CurTime() > self.NextFireT then
 					if self.Shots == 15 then

@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/hunter.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = {"models/vj_hlr/hl2/hunter.mdl"}
 ENT.StartHealth = 210
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -25,27 +25,27 @@ ENT.AnimTbl_MeleeAttack = {
 	"melee_02",
 }
 ENT.MeleeAttackDamage = 20
-ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDistance = 70 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.MeleeAttackDamageDistance = 130 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
+ENT.TimeUntilMeleeAttackDamage = false
+ENT.MeleeAttackDistance = 70
+ENT.MeleeAttackDamageDistance = 130
 ENT.MeleeAttackBleedEnemy = true
 ENT.MeleeAttackBleedEnemyChance = 1
 ENT.MeleeAttackBleedEnemyDamage = 3
 ENT.SlowPlayerOnMeleeAttack = true
 
-ENT.HasDeathAnimation = true -- Does it play an animation when it dies?
+ENT.HasDeathAnimation = true
 ENT.AnimTbl_Death = ACT_DIESIMPLE
 
-ENT.ControllerVars = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "MiniStrider.body_joint", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(18, 0, -5), -- The offset for the controller when the camera is in first person
+ENT.ControllerParameters = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "MiniStrider.body_joint",
+    FirstP_Offset = Vector(18, 0, -5),
 }
 
 ENT.DisableFootStepSoundTimer = true
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
-	-- ====== Sound Paths ====== --
+ENT.HasExtraMeleeAttackSounds = true
+
 -- ENT.SoundTbl_Breath = {"npc/combine_gunship/gunship_engine_loop3.wav"}
 ENT.SoundTbl_FootStep = {
 	"npc/ministrider/ministrider_footstep1.wav",
@@ -201,7 +201,7 @@ function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:PlayFootstepSound()
 	elseif key == "melee" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	elseif key == "range" then
 		self:FireFlechette()
 	end
@@ -416,7 +416,7 @@ function ENT:Controller_Movement(cont, ply, bullseyePos)
 		local aimVector = ply:GetAimVector()
 		local FT = FrameTime() *(self.TurningSpeed *1.25)
 
-		self.ControllerVars.TurnAngle = self.ControllerVars.TurnAngle or defAng
+		self.ControllerParameters.TurnAngle = self.ControllerParameters.TurnAngle or defAng
 
 		if self.IsCharging then
 			return
@@ -433,8 +433,8 @@ function ENT:Controller_Movement(cont, ply, bullseyePos)
 				-- else
 				-- 	cont:StartMovement(aimVector, defAng)
 				-- end
-				self.ControllerVars.TurnAngle = LerpAngle(FT, self.ControllerVars.TurnAngle, gerta_lef && angY45 or gerta_rig && angYN45 or defAng)
-				cont:StartMovement(aimVector, self.ControllerVars.TurnAngle)
+				self.ControllerParameters.TurnAngle = LerpAngle(FT, self.ControllerParameters.TurnAngle, gerta_lef && angY45 or gerta_rig && angYN45 or defAng)
+				cont:StartMovement(aimVector, self.ControllerParameters.TurnAngle)
 			end
 		elseif ply:KeyDown(IN_BACK) then
 			-- if gerta_lef then
@@ -444,16 +444,16 @@ function ENT:Controller_Movement(cont, ply, bullseyePos)
 			-- else
 			-- 	cont:StartMovement(aimVector*-1, defAng)
 			-- end
-			self.ControllerVars.TurnAngle = LerpAngle(FT, self.ControllerVars.TurnAngle, gerta_lef && angY135 or gerta_rig && angYN135 or angY180)
-			cont:StartMovement(aimVector, self.ControllerVars.TurnAngle)
+			self.ControllerParameters.TurnAngle = LerpAngle(FT, self.ControllerParameters.TurnAngle, gerta_lef && angY135 or gerta_rig && angYN135 or angY180)
+			cont:StartMovement(aimVector, self.ControllerParameters.TurnAngle)
 		elseif gerta_lef then
 			-- cont:StartMovement(aimVector, angY90)
-			self.ControllerVars.TurnAngle = LerpAngle(FT, self.ControllerVars.TurnAngle, angY90)
-			cont:StartMovement(aimVector, self.ControllerVars.TurnAngle)
+			self.ControllerParameters.TurnAngle = LerpAngle(FT, self.ControllerParameters.TurnAngle, angY90)
+			cont:StartMovement(aimVector, self.ControllerParameters.TurnAngle)
 		elseif gerta_rig then
 			-- cont:StartMovement(aimVector, angYN90)
-			self.ControllerVars.TurnAngle = LerpAngle(FT, self.ControllerVars.TurnAngle, angYN90)
-			cont:StartMovement(aimVector, self.ControllerVars.TurnAngle)
+			self.ControllerParameters.TurnAngle = LerpAngle(FT, self.ControllerParameters.TurnAngle, angYN90)
+			cont:StartMovement(aimVector, self.ControllerParameters.TurnAngle)
 		else
 			self:StopMoving()
 			if self.MovementType == VJ_MOVETYPE_AERIAL or self.MovementType == VJ_MOVETYPE_AQUATIC then

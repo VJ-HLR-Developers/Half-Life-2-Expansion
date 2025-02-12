@@ -11,11 +11,11 @@ ENT.HullType = HULL_HUMAN
 
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
-ENT.ControllerVars = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(3, 0, 0), -- The offset for the controller when the camera is in first person
+ENT.ControllerParameters = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "Bip01 Head",
+    FirstP_Offset = Vector(3, 0, 0),
 }
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
@@ -33,15 +33,15 @@ ENT.SoundTbl_FootStep = {
 	"physics/flesh/flesh_squishy_impact_hard3.wav",
 	"physics/flesh/flesh_squishy_impact_hard4.wav",
 }
-ENT.SoundTbl_FootStep_Run = {"physics/flesh/flesh_strider_impact_bullet1.wav","physics/flesh/flesh_strider_impact_bullet2.wav"}
-ENT.SoundTbl_Breath = {"npc/zombie_poison/pz_breathe_loop1.wav"}
-ENT.SoundTbl_Idle = {"npc/barnacle/barnacle_gulp1.wav","npc/barnacle/barnacle_gulp2.wav","^ambient/creatures/town_moan1.wav"}
-ENT.SoundTbl_Alert = {"npc/barnacle/barnacle_pull1.wav","npc/barnacle/barnacle_pull2.wav","npc/barnacle/barnacle_pull3.wav","npc/barnacle/barnacle_pull4.wav"}
-ENT.SoundTbl_BeforeMeleeAttack = {"npc/zombie_poison/pz_warn1.wav","npc/zombie_poison/pz_warn2.wav"}
-ENT.SoundTbl_Pain = {"npc/zombie/zombie_pain1.wav","npc/zombie/zombie_pain2.wav","npc/zombie/zombie_pain3.wav","npc/zombie/zombie_pain4.wav","npc/zombie/zombie_pain5.wav","npc/zombie/zombie_pain6.wav"}
-ENT.SoundTbl_Death = {"npc/zombie/zombie_die1.wav","npc/zombie/zombie_die2.wav","npc/zombie/zombie_die3.wav"}
-ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_strike2.wav","npc/zombie/claw_strike3.wav"}
-ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav","npc/zombie/claw_miss2.wav"}
+ENT.SoundTbl_FootStep_Run = {"physics/flesh/flesh_strider_impact_bullet1.wav", "physics/flesh/flesh_strider_impact_bullet2.wav"}
+ENT.SoundTbl_Breath = "npc/zombie_poison/pz_breathe_loop1.wav"
+ENT.SoundTbl_Idle = {"npc/barnacle/barnacle_gulp1.wav", "npc/barnacle/barnacle_gulp2.wav", "^ambient/creatures/town_moan1.wav"}
+ENT.SoundTbl_Alert = {"npc/barnacle/barnacle_pull1.wav", "npc/barnacle/barnacle_pull2.wav", "npc/barnacle/barnacle_pull3.wav", "npc/barnacle/barnacle_pull4.wav"}
+ENT.SoundTbl_BeforeMeleeAttack = {"npc/zombie_poison/pz_warn1.wav", "npc/zombie_poison/pz_warn2.wav"}
+ENT.SoundTbl_Pain = {"npc/zombie/zombie_pain1.wav", "npc/zombie/zombie_pain2.wav", "npc/zombie/zombie_pain3.wav", "npc/zombie/zombie_pain4.wav", "npc/zombie/zombie_pain5.wav", "npc/zombie/zombie_pain6.wav"}
+ENT.SoundTbl_Death = {"npc/zombie/zombie_die1.wav", "npc/zombie/zombie_die2.wav", "npc/zombie/zombie_die3.wav"}
+ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav", "npc/zombie/claw_strike2.wav", "npc/zombie/claw_strike3.wav"}
+ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav", "npc/zombie/claw_miss2.wav"}
 ENT.SoundTbl_Investigate = {
 	"ambient/voices/citizen_beaten3.wav",
 	"ambient/voices/citizen_beaten4.wav",
@@ -73,7 +73,7 @@ function ENT:OnInput(key, activator, caller, data)
 	elseif key == "step_run" then
 		VJ.EmitSound(self,self.SoundTbl_FootStep_Run,68)
 	elseif key == "melee" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

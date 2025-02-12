@@ -35,13 +35,13 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if !SERVER then return end
 
-ENT.Model = {"models/weapons/w_missile_launch.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
-ENT.DoesRadiusDamage = true -- Should it deal radius damage when it collides with something?
+ENT.Model = {"models/weapons/w_missile_launch.mdl"}
+ENT.DoesRadiusDamage = true
 ENT.RadiusDamageRadius = 300
 ENT.RadiusDamage = 100
-ENT.RadiusDamageUseRealisticRadius = true -- Should the damage decrease the farther away the hit entity is from the radius origin?
+ENT.RadiusDamageUseRealisticRadius = true
 ENT.RadiusDamageType = bit.bor(DMG_BLAST,DMG_SHOCK,DMG_DISSOLVE)
-ENT.RadiusDamageForce = 90 -- Damage force to apply to the hit entity | false = Don't apply any force
+ENT.RadiusDamageForce = 90
 ENT.CollisionDecal = {"Scorch"}
 ENT.SoundTbl_Idle = {"weapons/rpg/rocket1.wav"}
 ENT.SoundTbl_OnCollide = {"ambient/explosions/explode_8.wav"}

@@ -98,7 +98,7 @@ function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
 	elseif key == "melee" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

@@ -5,17 +5,17 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/overwatch_apc.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table 
+ENT.Model = "models/vj_hlr/hl2/overwatch_apc.mdl"
 ENT.StartHealth = 750
-ENT.ControllerVars = {
-    ThirdP_Offset = Vector(0, 40, -20), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "APC.Gun_Base", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(0, 0, 50), -- The offset for the controller when the camera is in first person
-	FirstP_ShrinkBone = false, -- Should the bone shrink? Useful if the bone is obscuring the player's view
+ENT.ControllerParameters = {
+    ThirdP_Offset = Vector(0, 40, -20),
+    FirstP_Bone = "APC.Gun_Base",
+    FirstP_Offset = Vector(0, 0, 50),
+	FirstP_ShrinkBone = false,
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
-ENT.DeathCorpseModel = {"models/combine_apc_destroyed_gib01.mdl"} -- Model(s) to spawn as the NPC's corpse | false = Use the NPC's model | Can be a single string or a table of strings
+ENT.DeathCorpseModel = {"models/combine_apc_destroyed_gib01.mdl"}
 
 ENT.SoundTbl_Breath = {"vehicles/apc/apc_idle1.wav"}
 ENT.SoundTbl_Idle = {

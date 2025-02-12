@@ -5,35 +5,35 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2b/houndeye.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = {"models/vj_hlr/hl2b/houndeye.mdl"}
 ENT.StartHealth = 80
 ENT.HullType = HULL_WIDE_SHORT
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_XEN"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.BloodParticle = {"vj_hlr_blood_yellow"}
-ENT.Immune_Sonic = true -- Immune to sonic damage
-ENT.HasMeleeAttack = true -- Can this NPC melee attack?
+ENT.Immune_Sonic = true
+ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = ACT_RANGE_ATTACK1
-ENT.MeleeAttackDistance = 130 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.TimeUntilMeleeAttackDamage = 2.35 -- This counted in seconds | This calculates the time until it hits something
+ENT.MeleeAttackDistance = 130
+ENT.TimeUntilMeleeAttackDamage = 2.35
 ENT.MeleeAttackDamage = 25
-ENT.MeleeAttackDamageType = DMG_SONIC -- Type of Damage
-ENT.MeleeAttackDSPSoundType = 34 -- What type of DSP effect? | Search online for the types
-ENT.MeleeAttackDSPSoundUseDamage = false -- Should it only do the DSP effect if gets damaged x or greater amount
+ENT.MeleeAttackDamageType = DMG_SONIC
+ENT.MeleeAttackDSPSoundType = 34
+ENT.MeleeAttackDSPSoundUseDamage = false
 ENT.DisableDefaultMeleeAttackDamageCode = true -- Disables the default mel	ee attack damage code
 ENT.DisableFootStepSoundTimer = true
-	-- ====== Flinching Code ====== --
-ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
-ENT.AnimTbl_Flinch = {"vjseq_flinch_small"} -- The regular flinch animations to play
 
-ENT.ControllerVars = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "HoundEye.Head", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(4, 0, 0), -- The offset for the controller when the camera is in first person
+ENT.CanFlinch = 1
+ENT.AnimTbl_Flinch = {"vjseq_flinch_small"}
+
+ENT.ControllerParameters = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "HoundEye.Head",
+    FirstP_Offset = Vector(4, 0, 0),
 }
-	-- ====== Sound Paths ====== --
+
 ENT.SoundTbl_FootStep = {
 	"npc/zombie/foot1.wav",
 	"npc/zombie/foot2.wav",

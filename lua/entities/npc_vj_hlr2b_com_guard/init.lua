@@ -10,12 +10,12 @@ ENT.StartHealth = 500
 ENT.SightAngle = 190
 ENT.HullType = HULL_HUMAN
 
-ENT.ControllerVars = {
-	CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-	ThirdP_Offset = Vector(0, 0, -40), -- The offset for the controller when the camera is in third person
-	FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
-	FirstP_Offset = Vector(0, 0, 5), -- The offset for the controller when the camera is in first person
-	FirstP_ShrinkBone = true, -- Should the bone shrink? Useful if the bone is obscuring the player's view
+ENT.ControllerParameters = {
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, -40),
+	FirstP_Bone = "Bip01 Head",
+	FirstP_Offset = Vector(0, 0, 5),
+	FirstP_ShrinkBone = true,
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
@@ -38,10 +38,9 @@ ENT.TimeUntilRangeAttackProjectileRelease = false
 ENT.NextRangeAttackTime = 5
 ENT.DisableDefaultRangeAttackCode = true
 
-ENT.NoChaseAfterCertainRange = true
-ENT.NoChaseAfterCertainRange_FarDistance = 1800
-ENT.NoChaseAfterCertainRange_CloseDistance = 500
-ENT.NoChaseAfterCertainRange_Type = "OnlyRange"
+ENT.LimitChaseDistance = "OnlyRange"
+ENT.LimitChaseDistance_Max = 1800
+ENT.LimitChaseDistance_Min = 500
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 
@@ -140,7 +139,7 @@ function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:PlayFootstepSound()
 	elseif key == "melee" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	elseif key == "charge" then
 		self:StartWarpCannon(true)
 	elseif key == "range" then

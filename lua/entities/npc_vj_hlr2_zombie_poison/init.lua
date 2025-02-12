@@ -155,7 +155,7 @@ function ENT:OnInput(key, activator, caller, data)
 			VJ.EmitSound(self,self.SoundTbl_FootStepAdd,self.FootStepSoundLevel)
 		end
 	elseif key == "melee" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 		if self.IsBeta then
 			VJ.EmitSound(self,"vj_hlr/hl1_npc/bullchicken/bc_spithit3.wav")
 

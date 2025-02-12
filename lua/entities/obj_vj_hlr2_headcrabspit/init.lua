@@ -5,12 +5,12 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/vj_base/projectiles/spit_acid_small.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_base/projectiles/spit_acid_small.mdl"
 ENT.ProjectileType = VJ.PROJ_TYPE_GRAVITY
-ENT.DoesRadiusDamage = true -- Should it deal radius damage when it collides with something?
+ENT.DoesRadiusDamage = true
 ENT.RadiusDamageRadius = 40
 ENT.RadiusDamage = 0
-ENT.RadiusDamageUseRealisticRadius = true -- Should the damage decrease the farther away the hit entity is from the radius origin?
+ENT.RadiusDamageUseRealisticRadius = true
 ENT.RadiusDamageType = DMG_POISON
 ENT.CollisionDecal = "BeerSplash"
 ENT.SoundTbl_Startup = "weapons/crossbow/bolt_fly4.wav"

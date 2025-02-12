@@ -5,10 +5,10 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/vj_hlr/hl2b/combine_assassin.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2b/combine_assassin.mdl"
 ENT.StartHealth = 65
 ENT.HullType = HULL_HUMAN
-ENT.JumpVars = {
+ENT.JumpParameters = {
 	MaxRise = 620,
 	MaxDrop = 620,
 	MaxDistance = 620
@@ -17,17 +17,17 @@ ENT.JumpVars = {
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = VJ.BLOOD_COLOR_RED
 
-ENT.HasMeleeAttack = true -- Can this NPC melee attack?
+ENT.HasMeleeAttack = true
 ENT.MeleeAttackDamage = 10
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
-ENT.MeleeAttackDistance = 55 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.MeleeAttackDamageDistance = 90 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
+ENT.MeleeAttackDistance = 55
+ENT.MeleeAttackDamageDistance = 90
 ENT.TimeUntilMeleeAttackDamage = false
 
-ENT.CanTurnWhileMoving = false -- Can the NPC turn while moving? | EX: GoldSrc NPCs, Facing enemy while running to cover, Facing the player while moving out of the way
-ENT.Weapon_NoSpawnMenu = true -- If set to true, the NPC weapon setting in the spawnmenu will not be applied for this SNPC
-ENT.DisableWeaponFiringGesture = true -- If set to true, it will disable the weapon firing gestures
-ENT.Weapon_StrafeWhileFiring = false -- Should it move randomly while firing a weapon?
+ENT.CanTurnWhileMoving = false
+ENT.Weapon_NoSpawnMenu = true
+ENT.DisableWeaponFiringGesture = true
+ENT.Weapon_StrafeWhileFiring = false
 
 ENT.AnimTbl_CallForHelp = false
 
@@ -35,7 +35,7 @@ ENT.AnimTbl_ShootWhileMovingRun = {ACT_SPRINT} -- Animations it will play when s
 ENT.AnimTbl_ShootWhileMovingWalk = {ACT_RUN} -- Animations it will play when shooting while walking | NOTE: Weapon may translate the animation that they see fit!
 
 ENT.DisableFootStepSoundTimer = true
-ENT.AnimTbl_TakingCover = {ACT_IDLE_ANGRY} -- The animation it plays when hiding in a covered position, leave empty to let the base decide
+ENT.AnimTbl_TakingCover = {ACT_IDLE_ANGRY}
 
 ENT.DropDeathLoot = false
 
@@ -99,7 +99,7 @@ function ENT:OnInput(key, activator, caller, data)
 		end
 	end
 	if string.StartWith(key,"melee") then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

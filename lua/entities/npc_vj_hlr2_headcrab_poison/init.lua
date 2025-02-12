@@ -11,11 +11,11 @@ ENT.HullType = HULL_TINY
 
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
-ENT.ControllerVars = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "HCblack.torso", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(1, 0, 2), -- The offset for the controller when the camera is in first person
+ENT.ControllerParameters = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "HCblack.torso",
+    FirstP_Offset = Vector(1, 0, 2),
 }
 
 ENT.AnimTbl_IdleStand = {ACT_IDLE,"IdleSumo","IdleSniff"}

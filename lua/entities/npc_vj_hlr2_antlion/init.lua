@@ -11,13 +11,13 @@ ENT.HullType = HULL_HUMAN
 
 ENT.VJ_NPC_Class = {"CLASS_ANTLION"}
 
-ENT.JumpVars = {
+ENT.JumpParameters = {
 	MaxRise = 1000,
 	MaxDrop = 1500,
 	MaxDistance = 1500
 }
 
-ENT.ControllerVars = {
+ENT.ControllerParameters = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Antlion.Head_Bone",
@@ -171,11 +171,11 @@ end
 function ENT:OnInput(key, activator, caller, data)
 	if key == "melee" then
 		self.MeleeAttackDamage = self.DefaultDamage
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 	if key == "melee_pounce" then
 		self.MeleeAttackDamage = self.DefaultDamage *1.5
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 	if key == "step" || key == "step_light" then
 		self:PlayFootstepSound()
@@ -188,7 +188,7 @@ function ENT:OnInput(key, activator, caller, data)
 	end
 	if key == "range" then
 		for i = 1,math.random(2,4) do
-			self:RangeAttackCode()
+			self:ExecuteRangeAttack()
 		end
 	end
 	if key == "step_heavy" then

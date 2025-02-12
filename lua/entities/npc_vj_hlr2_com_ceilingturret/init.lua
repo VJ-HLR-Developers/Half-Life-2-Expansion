@@ -6,10 +6,10 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/vj_hlr/hl2/ceiling_turret.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2/ceiling_turret.mdl"
 ENT.HasDeathCorpse = false
 ENT.StartHealth = 250
-ENT.SightDistance = 2200 -- How far it can see
+ENT.SightDistance = 2200
 ENT.PoseParameterLooking_TurningSpeed = 25
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()

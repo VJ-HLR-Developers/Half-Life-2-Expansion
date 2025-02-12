@@ -6,24 +6,24 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/vj_hlr/hl2/combine_cannon_gun.mdl" -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2/combine_cannon_gun.mdl"
 ENT.StartHealth = 500
 ENT.Immune_Bullet = true
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.Turret_HasAlarm = false
 ENT.Turret_BulletAttachment = "muzzle"
-ENT.TimeUntilRangeAttackProjectileRelease = 0.001 -- How much time until the projectile code is ran?
-ENT.NextRangeAttackTime = 1.2 -- How much time until it can use a range attack?
-ENT.NextAnyAttackTime_Range = 1.2 -- How much time until it can use any attack again? | Counted in Seconds
+ENT.TimeUntilRangeAttackProjectileRelease = 0.001
+ENT.NextRangeAttackTime = 1.2
+ENT.NextAnyAttackTime_Range = 1.2
 ENT.Turret_FireSound = {"^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot1.wav", "^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot2.wav", "^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot3.wav"}
 
 ENT.GibOnDeathFilter = false
 ENT.GeneratorHealth = 100
 
-ENT.ControllerVars = {
-    FirstP_Bone = "polySurface167", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(-5, 1, 20), -- The offset for the controller when the camera is in first person
-	FirstP_ShrinkBone = false, -- Should the bone shrink? Useful if the bone is obscuring the player's view
+ENT.ControllerParameters = {
+    FirstP_Bone = "polySurface167",
+    FirstP_Offset = Vector(-5, 1, 20),
+	FirstP_ShrinkBone = false,
 }
 
 local doorSound = !IsMounted("ep2")

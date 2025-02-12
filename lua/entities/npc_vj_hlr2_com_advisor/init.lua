@@ -6,54 +6,53 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/advisor_ep2.mdl"} -- Model(s) to spawn with | Picks a random one if it's a table
+ENT.Model = "models/vj_hlr/hl2/advisor_ep2.mdl"
 ENT.StartHealth = 500
 ENT.HullType = HULL_TINY
 ENT.VJ_ID_Boss = true
-ENT.MovementType = VJ_MOVETYPE_AERIAL -- How the NPC moves around
-ENT.Aerial_FlyingSpeed_Calm = 200 -- The speed it should fly with, when it's wandering, moving slowly, etc. | Basically walking compared to ground NPCs
+ENT.MovementType = VJ_MOVETYPE_AERIAL
+ENT.Aerial_FlyingSpeed_Calm = 200
 ENT.Aerial_FlyingSpeed_Alerted = 325
-ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it's wandering around while idle
-ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE_ANGRY} -- Animations it plays when it's moving while alerted
+ENT.Aerial_AnimTbl_Calm = ACT_IDLE
+ENT.Aerial_AnimTbl_Alerted = ACT_IDLE_ANGRY
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 
-ENT.HasMeleeAttack = true -- Can this NPC melee attack?
+ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
-ENT.MeleeAttackDistance = 120 -- How close an enemy has to be to trigger a melee attack | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.MeleeAttackDamageDistance = 170 -- How far does the damage go | false = Let the base auto calculate on initialize based on the NPC's collision bounds
-ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
+ENT.MeleeAttackDistance = 120
+ENT.MeleeAttackDamageDistance = 170
+ENT.TimeUntilMeleeAttackDamage = false
 ENT.MeleeAttackDamage = 55
 
-ENT.HasRangeAttack = true -- Can this NPC range attack?
+ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = {ACT_MELEE_ATTACK1}
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar" -- Entities that it can spawn when range attacking | If set as a table, it picks a random entity
+ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.7
-ENT.NextRangeAttackTime = 10 -- How much time until it can use a range attack?
-ENT.RangeDistance = 5000 -- How far can it range attack?
-ENT.RangeToMeleeDistance = 400 -- How close does it have to be until it uses melee?
+ENT.NextRangeAttackTime = 10
+ENT.RangeDistance = 5000
+ENT.RangeToMeleeDistance = 400
 
-ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
+ENT.HasExtraMeleeAttackSounds = true
 
-ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
-ENT.ConstantlyFaceEnemy_IfVisible = true -- Should it only face the enemy if it"s visible?
-ENT.ConstantlyFaceEnemy_IfAttacking = false -- Should it face the enemy when attacking?
-ENT.ConstantlyFaceEnemy_Postures = "Both" -- "Both" = Moving or standing | "Moving" = Only when moving | "Standing" = Only when standing
+ENT.ConstantlyFaceEnemy = true
+ENT.ConstantlyFaceEnemy_IfVisible = true
+ENT.ConstantlyFaceEnemy_IfAttacking = false
+ENT.ConstantlyFaceEnemy_Postures = "Both"
 ENT.ConstantlyFaceEnemy_MinDistance = 7500
 
-ENT.ControllerVars = {
-    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
-    ThirdP_Offset = Vector(0, 0, 0), -- The offset for the controller when the camera is in third person
-    FirstP_Bone = "advisor.camera", -- If left empty, the base will attempt to calculate a position for first person
-    FirstP_Offset = Vector(8, 0, 4), -- The offset for the controller when the camera is in first person
+ENT.ControllerParameters = {
+    CameraMode = 1,
+    ThirdP_Offset = Vector(0, 0, 0),
+    FirstP_Bone = "advisor.camera",
+    FirstP_Offset = Vector(8, 0, 4),
 }
 
-ENT.NoChaseAfterCertainRange = true -- Should the SNPC not be able to chase when it"s between number x and y?
-ENT.NoChaseAfterCertainRange_FarDistance = 4000 -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_CloseDistance = 0 -- How near until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_Type = "Regular" -- "Regular" = Default behavior | "OnlyRange" = Only does it if it"s able to range attack
-	-- ====== Sound Paths ====== --
+ENT.LimitChaseDistance = true
+ENT.LimitChaseDistance_Max = 4000
+ENT.LimitChaseDistance_Min = 0
+
 ENT.SoundTbl_Breath = {"ambient/atmosphere/city_beacon_loop1.wav"}
 ENT.SoundTbl_Idle = {
 	"vj_hlr/hl2_npc/advisor/advisor_speak01.wav",
@@ -114,7 +113,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "melee" then
-		self:MeleeAttackCode()
+		self:ExecuteMeleeAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
