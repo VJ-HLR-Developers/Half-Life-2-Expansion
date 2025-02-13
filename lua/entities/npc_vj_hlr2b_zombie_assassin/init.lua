@@ -11,7 +11,7 @@ ENT.HullType = HULL_HUMAN
 
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Bip01 Head",

@@ -23,7 +23,7 @@ ENT.TimeUntilMeleeAttackDamage = false
 ENT.DeathLootChance = 10
 ENT.DeathLoot = {"weapon_frag"}
 
-ENT.CanFlinch = 1
+ENT.CanFlinch = true
 ENT.FlinchChance = 8
 ENT.NextFlinchTime = 5
 ENT.AnimTbl_Flinch = ACT_FLINCH_PHYSICS

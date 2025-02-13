@@ -11,13 +11,13 @@ ENT.HullType = HULL_HUMAN
 
 ENT.VJ_NPC_Class = {"CLASS_ANTLION"}
 
-ENT.JumpParameters = {
+ENT.JumpParams = {
 	MaxRise = 1000,
 	MaxDrop = 1500,
 	MaxDistance = 1500
 }
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Antlion.Head_Bone",

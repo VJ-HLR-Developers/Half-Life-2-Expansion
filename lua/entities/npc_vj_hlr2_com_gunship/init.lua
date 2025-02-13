@@ -21,7 +21,7 @@ ENT.HasRangeAttack = false
 ENT.HasDeathAnimation = false
 ENT.HasDeathCorpse = false
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Chopper.Blade_Hull",

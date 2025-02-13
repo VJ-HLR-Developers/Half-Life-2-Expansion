@@ -11,8 +11,8 @@ ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
 ENT.Behavior = VJ_BEHAVIOR_PASSIVE
-ENT.Passive_RunOnTouch = false -- Should it run away && make a alert sound when something collides with it?
-ENT.Passive_RunOnDamage = false -- Should it run when it's damaged? | This doesn't impact how self.Passive_AlliesRunOnDamage works
+ENT.Passive_RunOnTouch = false
+ENT.DamageResponse = false
 ENT.DisableFindEnemy = true
 
 ENT.GodMode = true

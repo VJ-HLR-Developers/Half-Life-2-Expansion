@@ -9,7 +9,7 @@ include("shared.lua")
 ENT.Model = "models/vj_hlr/hl2/vortigaunt_slave.mdl"
 
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
-ENT.FriendsWithAllPlayerAllies = false
+ENT.AlliedWithPlayerAllies = false
 
 ENT.SoundTbl_FootStep = {"vj_hlr/hl2_npc/vort/vort_foot1.wav","vj_hlr/hl2_npc/vort/vort_foot2.wav","vj_hlr/hl2_npc/vort/vort_foot3.wav","vj_hlr/hl2_npc/vort/vort_foot4.wav"}
 ENT.SoundTbl_Alert = {

@@ -20,7 +20,7 @@ ENT.MeleeAttackDistance = 35
 ENT.MeleeAttackDamageDistance = 75
 ENT.TimeUntilMeleeAttackDamage = false
 
-ENT.CanFlinch = 1
+ENT.CanFlinch = true
 ENT.AnimTbl_Flinch = ACT_SMALL_FLINCH
 
 ENT.DisableFootStepSoundTimer = true

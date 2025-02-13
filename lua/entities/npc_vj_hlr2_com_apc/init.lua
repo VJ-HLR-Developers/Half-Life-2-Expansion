@@ -7,7 +7,7 @@ include("shared.lua")
 -----------------------------------------------*/
 ENT.Model = "models/vj_hlr/hl2/overwatch_apc.mdl"
 ENT.StartHealth = 750
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     ThirdP_Offset = Vector(0, 40, -20),
     FirstP_Bone = "APC.Gun_Base",
     FirstP_Offset = Vector(0, 0, 50),

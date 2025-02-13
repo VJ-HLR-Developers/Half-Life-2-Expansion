@@ -5,12 +5,12 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2b/combine_guard.mdl"}
+ENT.Model = "models/vj_hlr/hl2b/combine_guard.mdl"
 ENT.StartHealth = 500
 ENT.SightAngle = 190
 ENT.HullType = HULL_HUMAN
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
 	CameraMode = 1,
 	ThirdP_Offset = Vector(0, 0, -40),
 	FirstP_Bone = "Bip01 Head",
@@ -21,7 +21,7 @@ ENT.ControllerParameters = {
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 
 ENT.Bleeds = false
-ENT.Immune_AcidPoisonRadiation = true
+ENT.Immune_Toxic = true
 ENT.Immune_Dissolve = true
 
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
@@ -31,7 +31,7 @@ ENT.TimeUntilMeleeAttackDamage = false
 ENT.MeleeAttackDamage = 20
 
 ENT.HasRangeAttack = true
-ENT.AnimTbl_RangeAttack = {ACT_ARM}
+ENT.AnimTbl_RangeAttack = ACT_ARM
 ENT.RangeDistance = 3500
 ENT.RangeToMeleeDistance = 500
 ENT.TimeUntilRangeAttackProjectileRelease = false
@@ -212,7 +212,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 				end})
 			end})
 			self.NextKnockdownT = CurTime() +(dur *2)
-			self.NextCallForBackUpOnDamageT = CurTime() +dur
+			self.NextDamageAllyResponseT = CurTime() +dur
 		end
 	end
 end

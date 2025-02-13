@@ -10,7 +10,7 @@ ENT.StartHealth = 500
 ENT.HullType = HULL_LARGE
 ENT.VJ_ID_Boss = true
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Antlion_Guard.head",
@@ -77,7 +77,7 @@ function ENT:Init()
 		self:SetSkin(1)
 		self.MeleeAttackDamage = 110
 		self.MeleeAttackDamageType = bit.bor(DMG_SLASH,DMG_POISON,DMG_CRUSH)
-		self.Immune_AcidPoisonRadiation = true
+		self.Immune_Toxic = true
 	end
 	if self:IsDirt(self:GetPos()) then
 		self.IsDiging = true
@@ -469,7 +469,7 @@ function ENT:Controller_Movement(cont, ply, bullseyePos)
 		local aimVector = ply:GetAimVector()
 		local FT = FrameTime() *(self.TurningSpeed *1.25)
 
-		self.ControllerParameters.TurnAngle = self.ControllerParameters.TurnAngle or defAng
+		self.ControllerParams.TurnAngle = self.ControllerParams.TurnAngle or defAng
 
 		if self.IsCharging then
 			return
@@ -486,8 +486,8 @@ function ENT:Controller_Movement(cont, ply, bullseyePos)
 				-- else
 				-- 	cont:StartMovement(aimVector, defAng)
 				-- end
-				self.ControllerParameters.TurnAngle = LerpAngle(FT, self.ControllerParameters.TurnAngle, gerta_lef && angY45 or gerta_rig && angYN45 or defAng)
-				cont:StartMovement(aimVector, self.ControllerParameters.TurnAngle)
+				self.ControllerParams.TurnAngle = LerpAngle(FT, self.ControllerParams.TurnAngle, gerta_lef && angY45 or gerta_rig && angYN45 or defAng)
+				cont:StartMovement(aimVector, self.ControllerParams.TurnAngle)
 			end
 		elseif ply:KeyDown(IN_BACK) then
 			-- if gerta_lef then
@@ -497,16 +497,16 @@ function ENT:Controller_Movement(cont, ply, bullseyePos)
 			-- else
 			-- 	cont:StartMovement(aimVector*-1, defAng)
 			-- end
-			self.ControllerParameters.TurnAngle = LerpAngle(FT, self.ControllerParameters.TurnAngle, gerta_lef && angY135 or gerta_rig && angYN135 or angY180)
-			cont:StartMovement(aimVector, self.ControllerParameters.TurnAngle)
+			self.ControllerParams.TurnAngle = LerpAngle(FT, self.ControllerParams.TurnAngle, gerta_lef && angY135 or gerta_rig && angYN135 or angY180)
+			cont:StartMovement(aimVector, self.ControllerParams.TurnAngle)
 		elseif gerta_lef then
 			-- cont:StartMovement(aimVector, angY90)
-			self.ControllerParameters.TurnAngle = LerpAngle(FT, self.ControllerParameters.TurnAngle, angY90)
-			cont:StartMovement(aimVector, self.ControllerParameters.TurnAngle)
+			self.ControllerParams.TurnAngle = LerpAngle(FT, self.ControllerParams.TurnAngle, angY90)
+			cont:StartMovement(aimVector, self.ControllerParams.TurnAngle)
 		elseif gerta_rig then
 			-- cont:StartMovement(aimVector, angYN90)
-			self.ControllerParameters.TurnAngle = LerpAngle(FT, self.ControllerParameters.TurnAngle, angYN90)
-			cont:StartMovement(aimVector, self.ControllerParameters.TurnAngle)
+			self.ControllerParams.TurnAngle = LerpAngle(FT, self.ControllerParams.TurnAngle, angYN90)
+			cont:StartMovement(aimVector, self.ControllerParams.TurnAngle)
 		else
 			self:StopMoving()
 			if self.MovementType == VJ_MOVETYPE_AERIAL or self.MovementType == VJ_MOVETYPE_AQUATIC then

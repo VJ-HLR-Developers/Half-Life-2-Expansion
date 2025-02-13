@@ -29,14 +29,14 @@ ENT.PoseParameterLooking_Names = {pitch={"weapon_pitch"},yaw={"weapon_yaw"},roll
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 
 ENT.Bleeds = false
-ENT.Immune_AcidPoisonRadiation = true
+ENT.Immune_Toxic = true
 ENT.Immune_Bullet = true
 ENT.Immune_Fire = true
 
 ENT.HasMeleeAttack = false
 
 ENT.HasRangeAttack = true
-ENT.DisableRangeAttackAnimation = true
+ENT.AnimTbl_RangeAttack = false
 ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_rocket"
 ENT.TimeUntilRangeAttackProjectileRelease = 0
 ENT.NextRangeAttackTime = 5
@@ -51,7 +51,7 @@ ENT.AnimTbl_Death = ACT_DIESIMPLE
 ENT.DeathAnimationTime = false
 ENT.DeathCorpseCollisionType = COLLISION_GROUP_NONE
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Chopper.Blade_Hull",

@@ -20,7 +20,7 @@ ENT.Turret_FireSound = {"^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot1.wav", "^vj_h
 ENT.GibOnDeathFilter = false
 ENT.GeneratorHealth = 100
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     FirstP_Bone = "polySurface167",
     FirstP_Offset = Vector(-5, 1, 20),
 	FirstP_ShrinkBone = false,

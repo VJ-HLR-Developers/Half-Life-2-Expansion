@@ -11,9 +11,9 @@ ENT.StartHealth = 80
 ENT.VJ_NPC_Class = {"CLASS_XEN"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.BloodParticle = {"blood_impact_yellow_01"}
-ENT.Immune_AcidPoisonRadiation = true
+ENT.Immune_Toxic = true
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Bullsquid.Head_Bone1",

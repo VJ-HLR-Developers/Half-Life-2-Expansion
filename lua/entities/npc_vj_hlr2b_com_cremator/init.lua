@@ -14,7 +14,7 @@ ENT.CanEat = true
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = VJ.BLOOD_COLOR_RED
 
-ENT.CanFlinch = 1
+ENT.CanFlinch = true
 ENT.FlinchChance = 35
 ENT.AnimTbl_Flinch = ACT_SMALL_FLINCH
 

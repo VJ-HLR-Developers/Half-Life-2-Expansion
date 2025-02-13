@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2b/houndeye.mdl"}
+ENT.Model = "models/vj_hlr/hl2b/houndeye.mdl"
 ENT.StartHealth = 80
 ENT.HullType = HULL_WIDE_SHORT
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -16,18 +16,20 @@ ENT.Immune_Sonic = true
 ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = ACT_RANGE_ATTACK1
 ENT.MeleeAttackDistance = 130
+ENT.MeleeAttackDamageDistance = 400
+ENT.MeleeAttackDamageAngleRadius = 180
 ENT.TimeUntilMeleeAttackDamage = 2.35
 ENT.MeleeAttackDamage = 25
 ENT.MeleeAttackDamageType = DMG_SONIC
-ENT.MeleeAttackDSPSoundType = 34
-ENT.MeleeAttackDSPSoundUseDamage = false
-ENT.DisableDefaultMeleeAttackDamageCode = true -- Disables the default mel	ee attack damage code
+ENT.MeleeAttackDSP = 34
+ENT.MeleeAttackDSPLimit = false
+ENT.DisableDefaultMeleeAttackDamageCode = true
 ENT.DisableFootStepSoundTimer = true
 
-ENT.CanFlinch = 1
+ENT.CanFlinch = true
 ENT.AnimTbl_Flinch = {"vjseq_flinch_small"}
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "HoundEye.Head",

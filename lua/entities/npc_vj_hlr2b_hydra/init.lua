@@ -24,7 +24,7 @@ ENT.MeleeAttackDamage = 60
 
 ENT.HasDeathCorpse = false
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Bone47",

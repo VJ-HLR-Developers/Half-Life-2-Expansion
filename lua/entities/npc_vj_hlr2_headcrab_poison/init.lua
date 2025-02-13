@@ -5,13 +5,13 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/headcrabblack.mdl"}
+ENT.Model = "models/headcrabblack.mdl"
 ENT.StartHealth = 30
 ENT.HullType = HULL_TINY
 
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "HCblack.torso",
@@ -26,7 +26,7 @@ ENT.BloodParticle = {"blood_impact_yellow_01"}
 ENT.HasMeleeAttack = false
 
 ENT.HasRangeAttack = true
-ENT.AnimTbl_RangeAttack = {"vjseq_Spitattack"}
+ENT.AnimTbl_RangeAttack = "vjseq_Spitattack"
 ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_headcrabspit"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.725
 ENT.NextRangeAttackTime = 3
@@ -34,7 +34,7 @@ ENT.RangeDistance = 800
 ENT.RangeToMeleeDistance = 400
 
 ENT.HasLeapAttack = true
-ENT.AnimTbl_LeapAttack = {ACT_RANGE_ATTACK1}
+ENT.AnimTbl_LeapAttack = ACT_RANGE_ATTACK1
 ENT.LeapDistance = 250
 ENT.LeapToMeleeDistance = 0
 ENT.TimeUntilLeapAttackDamage = 1.5
@@ -50,7 +50,7 @@ ENT.LeapAttackDamageDistance = 40
 ENT.LeapAttackDamage = 0
 ENT.DisableDefaultLeapAttackDamageCode = true
 
-ENT.CanFlinch = 1
+ENT.CanFlinch = true
 ENT.AnimTbl_Flinch = ACT_SMALL_FLINCH
 ENT.FlinchChance = 3
 ENT.NextFlinchTime = 1

@@ -9,7 +9,7 @@ ENT.Model = {"models/Lamarr.mdl"}
 ENT.StartHealth = 200
 
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
-ENT.FriendsWithAllPlayerAllies = true
+ENT.AlliedWithPlayerAllies = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetCollisionBounds(Vector(8,10,15), Vector(-8,-10,0))

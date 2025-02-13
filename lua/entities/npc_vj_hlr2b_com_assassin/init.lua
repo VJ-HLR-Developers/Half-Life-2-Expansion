@@ -8,7 +8,7 @@ include("shared.lua")
 ENT.Model = "models/vj_hlr/hl2b/combine_assassin.mdl"
 ENT.StartHealth = 65
 ENT.HullType = HULL_HUMAN
-ENT.JumpParameters = {
+ENT.JumpParams = {
 	MaxRise = 620,
 	MaxDrop = 620,
 	MaxDistance = 620
@@ -26,8 +26,8 @@ ENT.TimeUntilMeleeAttackDamage = false
 
 ENT.CanTurnWhileMoving = false
 ENT.Weapon_NoSpawnMenu = true
-ENT.DisableWeaponFiringGesture = true
 ENT.Weapon_StrafeWhileFiring = false
+ENT.AnimTbl_WeaponAttackGesture = true
 
 ENT.AnimTbl_CallForHelp = false
 

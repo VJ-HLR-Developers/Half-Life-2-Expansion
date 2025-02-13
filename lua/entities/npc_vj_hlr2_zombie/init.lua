@@ -20,7 +20,7 @@ ENT.MeleeAttackDistance = 35
 ENT.MeleeAttackDamageDistance = 75
 ENT.TimeUntilMeleeAttackDamage = false
 
-ENT.CanFlinch = 1
+ENT.CanFlinch = true
 ENT.FlinchChance = 8
 ENT.NextFlinchTime = 3
 ENT.AnimTbl_Flinch = ACT_FLINCH_PHYSICS

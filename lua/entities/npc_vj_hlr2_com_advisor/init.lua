@@ -27,7 +27,7 @@ ENT.TimeUntilMeleeAttackDamage = false
 ENT.MeleeAttackDamage = 55
 
 ENT.HasRangeAttack = true
-ENT.AnimTbl_RangeAttack = {ACT_MELEE_ATTACK1}
+ENT.AnimTbl_RangeAttack = ACT_MELEE_ATTACK1
 ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.7
 ENT.NextRangeAttackTime = 10
@@ -42,7 +42,7 @@ ENT.ConstantlyFaceEnemy_IfAttacking = false
 ENT.ConstantlyFaceEnemy_Postures = "Both"
 ENT.ConstantlyFaceEnemy_MinDistance = 7500
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "advisor.camera",

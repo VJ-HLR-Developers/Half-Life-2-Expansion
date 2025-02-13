@@ -18,7 +18,7 @@ ENT.Aquatic_SwimmingSpeed_Alerted = 500
 ENT.Aquatic_AnimTbl_Calm = ACT_GLIDE
 ENT.Aquatic_AnimTbl_Alerted = ACT_SWIM
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     ThirdP_Offset = Vector(-25, 0, 0),
     FirstP_Bone = "Bip01 Head",
     FirstP_Offset = Vector(12, 0, 5),
@@ -42,12 +42,8 @@ ENT.AnimTbl_Death = ACT_DIESIMPLE
 
 ENT.MeleeAttackBleedEnemy = true
 ENT.MeleeAttackBleedEnemyChance = 1
-ENT.MeleeAttackBleedEnemyDamage = 1
-ENT.MeleeAttackBleedEnemyTime = 1
 ENT.MeleeAttackBleedEnemyReps = 10
 ENT.SlowPlayerOnMeleeAttack = true
-ENT.SlowPlayerOnMeleeAttack_WalkSpeed = 100
-ENT.SlowPlayerOnMeleeAttack_RunSpeed = 100
 ENT.SlowPlayerOnMeleeAttackTime = 10
 
 ENT.SoundTbl_Breath = "npc/ichthyosaur/water_breath.wav"

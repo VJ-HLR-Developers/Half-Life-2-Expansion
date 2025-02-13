@@ -10,14 +10,14 @@ ENT.Model = "models/vortigaunt.mdl"
 ENT.StartHealth = 100
 ENT.HullType = HULL_HUMAN
 
-ENT.JumpParameters = {
+ENT.JumpParams = {
 	MaxRise = 80,
 	MaxDrop = 192,
 	MaxDistance = 250,
 }
 
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY","CLASS_VORTIGAUNT"}
-ENT.FriendsWithAllPlayerAllies = true
+ENT.AlliedWithPlayerAllies = true
 ENT.HasOnPlayerSight = true
 ENT.BecomeEnemyToPlayer = 2
 
@@ -48,7 +48,7 @@ ENT.Medic_HealDistance = 256
 ENT.Medic_HealAmount = 50
 ENT.Medic_SpawnPropOnHeal = false
 
-ENT.CanFlinch = 1
+ENT.CanFlinch = true
 ENT.FlinchChance = 1
 ENT.NextFlinchTime = 3
 ENT.AnimTbl_Flinch = {"vjges_flinch_01","vjges_flinch_02","vjges_flinch_03"}

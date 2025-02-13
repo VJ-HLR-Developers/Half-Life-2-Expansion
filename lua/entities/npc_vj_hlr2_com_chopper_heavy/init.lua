@@ -29,7 +29,7 @@ ENT.PoseParameterLooking_InvertPitch = true
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 
 ENT.Bleeds = false
-ENT.Immune_AcidPoisonRadiation = true
+ENT.Immune_Toxic = true
 ENT.Immune_Bullet = true
 ENT.Immune_Fire = true
 
@@ -37,7 +37,7 @@ ENT.HasMeleeAttack = false
 
 ENT.DeathCorpseCollisionType = COLLISION_GROUP_NONE
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Chopper.Blade_Hull",

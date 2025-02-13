@@ -5,13 +5,13 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/headcrabclassic.mdl"}
+ENT.Model = "models/headcrabclassic.mdl"
 ENT.StartHealth = 10
 ENT.HullType = HULL_TINY
 
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "HeadcrabClassic.SpineControl",
@@ -24,7 +24,7 @@ ENT.BloodParticle = {"blood_impact_yellow_01"}
 ENT.HasMeleeAttack = false
 
 ENT.HasLeapAttack = true
-ENT.AnimTbl_LeapAttack = {ACT_RANGE_ATTACK1}
+ENT.AnimTbl_LeapAttack = ACT_RANGE_ATTACK1
 ENT.LeapDistance = 300
 ENT.LeapToMeleeDistance = 0
 ENT.TimeUntilLeapAttackDamage = 0.3

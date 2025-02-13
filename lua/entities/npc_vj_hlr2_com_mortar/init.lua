@@ -36,7 +36,7 @@ ENT.NextRangeAttackTime = 3
 ENT.RangeDistance = 2500
 ENT.RangeToMeleeDistance = 1
 
-ENT.CanFlinch = 1
+ENT.CanFlinch = true
 ENT.FlinchChance = 3
 ENT.NextFlinchTime = 2
 ENT.AnimTbl_Flinch = {"Mortar_Flinch_Front"}

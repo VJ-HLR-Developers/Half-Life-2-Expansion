@@ -13,7 +13,7 @@ ENT.HealthRegenerationDelay = VJ.SET(0.1,0.1)
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
-ENT.FriendsWithAllPlayerAllies = true
+ENT.AlliedWithPlayerAllies = true
 ENT.BloodColor = VJ.BLOOD_COLOR_RED
 ENT.AnimTbl_MeleeAttack = {"vjseq_MeleeAttack01"}
 ENT.TimeUntilMeleeAttackDamage = 0.7
@@ -21,7 +21,7 @@ ENT.TimeUntilMeleeAttackDamage = 0.7
 ENT.HasGrenadeAttack = true
 ENT.GrenadeAttackModel = "models/weapons/w_npcnade.mdl"
 ENT.AnimTbl_GrenadeAttack = {ACT_RANGE_ATTACK_THROW}
-ENT.TimeUntilGrenadeIsReleased = 0.87
+ENT.GrenadeAttackThrowTime = 0.87
 ENT.GrenadeAttackAttachment = "anim_attachment_RH"
 
 ENT.BecomeEnemyToPlayer = 2

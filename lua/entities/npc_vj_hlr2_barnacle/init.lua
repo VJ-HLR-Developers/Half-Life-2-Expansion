@@ -34,10 +34,10 @@ ENT.MeleeAttackAngleRadius = 180
 ENT.MeleeAttackDamageAngleRadius = 180
 
 ENT.CanReceiveOrders = false
-ENT.CallForBackUpOnDamage = false
+ENT.DamageAllyResponse = false
 ENT.CallForHelp = false
 ENT.DeathAllyResponse = "OnlyAlert"
-ENT.CanFlinch = 1
+ENT.CanFlinch = true
 ENT.AnimTbl_Flinch = ACT_SMALL_FLINCH
 ENT.HasDeathAnimation = true
 ENT.AnimTbl_Death = ACT_DIESIMPLE

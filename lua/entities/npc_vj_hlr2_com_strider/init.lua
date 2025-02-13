@@ -14,7 +14,7 @@ ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 
 ENT.BloodColor = VJ.BLOOD_COLOR_WHITE
 ENT.Immune_Bullet = true
-ENT.Immune_AcidPoisonRadiation = true
+ENT.Immune_Toxic = true
 ENT.Immune_Dissolve = true
 ENT.Immune_Fire = true
 
@@ -48,14 +48,14 @@ ENT.ConstantlyFaceEnemy_IfAttacking = false
 ENT.ConstantlyFaceEnemy_Postures = "Both"
 ENT.ConstantlyFaceEnemy_MinDistance = 5000
 
-ENT.ControllerParameters = {
+ENT.ControllerParams = {
     CameraMode = 1,
     ThirdP_Offset = Vector(0, 0, 0),
     FirstP_Bone = "Combine_Strider.Neck_Bone",
     FirstP_Offset = Vector(8, 0, -60),
 }
 
-ENT.CanFlinch = 2
+ENT.CanFlinch = "DamageTypes"
 ENT.FlinchDamageTypes = {DMG_BLAST}
 ENT.FlinchChance = 1
 ENT.NextFlinchTime = 2

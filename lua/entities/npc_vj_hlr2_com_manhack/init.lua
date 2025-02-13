@@ -20,8 +20,7 @@ ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.Bleeds = false
 
 ENT.HasMeleeAttack = true
-ENT.AnimTbl_MeleeAttack = ACT_FLY
-ENT.DisableMeleeAttackAnimation = true
+ENT.AnimTbl_MeleeAttack = false
 ENT.MeleeAttackDistance = 1
 ENT.MeleeAttackDamageDistance = 0
 ENT.TimeUntilMeleeAttackDamage = 1
