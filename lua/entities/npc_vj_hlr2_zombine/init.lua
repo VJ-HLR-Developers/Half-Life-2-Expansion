@@ -136,7 +136,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
 	if self.IsSlumped then
-		self.NextIdleSoundT_RegularChange = CurTime() +math.random(4,8)
+		self.NextIdleSoundT_Reg = CurTime() +math.random(4,8)
 	else
 		if self.GrenadePulled && CurTime() > self.GrenadeTime then
 			self:SetHealth(0)
