@@ -32,11 +32,10 @@ ENT.TimeUntilMeleeAttackDamage = false
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
-ENT.RangeDistance = 1024
-ENT.RangeToMeleeDistance = 256
+ENT.RangeAttackMaxDistance = 1024
+ENT.RangeAttackMinDistance = 256
 ENT.TimeUntilRangeAttackProjectileRelease = false
-ENT.NextRangeAttackTime = 3
-ENT.NextRangeAttackTime_DoRand = 6
+ENT.NextRangeAttackTime = VJ.SET(3, 6)
 ENT.DisableDefaultRangeAttackCode = true
 
 ENT.LimitChaseDistance = "OnlyRange"
@@ -50,7 +49,7 @@ ENT.Medic_SpawnPropOnHeal = false
 
 ENT.CanFlinch = true
 ENT.FlinchChance = 1
-ENT.NextFlinchTime = 3
+ENT.FlinchCooldown = 3
 ENT.AnimTbl_Flinch = {"vjges_flinch_01","vjges_flinch_02","vjges_flinch_03"}
 
 ENT.DisableFootStepSoundTimer = true
@@ -441,7 +440,7 @@ end
 function ENT:CustomAttack(ent,vis)
 	if !self.VJ_IsBeingControlled then
 		local ent = self:GetEnemy()
-		if vis && CurTime() > self.NextRandMoveT && self.NearestPointToEnemyDistance <= self.RangeDistance && !self:IsBusy() && !self.Vort_RunAway then
+		if vis && CurTime() > self.NextRandMoveT && self.NearestPointToEnemyDistance <= self.RangeAttackMaxDistance && !self:IsBusy() && !self.Vort_RunAway then
 			local checkdist = self:VJ_CheckAllFourSides(375)
 			local randmove = {}
 			if checkdist.Backward == true then randmove[#randmove+1] = "Backward" end

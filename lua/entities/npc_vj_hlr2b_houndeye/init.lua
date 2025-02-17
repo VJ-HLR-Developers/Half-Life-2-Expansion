@@ -74,8 +74,8 @@ ENT.SoundTbl_Death = {
 	"vj_hlr/hl2_npc/houndeye/he_die3.wav",
 }
 
-ENT.FootStepSoundLevel = 80
-ENT.FootStepPitch = VJ.SET(110, 115)
+ENT.FootstepSoundLevel = 80
+ENT.FootstepSoundPitch = VJ.SET(110, 115)
 ENT.GeneralSoundPitch1 = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()

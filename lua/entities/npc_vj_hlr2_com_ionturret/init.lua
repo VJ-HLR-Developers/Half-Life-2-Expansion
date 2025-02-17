@@ -31,7 +31,7 @@ local doorSound = !IsMounted("ep2")
 function ENT:Init()
 	self.SightDistance = 5000
 	self:SetCollisionBounds(Vector(8, 12, 22), Vector(-8, -12, 0))
-	self.RangeDistance = self.SightDistance
+	self.RangeAttackMaxDistance = self.SightDistance
 	self.RangeAttackAngleRadius = 75
 	self.SightAngle = 140
 

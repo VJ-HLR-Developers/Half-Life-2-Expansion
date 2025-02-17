@@ -37,12 +37,11 @@ ENT.HasMeleeAttack = false
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = false
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_rocket"
+ENT.RangeAttackProjectiles = "obj_vj_hlr2_rocket"
 ENT.TimeUntilRangeAttackProjectileRelease = 0
-ENT.NextRangeAttackTime = 5
-ENT.NextRangeAttackTime_DoRand = 10
-ENT.RangeDistance = 7500
-ENT.RangeToMeleeDistance = 0
+ENT.NextRangeAttackTime = VJ.SET(5, 10)
+ENT.RangeAttackMaxDistance = 7500
+ENT.RangeAttackMinDistance = 0
 ENT.RangeUseAttachmentForPos = true
 ENT.RangeAttackExtraTimers = {1}
 

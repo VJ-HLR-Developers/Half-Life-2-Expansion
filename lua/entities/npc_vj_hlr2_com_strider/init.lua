@@ -58,7 +58,7 @@ ENT.ControllerParams = {
 ENT.CanFlinch = "DamageTypes"
 ENT.FlinchDamageTypes = {DMG_BLAST}
 ENT.FlinchChance = 1
-ENT.NextFlinchTime = 2
+ENT.FlinchCooldown = 2
 ENT.AnimTbl_Flinch = {"dodgeleft","dodgeright"}
 -- ENT.AnimTbl_Flinch = {"vjges_flinch_gesture","vjges_flinch_gesture2","vjges_flinch_gesture_big"}
 

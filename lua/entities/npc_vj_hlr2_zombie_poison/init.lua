@@ -150,9 +150,9 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
-		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
+		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootstepSoundLevel)
 		if self.SoundTbl_FootStepAdd then
-			VJ.EmitSound(self,self.SoundTbl_FootStepAdd,self.FootStepSoundLevel)
+			VJ.EmitSound(self,self.SoundTbl_FootStepAdd,self.FootstepSoundLevel)
 		end
 	elseif key == "melee" then
 		self:ExecuteMeleeAttack()

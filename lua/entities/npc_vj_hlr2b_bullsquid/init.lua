@@ -31,11 +31,11 @@ ENT.TimeUntilMeleeAttackDamage = false
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
 ENT.TimeUntilRangeAttackProjectileRelease = false
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_antlionspit"
+ENT.RangeAttackProjectiles = "obj_vj_hlr2_antlionspit"
 ENT.RangeAttackReps = 3
 ENT.NextRangeAttackTime = 1.5
-ENT.RangeDistance = 1024
-ENT.RangeToMeleeDistance = 256
+ENT.RangeAttackMaxDistance = 1024
+ENT.RangeAttackMinDistance = 256
 
 ENT.Aquatic_SwimmingSpeed_Calm = 200
 ENT.Aquatic_SwimmingSpeed_Alerted = 300

@@ -22,8 +22,8 @@ ENT.TimeUntilMeleeAttackDamage = false
 
 ENT.HasLeapAttack = true
 ENT.AnimTbl_LeapAttack = ACT_JUMP
-ENT.LeapDistance = 400
-ENT.LeapToMeleeDistance = 150
+ENT.LeapAttackMaxDistance = 400
+ENT.LeapAttackMinDistance = 150
 ENT.TimeUntilLeapAttackDamage = 0.2
 ENT.NextLeapAttackTime = 3
 ENT.NextAnyAttackTime_Leap = 0.4
@@ -96,7 +96,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
-		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
+		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootstepSoundLevel)
 	elseif key == "melee" then
 		self:ExecuteMeleeAttack()
 	end
@@ -138,7 +138,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 	if status == "PreDamage" then
 		local nonGes = (hitgroup == HITGROUP_LEFTLEG or hitgroup == HITGROUP_RIGHTLEG)
 		self.FlinchChance = nonGes && 8 or 2
-		self.NextFlinchTime = nonGes && 5 or 2
+		self.FlinchCooldown = nonGes && 5 or 2
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

@@ -23,17 +23,16 @@ ENT.TimeUntilMeleeAttackDamage = false
 ENT.MeleeAttackAnimationFaceEnemy = false
 ENT.MeleeAttackBleedEnemyChance = 1
 ENT.MeleeAttackBleedEnemyReps = 10
-ENT.SlowPlayerOnMeleeAttackTime = 10
+ENT.MeleeAttackPlayerSpeedTime = 10
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
 ENT.RangeAttackAnimationStopMovement = false
 ENT.RangeAttackAnimationFaceEnemy = false
-ENT.RangeDistance = 1750
-ENT.RangeToMeleeDistance = 500
+ENT.RangeAttackMaxDistance = 1750
+ENT.RangeAttackMinDistance = 500
 ENT.TimeUntilRangeAttackProjectileRelease = false
-ENT.NextRangeAttackTime = 5
-ENT.NextRangeAttackTime_DoRand = 9
+ENT.NextRangeAttackTime = VJ.SET(5, 9)
 
 ENT.ConstantlyFaceEnemy_MinDistance = 1750
 
@@ -67,19 +66,19 @@ function ENT:OnInput(key, activator, caller, data)
 		self.MeleeAttackDamage = 20
 		self.HasMeleeAttackKnockBack = false
 		self.MeleeAttackBleedEnemy = false
-		self.SlowPlayerOnMeleeAttack = false
+		self.MeleeAttackPlayerSpeed = false
 		self:ExecuteMeleeAttack()
 	elseif key == "attack_stab" then
 		self.MeleeAttackDamage = 40
 		self.HasMeleeAttackKnockBack = false
 		self.MeleeAttackBleedEnemy = true
-		self.SlowPlayerOnMeleeAttack = true
+		self.MeleeAttackPlayerSpeed = true
 		self:ExecuteMeleeAttack()
 	elseif key == "attack_left" then
 		self.MeleeAttackDamage = 20
 		self.HasMeleeAttackKnockBack = true
 		self.MeleeAttackBleedEnemy = false
-		self.SlowPlayerOnMeleeAttack = false
+		self.MeleeAttackPlayerSpeed = false
 		self:ExecuteMeleeAttack()
 	elseif key == "gun_drop" then
 		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/flesh_rip.wav", 80)

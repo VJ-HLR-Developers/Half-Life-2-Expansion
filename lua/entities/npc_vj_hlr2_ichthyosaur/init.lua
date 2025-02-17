@@ -43,8 +43,8 @@ ENT.AnimTbl_Death = ACT_DIESIMPLE
 ENT.MeleeAttackBleedEnemy = true
 ENT.MeleeAttackBleedEnemyChance = 1
 ENT.MeleeAttackBleedEnemyReps = 10
-ENT.SlowPlayerOnMeleeAttack = true
-ENT.SlowPlayerOnMeleeAttackTime = 10
+ENT.MeleeAttackPlayerSpeed = true
+ENT.MeleeAttackPlayerSpeedTime = 10
 
 ENT.SoundTbl_Breath = "npc/ichthyosaur/water_breath.wav"
 ENT.SoundTbl_Alert = "npc/ichthyosaur/water_growl5.wav"

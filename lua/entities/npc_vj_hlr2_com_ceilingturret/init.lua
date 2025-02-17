@@ -15,7 +15,7 @@ ENT.PoseParameterLooking_TurningSpeed = 25
 function ENT:Init()
 	self:SetCollisionBounds(Vector(13, 13, 0), Vector(-13, -13, -40))
 	self:SetPos(self:GetPos() +Vector(0,0,32))
-	self.RangeDistance = self.SightDistance
+	self.RangeAttackMaxDistance = self.SightDistance
 	self.RangeAttackAngleRadius = 180
 	self.SightAngle = 90
 	

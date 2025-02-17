@@ -27,16 +27,16 @@ ENT.HasMeleeAttack = false
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = "vjseq_Spitattack"
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_headcrabspit"
+ENT.RangeAttackProjectiles = "obj_vj_hlr2_headcrabspit"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.725
 ENT.NextRangeAttackTime = 3
-ENT.RangeDistance = 800
-ENT.RangeToMeleeDistance = 400
+ENT.RangeAttackMaxDistance = 800
+ENT.RangeAttackMinDistance = 400
 
 ENT.HasLeapAttack = true
 ENT.AnimTbl_LeapAttack = ACT_RANGE_ATTACK1
-ENT.LeapDistance = 250
-ENT.LeapToMeleeDistance = 0
+ENT.LeapAttackMaxDistance = 250
+ENT.LeapAttackMinDistance = 0
 ENT.TimeUntilLeapAttackDamage = 1.5
 ENT.NextLeapAttackTime = 1.8
 ENT.NextAnyAttackTime_Leap = 1.8
@@ -45,7 +45,7 @@ ENT.LeapAttackVelocityForward = 70
 ENT.LeapAttackVelocityUp = 200
 ENT.LeapAttackDamageType = DMG_SLASH
 ENT.LeapAttackExtraTimers = {1.7,1.9,2.1,2.3}
-ENT.StopLeapAttackAfterFirstHit = true
+ENT.LeapAttackStopOnHit = true
 ENT.LeapAttackDamageDistance = 40
 ENT.LeapAttackDamage = 0
 ENT.DisableDefaultLeapAttackDamageCode = true
@@ -53,11 +53,11 @@ ENT.DisableDefaultLeapAttackDamageCode = true
 ENT.CanFlinch = true
 ENT.AnimTbl_Flinch = ACT_SMALL_FLINCH
 ENT.FlinchChance = 3
-ENT.NextFlinchTime = 1
+ENT.FlinchCooldown = 1
 
 ENT.HasExtraMeleeAttackSounds = true
-ENT.FootStepTimeRun = 0.5
-ENT.FootStepTimeWalk = 0.5
+ENT.FootstepTimerRun = 0.5
+ENT.FootstepTimerWalk = 0.5
 
 ENT.SoundTbl_FootStep = {"npc/headcrab_poison/ph_step1.wav","npc/headcrab_poison/ph_step2.wav","npc/headcrab_poison/ph_step3.wav","npc/headcrab_poison/ph_step4.wav"}
 ENT.SoundTbl_AlertAnim = {"npc/headcrab_poison/ph_warning1.wav","npc/headcrab_poison/ph_warning2.wav","npc/headcrab_poison/ph_warning3.wav"}
@@ -127,7 +127,7 @@ function ENT:OnAlert(ent)
 
 	VJ.STOPSOUND(self.CurrentIdleSound)
 	self.NextIdleSoundT = self.NextIdleSoundT + 2
-	self.CurrentSpeechSound = VJ.CreateSound(self,VJ.PICK(self.SoundTbl_AlertAnim),self.AlertSoundLevel,self:GetSoundPitch(self.AlertSoundPitch.a,self.AlertSoundPitch.b))
+	self.CurrentSpeechSound = VJ.CreateSound(self,VJ.PICK(self.SoundTbl_AlertAnim),self.AlertSoundLevel,self:GetSoundPitch(self.AlertSoundPitch))
 	self:PlayAnim("Threatdisplay",true,VJ.AnimDuration(self,"Threatdisplay"),false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

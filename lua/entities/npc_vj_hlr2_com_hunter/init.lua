@@ -31,7 +31,7 @@ ENT.MeleeAttackDamageDistance = 130
 ENT.MeleeAttackBleedEnemy = true
 ENT.MeleeAttackBleedEnemyChance = 1
 ENT.MeleeAttackBleedEnemyDamage = 3
-ENT.SlowPlayerOnMeleeAttack = true
+ENT.MeleeAttackPlayerSpeed = true
 
 ENT.HasDeathAnimation = true
 ENT.AnimTbl_Death = ACT_DIESIMPLE
@@ -124,8 +124,8 @@ function ENT:OnCallForHelp(ally)
 	if ally:GetClass() == self:GetClass() && !ally:IsBusy("Activities") && !IsValid(ally:GetEnemy()) then
 		ally:PlaySoundSystem("CallForHelp")
 		local pickanim = VJ.PICK(ally.AnimTbl_CallForHelp)
-		ally:PlayAnim(pickanim,ally.CallForHelpStopAnimations,ally:DecideAnimationLength(pickanim,ally.CallForHelpStopAnimationsTime),ally.CallForHelpAnimationFaceEnemy,0,{PlayBackRateCalculated=true})
-		ally.NextCallForHelpAnimationT = CurTime() +ally.NextCallForHelpAnimationTime
+		ally:PlayAnim(pickanim,ally.CallForHelpStopAnimations,ally:DecideAnimationLength(pickanim,ally.CallForHelpStopAnimationsTime),ally.CallForHelpAnimFaceEnemy,0,{PlayBackRateCalculated=true})
+		ally.NextCallForHelpAnimationT = CurTime() +ally.CallForHelpAnimCooldown
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

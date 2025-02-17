@@ -25,9 +25,9 @@ ENT.DeathLoot = {"weapon_frag"}
 
 ENT.CanFlinch = true
 ENT.FlinchChance = 8
-ENT.NextFlinchTime = 5
+ENT.FlinchCooldown = 5
 ENT.AnimTbl_Flinch = ACT_FLINCH_PHYSICS
-ENT.HitGroupFlinching_Values = {
+ENT.FlinchHitGroupMap = {
 	{HitGroup = {HITGROUP_LEFTLEG}, Animation = {ACT_FLINCH_LEFTLEG}},
 	{HitGroup = {HITGROUP_RIGHTLEG}, Animation = {ACT_FLINCH_RIGHTLEG}}
 }
@@ -106,7 +106,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
-		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
+		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootstepSoundLevel)
 	elseif key == "pin" then
 		self:CreateGrenade()
 	elseif key == "melee" then

@@ -12,11 +12,11 @@ ENT.BloodParticle = {"vj_acid_impact1_small_splat"}
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_antlionspit"
+ENT.RangeAttackProjectiles = "obj_vj_hlr2_antlionspit"
 ENT.TimeUntilRangeAttackProjectileRelease = false
 ENT.NextRangeAttackTime = 1.5
-ENT.RangeDistance = 2000
-ENT.RangeToMeleeDistance = 400
+ENT.RangeAttackMaxDistance = 2000
+ENT.RangeAttackMinDistance = 400
 
 ENT.LimitChaseDistance = "OnlyRange"
 ENT.LimitChaseDistance_Max = "UseRangeDistance"

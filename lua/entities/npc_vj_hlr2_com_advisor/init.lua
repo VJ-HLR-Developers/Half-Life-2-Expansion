@@ -28,11 +28,11 @@ ENT.MeleeAttackDamage = 55
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = ACT_MELEE_ATTACK1
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar"
+ENT.RangeAttackProjectiles = "obj_vj_hlr2_mortar"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.7
 ENT.NextRangeAttackTime = 10
-ENT.RangeDistance = 5000
-ENT.RangeToMeleeDistance = 400
+ENT.RangeAttackMaxDistance = 5000
+ENT.RangeAttackMinDistance = 400
 
 ENT.HasExtraMeleeAttackSounds = true
 

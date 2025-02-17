@@ -25,8 +25,8 @@ ENT.MeleeAttackDamageDistance = 90
 ENT.TimeUntilMeleeAttackDamage = false
 
 ENT.CanTurnWhileMoving = false
-ENT.Weapon_NoSpawnMenu = true
-ENT.Weapon_StrafeWhileFiring = false
+ENT.Weapon_IgnoreSpawnMenu = true
+ENT.Weapon_Strafe = false
 ENT.AnimTbl_WeaponAttackGesture = true
 
 ENT.AnimTbl_CallForHelp = false

@@ -29,8 +29,8 @@ ENT.MeleeAttackDamage = 25
 ENT.MeleeAttackDamageType = bit.bor(DMG_SLASH,DMG_CRUSH)
 ENT.HasMeleeAttackKnockBack = true
 
-ENT.FootStepTimeRun = 0.21
-ENT.FootStepTimeWalk = 0.3
+ENT.FootstepTimerRun = 0.21
+ENT.FootstepTimerWalk = 0.3
 ENT.HasExtraMeleeAttackSounds = true
 ENT.GeneralSoundPitch1 = 100
 

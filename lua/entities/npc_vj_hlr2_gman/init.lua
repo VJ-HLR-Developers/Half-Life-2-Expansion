@@ -13,7 +13,7 @@ ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
 ENT.Behavior = VJ_BEHAVIOR_PASSIVE
 ENT.Passive_RunOnTouch = false
 ENT.DamageResponse = false
-ENT.DisableFindEnemy = true
+ENT.EnemyDetection = false
 
 ENT.GodMode = true
 ENT.BloodColor = VJ.BLOOD_COLOR_RED

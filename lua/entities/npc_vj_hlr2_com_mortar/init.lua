@@ -30,15 +30,15 @@ ENT.HasExtraMeleeAttackSounds = true
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
-ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2_mortar"
+ENT.RangeAttackProjectiles = "obj_vj_hlr2_mortar"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.7
 ENT.NextRangeAttackTime = 3
-ENT.RangeDistance = 2500
-ENT.RangeToMeleeDistance = 1
+ENT.RangeAttackMaxDistance = 2500
+ENT.RangeAttackMinDistance = 1
 
 ENT.CanFlinch = true
 ENT.FlinchChance = 3
-ENT.NextFlinchTime = 2
+ENT.FlinchCooldown = 2
 ENT.AnimTbl_Flinch = {"Mortar_Flinch_Front"}
 
 ENT.LimitChaseDistance = true

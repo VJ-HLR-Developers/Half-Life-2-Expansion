@@ -26,11 +26,11 @@ ENT.MeleeAttackDistance = 300
 ENT.PropInteraction = false
 
 -- ENT.HasRangeAttack = true
--- ENT.RangeAttackEntityToSpawn = "obj_vj_hlr2b_cremator"
+-- ENT.RangeAttackProjectiles = "obj_vj_hlr2b_cremator"
 -- ENT.AnimTbl_RangeAttack = "vjges_" .. ACT_GESTURE_RANGE_ATTACK1
 -- ENT.RangeAttackAnimationStopMovement = false
--- ENT.RangeDistance = 850
--- ENT.RangeToMeleeDistance = 500
+-- ENT.RangeAttackMaxDistance = 850
+-- ENT.RangeAttackMinDistance = 500
 -- ENT.RangeAttackAngleRadius = 60
 -- ENT.TimeUntilRangeAttackProjectileRelease = 0.2
 -- ENT.NextRangeAttackTime = 12

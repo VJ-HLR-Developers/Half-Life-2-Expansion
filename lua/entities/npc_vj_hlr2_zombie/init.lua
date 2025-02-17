@@ -22,9 +22,9 @@ ENT.TimeUntilMeleeAttackDamage = false
 
 ENT.CanFlinch = true
 ENT.FlinchChance = 8
-ENT.NextFlinchTime = 3
+ENT.FlinchCooldown = 3
 ENT.AnimTbl_Flinch = ACT_FLINCH_PHYSICS
-ENT.HitGroupFlinching_Values = {
+ENT.FlinchHitGroupMap = {
 	{HitGroup = {HITGROUP_HEAD}, Animation = {"vjges_flinch_head"}},
 	{HitGroup = {HITGROUP_CHEST}, Animation = {"vjges_flinch_chest"}},
 	{HitGroup = {HITGROUP_LEFTARM}, Animation = {"vjges_flinch_leftArm"}},
@@ -121,9 +121,9 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
-		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootStepSoundLevel)
+		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootstepSoundLevel)
 	elseif key == "scuff" then
-		VJ.EmitSound(self,"npc/zombie/foot_slide" .. math.random(1,3) .. ".wav",self.FootStepSoundLevel)
+		VJ.EmitSound(self,"npc/zombie/foot_slide" .. math.random(1,3) .. ".wav",self.FootstepSoundLevel)
 	elseif key == "melee" or key == "swat" then
 		self.MeleeAttackDamage = 10
 		self:ExecuteMeleeAttack()
@@ -159,7 +159,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 	if status == "PreDamage" then
 		local nonGes = (hitgroup == HITGROUP_LEFTLEG or hitgroup == HITGROUP_RIGHTLEG)
 		self.FlinchChance = nonGes && 8 or 2
-		self.NextFlinchTime = nonGes && 5 or 2
+		self.FlinchCooldown = nonGes && 5 or 2
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
