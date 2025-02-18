@@ -10,7 +10,6 @@ ENT.Base 			= "obj_vj_projectile_base"
 ENT.PrintName		= "Overwatch Cremator"
 ENT.Author 			= "DrVrej"
 ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
-ENT.Category		= "Projectiles"
 
 if CLIENT then
 	VJ.AddKillIcon("obj_vj_hlr2b_cremator", ENT.PrintName)
