@@ -36,8 +36,7 @@ ENT.LeapAttackDamageDistance = 100
 
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
-ENT.GeneralSoundPitch1 = 100
-ENT.GeneralSoundPitch2 = 100
+ENT.MainSoundPitch = 100
 
 ENT.SoundTbl_FootStep = {"npc/fast_zombie/foot1.wav","npc/fast_zombie/foot2.wav","npc/fast_zombie/foot3.wav","npc/fast_zombie/foot4.wav"}
 ENT.SoundTbl_DefBreath = {"npc/fast_zombie/breathe_loop1.wav","npc/fast_zombie/gurgle_loop1.wav"}

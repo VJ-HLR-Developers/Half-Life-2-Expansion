@@ -49,7 +49,7 @@ ENT.LeapAttackDamageDistance = 100
 
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 
 ENT.ConstantlyFaceEnemy = true
 ENT.ConstantlyFaceEnemy_Postures = "Moving"
@@ -87,7 +87,7 @@ function ENT:GetLeapAttackVelocity()
 	return self:CalculateProjectile("Curve", self:GetPos(), self:GetAimPosition(self:GetEnemy(), self:GetPos(), 1, 1100), 1100)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjVelocity(projectile)
+function ENT:RangeAttackProjVel(projectile)
 	local projPos = projectile:GetPos()
 	return self:CalculateProjectile("Curve", projPos, self:GetAimPosition(self:GetEnemy(), projPos, 1, 1100) +(VectorRand() *28), 1100)
 end

@@ -117,7 +117,9 @@ ENT.SoundTbl_Death = {
 ENT.IdleSoundLevel = 90
 ENT.AlertSoundLevel = 95
 ENT.PainSoundLevel = 90
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
+
+-- Custom
 ENT.Flechette_Speed = 3000
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnCallForHelp(ally)
@@ -165,7 +167,7 @@ function ENT:FireFlechette()
 		proj:SetPhysicsAttacker(self)
 		local phys = proj:GetPhysicsObject()
 		if IsValid(phys) then
-			local vel = self:RangeAttackProjVelocity(proj)
+			local vel = self:RangeAttackProjVel(proj)
 			phys:Wake()
 			phys:SetVelocity(vel)
 			proj:SetAngles(vel:GetNormal():Angle())
@@ -207,7 +209,7 @@ function ENT:OnInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjVelocity(projectile)
+function ENT:RangeAttackProjVel(projectile)
 	local ent = self:GetEnemy()
 	local targetPos
 	if IsValid(ent) && ent:Visible(self) then

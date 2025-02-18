@@ -34,8 +34,7 @@ ENT.FlinchHitGroupMap = {
 
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
-ENT.GeneralSoundPitch1 = 100
-ENT.GeneralSoundPitch2 = 100
+ENT.MainSoundPitch = 100
 
 ENT.SoundTbl_FootStep = {"vj_hlr/hl2_npc/zombine/gear1.wav","vj_hlr/hl2_npc/zombine/gear2.wav","vj_hlr/hl2_npc/zombine/gear3.wav"}
 ENT.SoundTbl_Idle = {"vj_hlr/hl2_npc/zombine/zombine_idle1.wav","vj_hlr/hl2_npc/zombine/zombine_idle2.wav","vj_hlr/hl2_npc/zombine/zombine_idle3.wav","vj_hlr/hl2_npc/zombine/zombine_idle4.wav"}

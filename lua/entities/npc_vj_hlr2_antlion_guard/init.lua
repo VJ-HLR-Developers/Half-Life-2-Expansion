@@ -32,7 +32,7 @@ ENT.HasMeleeAttackKnockBack = true
 ENT.FootstepTimerRun = 0.21
 ENT.FootstepTimerWalk = 0.3
 ENT.HasExtraMeleeAttackSounds = true
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 
 -- ENT.SoundTbl_Breath = {"npc/antlion_guard/growl_idle.wav"}
 ENT.SoundTbl_FootStep = {"npc/antlion_guard/foot_heavy1.wav","npc/antlion_guard/foot_heavy2.wav","npc/antlion_guard/foot_light1.wav","npc/antlion_guard/foot_light2.wav"}

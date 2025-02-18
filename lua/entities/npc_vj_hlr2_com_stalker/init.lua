@@ -52,7 +52,7 @@ ENT.SoundTbl_Death = {
 	"npc/stalker/stalker_die2.wav",
 }
 
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetCollisionBounds(Vector(20,20,65),Vector(-20,-20,0))

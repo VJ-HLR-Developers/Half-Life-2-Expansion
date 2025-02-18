@@ -151,11 +151,11 @@ function ENT:MeleeAttackKnockbackVelocity(hitEnt)
 	return self:GetForward() * 55 + self:GetUp() * 255
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjSpawnPos(projectile)
+function ENT:RangeAttackProjPos(projectile)
 	return self:GetAttachment(self:LookupAttachment("mouth")).Pos
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjVelocity(projectile)
+function ENT:RangeAttackProjVel(projectile)
 	local projPos = projectile:GetPos()
 	return self:CalculateProjectile("Curve", projPos, self:GetAimPosition(self:GetEnemy(), projPos, 1, 1100) +(VectorRand() *28), 1100)
 end

@@ -57,8 +57,7 @@ ENT.SoundTbl_Investigate = {
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 ENT.BreathSoundLevel = 45
-ENT.GeneralSoundPitch1 = 75
-ENT.GeneralSoundPitch2 = 85
+ENT.MainSoundPitch = VJ.SET(75, 85)
 ENT.InvestigateSoundPitch = VJ.SET(75, 80)
 
 ENT.AnimationSet = 0

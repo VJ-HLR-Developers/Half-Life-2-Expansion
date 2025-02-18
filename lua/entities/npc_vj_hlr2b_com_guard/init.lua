@@ -111,7 +111,7 @@ ENT.SoundTbl_Death = {
 }
 ENT.SoundTbl_MeleeAttackExtra = "VJ.Impact.Metal_Crush"
 
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 ---------------------------------------------------------------------------------------------------------------------------------------------

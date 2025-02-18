@@ -38,7 +38,7 @@ ENT.ConstantlyFaceEnemy_MinDistance = 1750
 
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 
 ENT.SoundTbl_Idle = "vj_hlr/hl2_npc/crab/taunt.wav"
 ENT.SoundTbl_Pain = "vj_hlr/hl2_npc/crab/pain1.wav"

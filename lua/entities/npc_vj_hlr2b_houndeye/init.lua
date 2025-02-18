@@ -76,7 +76,7 @@ ENT.SoundTbl_Death = {
 
 ENT.FootstepSoundLevel = 80
 ENT.FootstepSoundPitch = VJ.SET(110, 115)
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetCollisionBounds(Vector(17,17,40),Vector(-17,-17,0))

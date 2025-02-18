@@ -94,7 +94,7 @@ ENT.SoundTbl_UnFollowPlayer = {
 	"npc/headcrab_poison/ph_talk3.wav",
 }
 
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 
 ENT.AnimationSet = 0 -- 0 = Default, 1 = Scurry, 2 = Custom
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -108,11 +108,11 @@ function ENT:Init()
 	self.HasRanThrownDamage = false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjSpawnPos(projectile)
+function ENT:RangeAttackProjPos(projectile)
 	return self:GetPos() + self:GetUp() * 15 + self:GetForward() * 10
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjVelocity(projectile)
+function ENT:RangeAttackProjVel(projectile)
 	return self:CalculateProjectile("Curve", projectile:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 1200)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

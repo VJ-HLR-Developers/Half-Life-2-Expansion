@@ -78,11 +78,11 @@ util.AddNetworkString("VJ_HLR_AdvisorScreenFX")
 
 ENT.PsionicAttacking = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjSpawnPos(projectile)
+function ENT:RangeAttackProjPos(projectile)
 	return self:GetPos() + self:GetUp() * 35 + self:GetForward() * 70
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjVelocity(projectile)
+function ENT:RangeAttackProjVel(projectile)
 	return self:CalculateProjectile("Curve", self:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), self:GetPos():Distance(self:GetEnemy():GetPos()))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

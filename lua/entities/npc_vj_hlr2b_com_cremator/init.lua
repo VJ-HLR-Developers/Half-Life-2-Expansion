@@ -39,7 +39,7 @@ ENT.PoseParameterLooking_InvertYaw = true
 ENT.ConstantlyFaceEnemy_MinDistance = 1000
 
 ENT.DisableFootStepSoundTimer = true
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 ENT.PainSoundPitch = VJ.SET(40, 55)
 ENT.OnKilledEnemySoundPitch = VJ.SET(65, 70)
 
@@ -111,7 +111,7 @@ function ENT:OnInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjSpawnPos(projectile)
+function ENT:RangeAttackProjPos(projectile)
 	return self:GetAttachment(self:LookupAttachment("muzzle")).Pos
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

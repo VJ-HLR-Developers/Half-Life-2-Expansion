@@ -52,7 +52,7 @@ ENT.SoundTbl_Death = {"npc/headcrab/die1.wav","npc/headcrab/die2.wav"}
 ENT.SoundTbl_IdleDialogue = {"npc/headcrab/idle1.wav","npc/headcrab/idle2.wav","npc/headcrab/idle3.wav"}
 ENT.SoundTbl_IdleDialogueAnswer = {"npc/headcrab/alert1.wav","npc/headcrab/idle1.wav","npc/headcrab/idle2.wav","npc/headcrab/idle3.wav"}
 
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 ENT.FootstepSoundLevel = 50
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()

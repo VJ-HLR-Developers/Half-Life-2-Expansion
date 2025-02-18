@@ -33,7 +33,7 @@ ENT.SoundTbl_FootStep = {"NPC_Citizen.FootstepLeft", "NPC_Citizen.FootstepRight"
 ENT.SoundTbl_Breath = "player/breathe1.wav"
 ENT.SoundTbl_Pain = {"player/pl_pain5.wav", "player/pl_pain6.wav", "player/pl_pain7.wav"}
 
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 ENT.BreathSoundLevel = 40
 
 ENT.WeaponsList = {

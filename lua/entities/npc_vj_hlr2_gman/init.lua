@@ -29,7 +29,7 @@ ENT.DisableFootStepSoundTimer = true
 -- ENT.SoundTbl_FollowPlayer = {"vo/gman_misc/gman_02.wav","vo/gman_misc/gman_03.wav"}
 -- ENT.SoundTbl_UnFollowPlayer = {"vo/gman_misc/gman_04.wav"}
 
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:AddFlags(FL_NOTARGET)

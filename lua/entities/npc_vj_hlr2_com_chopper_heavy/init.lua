@@ -63,7 +63,7 @@ ENT.AlertSoundLevel = 150
 ENT.PainSoundLevel = 150
 ENT.DeathSoundLevel = 150
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackProjVelocity(projectile)
+function ENT:RangeAttackProjVel(projectile)
 	return self:CalculateProjectile("Line",self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos,self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

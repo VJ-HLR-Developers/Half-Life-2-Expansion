@@ -43,8 +43,7 @@ ENT.SoundTbl_BeforeMeleeAttack = {"npc/metropolice/pain1.wav","npc/metropolice/p
 ENT.SoundTbl_Pain = {"npc/combine_soldier/pain1.wav","npc/combine_soldier/pain2.wav","npc/combine_soldier/pain3.wav"}
 ENT.SoundTbl_Death = {"npc/combine_soldier/die1.wav","npc/combine_soldier/die2.wav","npc/combine_soldier/die3.wav"}
 
-ENT.GeneralSoundPitch1 = 145
-ENT.GeneralSoundPitch2 = 145
+ENT.MainSoundPitch = 145
 
 ENT.Assassin_NextJumpT = 0
 ENT.Assassin_OffGround = false

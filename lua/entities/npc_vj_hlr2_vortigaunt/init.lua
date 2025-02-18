@@ -54,8 +54,7 @@ ENT.AnimTbl_Flinch = {"vjges_flinch_01","vjges_flinch_02","vjges_flinch_03"}
 
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
-ENT.GeneralSoundPitch1 = 100
-ENT.GeneralSoundPitch2 = 100
+ENT.MainSoundPitch = 100
 
 ENT.SoundTbl_FootStep = {"vj_hlr/hl2_npc/vort/vort_foot1.wav","vj_hlr/hl2_npc/vort/vort_foot2.wav","vj_hlr/hl2_npc/vort/vort_foot3.wav","vj_hlr/hl2_npc/vort/vort_foot4.wav"}
 ENT.SoundTbl_IdleDialogue = {

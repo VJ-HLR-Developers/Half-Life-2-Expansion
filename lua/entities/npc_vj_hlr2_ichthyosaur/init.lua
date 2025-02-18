@@ -52,7 +52,7 @@ ENT.SoundTbl_CombatIdle = "npc/ichthyosaur/water_growl5.wav"
 ENT.SoundTbl_BeforeMeleeAttack = {"npc/ichthyosaur/attack_growl1.wav", "npc/ichthyosaur/attack_growl2.wav", "npc/ichthyosaur/attack_growl3.wav"}
 ENT.SoundTbl_MeleeAttack = "npc/ichthyosaur/snap.wav"
 
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 
 ENT.Icky_Idle = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------

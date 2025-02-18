@@ -30,7 +30,7 @@ ENT.TimeUntilMeleeAttackDamage = false
 
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
-ENT.GeneralSoundPitch1 = 100
+ENT.MainSoundPitch = 100
 ENT.IdleSoundVolume = 150
 ENT.IdleCombatSoundVolume = 150
 ENT.AlertSoundVolume = 150
