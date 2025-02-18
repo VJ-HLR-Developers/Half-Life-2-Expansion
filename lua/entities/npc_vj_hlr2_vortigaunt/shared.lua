@@ -3,8 +3,6 @@ ENT.Type 			= "ai"
 ENT.PrintName 		= "Vortigaunt"
 ENT.Author 			= "Cpt. Hazama"
 ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
-ENT.Purpose 		= "Spawn it and fight with it!"
-ENT.Instructions 	= "Click on the spawnicon to spawn it."
 ENT.Category		= "Half-Life 2"
 
 -- if CLIENT && GetConVar("vj_hlr2_combine_eyeglow"):GetInt() == 1 then

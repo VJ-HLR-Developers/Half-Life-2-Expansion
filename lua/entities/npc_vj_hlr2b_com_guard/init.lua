@@ -83,7 +83,7 @@ ENT.SoundTbl_AllyDeath = {
 	"vj_hlr/hl2_npc/combine_guard/man_down2.wav",
 	"vj_hlr/hl2_npc/combine_guard/man_down3.wav",
 }
-ENT.SoundTbl_OnKilledEnemy = {
+ENT.SoundTbl_KilledEnemy = {
 	"vj_hlr/hl2_npc/combine_guard/player_dead1.wav",
 	"vj_hlr/hl2_npc/combine_guard/player_dead2.wav",
 	"vj_hlr/hl2_npc/combine_guard/player_dead3.wav",

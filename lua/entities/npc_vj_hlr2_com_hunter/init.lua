@@ -74,7 +74,7 @@ ENT.SoundTbl_CallForHelp = {
 	"npc/ministrider/hunter_foundenemy2.wav",
 	"npc/ministrider/hunter_foundenemy3.wav",
 }
-ENT.SoundTbl_OnReceiveOrder = {
+ENT.SoundTbl_ReceiveOrder = {
 	"npc/ministrider/hunter_foundenemy_ack1.wav",
 	"npc/ministrider/hunter_foundenemy_ack2.wav",
 	"npc/ministrider/hunter_foundenemy_ack3.wav",
@@ -91,7 +91,7 @@ ENT.SoundTbl_LostEnemy = {
 	"npc/ministrider/hunter_scan3.wav",
 	"npc/ministrider/hunter_scan4.wav",
 }
-ENT.SoundTbl_OnKilledEnemy = {
+ENT.SoundTbl_KilledEnemy = {
 	"npc/ministrider/hunter_laugh1.wav",
 	"npc/ministrider/hunter_laugh2.wav",
 	"npc/ministrider/hunter_laugh3.wav",

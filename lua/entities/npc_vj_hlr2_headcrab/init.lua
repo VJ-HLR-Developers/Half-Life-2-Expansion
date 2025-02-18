@@ -39,8 +39,8 @@ ENT.LeapAttackStopOnHit = true
 ENT.LeapAttackDamageDistance = 40
 
 ENT.HasExtraMeleeAttackSounds = true
-ENT.FootstepTimerRun = 0.2
-ENT.FootstepTimerWalk = 0.2
+ENT.FootstepSoundTimerRun = 0.2
+ENT.FootstepSoundTimerWalk = 0.2
 
 ENT.SoundTbl_FootStep = {"npc/headcrab_poison/ph_step1.wav","npc/headcrab_poison/ph_step2.wav","npc/headcrab_poison/ph_step3.wav","npc/headcrab_poison/ph_step4.wav"}
 ENT.SoundTbl_Alert = {"npc/headcrab/alert1.wav"}

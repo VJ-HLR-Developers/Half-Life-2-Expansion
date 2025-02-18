@@ -56,8 +56,8 @@ ENT.FlinchChance = 3
 ENT.FlinchCooldown = 1
 
 ENT.HasExtraMeleeAttackSounds = true
-ENT.FootstepTimerRun = 0.5
-ENT.FootstepTimerWalk = 0.5
+ENT.FootstepSoundTimerRun = 0.5
+ENT.FootstepSoundTimerWalk = 0.5
 
 ENT.SoundTbl_FootStep = {"npc/headcrab_poison/ph_step1.wav","npc/headcrab_poison/ph_step2.wav","npc/headcrab_poison/ph_step3.wav","npc/headcrab_poison/ph_step4.wav"}
 ENT.SoundTbl_AlertAnim = {"npc/headcrab_poison/ph_warning1.wav","npc/headcrab_poison/ph_warning2.wav","npc/headcrab_poison/ph_warning3.wav"}

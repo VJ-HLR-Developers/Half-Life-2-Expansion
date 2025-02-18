@@ -154,7 +154,7 @@ ENT.SoundTbl_UnFollowPlayer = {
 	"vj_hlr/hl2_npc/vort/vo/mutual.wav",
 	"vj_hlr/hl2_npc/vort/vo/ourplacehere.wav",
 }
-ENT.SoundTbl_YieldToAlliedPlayer = {
+ENT.SoundTbl_YieldToPlayer = {
 	"vj_hlr/hl2_npc/vort/vo/fmadvance.wav",
 	"vj_hlr/hl2_npc/vort/vo/fminway.wav",
 	"vj_hlr/hl2_npc/vort/vo/hastefm.wav",
@@ -202,7 +202,7 @@ ENT.SoundTbl_Alert = {
 ENT.SoundTbl_BeforeMeleeAttack = {
 	"vj_hlr/hl2_npc/vort/vo/vort_attack21.wav",
 }
-ENT.SoundTbl_OnKilledEnemy = {
+ENT.SoundTbl_KilledEnemy = {
 	"vj_hlr/hl2_npc/vort/vo/allfornow.wav",
 	"vj_hlr/hl2_npc/vort/vo/allinoneinall.wav",
 	"vj_hlr/hl2_npc/vort/vo/done.wav",

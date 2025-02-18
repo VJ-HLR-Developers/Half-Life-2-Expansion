@@ -89,7 +89,7 @@ function ENT:OnThinkActive()
 			for _,v in pairs(ents.FindInSphere(self:GetPos(), 400)) do
 				if v:IsPlayer() && self:CheckRelationship(v) == D_HT then
 					local time = ((400 /self:GetPos():Distance(v:GetPos())) -1) *1.5
-					self:VJ_DoSlowPlayer(v,70,90,time)
+					self:DoMeleeAttackPlayerSpeed(v,70,90,time)
 					net.Start("VJ_HLR2_ZombieAssassinScream")
 						net.WriteEntity(v)
 					net.Send(v)

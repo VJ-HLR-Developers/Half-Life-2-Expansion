@@ -2,8 +2,6 @@ SWEP.Base 								= "weapon_vj_base"
 SWEP.PrintName							= "Dual Pistols"
 SWEP.Author 							= "Cpt. Hazama"
 SWEP.Contact							= ""
-SWEP.Purpose							= ""
-SWEP.Instructions						= ""
 
 SWEP.WorldModel							= "models/weapons/w_pistol.mdl"
 SWEP.HoldType 							= "pistol"

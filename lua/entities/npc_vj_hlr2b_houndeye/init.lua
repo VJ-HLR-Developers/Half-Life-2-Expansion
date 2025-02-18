@@ -42,7 +42,7 @@ ENT.SoundTbl_FootStep = {
 	"npc/zombie/foot3.wav",
 }
 ENT.SoundTbl_CallForHelp = {"vj_hlr/hl2_npc/houndeye/he_bark_group_attack.wav"}
-ENT.SoundTbl_OnReceiveOrder = {"vj_hlr/hl2_npc/houndeye/he_bark_group_attack_reply.wav"}
+ENT.SoundTbl_ReceiveOrder = {"vj_hlr/hl2_npc/houndeye/he_bark_group_attack_reply.wav"}
 ENT.SoundTbl_AllyDeath = {"vj_hlr/hl2_npc/houndeye/he_bark_group_retreat.wav"}
 ENT.SoundTbl_Idle = {
 	"vj_hlr/hl2_npc/houndeye/he_idle1.wav",

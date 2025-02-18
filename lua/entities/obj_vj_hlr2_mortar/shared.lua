@@ -3,7 +3,6 @@ ENT.Base 			= "obj_vj_projectile_base"
 ENT.PrintName		= "Mortar Synth"
 ENT.Author 			= "DrVrej"
 ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
-ENT.Information		= "Projectile, usually used for NPCs & Weapons"
 ENT.Category		= "Projectiles"
 
 if (CLIENT) then

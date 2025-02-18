@@ -5,8 +5,6 @@ ENT.Type 			= "anim"
 ENT.PrintName 		= "Mounted Turret"
 ENT.Author 			= "Cpt. Hazama"
 ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
-ENT.Purpose 		= "Used to make simple props and animate them, since prop_dynamic doesn't work properly in Garry's Mod."
-ENT.Instructions 	= "Don't change anything."
 ENT.Category		= "VJ Base"
 
 if CLIENT then return end

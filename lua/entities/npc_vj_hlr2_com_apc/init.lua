@@ -40,7 +40,7 @@ ENT.SoundTbl_CombatIdle = {
 	"npc/overwatch/radiovoice/youarechargedwithterminal.wav",
 	"npc/overwatch/radiovoice/youarejudgedguilty.wav",
 }
-ENT.SoundTbl_OnReceiveOrder = {
+ENT.SoundTbl_ReceiveOrder = {
 	"npc/overwatch/radiovoice/beginscanning10-0.wav",
 	"npc/overwatch/radiovoice/officerclosingonsuspect.wav",
 }
@@ -94,7 +94,7 @@ ENT.SoundTbl_OnPlayerSight = {
 	"npc/overwatch/radiovoice/fugitive17f.wav",
 	"npc/overwatch/radiovoice/highpriorityregion.wav",
 }
-ENT.SoundTbl_OnKilledEnemy = {
+ENT.SoundTbl_KilledEnemy = {
 	"npc/overwatch/radiovoice/finalverdictadministered.wav",
 	"npc/overwatch/radiovoice/sociostabilizationrestored.wav",
 	"npc/overwatch/radiovoice/stabilizationjurisdiction.wav",

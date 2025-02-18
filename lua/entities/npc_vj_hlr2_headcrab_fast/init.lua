@@ -14,8 +14,8 @@ ENT.ControllerParams = {
     FirstP_Offset = Vector(1, 0, 2),
 }
 
-ENT.FootstepTimerRun = 0.1
-ENT.FootstepTimerWalk = 0.1
+ENT.FootstepSoundTimerRun = 0.1
+ENT.FootstepSoundTimerWalk = 0.1
 
 ENT.MainSoundPitch = 120
 ---------------------------------------------------------------------------------------------------------------------------------------------

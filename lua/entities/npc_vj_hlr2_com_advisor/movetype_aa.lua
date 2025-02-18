@@ -6,10 +6,10 @@
 ---------------------------------------------------------------------------------------------------------------------------------------------
 -- AERIAL & AQUATIC BASE --
 // MOVETYPE_FLY | MOVETYPE_FLYGRAVITY
-ENT.AA_CurrentMoveAnimation = nil
+ENT.AA_CurrentMoveAnim = nil
 ENT.AA_NextMovementAnimation = 0
 ENT.AA_CanPlayMoveAnimation = false
-ENT.AA_CurrentMoveAnimationType = "Calm"
+ENT.AA_CurrentMoveAnimType = "Calm"
 ENT.AA_MoveLength_Wander = 0
 ENT.AA_MoveLength_Chase = 0
 ENT.AA_MoveTime = 0
@@ -65,7 +65,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AAMove_FlyToPosition(Pos,isWander,ovSpeed)
 	self.AA_CanPlayMoveAnimation = true
-	self.AA_CurrentMoveAnimationType = "Calm"
+	self.AA_CurrentMoveAnimType = "Calm"
 
 	local speed = ovSpeed or self.FlySpeed
 	-- local speed = math.Clamp(self:GetVelocity():Length() +self.Acceleration,5,self.FlySpeed)

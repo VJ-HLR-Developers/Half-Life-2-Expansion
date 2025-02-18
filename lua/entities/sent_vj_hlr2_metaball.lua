@@ -10,8 +10,6 @@ ENT.Type 			= "anim"
 ENT.PrintName 		= "Blob"
 ENT.Author 			= ""
 ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
-ENT.Purpose 		= ""
-ENT.Instructions 	= ""
 
 ENT.Spawnable = false
 ENT.AdminOnly = false
