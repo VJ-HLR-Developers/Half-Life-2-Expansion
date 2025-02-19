@@ -128,7 +128,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:TranslateActivity(act)
 	if act == ACT_RUN && !IsValid(self.VJ_TheController) then
-		local dist = self.NearestPointToEnemyDistance
+		local dist = self.EnemyData.DistanceNearest
 		if dist && (dist >= 2000 or dist <= 500) then
 			return ACT_RUN
 		end

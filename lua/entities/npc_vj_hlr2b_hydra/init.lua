@@ -188,7 +188,7 @@ function ENT:OnThink()
 	local toMax = (self:GetPoseParameter("idle_length") /90)
 	local ent = self:GetEnemy()
 	if IsValid(ent) then
-		local dist = self.NearestPointToEnemyDistance or 0
+		local dist = self.EnemyData.DistanceNearest or 0
 		self.IdleLength = math.Clamp((dist /460) *90,0,90)
 		self.MeleeAttackDistance = 500 *toMax
 		self.MeleeAttackDamageDistance = 550 *toMax

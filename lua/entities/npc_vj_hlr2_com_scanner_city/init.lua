@@ -157,8 +157,8 @@ function ENT:OnThinkActive()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttack(ent, visible)
-	local dist = self.NearestPointToEnemyDistance
-	if dist <= self.LimitChaseDistance_Max && CurTime() > self.NextCameraAttackT && !self.DoingCameraAttack && math.random(1,20) == 1 then
+	local dist = self.EnemyData.DistanceNearest
+	if dist <= self.LimitChaseDistance_Max && CurTime() > self.NextCameraAttackT && !self.DoingCameraAttack && math.random(1, 20) == 1 then
 		self.DoingCameraAttack = true
 		VJ.CreateSound(self,"npc/scanner/scanner_blip1.wav",75)
 		if !self.HLR_IsClawScanner then

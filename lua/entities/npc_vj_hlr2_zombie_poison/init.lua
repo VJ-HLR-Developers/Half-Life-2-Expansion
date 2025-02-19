@@ -168,7 +168,7 @@ function ENT:OnInput(key, activator, caller, data)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttack(ent,vis)
-	local dist = self.NearestPointToEnemyDistance
+	local dist = self.EnemyData.DistanceNearest
 	local headcrabs = self.Headcrabs
 
 	if headcrabs > 0 && ((self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2)) or (!self.VJ_IsBeingControlled && dist <= 700 && dist > 250 && math.random(1,50) == 1 && vis && CurTime() > self.NextThrowT && !self:IsBusy())) then

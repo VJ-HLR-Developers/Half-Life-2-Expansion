@@ -181,7 +181,7 @@ function ENT:Manhack_Displacement(angForce,velForce,velTime,ent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
-	local dist = self.NearestPointToEnemyDistance
+	local dist = self.EnemyData.DistanceNearest
 	if dist then
 		self.Panels = Lerp(FrameTime() *10,self.Panels,(dist <= 275 && IsValid(self:GetEnemy())) && 100 or 0)
 		if self.Panels >= 25 then

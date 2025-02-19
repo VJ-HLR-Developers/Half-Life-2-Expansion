@@ -81,7 +81,7 @@ function ENT:OnThinkActive()
 	local set = self.AnimationSet
 	local enemy = self:GetEnemy()
 	if IsValid(enemy) && !controlled then
-		local dist = self.NearestPointToEnemyDistance
+		local dist = self.EnemyData.DistanceNearest
 		if CurTime() > self.NextScreamT && math.random(1,15) == 1 && dist < 200 then
 			VJ.CreateSound(self,"^npc/stalker/go_alert2a.wav",100,65)
 			util.ScreenShake(self:GetPos(), 10, 120, 2, 400)

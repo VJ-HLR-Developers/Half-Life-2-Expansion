@@ -180,7 +180,7 @@ function ENT:GrabEntity(ent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttack()
-	if CurTime() > self.NextPsionicAttackT && self.LatestEnemyDistance <= 8500 && !self:IsBusy("Activities") && self.PsionicAttacking == false && self:Visible(self:GetEnemy()) then
+	if CurTime() > self.NextPsionicAttackT && self.EnemyData.Distance <= 8500 && !self:IsBusy("Activities") && self.PsionicAttacking == false && self:Visible(self:GetEnemy()) then
 		//print("SEARCH ----")
 		local pTbl = {} -- Table of props that it found
 		for _, v in ipairs(ents.FindInSphere(self:GetEnemy():GetPos(), 2000)) do

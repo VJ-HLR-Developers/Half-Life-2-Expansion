@@ -125,13 +125,11 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttack()
 	if IsValid(self:GetEnemy()) then
-		local dist = self.NearestPointToEnemyDistance
-		if dist <= 4000 && self:Visible(self:GetEnemy()) then
-			if CurTime() > self.NextFireT then
-				self:BarrageFire()
-				VJ.CreateSound(self,"npc/combine_gunship/attack_start2.wav",100)
-				self.NextFireT = CurTime() +8
-			end
+		local dist = self.EnemyData.DistanceNearest
+		if dist <= 4000 && self:Visible(self:GetEnemy()) && CurTime() > self.NextFireT then
+			self:BarrageFire()
+			VJ.CreateSound(self,"npc/combine_gunship/attack_start2.wav",100)
+			self.NextFireT = CurTime() +8
 		end
 	end
 end

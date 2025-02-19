@@ -242,7 +242,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttack()
 	if IsValid(self:GetEnemy()) then
-		local dist = self.NearestPointToEnemyDistance
+		local dist = self.EnemyData.DistanceNearest
 		if CurTime() > self.NextBombT then
 			local tr = util.TraceHull({
 				start = self:GetPos(),

@@ -215,7 +215,7 @@ function ENT:RangeAttackProjVel(projectile)
 	if IsValid(ent) && ent:Visible(self) then
 		targetPos = ent:GetPos() +ent:OBBCenter()
 	else
-		targetPos = self.EnemyData && self.EnemyData.LastVisiblePos or projectile:GetPos() +projectile:GetForward() *1000
+		targetPos = self.EnemyData.LastVisiblePos or projectile:GetPos() +projectile:GetForward() *1000
 	end
 	targetPos = targetPos +VectorRand(-35,35)
 	return self:CalculateProjectile("Line",projectile:GetPos(),targetPos,self.Flechette_Speed)
@@ -254,8 +254,6 @@ function ENT:TranslateActivity(act)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
-	local dist = self.NearestPointToEnemyDistance
-
 	if self.IsCharging && !self:IsBusy() then
 		if CurTime() > self.ChargeT then
 			self:SetMaxYawSpeed(self.TurningSpeed)
@@ -359,7 +357,8 @@ end
 function ENT:CustomAttack(ent,vis)
 	if self.IsCharging then return end
 
-	local dist = self.NearestPointToEnemyDistance
+	local eneData = self.EnemyData
+	local dist = eneData.DistanceNearest
 	if vis then
 		if !self.VJ_IsBeingControlled && !self:IsBusy() && CurTime() > self.NextRandMoveT && !self.DoRangeAttack && dist > 400 then
 			local checkdist = self:VJ_CheckAllFourSides(400)
@@ -393,7 +392,7 @@ function ENT:CustomAttack(ent,vis)
 	end
 
 	if self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2) && !self.DoRangeAttack && !self.IsCharging or !self.VJ_IsBeingControlled && !self.IsCharging && CurTime() > self.NextRangeT && !self.DoRangeAttack && dist > 250 && dist <= 2200 then
-		if !self:VisibleVec(self.EnemyData && self.EnemyData.LastVisiblePos or ent:GetPos() +ent:OBBCenter()) then return end
+		if !self:VisibleVec(eneData.LastVisiblePos or ent:GetPos() +ent:OBBCenter()) then return end
 		self.Shots = 0
 		self.DoRangeAttack = true
 		self.HasMeleeAttack = false
@@ -401,7 +400,6 @@ function ENT:CustomAttack(ent,vis)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local defAng = Angle(0, 0, 0)
-local angY45 = Angle(0, 45, 0)
 local angY45 = Angle(0, 45, 0)
 local angYN45 = Angle(0, -45, 0)
 local angY90 = Angle(0, 90, 0)

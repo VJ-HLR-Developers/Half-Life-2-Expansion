@@ -319,7 +319,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttack(ent,vis)
-	local dist = self.NearestPointToEnemyDistance
+	local dist = self.EnemyData.DistanceNearest
 	if self.IsCharging then
 		if CurTime() > self.ChargeT then
 			self:SetMaxYawSpeed(self.TurningSpeed)

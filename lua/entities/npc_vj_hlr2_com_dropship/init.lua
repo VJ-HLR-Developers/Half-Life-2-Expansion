@@ -159,7 +159,7 @@ function ENT:CustomAttack()
 	local cargo = self.Cargo
 	if IsValid(cargo) && self.CargoType == CRATE_TYPES.CRATE_SOLDIER then
 		if IsValid(self:GetEnemy()) then
-			local dist = self.NearestPointToEnemyDistance
+			local dist = self.EnemyData.DistanceNearest
 			if dist <= 4000 && self:Visible(self:GetEnemy()) then
 				if CurTime() > self.NextFireT then
 					self:BarrageFire(cargo)

@@ -213,7 +213,7 @@ function ENT:CustomAttack()
 	self.HasRangeAttack = !self.CarpetBombing
 	local ent = self:GetEnemy()
 	if IsValid(ent) then
-		local dist = self.NearestPointToEnemyDistance
+		local dist = self.EnemyData.DistanceNearest
 		if self:Health() <= self:GetMaxHealth() *0.5 then
 			if !self.CarpetBombing && CurTime() > self.NextCarpetBombT then
 				self.CarpetBombing = true

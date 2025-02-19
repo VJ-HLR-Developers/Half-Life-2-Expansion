@@ -114,7 +114,7 @@ function ENT:OnInput(key, activator, caller, data)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttack(ent,vis)
-	local dist = self.NearestPointToEnemyDistance
+	local dist = self.EnemyData.DistanceNearest
 	if !self.RageState && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or !self.VJ_IsBeingControlled && dist <= 750 && math.random(1,dist *0.5) == 1) then
 		VJ.STOPSOUND(self.CurrentSpeechSound)
 		VJ.STOPSOUND(self.CurrentIdleSound)
