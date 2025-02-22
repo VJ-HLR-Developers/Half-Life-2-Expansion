@@ -179,7 +179,7 @@ function ENT:GrabEntity(ent)
 	ent:GetPhysicsObject():ApplyForceCenter(ent:GetPos() +Vector(0,0,ent:GetPhysicsObject():GetMass() *1.5))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack()
+function ENT:OnThinkAttack(isAttacking, enemy)
 	if CurTime() > self.NextPsionicAttackT && self.EnemyData.Distance <= 8500 && !self:IsBusy("Activities") && self.PsionicAttacking == false && self:Visible(self:GetEnemy()) then
 		//print("SEARCH ----")
 		local pTbl = {} -- Table of props that it found

@@ -181,10 +181,7 @@ function ENT:OnUpdatePoseParamTracking(pitch, yaw, roll)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack()
-	local enemy = self:GetEnemy()
-	if !IsValid(enemy) then return end
-	
+function ENT:OnThinkAttack(isAttacking, enemy)
 	if CurTime() > self.NextRocketT && enemy:Visible(self) then
 		if self.Ammo <= 0 then
 			local t = SoundDuration("ambient/machines/thumper_shutdown1.wav")

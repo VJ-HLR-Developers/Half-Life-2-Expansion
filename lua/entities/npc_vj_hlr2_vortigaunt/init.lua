@@ -436,10 +436,10 @@ function ENT:SelectSchedule()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack(ent,vis)
+function ENT:OnThinkAttack(isAttacking, enemy)
 	if !self.VJ_IsBeingControlled then
-		local ent = self:GetEnemy()
-		if vis && CurTime() > self.NextRandMoveT && self.EnemyData.DistanceNearest <= self.RangeAttackMaxDistance && !self:IsBusy() && !self.Vort_RunAway then
+		local eneData = self.EnemyData
+		if eneData.Visible && CurTime() > self.NextRandMoveT && eneData.DistanceNearest <= self.RangeAttackMaxDistance && !self:IsBusy() && !self.Vort_RunAway then
 			local checkdist = self:VJ_CheckAllFourSides(375)
 			local randmove = {}
 			if checkdist.Backward == true then randmove[#randmove+1] = "Backward" end

@@ -167,11 +167,12 @@ function ENT:OnInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack(ent,vis)
-	local dist = self.EnemyData.DistanceNearest
+function ENT:OnThinkAttack(isAttacking, enemy)
+	local eneData = self.EnemyData
+	local dist = eneData.DistanceNearest
 	local headcrabs = self.Headcrabs
 
-	if headcrabs > 0 && ((self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2)) or (!self.VJ_IsBeingControlled && dist <= 700 && dist > 250 && math.random(1,50) == 1 && vis && CurTime() > self.NextThrowT && !self:IsBusy())) then
+	if headcrabs > 0 && ((self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2)) or (!self.VJ_IsBeingControlled && dist <= 700 && dist > 250 && math.random(1,50) == 1 && eneData.Visible && CurTime() > self.NextThrowT && !self:IsBusy())) then
 		if dist <= 350 then
 			self:PlayAnim("headcrab2Leap",true,false,true)
 		else
@@ -184,8 +185,8 @@ function ENT:CustomAttack(ent,vis)
 				VJ.CreateSound(self,self.SoundTbl_Throw,80)
 			end})
 		end
-		sound.EmitHint(SOUND_DANGER, ent:GetPos(), 250, 1, self)
-		self.NextThrowT = CurTime() +math.random(8,12)
+		sound.EmitHint(SOUND_DANGER, enemy:GetPos(), 250, 1, self)
+		self.NextThrowT = CurTime() + math.random(8,12)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

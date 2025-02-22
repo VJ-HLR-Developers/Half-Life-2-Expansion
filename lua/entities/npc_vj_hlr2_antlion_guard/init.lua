@@ -318,8 +318,9 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack(ent,vis)
-	local dist = self.EnemyData.DistanceNearest
+function ENT:OnThinkAttack(isAttacking, enemy)
+	local eneData = self.EnemyData
+	local dist = eneData.DistanceNearest
 	if self.IsCharging then
 		if CurTime() > self.ChargeT then
 			self:SetMaxYawSpeed(self.TurningSpeed)
@@ -336,7 +337,7 @@ function ENT:CustomAttack(ent,vis)
 		self.DisableChasingEnemy = true
 		self.HasMeleeAttack = false
 		self:SetMaxYawSpeed(2)
-		self:SetTurnTarget(ent, -1)
+		self:SetTurnTarget(enemy, -1)
 		local tr = util.TraceHull({
 			start = self:GetPos() +self:OBBCenter(),
 			endpos = self:GetPos() +self:OBBCenter() +self:GetForward() *100,
@@ -368,7 +369,7 @@ function ENT:CustomAttack(ent,vis)
 				local gest = self:AddGestureSequence(self:LookupSequence("charge_hit"))
 				self:SetLayerPriority(gest,1)
 				self:SetLayerPlaybackRate(gest,0.5)
-				ent = tr.Entity
+				local ent = tr.Entity
 				local isProp = IsValid(ent) && VJ.IsProp(ent) or false
 				if IsValid(ent) && (isProp or self:CheckRelationship(ent) == D_HT) then
 					if isProp then
@@ -399,7 +400,7 @@ function ENT:CustomAttack(ent,vis)
 
 	local controlled = self.VJ_IsBeingControlled
 	local ply = self.VJ_TheController
-	if (controlled && ply:KeyDown(IN_ATTACK2) or !controlled && vis && dist > 500 && dist <= 2500 && !self:IsBusy() && math.random(1,50) == 1 && math.abs(self:GetPos().z -ent:GetPos().z) <= 128) && !self.IsCharging then
+	if (controlled && ply:KeyDown(IN_ATTACK2) or !controlled && eneData.Visible && dist > 500 && dist <= 2500 && !self:IsBusy() && math.random(1,50) == 1 && math.abs(self:GetPos().z -enemy:GetPos().z) <= 128) && !self.IsCharging then
 		self.IsCharging = true
 		self.ChargeT = CurTime() +6
 		VJ.CreateSound(self,{"npc/antlion_guard/angry1.wav","npc/antlion_guard/angry2.wav","npc/antlion_guard/angry3.wav"},72)

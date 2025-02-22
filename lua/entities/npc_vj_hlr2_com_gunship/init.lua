@@ -123,14 +123,12 @@ function ENT:BarrageFire()
 	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack()
-	if IsValid(self:GetEnemy()) then
-		local dist = self.EnemyData.DistanceNearest
-		if dist <= 4000 && self:Visible(self:GetEnemy()) && CurTime() > self.NextFireT then
-			self:BarrageFire()
-			VJ.CreateSound(self,"npc/combine_gunship/attack_start2.wav",100)
-			self.NextFireT = CurTime() +8
-		end
+function ENT:OnThinkAttack(isAttacking, enemy)
+	local dist = self.EnemyData.DistanceNearest
+	if dist <= 4000 && self:Visible(self:GetEnemy()) && CurTime() > self.NextFireT then
+		self:BarrageFire()
+		VJ.CreateSound(self,"npc/combine_gunship/attack_start2.wav",100)
+		self.NextFireT = CurTime() +8
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -216,7 +214,7 @@ function ENT:OnThink()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDeath(dmginfo, hitgroup, status)
-	if status == "Initial" then
+	if status == "Init" then
 		local deathCorpse = ents.Create("prop_vj_animatable")
 		deathCorpse:SetModel(self:GetModel())
 		deathCorpse:SetPos(self:GetPos())

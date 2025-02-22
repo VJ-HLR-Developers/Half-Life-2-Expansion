@@ -354,12 +354,12 @@ function ENT:OnThinkActive()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack(ent,vis)
+function ENT:OnThinkAttack(isAttacking, enemy)
 	if self.IsCharging then return end
 
 	local eneData = self.EnemyData
 	local dist = eneData.DistanceNearest
-	if vis then
+	if eneData.Visible then
 		if !self.VJ_IsBeingControlled && !self:IsBusy() && CurTime() > self.NextRandMoveT && !self.DoRangeAttack && dist > 400 then
 			local checkdist = self:VJ_CheckAllFourSides(400)
 			local randmove = {}
@@ -377,7 +377,7 @@ function ENT:CustomAttack(ent,vis)
 			end
 		end
 
-		if dist > 500 && dist <= 2500 && !self.IsCharging && !self:IsBusy() && !self.DoRangeAttack && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or !self.VJ_IsBeingControlled && math.random(1,50) == 1) && math.abs(self:GetPos().z -ent:GetPos().z) <= 128 then
+		if dist > 500 && dist <= 2500 && !self.IsCharging && !self:IsBusy() && !self.DoRangeAttack && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or !self.VJ_IsBeingControlled && math.random(1,50) == 1) && math.abs(self:GetPos().z -enemy:GetPos().z) <= 128 then
 			self:PlayAnim("charge_start",true,false,true, 0, {OnFinish=function(interrupted, anim)
 				if interrupted then
 					return
@@ -392,7 +392,7 @@ function ENT:CustomAttack(ent,vis)
 	end
 
 	if self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2) && !self.DoRangeAttack && !self.IsCharging or !self.VJ_IsBeingControlled && !self.IsCharging && CurTime() > self.NextRangeT && !self.DoRangeAttack && dist > 250 && dist <= 2200 then
-		if !self:VisibleVec(eneData.LastVisiblePos or ent:GetPos() +ent:OBBCenter()) then return end
+		if !self:VisibleVec(eneData.LastVisiblePos or enemy:GetPos() + enemy:OBBCenter()) then return end
 		self.Shots = 0
 		self.DoRangeAttack = true
 		self.HasMeleeAttack = false

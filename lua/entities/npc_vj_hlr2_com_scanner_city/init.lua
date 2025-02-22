@@ -156,7 +156,7 @@ function ENT:OnThinkActive()
 	self:SetPoseParameter("alert_control",IsValid(self:GetEnemy()) && Lerp(FrameTime() *5,self:GetPoseParameter("alert_control"),1) || Lerp(FrameTime() *3,self:GetPoseParameter("alert_control"),0))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack(ent, visible)
+function ENT:OnThinkAttack(isAttacking, enemy)
 	local dist = self.EnemyData.DistanceNearest
 	if dist <= self.LimitChaseDistance_Max && CurTime() > self.NextCameraAttackT && !self.DoingCameraAttack && math.random(1, 20) == 1 then
 		self.DoingCameraAttack = true
@@ -232,7 +232,7 @@ function ENT:OnResetEnemy()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDeath(dmginfo, hitgroup, status)
-	if status == "Initial" then
+	if status == "Init" then
 		ParticleEffect("explosion_turret_break",self:GetPos(),Angle(0,0,0),nil)
 		ParticleEffect("electrical_arc_01_system",self:GetPos(),Angle(0,0,0),nil)
 		util.BlastDamage(self,self,self:GetPos(),80,20)

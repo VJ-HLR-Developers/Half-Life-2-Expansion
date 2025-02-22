@@ -363,80 +363,77 @@ function ENT:ControllAI(enemy,dist,cos)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack()
+function ENT:OnThinkAttack(isAttacking, enemy)
 	local controlled = self.VJ_IsBeingControlled
-	local enemy = self:GetEnemy()
-	if IsValid(enemy) then
-		local dist = self.EnemyData.DistanceNearest
-		local cos = (self:GetForward():Dot((enemy:GetPos() +enemy:OBBCenter() -self:GetPos() + self:OBBCenter()):GetNormalized()) > math.cos(math.rad(80)))
-		if controlled then
-			self:ControllAI(enemy,dist,cos)
-			return
-		end
-		if dist <= self.LimitChaseDistance_Max && dist >= self.LimitChaseDistance_Min then
-			if enemy:Visible(self) && cos then
-				if CurTime() > self.NextFireT then
-					if self.Shots == 15 then
-						self.NextFireT = CurTime() +2
-						self.Shots = 0
-						self.MinigunDelay = math.random(1,3) == 1 && 0.08 or 0.1
-						return
-					end
-					local bullet = {}
-					bullet.Num = 1
-					bullet.Src = self:GetAttachment(self:LookupAttachment("MiniGun")).Pos
-					bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -self:GetAttachment(self:LookupAttachment("MiniGun")).Pos +Vector(math.random(-self.MinigunSpread,self.MinigunSpread) -self.Shots,math.random(-self.MinigunSpread,self.MinigunSpread) -self.Shots,math.random(-self.MinigunSpread,self.MinigunSpread) -self.Shots)
-					bullet.Spread = self.MinigunSpread -self.Shots
-					bullet.Tracer = 1
-					bullet.TracerName = "AR2Tracer"
-					bullet.Force = 3
-					bullet.Damage = 5
-					bullet.AmmoType = "AR2"
-					self:FireBullets(bullet)
-					self.Shots = self.Shots +1
-
-					-- VJ.EmitSound(self,{"npc/strider/strider_minigun.wav","npc/strider/strider_minigun2.wav"},110,100)
-					VJ.EmitSound(self,"NPC_Strider.FireMinigun",110,100)
-
-					local muz = ents.Create("env_sprite")
-					muz:SetKeyValue("model","effects/strider_muzzle.vmt")
-					muz:SetKeyValue("scale",tostring(math.Rand(1,1.5)))
-					muz:SetKeyValue("GlowProxySize","2.0") -- Size of the glow to be rendered for visibility testing.
-					muz:SetKeyValue("HDRColorScale","1.0")
-					muz:SetKeyValue("renderfx","14")
-					muz:SetKeyValue("rendermode","3") -- Set the render mode to "3" (Glow)
-					muz:SetKeyValue("renderamt","255") -- Transparency
-					muz:SetKeyValue("disablereceiveshadows","0") -- Disable receiving shadows
-					muz:SetKeyValue("framerate","10.0") -- Rate at which the sprite should animate, if at all.
-					muz:SetKeyValue("spawnflags","0")
-					muz:SetParent(self)
-					muz:Fire("SetParentAttachment","MiniGun")
-					muz:SetAngles(Angle(math.random(-100, 100), math.random(-100, 100), math.random(-100, 100)))
-					muz:Spawn()
-					muz:Activate()
-					muz:Fire("Kill","",0.09)
-					
-					local FireLight1 = ents.Create("light_dynamic")
-					FireLight1:SetKeyValue("brightness",8)
-					FireLight1:SetKeyValue("distance",300)
-					FireLight1:SetLocalPos(self:GetAttachment(2).Pos)
-					FireLight1:SetLocalAngles(self:GetAngles())
-					FireLight1:Fire("Color","0 161 255 255")
-					FireLight1:Spawn()
-					FireLight1:Activate()
-					FireLight1:Fire("TurnOn","",0)
-					FireLight1:Fire("Kill","",0.07)
-					self:DeleteOnRemove(FireLight1)
-
-					self.NextFireT = CurTime() +self.MinigunDelay
+	local dist = self.EnemyData.DistanceNearest
+	local cos = (self:GetForward():Dot((enemy:GetPos() +enemy:OBBCenter() -self:GetPos() + self:OBBCenter()):GetNormalized()) > math.cos(math.rad(80)))
+	if controlled then
+		self:ControllAI(enemy,dist,cos)
+		return
+	end
+	if dist <= self.LimitChaseDistance_Max && dist >= self.LimitChaseDistance_Min then
+		if enemy:Visible(self) && cos then
+			if CurTime() > self.NextFireT then
+				if self.Shots == 15 then
+					self.NextFireT = CurTime() +2
+					self.Shots = 0
+					self.MinigunDelay = math.random(1,3) == 1 && 0.08 or 0.1
+					return
 				end
-				if CurTime() > self.NextWarpT && math.random(1,100) == 1 then
-					self:StartWarpCannon()
-				end
-			elseif !enemy:Visible(self) && cos then
-				if CurTime() > self.NextWarpT && math.random(1,20) == 1 && (self:GetEnemyLastKnownPos() != defPos) then
-					self:StartWarpCannon(true)
-				end
+				local bullet = {}
+				bullet.Num = 1
+				bullet.Src = self:GetAttachment(self:LookupAttachment("MiniGun")).Pos
+				bullet.Dir = (enemy:GetPos() + enemy:OBBCenter()) -self:GetAttachment(self:LookupAttachment("MiniGun")).Pos +Vector(math.random(-self.MinigunSpread,self.MinigunSpread) -self.Shots,math.random(-self.MinigunSpread,self.MinigunSpread) -self.Shots,math.random(-self.MinigunSpread,self.MinigunSpread) -self.Shots)
+				bullet.Spread = self.MinigunSpread -self.Shots
+				bullet.Tracer = 1
+				bullet.TracerName = "AR2Tracer"
+				bullet.Force = 3
+				bullet.Damage = 5
+				bullet.AmmoType = "AR2"
+				self:FireBullets(bullet)
+				self.Shots = self.Shots +1
+
+				-- VJ.EmitSound(self,{"npc/strider/strider_minigun.wav","npc/strider/strider_minigun2.wav"},110,100)
+				VJ.EmitSound(self,"NPC_Strider.FireMinigun",110,100)
+
+				local muz = ents.Create("env_sprite")
+				muz:SetKeyValue("model","effects/strider_muzzle.vmt")
+				muz:SetKeyValue("scale",tostring(math.Rand(1,1.5)))
+				muz:SetKeyValue("GlowProxySize","2.0") -- Size of the glow to be rendered for visibility testing.
+				muz:SetKeyValue("HDRColorScale","1.0")
+				muz:SetKeyValue("renderfx","14")
+				muz:SetKeyValue("rendermode","3") -- Set the render mode to "3" (Glow)
+				muz:SetKeyValue("renderamt","255") -- Transparency
+				muz:SetKeyValue("disablereceiveshadows","0") -- Disable receiving shadows
+				muz:SetKeyValue("framerate","10.0") -- Rate at which the sprite should animate, if at all.
+				muz:SetKeyValue("spawnflags","0")
+				muz:SetParent(self)
+				muz:Fire("SetParentAttachment","MiniGun")
+				muz:SetAngles(Angle(math.random(-100, 100), math.random(-100, 100), math.random(-100, 100)))
+				muz:Spawn()
+				muz:Activate()
+				muz:Fire("Kill","",0.09)
+				
+				local FireLight1 = ents.Create("light_dynamic")
+				FireLight1:SetKeyValue("brightness",8)
+				FireLight1:SetKeyValue("distance",300)
+				FireLight1:SetLocalPos(self:GetAttachment(2).Pos)
+				FireLight1:SetLocalAngles(self:GetAngles())
+				FireLight1:Fire("Color","0 161 255 255")
+				FireLight1:Spawn()
+				FireLight1:Activate()
+				FireLight1:Fire("TurnOn","",0)
+				FireLight1:Fire("Kill","",0.07)
+				self:DeleteOnRemove(FireLight1)
+
+				self.NextFireT = CurTime() +self.MinigunDelay
+			end
+			if CurTime() > self.NextWarpT && math.random(1,100) == 1 then
+				self:StartWarpCannon()
+			end
+		elseif !enemy:Visible(self) && cos then
+			if CurTime() > self.NextWarpT && math.random(1,20) == 1 && (self:GetEnemyLastKnownPos() != defPos) then
+				self:StartWarpCannon(true)
 			end
 		end
 	end

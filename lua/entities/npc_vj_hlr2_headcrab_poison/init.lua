@@ -117,7 +117,7 @@ function ENT:RangeAttackProjVel(projectile)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnFlinch(dmginfo, hitgroup, status)
-	if status == "PriorExecution" && self.AttackState == VJ.ATTACK_STATE_STARTED then -- Since StopAttacks() doesn't stop the velocity code from running
+	if status == "Init" && self.AttackState == VJ.ATTACK_STATE_STARTED then -- Since StopAttacks() doesn't stop the velocity code from running
 		return true
 	end
 end
@@ -198,14 +198,14 @@ function ENT:DoPoisonHeadcrabDamage(v)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnLeapAttack_AfterStartTimer(seed)
-	local pos = self:GetPos()
-	if IsValid(self:GetEnemy()) then
-		pos = self:GetEnemy():GetPos()
+function ENT:OnLeapAttack(status, enemy)
+	if status == "PostSetup" then
+		sound.EmitHint(SOUND_DANGER, enemy:GetPos(), 250, 1, self)
 	end
-	sound.EmitHint(SOUND_DANGER, pos, 250, 1, self)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnLeapAttack_AfterChecks(v)
-	self:DoPoisonHeadcrabDamage(v)
+function ENT:OnLeapAttackExecute(status, ent)
+	if status == "Damage" then
+		self:DoPoisonHeadcrabDamage(ent)
+	end
 end

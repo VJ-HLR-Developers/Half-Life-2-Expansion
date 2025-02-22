@@ -155,7 +155,7 @@ function ENT:BarrageFire(cargo)
 	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack()
+function ENT:OnThinkAttack(isAttacking, enemy)
 	local cargo = self.Cargo
 	if IsValid(cargo) && self.CargoType == CRATE_TYPES.CRATE_SOLDIER then
 		if IsValid(self:GetEnemy()) then

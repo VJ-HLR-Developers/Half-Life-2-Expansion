@@ -218,7 +218,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDeath(dmginfo, hitgroup, status)
-	if status == "Initial" then
+	if status == "Init" then
 		local explosion = dmginfo:IsExplosionDamage()
 		if (explosion or bit_band(dmginfo:GetDamageType(),DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
 			self.HasDeathAnimation = true

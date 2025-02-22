@@ -82,7 +82,7 @@ function ENT:RangeAttackProjVel(projectile)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnFlinch(dmginfo, hitgroup, status)
-	if status == "PriorExecution" then
+	if status == "Init" then
 		local dmgtype = dmginfo:GetDamageType()
 		if (dmgtype == DMG_BULLET or dmgtype == DMG_SLASH) then
 			self.AnimTbl_Flinch = {"Mortar_Flinch_Back","Mortar_Flinch_Left","Mortar_Flinch_Right","Mortar_Flinch_Front"}
@@ -93,7 +93,7 @@ function ENT:OnFlinch(dmginfo, hitgroup, status)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDeath(dmginfo, hitgroup, status)
-	if status == "Initial" then
+	if status == "Init" then
 		ParticleEffect("explosion_turret_break",self:GetPos(),Angle(0,0,0),nil)
 		ParticleEffect("electrical_arc_01_system",self:GetPos(),Angle(0,0,0),nil)
 		util.BlastDamage(self,self,self:GetPos(),80,20)

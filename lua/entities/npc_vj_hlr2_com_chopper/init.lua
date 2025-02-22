@@ -137,7 +137,7 @@ function ENT:Init()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDamaged(dmginfo, hitgroup, status)
-	if status == "Initial" && dmginfo:IsDamageType(DMG_PHYSGUN) then
+	if status == "Init" && dmginfo:IsDamageType(DMG_PHYSGUN) then
 		dmginfo:SetDamage(0)
 	end
 end
@@ -206,7 +206,7 @@ function ENT:OnInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack()
+function ENT:OnThinkAttack(isAttacking, enemy)
 	if self.CarpetBombing then
 		self.NextChaseTime = CurTime() +1
 	end
@@ -326,7 +326,7 @@ function ENT:OnThink()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDeath(dmginfo, hitgroup, status)
-	if status == "Initial" then
+	if status == "Init" then
 		ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,self,8)
 		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,4)
 		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,6)

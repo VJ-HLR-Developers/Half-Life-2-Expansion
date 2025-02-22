@@ -81,10 +81,12 @@ ENT.SoundTbl_Death = {
 }
 
 ENT.Antlion_StartedLeapAttack = false
--- ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:GetLeapAttackVelocity()
-	self.Antlion_StartedLeapAttack = true
-	return self:CalculateProjectile("Curve", self:GetPos(), self:GetAimPosition(self:GetEnemy(), self:GetPos(), 1, 1100), 1100)
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnLeapAttack(status, enemy)
+	if status == "Jump" then
+		self.Antlion_StartedLeapAttack = true
+		return self:CalculateProjectile("Curve", self:GetPos(), self:GetAimPosition(enemy, self:GetPos(), 1, 1100), 1100)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackProjVel(projectile)
