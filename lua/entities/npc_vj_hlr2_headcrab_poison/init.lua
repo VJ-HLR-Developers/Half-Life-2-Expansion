@@ -199,13 +199,13 @@ function ENT:DoPoisonHeadcrabDamage(v)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnLeapAttack(status, enemy)
-	if status == "PostSetup" then
+	if status == "PostInit" then
 		sound.EmitHint(SOUND_DANGER, enemy:GetPos(), 250, 1, self)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnLeapAttackExecute(status, ent)
-	if status == "Damage" then
+	if status == "PreDamage" then
 		self:DoPoisonHeadcrabDamage(ent)
 	end
 end
