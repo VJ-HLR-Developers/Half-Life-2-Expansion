@@ -215,7 +215,7 @@ function ENT:RangeAttackProjVel(projectile)
 	if IsValid(ent) && ent:Visible(self) then
 		targetPos = ent:GetPos() +ent:OBBCenter()
 	else
-		targetPos = self.EnemyData.LastVisiblePos or projectile:GetPos() +projectile:GetForward() *1000
+		targetPos = self.EnemyData.VisiblePos or projectile:GetPos() +projectile:GetForward() *1000
 	end
 	targetPos = targetPos +VectorRand(-35,35)
 	return self:CalculateProjectile("Line",projectile:GetPos(),targetPos,self.Flechette_Speed)
@@ -392,7 +392,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 	end
 
 	if self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2) && !self.DoRangeAttack && !self.IsCharging or !self.VJ_IsBeingControlled && !self.IsCharging && CurTime() > self.NextRangeT && !self.DoRangeAttack && dist > 250 && dist <= 2200 then
-		if !self:VisibleVec(eneData.LastVisiblePos or enemy:GetPos() + enemy:OBBCenter()) then return end
+		if !self:VisibleVec(eneData.VisiblePos or enemy:GetPos() + enemy:OBBCenter()) then return end
 		self.Shots = 0
 		self.DoRangeAttack = true
 		self.HasMeleeAttack = false
