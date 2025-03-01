@@ -11,9 +11,6 @@ ENT.PrintName 		= "Blob"
 ENT.Author 			= ""
 ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
 
-ENT.Spawnable = false
-ENT.AdminOnly = false
-
 local BLOB_HEIGHTVEC = Vector(0,0,8)
 local BLOB_VEC0 = Vector(0,0,0)
 ---------------------------------------------------------------------------------------------------------------------------------------------

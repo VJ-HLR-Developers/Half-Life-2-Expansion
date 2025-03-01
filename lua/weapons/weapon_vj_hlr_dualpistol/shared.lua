@@ -5,8 +5,6 @@ SWEP.Contact							= ""
 
 SWEP.WorldModel							= "models/weapons/w_pistol.mdl"
 SWEP.HoldType 							= "pistol"
-SWEP.Spawnable							= false
-SWEP.AdminSpawnable						= false
 
 SWEP.NPC_NextPrimaryFire 				= 0.08
 SWEP.NPC_TimeUntilFire 					= 0
