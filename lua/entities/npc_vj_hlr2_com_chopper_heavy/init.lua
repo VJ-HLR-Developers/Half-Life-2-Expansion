@@ -101,10 +101,12 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomRangeAttackCode_AfterProjectileSpawn(ent)
-	self.RangeUseAttachmentForPosID = self.RangeUseAttachmentForPosID == "Damage0" && "Damage3" or "Damage0"
-	VJ.CreateSound(ent,"weapons/rpg/rocketfire1.wav",80)
-	VJ.CreateSound(ent,"vj_base/weapons/rpg/rpg1_single_dist.wav",120)
+function ENT:OnRangeAttackExecute(status, enemy, projectile)
+	if status == "PostProjSpawn" then
+		self.RangeUseAttachmentForPosID = self.RangeUseAttachmentForPosID == "Damage0" && "Damage3" or "Damage0"
+		VJ.CreateSound(projectile,"weapons/rpg/rocketfire1.wav",80)
+		VJ.CreateSound(projectile,"vj_base/weapons/rpg/rpg1_single_dist.wav",120)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CreateFakeBullet(att)

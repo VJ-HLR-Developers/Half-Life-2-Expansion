@@ -27,7 +27,6 @@ ENT.MeleeAttackPlayerSpeedTime = 10
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
-ENT.RangeAttackAnimationStopMovement = false
 ENT.RangeAttackAnimationFaceEnemy = false
 ENT.RangeAttackMaxDistance = 1750
 ENT.RangeAttackMinDistance = 500

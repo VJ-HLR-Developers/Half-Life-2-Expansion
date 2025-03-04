@@ -182,36 +182,38 @@ function ENT:DoTrace()
 	return util.TraceLine(tracedata).HitPos
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomRangeAttackCode()
-	local attackpos = self:DoTrace()
-	util.ParticleTracerEx("weapon_combine_ion_cannon",self:GetPos(),attackpos,false,self:EntIndex(),1)
-	ParticleEffect("vj_aurora_shockwave",attackpos,Angle(math.random(0,360),math.random(0,360),math.random(0,360)),nil)
-	ParticleEffect("Weapon_Combine_Ion_Cannon_Exlposion_c",attackpos +Vector(0,0,-35),Angle(math.random(0,360),math.random(0,360),math.random(0,360)),nil)
-	util.ScreenShake(attackpos, 16, 200, 2, 1500)
-	util.ScreenShake(self:GetPos(),12,100,0.4,800)
-	sound.Play("weapons/mortar/mortar_explode3.wav",attackpos,80,100)
-	VJ.ApplyRadiusDamage(self,self,attackpos,80,50,bit.bor(DMG_BLAST,DMG_BURN,DMG_DISSOLVE,DMG_AIRBOAT),true,false,{Force = 150})
-	
-	VJ.EmitSound(self,self.Turret_FireSound,120,math.random(100,110))
-	self:PlayAnim("vjseq_fire",true,0.15)
-	local gest = self:AddGestureSequence(self:LookupSequence("fire"))
-	self:SetLayerPriority(gest,1)
-	self:SetLayerPlaybackRate(gest,0.5)
-	
-	ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,1)
-	
-	local FireLight1 = ents.Create("light_dynamic")
-	FireLight1:SetKeyValue("brightness", "4")
-	FireLight1:SetKeyValue("distance", "120")
-	FireLight1:SetPos(self:GetAttachment(1).Pos)
-	FireLight1:SetLocalAngles(self:GetAngles())
-	FireLight1:Fire("Color", "0 31 225")
-	FireLight1:SetParent(self)
-	FireLight1:Spawn()
-	FireLight1:Activate()
-	FireLight1:Fire("TurnOn","",0)
-	FireLight1:Fire("Kill","",0.07)
-	self:DeleteOnRemove(FireLight1)
+function ENT:OnRangeAttackExecute(status, enemy, projectile)
+	if status == "Init" then
+		local attackpos = self:DoTrace()
+		util.ParticleTracerEx("weapon_combine_ion_cannon",self:GetPos(),attackpos,false,self:EntIndex(),1)
+		ParticleEffect("vj_aurora_shockwave",attackpos,Angle(math.random(0,360),math.random(0,360),math.random(0,360)),nil)
+		ParticleEffect("Weapon_Combine_Ion_Cannon_Exlposion_c",attackpos +Vector(0,0,-35),Angle(math.random(0,360),math.random(0,360),math.random(0,360)),nil)
+		util.ScreenShake(attackpos, 16, 200, 2, 1500)
+		util.ScreenShake(self:GetPos(),12,100,0.4,800)
+		sound.Play("weapons/mortar/mortar_explode3.wav",attackpos,80,100)
+		VJ.ApplyRadiusDamage(self,self,attackpos,80,50,bit.bor(DMG_BLAST,DMG_BURN,DMG_DISSOLVE,DMG_AIRBOAT),true,false,{Force = 150})
+		
+		VJ.EmitSound(self,self.Turret_FireSound,120,math.random(100,110))
+		self:PlayAnim("vjseq_fire",true,0.15)
+		local gest = self:AddGestureSequence(self:LookupSequence("fire"))
+		self:SetLayerPriority(gest,1)
+		self:SetLayerPlaybackRate(gest,0.5)
+		
+		ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,1)
+		
+		local FireLight1 = ents.Create("light_dynamic")
+		FireLight1:SetKeyValue("brightness", "4")
+		FireLight1:SetKeyValue("distance", "120")
+		FireLight1:SetPos(self:GetAttachment(1).Pos)
+		FireLight1:SetLocalAngles(self:GetAngles())
+		FireLight1:Fire("Color", "0 31 225")
+		FireLight1:SetParent(self)
+		FireLight1:Spawn()
+		FireLight1:Activate()
+		FireLight1:Fire("TurnOn","",0)
+		FireLight1:Fire("Kill","",0.07)
+		self:DeleteOnRemove(FireLight1)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnAlert(ent)

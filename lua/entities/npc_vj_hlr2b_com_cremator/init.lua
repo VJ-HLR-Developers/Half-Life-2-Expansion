@@ -28,7 +28,6 @@ ENT.PropInteraction = false
 -- ENT.HasRangeAttack = true
 -- ENT.RangeAttackProjectiles = "obj_vj_hlr2b_cremator"
 -- ENT.AnimTbl_RangeAttack = "vjges_" .. ACT_GESTURE_RANGE_ATTACK1
--- ENT.RangeAttackAnimationStopMovement = false
 -- ENT.RangeAttackMaxDistance = 850
 -- ENT.RangeAttackMinDistance = 500
 -- ENT.RangeAttackAngleRadius = 60

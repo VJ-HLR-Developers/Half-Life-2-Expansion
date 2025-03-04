@@ -36,7 +36,6 @@ ENT.RangeAttackMaxDistance = 3500
 ENT.RangeAttackMinDistance = 500
 ENT.TimeUntilRangeAttackProjectileRelease = false
 ENT.NextRangeAttackTime = 5
-ENT.DisableDefaultRangeAttackCode = true
 
 ENT.LimitChaseDistance = "OnlyRange"
 ENT.LimitChaseDistance_Max = 1800
@@ -148,12 +147,16 @@ function ENT:OnInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnRangeAttack_AfterStartTimer(seed)
-	-- self:PlayAnim("idleact",true,false,true,0,{OnFinish=function(interrupted,anim)
-	-- 	if interrupted then return end
-	-- 	self:PlayAnim(ACT_RANGE_ATTACK1,true,false,false)
-	-- end})
-	self:PlayAnim(ACT_RANGE_ATTACK1,true,false,false)
+function ENT:OnRangeAttack(status, enemy)
+	if status == "PostInit" then
+		self:PlayAnim(ACT_RANGE_ATTACK1,true,false,false)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnRangeAttackExecute(status, enemy, projectile)
+	if status == "Init" then
+		return true
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local bit_band = bit.band

@@ -36,7 +36,6 @@ ENT.RangeAttackMaxDistance = 1024
 ENT.RangeAttackMinDistance = 256
 ENT.TimeUntilRangeAttackProjectileRelease = false
 ENT.NextRangeAttackTime = VJ.SET(3, 6)
-ENT.DisableDefaultRangeAttackCode = true
 
 ENT.LimitChaseDistance = "OnlyRange"
 ENT.LimitChaseDistance_Max = "UseRangeDistance"
@@ -364,31 +363,34 @@ function ENT:OnAnimEvent(ev, evTime, evCycle, evType, evOptions)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomRangeAttackCode()
-	local startPos = self:GetPos() + self:GetUp()*45 + self:GetForward()*40
-	local tr = util.TraceLine({
-		start = startPos,
-		endpos = self:GetAimPosition(self:GetEnemy(), startPos, 0),
-		filter = self
-	})
-	local hitPos = tr.HitPos
+function ENT:OnRangeAttackExecute(status, enemy, projectile)
+	if status == "Init" then
+		local startPos = self:GetPos() + self:GetUp()*45 + self:GetForward()*40
+		local tr = util.TraceLine({
+			start = startPos,
+			endpos = self:GetAimPosition(enemy, startPos, 0),
+			filter = self
+		})
+		local hitPos = tr.HitPos
 
-	util.ParticleTracerEx("vortigaunt_beam", startPos, hitPos, false, self:EntIndex(), self:LookupAttachment("leftclaw"))
-	util.ParticleTracerEx("vortigaunt_beam", startPos, hitPos, false, self:EntIndex(), self:LookupAttachment("rightclaw"))
-	
-	sound.Play("vj_hlr/hl2_npc/vort/vort_attack_shoot" .. math.random(3,4) .. ".wav",hitPos,75)
-	VJ.ApplyRadiusDamage(self, self, hitPos, 100, 25, bit.bor(DMG_SHOCK,DMG_ENERGYBEAM), true, false, {Force = 90})
+		util.ParticleTracerEx("vortigaunt_beam", startPos, hitPos, false, self:EntIndex(), self:LookupAttachment("leftclaw"))
+		util.ParticleTracerEx("vortigaunt_beam", startPos, hitPos, false, self:EntIndex(), self:LookupAttachment("rightclaw"))
+		
+		sound.Play("vj_hlr/hl2_npc/vort/vort_attack_shoot" .. math.random(3,4) .. ".wav",hitPos,75)
+		VJ.ApplyRadiusDamage(self, self, hitPos, 100, 25, bit.bor(DMG_SHOCK,DMG_ENERGYBEAM), true, false, {Force = 90})
 
-	local light = ents.Create("light_dynamic")
-	light:SetKeyValue("_light","44 255 139 255")
-	light:SetKeyValue("style","0")
-	light:SetKeyValue("distance","200")
-	light:SetKeyValue("brightness","2")
-	light:SetPos(hitPos)
-	light:Spawn()
-	light:Activate()
-	light:Fire("TurnOn","",0)
-	SafeRemoveEntityDelayed(light, 0.1)
+		local light = ents.Create("light_dynamic")
+		light:SetKeyValue("_light","44 255 139 255")
+		light:SetKeyValue("style","0")
+		light:SetKeyValue("distance","200")
+		light:SetKeyValue("brightness","2")
+		light:SetPos(hitPos)
+		light:Spawn()
+		light:Activate()
+		light:Fire("TurnOn","",0)
+		SafeRemoveEntityDelayed(light, 0.1)
+		return true
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local alertAntlions = {"vj_hlr/hl2_npc/vort/vo/alert_antlions.wav"}
