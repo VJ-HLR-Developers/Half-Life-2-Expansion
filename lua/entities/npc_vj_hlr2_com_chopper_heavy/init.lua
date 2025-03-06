@@ -102,7 +102,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnRangeAttackExecute(status, enemy, projectile)
-	if status == "PostProjSpawn" then
+	if status == "PostSpawn" then
 		self.RangeUseAttachmentForPosID = self.RangeUseAttachmentForPosID == "Damage0" && "Damage3" or "Damage0"
 		VJ.CreateSound(projectile,"weapons/rpg/rocketfire1.wav",80)
 		VJ.CreateSound(projectile,"vj_base/weapons/rpg/rpg1_single_dist.wav",120)
