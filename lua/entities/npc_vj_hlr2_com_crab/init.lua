@@ -39,10 +39,10 @@ ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 ENT.MainSoundPitch = 100
 
-ENT.SoundTbl_Idle = "vj_hlr/hl2_npc/crab/taunt.wav"
-ENT.SoundTbl_Pain = "vj_hlr/hl2_npc/crab/pain1.wav"
-ENT.SoundTbl_MeleeAttackExtra = "vj_hlr/hl2_npc/crab/stab.wav"
-ENT.SoundTbl_MeleeAttackMiss = "vj_hlr/hl2_npc/crab/step2.wav"
+ENT.SoundTbl_Idle = "vj_hlr/src/npc/crab/taunt.wav"
+ENT.SoundTbl_Pain = "vj_hlr/src/npc/crab/pain1.wav"
+ENT.SoundTbl_MeleeAttackExtra = "vj_hlr/src/npc/crab/stab.wav"
+ENT.SoundTbl_MeleeAttackMiss = "vj_hlr/src/npc/crab/step2.wav"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetCollisionBounds(Vector(45,45,100), Vector(-45,-45,0))
@@ -57,9 +57,9 @@ end
 function ENT:OnInput(key, activator, caller, data)
 	-- print(key)
 	if key == "step" then
-		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/step2.wav", 75)
+		VJ.EmitSound(self, "vj_hlr/src/npc/crab/step2.wav", 75)
 	elseif key == "step_heavy" then
-		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/step.wav", 80)
+		VJ.EmitSound(self, "vj_hlr/src/npc/crab/step.wav", 80)
 		util.ScreenShake(self:GetPos(), 8, 100, 0.2, 500)
 	elseif key == "attack" then
 		self.MeleeAttackDamage = 20
@@ -80,13 +80,13 @@ function ENT:OnInput(key, activator, caller, data)
 		self.MeleeAttackPlayerSpeed = false
 		self:ExecuteMeleeAttack()
 	elseif key == "gun_drop" then
-		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/flesh_rip.wav", 80)
+		VJ.EmitSound(self, "vj_hlr/src/npc/crab/flesh_rip.wav", 80)
 	elseif key == "gun_load" then
-		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/gun_drop.wav", 80)
+		VJ.EmitSound(self, "vj_hlr/src/npc/crab/gun_drop.wav", 80)
 	elseif key == "gun_charge" then
-		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/charge_cannon.wav", 80)
+		VJ.EmitSound(self, "vj_hlr/src/npc/crab/charge_cannon.wav", 80)
 	elseif key == "gun_fire" then
-		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/fire.wav", 150)
+		VJ.EmitSound(self, "vj_hlr/src/npc/crab/fire.wav", 150)
 		ParticleEffectAttach("vj_muzzle_ar2_main",PATTACH_POINT_FOLLOW,self,1)
 		local att = self:GetAttachment(1)
 		local targetPos = IsValid(self:GetEnemy()) && self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() or self:GetPos() +self:GetForward() *1500
@@ -113,7 +113,7 @@ function ENT:OnInput(key, activator, caller, data)
 			self:FireBullets(bullet)
 		end
 	elseif key == "gun_retract" then
-		VJ.EmitSound(self, "vj_hlr/hl2_npc/crab/gun_retract.wav", 80)
+		VJ.EmitSound(self, "vj_hlr/src/npc/crab/gun_retract.wav", 80)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

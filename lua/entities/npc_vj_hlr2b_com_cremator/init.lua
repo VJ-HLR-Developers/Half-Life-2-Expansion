@@ -42,11 +42,11 @@ ENT.MainSoundPitch = 100
 ENT.PainSoundPitch = VJ.SET(40, 55)
 ENT.KilledEnemySoundPitch = VJ.SET(65, 70)
 
-ENT.SoundTbl_FootStep = {"vj_hlr/hl2_npc/cremator/foot1.wav","vj_hlr/hl2_npc/cremator/foot2.wav","vj_hlr/hl2_npc/cremator/foot3.wav"}
-ENT.SoundTbl_Alert = {"vj_hlr/hl2_npc/cremator/alert_object.wav","vj_hlr/hl2_npc/cremator/alert_player.wav"}
+ENT.SoundTbl_FootStep = {"vj_hlr/src/npc/cremator/foot1.wav","vj_hlr/src/npc/cremator/foot2.wav","vj_hlr/src/npc/cremator/foot3.wav"}
+ENT.SoundTbl_Alert = {"vj_hlr/src/npc/cremator/alert_object.wav","vj_hlr/src/npc/cremator/alert_player.wav"}
 ENT.SoundTbl_KilledEnemy = {"npc/metropolice/vo/chuckle.wav"}
 ENT.SoundTbl_Pain = {"npc/combine_soldier/pain1.wav","npc/combine_soldier/pain2.wav","npc/combine_soldier/pain3.wav"}
-ENT.SoundTbl_Death = {"vj_hlr/hl2_npc/cremator/crem_die.wav"}
+ENT.SoundTbl_Death = {"vj_hlr/src/npc/cremator/crem_die.wav"}
 
 ENT.Cremator_FlameRange = 370
 ENT.Cremator_FlameDamage = 2
@@ -55,14 +55,14 @@ function ENT:Init()
 	self.IsFlameActive = false
 	self.IdleLoopStatus = 0
 
-	self.IdleLoop = CreateSound(self,"vj_hlr/hl2_npc/cremator/amb_loop.wav")
+	self.IdleLoop = CreateSound(self,"vj_hlr/src/npc/cremator/amb_loop.wav")
 	self.IdleLoop:SetSoundLevel(60)
 	self.IdleLoop:Play()
 
-	self.AlertLoop = CreateSound(self,"vj_hlr/hl2_npc/cremator/amb_mad.wav")
+	self.AlertLoop = CreateSound(self,"vj_hlr/src/npc/cremator/amb_mad.wav")
 	self.AlertLoop:SetSoundLevel(65)
 
-	self.FireLoop = CreateSound(self,"vj_hlr/hl2_npc/cremator/plasma_shoot.wav")
+	self.FireLoop = CreateSound(self,"vj_hlr/src/npc/cremator/plasma_shoot.wav")
 	self.FireLoop:SetSoundLevel(80)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -76,11 +76,11 @@ function ENT:OnInput(key, activator, caller, data)
 	-- print(key)
 	if key == "step" then
 		self:PlayFootstepSound()
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/cremator/amb" .. math.random(1,3) .. ".wav",60)
+		VJ.EmitSound(self,"vj_hlr/src/npc/cremator/amb" .. math.random(1,3) .. ".wav",60)
 	elseif key == "fire_start" then
 		self.IsFlameActive = true
 		ParticleEffectAttach("vj_hlr_cremator_range",PATTACH_POINT_FOLLOW,self,self:LookupAttachment("muzzle"))
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/cremator/plasma_ignite.wav",75)
+		VJ.EmitSound(self,"vj_hlr/src/npc/cremator/plasma_ignite.wav",75)
 		self.FireLoop:Play()
 		self:SetMaxYawSpeed(1)
 
@@ -101,7 +101,7 @@ function ENT:OnInput(key, activator, caller, data)
 	elseif key == "fire_end" then
 		self.IsFlameActive = false
 		self:StopParticles()
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/cremator/plasma_stop.wav",75)
+		VJ.EmitSound(self,"vj_hlr/src/npc/cremator/plasma_stop.wav",75)
 		self.FireLoop:Stop()
 		self:SetMaxYawSpeed(self.TurningSpeed)
 		SafeRemoveEntity(self.FireLight)
@@ -118,7 +118,7 @@ function ENT:OnChangeActivity(act)
 	if self.IsFlameActive then
 		self.IsFlameActive = false
 		self:StopParticles()
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/cremator/plasma_stop.wav",75)
+		VJ.EmitSound(self,"vj_hlr/src/npc/cremator/plasma_stop.wav",75)
 		self.FireLoop:Stop()
 		self:SetMaxYawSpeed(self.TurningSpeed)
 		SafeRemoveEntity(self.FireLight)

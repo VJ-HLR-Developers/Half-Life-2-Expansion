@@ -99,12 +99,12 @@ function ENT:Init()
 				self.DeathLoot = {"weapon_frag"}
 				self.DeathLootChance = 12
 				if zType == 6 then
-					self.SoundTbl_FootStep = {"vj_hlr/hl2_npc/zolice/gear1.wav","vj_hlr/hl2_npc/zolice/gear2.wav","vj_hlr/hl2_npc/zolice/gear3.wav"}
-					self.SoundTbl_Idle = {"vj_hlr/hl2_npc/zolice/idle1.wav","vj_hlr/hl2_npc/zolice/idle2.wav","vj_hlr/hl2_npc/zolice/idle3.wav","vj_hlr/hl2_npc/zolice/idle4.wav","vj_hlr/hl2_npc/zolice/idle5.wav","vj_hlr/hl2_npc/zolice/idle6.wav"}
-					self.SoundTbl_Alert = {"vj_hlr/hl2_npc/zolice/alert1.wav","vj_hlr/hl2_npc/zolice/alert2.wav","vj_hlr/hl2_npc/zolice/alert3.wav"}
-					self.SoundTbl_BeforeMeleeAttack = {"vj_hlr/hl2_npc/zolice/attack1.wav","vj_hlr/hl2_npc/zolice/attack2.wav","vj_hlr/hl2_npc/zolice/attack3.wav","vj_hlr/hl2_npc/zolice/attack4.wav","vj_hlr/hl2_npc/zolice/attack6.wav"}
-					self.SoundTbl_Pain = {"vj_hlr/hl2_npc/zolice/pain1.wav","vj_hlr/hl2_npc/zolice/pain2.wav","vj_hlr/hl2_npc/zolice/pain3.wav","vj_hlr/hl2_npc/zolice/pain4.wav"}
-					self.SoundTbl_DeathFollow = {"vj_hlr/hl2_npc/zolice/die1.wav","vj_hlr/hl2_npc/zolice/die2.wav","vj_hlr/hl2_npc/zolice/die3.wav","vj_hlr/hl2_npc/zolice/die4.wav"}
+					self.SoundTbl_FootStep = {"vj_hlr/src/npc/zolice/gear1.wav","vj_hlr/src/npc/zolice/gear2.wav","vj_hlr/src/npc/zolice/gear3.wav"}
+					self.SoundTbl_Idle = {"vj_hlr/src/npc/zolice/idle1.wav","vj_hlr/src/npc/zolice/idle2.wav","vj_hlr/src/npc/zolice/idle3.wav","vj_hlr/src/npc/zolice/idle4.wav","vj_hlr/src/npc/zolice/idle5.wav","vj_hlr/src/npc/zolice/idle6.wav"}
+					self.SoundTbl_Alert = {"vj_hlr/src/npc/zolice/alert1.wav","vj_hlr/src/npc/zolice/alert2.wav","vj_hlr/src/npc/zolice/alert3.wav"}
+					self.SoundTbl_BeforeMeleeAttack = {"vj_hlr/src/npc/zolice/attack1.wav","vj_hlr/src/npc/zolice/attack2.wav","vj_hlr/src/npc/zolice/attack3.wav","vj_hlr/src/npc/zolice/attack4.wav","vj_hlr/src/npc/zolice/attack6.wav"}
+					self.SoundTbl_Pain = {"vj_hlr/src/npc/zolice/pain1.wav","vj_hlr/src/npc/zolice/pain2.wav","vj_hlr/src/npc/zolice/pain3.wav","vj_hlr/src/npc/zolice/pain4.wav"}
+					self.SoundTbl_DeathFollow = {"vj_hlr/src/npc/zolice/die1.wav","vj_hlr/src/npc/zolice/die2.wav","vj_hlr/src/npc/zolice/die3.wav","vj_hlr/src/npc/zolice/die4.wav"}
 				end
 			end
 		end

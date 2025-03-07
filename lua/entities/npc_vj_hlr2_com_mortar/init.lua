@@ -45,13 +45,13 @@ ENT.LimitChaseDistance = true
 ENT.LimitChaseDistance_Max = "UseRangeDistance"
 ENT.LimitChaseDistance_Min = "UseRangeDistance"
 
-ENT.SoundTbl_Breath = {"vj_hlr/hl2_npc/mortarsynth/hover.wav"}
-ENT.SoundTbl_Idle = {"vj_hlr/hl2_npc/combot/cbot_battletalk1.wav","vj_hlr/hl2_npc/combot/cbot_battletalk2.wav","vj_hlr/hl2_npc/combot/cbot_battletalk3.wav","vj_hlr/hl2_npc/combot/cbot_battletalk4.wav"}
-ENT.SoundTbl_CombatIdle = {"vj_hlr/hl2_npc/combot/cbot_scan1.wav","vj_hlr/hl2_npc/combot/cbot_scan2.wav"}
-ENT.SoundTbl_Alert = {"vj_hlr/hl2_npc/combot/cbot_alert1.wav"}
-ENT.SoundTbl_RangeAttack = {"vj_hlr/hl2_npc/mortarsynth/attack_shoot.wav"}
-ENT.SoundTbl_Pain = {"vj_hlr/hl2_npc/combot/cbot_servoscared.wav","vj_hlr/hl2_npc/combot/cbot_servosurprise.wav"}
-ENT.SoundTbl_Death = {"vj_hlr/hl2_npc/waste_scanner/grenade_fire.wav"}
+ENT.SoundTbl_Breath = {"vj_hlr/src/npc/mortarsynth/hover.wav"}
+ENT.SoundTbl_Idle = {"vj_hlr/src/npc/combot/cbot_battletalk1.wav","vj_hlr/src/npc/combot/cbot_battletalk2.wav","vj_hlr/src/npc/combot/cbot_battletalk3.wav","vj_hlr/src/npc/combot/cbot_battletalk4.wav"}
+ENT.SoundTbl_CombatIdle = {"vj_hlr/src/npc/combot/cbot_scan1.wav","vj_hlr/src/npc/combot/cbot_scan2.wav"}
+ENT.SoundTbl_Alert = {"vj_hlr/src/npc/combot/cbot_alert1.wav"}
+ENT.SoundTbl_RangeAttack = {"vj_hlr/src/npc/mortarsynth/attack_shoot.wav"}
+ENT.SoundTbl_Pain = {"vj_hlr/src/npc/combot/cbot_servoscared.wav","vj_hlr/src/npc/combot/cbot_servosurprise.wav"}
+ENT.SoundTbl_Death = {"vj_hlr/src/npc/waste_scanner/grenade_fire.wav"}
 
 ENT.BreathSoundLevel = 75
 ENT.AlertSoundLevel = 90

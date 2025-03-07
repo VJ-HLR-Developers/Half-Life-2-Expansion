@@ -24,15 +24,15 @@ ENT.RadiusDamageRadius = 200
 ENT.RadiusDamage = 45
 ENT.RadiusDamageUseRealisticRadius = true
 ENT.RadiusDamageType = bit.bor(DMG_BURN,DMG_DISSOLVE, DMG_ENERGYBEAM)
-ENT.SoundTbl_Idle = "vj_hlr/hl1_npc/kingpin/kingpin_move.wav"
-ENT.SoundTbl_OnCollide = "vj_hlr/hl2_npc/cremator/plasma_stop.wav"
+ENT.SoundTbl_Idle = "vj_hlr/gsrc/npc/kingpin/kingpin_move.wav"
+ENT.SoundTbl_OnCollide = "vj_hlr/src/npc/cremator/plasma_stop.wav"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetNoDraw(true)
 	self:DrawShadow(false)
 
 	ParticleEffectAttach("vj_hlr_cremator_projectile",PATTACH_ABSORIGIN_FOLLOW,self,0)
-	VJ.EmitSound(self,"vj_hlr/hl2_npc/cremator/plasma_ignite.wav",75)
+	VJ.EmitSound(self,"vj_hlr/src/npc/cremator/plasma_ignite.wav",75)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()

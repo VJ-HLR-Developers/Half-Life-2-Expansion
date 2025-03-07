@@ -13,7 +13,7 @@ ENT.MeleeAttackDamage = 25
 ENT.MeleeAttackDamageType = bit.bor(DMG_POISON,DMG_ACID)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInit()
-	self.SoundTbl_MeleeAttackExtra = {"vj_hlr/hl1_npc/bullchicken/bc_spithit1.wav","vj_hlr/hl1_npc/bullchicken/bc_spithit2.wav"}
+	self.SoundTbl_MeleeAttackExtra = {"vj_hlr/gsrc/npc/bullchicken/bc_spithit1.wav","vj_hlr/gsrc/npc/bullchicken/bc_spithit2.wav"}
 
 	self.IsBeta = true
 	self.HeadcrabClass = "npc_vj_hlr2b_headcrab_poison"

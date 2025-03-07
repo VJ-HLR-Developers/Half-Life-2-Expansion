@@ -15,7 +15,7 @@ ENT.Turret_BulletAttachment = "muzzle"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.001
 ENT.NextRangeAttackTime = 1.2
 ENT.NextAnyAttackTime_Range = 1.2
-ENT.Turret_FireSound = {"^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot1.wav", "^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot2.wav", "^vj_hlr/hl2_npc/ioncannon/ion_cannon_shot3.wav"}
+ENT.Turret_FireSound = {"^vj_hlr/src/npc/ioncannon/ion_cannon_shot1.wav", "^vj_hlr/src/npc/ioncannon/ion_cannon_shot2.wav", "^vj_hlr/src/npc/ioncannon/ion_cannon_shot3.wav"}
 
 ENT.GibOnDeathFilter = false
 ENT.GeneratorHealth = 100
@@ -244,12 +244,12 @@ function ENT:OnThink()
 			gen.DoorState = 2
 			gen:ResetSequence(gen:LookupSequence("close"))
 			self.Bullseye:AddFlags(FL_NOTARGET)
-			if doorSound then VJ.CreateSound(gen,"vj_hlr/hl2_npc/ioncannon/ol09_gungrate_open.wav",80) end
+			if doorSound then VJ.CreateSound(gen,"vj_hlr/src/npc/ioncannon/ol09_gungrate_open.wav",80) end
 		elseif self.Turret_StandDown && gen.DoorState != 1 then
 			gen.DoorState = 1
 			gen:ResetSequence(gen:LookupSequence("open"))
 			self.Bullseye:RemoveFlags(FL_NOTARGET)
-			if doorSound then VJ.CreateSound(gen,"vj_hlr/hl2_npc/ioncannon/ol09_gungrate_open.wav",80) end
+			if doorSound then VJ.CreateSound(gen,"vj_hlr/src/npc/ioncannon/ol09_gungrate_open.wav",80) end
 		end
 	end
 end
@@ -323,7 +323,7 @@ local defAng = Angle(0, 0, 0)
 --
 function ENT:OnDeath(dmginfo, hitgroup, status)
 	if status == "Finish" then
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/ioncannon/ol09_biggundestroy.wav",110)
+		VJ.EmitSound(self,"vj_hlr/src/npc/ioncannon/ol09_biggundestroy.wav",110)
 		local function explode(ent)
 			ent = ent or self
 			if !IsValid(ent) then return end

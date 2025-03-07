@@ -13,8 +13,8 @@ ENT.RadiusDamage = 40
 ENT.RadiusDamageUseRealisticRadius = true
 ENT.RadiusDamageType = DMG_DISSOLVE
 ENT.CollisionDecal = "Scorch"
-ENT.SoundTbl_Idle = "vj_hlr/hl2_npc/combot/cbot_energyball_loop1.wav"
-ENT.SoundTbl_OnCollide = "vj_hlr/hl2_npc/mortarsynth/grenade_fire.wav"
+ENT.SoundTbl_Idle = "vj_hlr/src/npc/combot/cbot_energyball_loop1.wav"
+ENT.SoundTbl_OnCollide = "vj_hlr/src/npc/mortarsynth/grenade_fire.wav"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()
 	ParticleEffectAttach("electrical_arc_01_system",PATTACH_POINT_FOLLOW,self,0)

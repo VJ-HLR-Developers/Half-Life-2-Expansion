@@ -41,37 +41,37 @@ ENT.SoundTbl_FootStep = {
 	"npc/zombie/foot2.wav",
 	"npc/zombie/foot3.wav",
 }
-ENT.SoundTbl_CallForHelp = {"vj_hlr/hl2_npc/houndeye/he_bark_group_attack.wav"}
-ENT.SoundTbl_ReceiveOrder = {"vj_hlr/hl2_npc/houndeye/he_bark_group_attack_reply.wav"}
-ENT.SoundTbl_AllyDeath = {"vj_hlr/hl2_npc/houndeye/he_bark_group_retreat.wav"}
+ENT.SoundTbl_CallForHelp = {"vj_hlr/src/npc/houndeye/he_bark_group_attack.wav"}
+ENT.SoundTbl_ReceiveOrder = {"vj_hlr/src/npc/houndeye/he_bark_group_attack_reply.wav"}
+ENT.SoundTbl_AllyDeath = {"vj_hlr/src/npc/houndeye/he_bark_group_retreat.wav"}
 ENT.SoundTbl_Idle = {
-	"vj_hlr/hl2_npc/houndeye/he_idle1.wav",
-	"vj_hlr/hl2_npc/houndeye/he_idle2.wav",
-	"vj_hlr/hl2_npc/houndeye/he_idle3.wav",
-	"vj_hlr/hl2_npc/houndeye/he_idle4.wav",
+	"vj_hlr/src/npc/houndeye/he_idle1.wav",
+	"vj_hlr/src/npc/houndeye/he_idle2.wav",
+	"vj_hlr/src/npc/houndeye/he_idle3.wav",
+	"vj_hlr/src/npc/houndeye/he_idle4.wav",
 }
 ENT.SoundTbl_Alert = {
-	"vj_hlr/hl2_npc/houndeye/he_alert1.wav",
-	"vj_hlr/hl2_npc/houndeye/he_alert2.wav",
-	"vj_hlr/hl2_npc/houndeye/he_alert3.wav",
+	"vj_hlr/src/npc/houndeye/he_alert1.wav",
+	"vj_hlr/src/npc/houndeye/he_alert2.wav",
+	"vj_hlr/src/npc/houndeye/he_alert3.wav",
 }
 ENT.SoundTbl_BeforeMeleeAttack = {
-	"vj_hlr/hl2_npc/houndeye/he_attack1.wav",
-	"vj_hlr/hl2_npc/houndeye/he_attack2.wav",
-	"vj_hlr/hl2_npc/houndeye/he_attack3.wav",
+	"vj_hlr/src/npc/houndeye/he_attack1.wav",
+	"vj_hlr/src/npc/houndeye/he_attack2.wav",
+	"vj_hlr/src/npc/houndeye/he_attack3.wav",
 }
 ENT.SoundTbl_Pain = {
-	"vj_hlr/hl2_npc/houndeye/he_pain1.wav",
-	"vj_hlr/hl2_npc/houndeye/he_pain2.wav",
-	"vj_hlr/hl2_npc/houndeye/he_pain3.wav",
-	"vj_hlr/hl2_npc/houndeye/he_pain4.wav",
-	"vj_hlr/hl2_npc/houndeye/he_pain5.wav",
-	"vj_hlr/hl2_npc/houndeye/he_yelp1.wav"
+	"vj_hlr/src/npc/houndeye/he_pain1.wav",
+	"vj_hlr/src/npc/houndeye/he_pain2.wav",
+	"vj_hlr/src/npc/houndeye/he_pain3.wav",
+	"vj_hlr/src/npc/houndeye/he_pain4.wav",
+	"vj_hlr/src/npc/houndeye/he_pain5.wav",
+	"vj_hlr/src/npc/houndeye/he_yelp1.wav"
 }
 ENT.SoundTbl_Death = {
-	"vj_hlr/hl2_npc/houndeye/he_die1.wav",
-	"vj_hlr/hl2_npc/houndeye/he_die2.wav",
-	"vj_hlr/hl2_npc/houndeye/he_die3.wav",
+	"vj_hlr/src/npc/houndeye/he_die1.wav",
+	"vj_hlr/src/npc/houndeye/he_die2.wav",
+	"vj_hlr/src/npc/houndeye/he_die3.wav",
 }
 
 ENT.FootstepSoundLevel = 80
@@ -87,7 +87,7 @@ function ENT:OnInput(key, activator, caller, data)
 		self:PlayFootstepSound()
 	end
 	if key == "hunt" then
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/houndeye/he_hunt"..math.random(1,4)..".wav")
+		VJ.EmitSound(self,"vj_hlr/src/npc/houndeye/he_hunt"..math.random(1,4)..".wav")
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ function ENT:CustomOnMeleeAttack_BeforeChecks()
 	effects.BeamRingPoint(self:GetPos() +Vector(0,0,5),0.3,2,200,16,0,Color(248,0,35),{material="vj_hl/sprites/shockwave",framerate=20,flags=0})
 
 	if self.HasSounds && self.HasMeleeAttackSounds then
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/houndeye/he_blast"..math.random(1,3)..".wav",100,math.random(80,100))
+		VJ.EmitSound(self,"vj_hlr/src/npc/houndeye/he_blast"..math.random(1,3)..".wav",100,math.random(80,100))
 	end
 
 	VJ.ApplyRadiusDamage(self,self,self:GetPos(),400,self.MeleeAttackDamage,self.MeleeAttackDamageType,true,true,{DisableVisibilityCheck=true,Force=80})

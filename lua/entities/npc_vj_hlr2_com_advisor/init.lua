@@ -55,11 +55,11 @@ ENT.LimitChaseDistance_Min = 0
 
 ENT.SoundTbl_Breath = {"ambient/atmosphere/city_beacon_loop1.wav"}
 ENT.SoundTbl_Idle = {
-	"vj_hlr/hl2_npc/advisor/advisor_speak01.wav",
+	"vj_hlr/src/npc/advisor/advisor_speak01.wav",
 }
-ENT.SoundTbl_BeforeMeleeAttack = {"vj_hlr/hl2_npc/advisor/advisorattack03.wav"}
-ENT.SoundTbl_Pain = {"vj_hlr/hl2_npc/advisor/pain.wav"}
-ENT.SoundTbl_Death = {"vj_hlr/hl2_npc/advisor/advisor_scream.wav"}
+ENT.SoundTbl_BeforeMeleeAttack = {"vj_hlr/src/npc/advisor/advisorattack03.wav"}
+ENT.SoundTbl_Pain = {"vj_hlr/src/npc/advisor/pain.wav"}
+ENT.SoundTbl_Death = {"vj_hlr/src/npc/advisor/advisor_scream.wav"}
 
 ENT.BreathSoundLevel = 50
 
@@ -174,7 +174,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:GrabEntity(ent)
 	table.insert(self.tbl_HeldEntities,ent)
-	VJ.EmitSound(self,"vj_hlr/hl2_npc/advisor/advisor_blast6.wav")
+	VJ.EmitSound(self,"vj_hlr/src/npc/advisor/advisor_blast6.wav")
 	VJ.EmitSound(ent,"ambient/energy/whiteflash.wav")
 	ent:GetPhysicsObject():ApplyForceCenter(ent:GetPos() +Vector(0,0,ent:GetPhysicsObject():GetMass() *1.5))
 end
@@ -195,7 +195,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 		//print(pTbl)
 		if #pTbl > 0 then -- If greater then 1, then we found an object!
 			self:SetNW2Bool("PsionicEffect", true)
-			VJ.EmitSound(self,"vj_hlr/hl2_npc/advisor/advisorattack03.wav", 95)
+			VJ.EmitSound(self,"vj_hlr/src/npc/advisor/advisorattack03.wav", 95)
 			self.PsionicAttacking = true
 			self:SetState(VJ_STATE_ONLY_ANIMATION)
 			for _, v in ipairs(pTbl) do
@@ -218,7 +218,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 					if IsValid(v) then
 						local phys = v:GetPhysicsObject()
 						if IsValid(phys) then
-							VJ.EmitSound(self,"vj_hlr/hl2_npc/advisor/advisorattack02.wav", 95)
+							VJ.EmitSound(self,"vj_hlr/src/npc/advisor/advisorattack02.wav", 95)
 							v.BeingControlledByAdvisor = false
 							v:SetNW2Bool("BeingControlledByAdvisor", false)
 							phys:EnableGravity(true)

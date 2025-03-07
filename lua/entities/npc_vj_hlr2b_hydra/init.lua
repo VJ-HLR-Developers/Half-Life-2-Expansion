@@ -32,35 +32,35 @@ ENT.ControllerParams = {
 }
 
 ENT.SoundTbl_Alert = {
-	"vj_hlr/hl2_npc/hydra/hydra_alert1.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_alert2.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_alert3.wav",
+	"vj_hlr/src/npc/hydra/hydra_alert1.wav",
+	"vj_hlr/src/npc/hydra/hydra_alert2.wav",
+	"vj_hlr/src/npc/hydra/hydra_alert3.wav",
 }
 ENT.SoundTbl_CombatIdle = {
-	"vj_hlr/hl2_npc/hydra/hydra_search5.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_search6.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_search7.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_search8.wav",
+	"vj_hlr/src/npc/hydra/hydra_search5.wav",
+	"vj_hlr/src/npc/hydra/hydra_search6.wav",
+	"vj_hlr/src/npc/hydra/hydra_search7.wav",
+	"vj_hlr/src/npc/hydra/hydra_search8.wav",
 }
 ENT.SoundTbl_BumpWorld = {
-	"vj_hlr/hl2_npc/hydra/hydra_bump1.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_bump2.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_bump3.wav",
+	"vj_hlr/src/npc/hydra/hydra_bump1.wav",
+	"vj_hlr/src/npc/hydra/hydra_bump2.wav",
+	"vj_hlr/src/npc/hydra/hydra_bump3.wav",
 }
 ENT.SoundTbl_PrepareAttack = {
-	"vj_hlr/hl2_npc/hydra/hydra_sendtentacle1.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_sendtentacle2.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_sendtentacle3.wav",
+	"vj_hlr/src/npc/hydra/hydra_sendtentacle1.wav",
+	"vj_hlr/src/npc/hydra/hydra_sendtentacle2.wav",
+	"vj_hlr/src/npc/hydra/hydra_sendtentacle3.wav",
 }
 ENT.SoundTbl_BeforeMeleeAttack = {
-	"vj_hlr/hl2_npc/hydra/hydra_strike1.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_strike2.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_strike3.wav",
+	"vj_hlr/src/npc/hydra/hydra_strike1.wav",
+	"vj_hlr/src/npc/hydra/hydra_strike2.wav",
+	"vj_hlr/src/npc/hydra/hydra_strike3.wav",
 }
 ENT.SoundTbl_Pain = {
-	"vj_hlr/hl2_npc/hydra/hydra_pain1.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_pain2.wav",
-	"vj_hlr/hl2_npc/hydra/hydra_pain3.wav",
+	"vj_hlr/src/npc/hydra/hydra_pain1.wav",
+	"vj_hlr/src/npc/hydra/hydra_pain2.wav",
+	"vj_hlr/src/npc/hydra/hydra_pain3.wav",
 }
 
 	-- Enumerations --
@@ -69,7 +69,7 @@ ENT.SoundTbl_Pain = {
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetCollisionBounds(Vector(20, 20, 250), Vector(-20, -20, 0))
-	self.HeartBeatSnd = "vj_hlr/hl2_npc/hydra/hydra_heartloop" .. math.random(1,2) .. ".wav"
+	self.HeartBeatSnd = "vj_hlr/src/npc/hydra/hydra_heartloop" .. math.random(1,2) .. ".wav"
 	self.HeartBeat = CreateSound(self,self.HeartBeatSnd)
 	self.HeartBeat:SetSoundLevel(70)
 	self.NextHeartBeatT = CurTime()

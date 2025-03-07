@@ -55,22 +55,22 @@ ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 ENT.MainSoundPitch = 100
 
-ENT.SoundTbl_FootStep = {"vj_hlr/hl2_npc/vort/vort_foot1.wav","vj_hlr/hl2_npc/vort/vort_foot2.wav","vj_hlr/hl2_npc/vort/vort_foot3.wav","vj_hlr/hl2_npc/vort/vort_foot4.wav"}
+ENT.SoundTbl_FootStep = {"vj_hlr/src/npc/vort/vort_foot1.wav","vj_hlr/src/npc/vort/vort_foot2.wav","vj_hlr/src/npc/vort/vort_foot3.wav","vj_hlr/src/npc/vort/vort_foot4.wav"}
 ENT.SoundTbl_IdleDialogue = {
 	"vo/eli_lab/vort_elab_use01.wav",
 	"vo/eli_lab/vort_elab_use02.wav",
 	"vo/eli_lab/vort_elab_use03.wav",
 	"vo/eli_lab/vort_elab_use04.wav",
 	"vo/eli_lab/vort_elab_use05.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_grp_greetings04.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese02.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese03.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese04.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese05.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese07.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese08.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese09.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese13.wav",
+	"vj_hlr/src/npc/vort/vo/vort_grp_greetings04.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese02.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese03.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese04.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese05.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese07.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese08.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese09.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese13.wav",
 	"vo/npc/vortigaunt/vques01.wav",
 	"vo/npc/vortigaunt/vques02.wav",
 	"vo/npc/vortigaunt/vques03.wav",
@@ -83,22 +83,22 @@ ENT.SoundTbl_IdleDialogue = {
 	"vo/npc/vortigaunt/vques10.wav",
 }
 ENT.SoundTbl_IdleDialogueAnswer = {
-	"vj_hlr/hl2_npc/vort/vo/vort_grp_agree01.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_grp_agree02.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_grp_agree03.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_grp_agree04.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_grp_agree05.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_grp_agree06.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_grp_agree07.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese02.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese03.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese04.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese05.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese07.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese08.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese09.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese13.wav",
-	"vj_hlr/hl2_npc/vort/vo/yes.wav",
+	"vj_hlr/src/npc/vort/vo/vort_grp_agree01.wav",
+	"vj_hlr/src/npc/vort/vo/vort_grp_agree02.wav",
+	"vj_hlr/src/npc/vort/vo/vort_grp_agree03.wav",
+	"vj_hlr/src/npc/vort/vo/vort_grp_agree04.wav",
+	"vj_hlr/src/npc/vort/vo/vort_grp_agree05.wav",
+	"vj_hlr/src/npc/vort/vo/vort_grp_agree06.wav",
+	"vj_hlr/src/npc/vort/vo/vort_grp_agree07.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese02.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese03.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese04.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese05.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese07.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese08.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese09.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese13.wav",
+	"vj_hlr/src/npc/vort/vo/yes.wav",
 	"vo/npc/vortigaunt/vanswer01.wav",
 	"vo/npc/vortigaunt/vanswer02.wav",
 	"vo/npc/vortigaunt/vanswer03.wav",
@@ -120,101 +120,101 @@ ENT.SoundTbl_IdleDialogueAnswer = {
 }
 ENT.SoundTbl_FollowPlayer = {
 	"vo/coast/vgossip_02.wav",
-	"vj_hlr/hl2_npc/vort/vo/accompany.wav",
-	"vj_hlr/hl2_npc/vort/vo/bodyyours.wav",
-	"vj_hlr/hl2_npc/vort/vo/dedicate.wav",
-	"vj_hlr/hl2_npc/vort/vo/dreamed.wav",
-	"vj_hlr/hl2_npc/vort/vo/fmaccompany.wav",
-	"vj_hlr/hl2_npc/vort/vo/fmmustfollow.wav",
-	"vj_hlr/hl2_npc/vort/vo/fmmustmove.wav",
-	"vj_hlr/hl2_npc/vort/vo/followfm.wav",
-	"vj_hlr/hl2_npc/vort/vo/gloriousend.wav",
-	"vj_hlr/hl2_npc/vort/vo/honorfollow.wav",
-	"vj_hlr/hl2_npc/vort/vo/leadon.wav",
-	"vj_hlr/hl2_npc/vort/vo/leadus.wav",
-	"vj_hlr/hl2_npc/vort/vo/onward.wav",
-	"vj_hlr/hl2_npc/vort/vo/pleasure.wav",
-	"vj_hlr/hl2_npc/vort/vo/propitious.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_excellent.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_fmisinvcomp.wav",
-	"vj_hlr/hl2_npc/vort/vo/weareyours.wav",
-	"vj_hlr/hl2_npc/vort/vo/weclaimyou.wav",
-	"vj_hlr/hl2_npc/vort/vo/wefollowfm.wav",
-	"vj_hlr/hl2_npc/vort/vo/wewillhelp.wav",
-	"vj_hlr/hl2_npc/vort/vo/yesforward.wav",
+	"vj_hlr/src/npc/vort/vo/accompany.wav",
+	"vj_hlr/src/npc/vort/vo/bodyyours.wav",
+	"vj_hlr/src/npc/vort/vo/dedicate.wav",
+	"vj_hlr/src/npc/vort/vo/dreamed.wav",
+	"vj_hlr/src/npc/vort/vo/fmaccompany.wav",
+	"vj_hlr/src/npc/vort/vo/fmmustfollow.wav",
+	"vj_hlr/src/npc/vort/vo/fmmustmove.wav",
+	"vj_hlr/src/npc/vort/vo/followfm.wav",
+	"vj_hlr/src/npc/vort/vo/gloriousend.wav",
+	"vj_hlr/src/npc/vort/vo/honorfollow.wav",
+	"vj_hlr/src/npc/vort/vo/leadon.wav",
+	"vj_hlr/src/npc/vort/vo/leadus.wav",
+	"vj_hlr/src/npc/vort/vo/onward.wav",
+	"vj_hlr/src/npc/vort/vo/pleasure.wav",
+	"vj_hlr/src/npc/vort/vo/propitious.wav",
+	"vj_hlr/src/npc/vort/vo/vort_excellent.wav",
+	"vj_hlr/src/npc/vort/vo/vort_fmisinvcomp.wav",
+	"vj_hlr/src/npc/vort/vo/weareyours.wav",
+	"vj_hlr/src/npc/vort/vo/weclaimyou.wav",
+	"vj_hlr/src/npc/vort/vo/wefollowfm.wav",
+	"vj_hlr/src/npc/vort/vo/wewillhelp.wav",
+	"vj_hlr/src/npc/vort/vo/yesforward.wav",
 }
 ENT.SoundTbl_UnFollowPlayer = {
-	"vj_hlr/hl2_npc/vort/vo/fmknowsbest.wav",
-	"vj_hlr/hl2_npc/vort/vo/gladly.wav",
-	"vj_hlr/hl2_npc/vort/vo/halt.wav",
-	"vj_hlr/hl2_npc/vort/vo/herewestay.wav",
-	"vj_hlr/hl2_npc/vort/vo/here.wav",
-	"vj_hlr/hl2_npc/vort/vo/hold.wav",
-	"vj_hlr/hl2_npc/vort/vo/mutual.wav",
-	"vj_hlr/hl2_npc/vort/vo/ourplacehere.wav",
+	"vj_hlr/src/npc/vort/vo/fmknowsbest.wav",
+	"vj_hlr/src/npc/vort/vo/gladly.wav",
+	"vj_hlr/src/npc/vort/vo/halt.wav",
+	"vj_hlr/src/npc/vort/vo/herewestay.wav",
+	"vj_hlr/src/npc/vort/vo/here.wav",
+	"vj_hlr/src/npc/vort/vo/hold.wav",
+	"vj_hlr/src/npc/vort/vo/mutual.wav",
+	"vj_hlr/src/npc/vort/vo/ourplacehere.wav",
 }
 ENT.SoundTbl_YieldToPlayer = {
-	"vj_hlr/hl2_npc/vort/vo/fmadvance.wav",
-	"vj_hlr/hl2_npc/vort/vo/fminway.wav",
-	"vj_hlr/hl2_npc/vort/vo/hastefm.wav",
+	"vj_hlr/src/npc/vort/vo/fmadvance.wav",
+	"vj_hlr/src/npc/vort/vo/fminway.wav",
+	"vj_hlr/src/npc/vort/vo/hastefm.wav",
 }
 ENT.SoundTbl_OnPlayerSight = {
 	"vo/canals/vort_reckoning.wav",
 	"vo/coast/bugbait/vbaittrain01a.wav",
-	"vj_hlr/hl2_npc/vort/vo/cautionfm.wav",
-	"vj_hlr/hl2_npc/vort/vo/cautionfm02.wav",
-	"vj_hlr/hl2_npc/vort/vo/empowerus.wav",
-	"vj_hlr/hl2_npc/vort/vo/fmdoesushonor.wav",
-	"vj_hlr/hl2_npc/vort/vo/fmhonorsus.wav",
-	"vj_hlr/hl2_npc/vort/vo/freeman.wav",
-	"vj_hlr/hl2_npc/vort/vo/honorours.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_goodfightwithus.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_goodtogether.wav",
-	"vj_hlr/hl2_npc/vort/vo/wellmet.wav",
+	"vj_hlr/src/npc/vort/vo/cautionfm.wav",
+	"vj_hlr/src/npc/vort/vo/cautionfm02.wav",
+	"vj_hlr/src/npc/vort/vo/empowerus.wav",
+	"vj_hlr/src/npc/vort/vo/fmdoesushonor.wav",
+	"vj_hlr/src/npc/vort/vo/fmhonorsus.wav",
+	"vj_hlr/src/npc/vort/vo/freeman.wav",
+	"vj_hlr/src/npc/vort/vo/honorours.wav",
+	"vj_hlr/src/npc/vort/vo/vort_goodfightwithus.wav",
+	"vj_hlr/src/npc/vort/vo/vort_goodtogether.wav",
+	"vj_hlr/src/npc/vort/vo/wellmet.wav",
 }
 ENT.SoundTbl_LostEnemy = {
-	"vj_hlr/hl2_npc/vort/vo/thatisall.wav",
-	"vj_hlr/hl2_npc/vort/vo/vort_skillsformidable.wav",
+	"vj_hlr/src/npc/vort/vo/thatisall.wav",
+	"vj_hlr/src/npc/vort/vo/vort_skillsformidable.wav",
 }
 ENT.SoundTbl_Alert = {
-	"vj_hlr/hl2_npc/vort/vo/alert.wav",
-	"vj_hlr/hl2_npc/vort/vo/assent.wav",
-	"vj_hlr/hl2_npc/vort/vo/caution.wav",
-	"vj_hlr/hl2_npc/vort/vo/fmbeware.wav",
-	"vj_hlr/hl2_npc/vort/vo/fmmustbeware.wav",
-	"vj_hlr/hl2_npc/vort/vo/forfreedom.wav",
-	"vj_hlr/hl2_npc/vort/vo/forthefm.wav",
-	"vj_hlr/hl2_npc/vort/vo/forward.wav",
-	"vj_hlr/hl2_npc/vort/vo/giveover.wav",
-	"vj_hlr/hl2_npc/vort/vo/nodenexus.wav",
-	"vj_hlr/hl2_npc/vort/vo/prevail.wav",
-	"vj_hlr/hl2_npc/vort/vo/surge.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese02.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese03.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese04.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese05.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese07.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese08.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese09.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese13.wav",
+	"vj_hlr/src/npc/vort/vo/alert.wav",
+	"vj_hlr/src/npc/vort/vo/assent.wav",
+	"vj_hlr/src/npc/vort/vo/caution.wav",
+	"vj_hlr/src/npc/vort/vo/fmbeware.wav",
+	"vj_hlr/src/npc/vort/vo/fmmustbeware.wav",
+	"vj_hlr/src/npc/vort/vo/forfreedom.wav",
+	"vj_hlr/src/npc/vort/vo/forthefm.wav",
+	"vj_hlr/src/npc/vort/vo/forward.wav",
+	"vj_hlr/src/npc/vort/vo/giveover.wav",
+	"vj_hlr/src/npc/vort/vo/nodenexus.wav",
+	"vj_hlr/src/npc/vort/vo/prevail.wav",
+	"vj_hlr/src/npc/vort/vo/surge.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese02.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese03.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese04.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese05.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese07.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese08.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese09.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese13.wav",
 }
 ENT.SoundTbl_BeforeMeleeAttack = {
-	"vj_hlr/hl2_npc/vort/vo/vort_attack21.wav",
+	"vj_hlr/src/npc/vort/vo/vort_attack21.wav",
 }
 ENT.SoundTbl_KilledEnemy = {
-	"vj_hlr/hl2_npc/vort/vo/allfornow.wav",
-	"vj_hlr/hl2_npc/vort/vo/allinoneinall.wav",
-	"vj_hlr/hl2_npc/vort/vo/done.wav",
-	"vj_hlr/hl2_npc/vort/vo/passon.wav",
-	"vj_hlr/hl2_npc/vort/vo/returntoall.wav",
-	"vj_hlr/hl2_npc/vort/vo/satisfaction.wav",
-	"vj_hlr/hl2_npc/vort/vo/tothevoid.wav",
-	"vj_hlr/hl2_npc/vort/vo/troubleus.wav",
-	"vj_hlr/hl2_npc/vort/vo/undeserving.wav",
+	"vj_hlr/src/npc/vort/vo/allfornow.wav",
+	"vj_hlr/src/npc/vort/vo/allinoneinall.wav",
+	"vj_hlr/src/npc/vort/vo/done.wav",
+	"vj_hlr/src/npc/vort/vo/passon.wav",
+	"vj_hlr/src/npc/vort/vo/returntoall.wav",
+	"vj_hlr/src/npc/vort/vo/satisfaction.wav",
+	"vj_hlr/src/npc/vort/vo/tothevoid.wav",
+	"vj_hlr/src/npc/vort/vo/troubleus.wav",
+	"vj_hlr/src/npc/vort/vo/undeserving.wav",
 }
 ENT.SoundTbl_AllyDeath = {
-	"vj_hlr/hl2_npc/vort/vo/regrettable.wav",
-	"vj_hlr/hl2_npc/vort/vo/returnvoid.wav",
+	"vj_hlr/src/npc/vort/vo/regrettable.wav",
+	"vj_hlr/src/npc/vort/vo/returnvoid.wav",
 }
 ENT.SoundTbl_Pain = {
 	"vo/npc/vortigaunt/vortigese03.wav",
@@ -320,8 +320,8 @@ function ENT:OnAnimEvent(ev, evTime, evCycle, evType, evOptions)
 		end
 	elseif event == "AE_VORTIGAUNT_SHOOT_SOUNDSTART" then
 		VJ.STOPSOUND(self.Vort_ZapPowerUp)
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/vort/attack_shoot.wav",75)
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/vort/vort_attack_shoot" .. math.random(1,2) .. ".wav",75)
+		VJ.EmitSound(self,"vj_hlr/src/npc/vort/attack_shoot.wav",75)
+		VJ.EmitSound(self,"vj_hlr/src/npc/vort/vort_attack_shoot" .. math.random(1,2) .. ".wav",75)
 	elseif event == "AE_VORTIGAUNT_ZAP_SHOOT" then
 		self:ExecuteRangeAttack()
 	elseif event == "AE_VORTIGAUNT_ZAP_DONE" then
@@ -331,13 +331,13 @@ function ENT:OnAnimEvent(ev, evTime, evCycle, evType, evOptions)
 	elseif event == "AE_VORTIGAUNT_CLAW_RIGHT" then
 		self:ExecuteMeleeAttack()
 	elseif event == "AE_VORTIGAUNT_START_DISPEL" then
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/vort/vort_dispell.wav",75)
+		VJ.EmitSound(self,"vj_hlr/src/npc/vort/vort_dispell.wav",75)
 	elseif event == "AE_VORTIGAUNT_ACCEL_DISPEL" then
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/vort/vort_attack_shoot1.wav",85)
+		VJ.EmitSound(self,"vj_hlr/src/npc/vort/vort_attack_shoot1.wav",85)
 	elseif event == "AE_VORTIGAUNT_DISPEL" then
 		self:StopParticles()
 		VJ.STOPSOUND(self.Vort_ZapPowerUp)
-		VJ.EmitSound(self,"vj_hlr/hl2_npc/vort/vort_explode" .. math.random(1,2) .. ".wav",85)
+		VJ.EmitSound(self,"vj_hlr/src/npc/vort/vort_explode" .. math.random(1,2) .. ".wav",85)
 		util.ScreenShake(self:GetPos(), 16, 100, 1, 600)
 		VJ.ApplyRadiusDamage(self, self, self:GetPos(), 500, 90, bit.bor(DMG_SHOCK,DMG_ENERGYBEAM,DMG_BLAST), true, false, {Force = 175})
 		for _,v in pairs(ents.FindInSphere(self:GetPos(), 500)) do
@@ -376,7 +376,7 @@ function ENT:OnRangeAttackExecute(status, enemy, projectile)
 		util.ParticleTracerEx("vortigaunt_beam", startPos, hitPos, false, self:EntIndex(), self:LookupAttachment("leftclaw"))
 		util.ParticleTracerEx("vortigaunt_beam", startPos, hitPos, false, self:EntIndex(), self:LookupAttachment("rightclaw"))
 		
-		sound.Play("vj_hlr/hl2_npc/vort/vort_attack_shoot" .. math.random(3,4) .. ".wav",hitPos,75)
+		sound.Play("vj_hlr/src/npc/vort/vort_attack_shoot" .. math.random(3,4) .. ".wav",hitPos,75)
 		VJ.ApplyRadiusDamage(self, self, hitPos, 100, 25, bit.bor(DMG_SHOCK,DMG_ENERGYBEAM), true, false, {Force = 90})
 
 		local light = ents.Create("light_dynamic")
@@ -393,7 +393,7 @@ function ENT:OnRangeAttackExecute(status, enemy, projectile)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-local alertAntlions = {"vj_hlr/hl2_npc/vort/vo/alert_antlions.wav"}
+local alertAntlions = {"vj_hlr/src/npc/vort/vo/alert_antlions.wav"}
 --
 function ENT:OnAlert(ent)
 	if math.random(1,2) == 1 && ent:IsNPC() then

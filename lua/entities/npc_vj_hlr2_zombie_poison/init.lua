@@ -94,9 +94,9 @@ function ENT:Init()
 				self.DeathLootChance = 6
 			end
 			if zType == 3 then
-				self.SoundTbl_FootStepAdd = {"vj_hlr/hl2_npc/zolice/gear1.wav","vj_hlr/hl2_npc/zolice/gear2.wav","vj_hlr/hl2_npc/zolice/gear3.wav"}
+				self.SoundTbl_FootStepAdd = {"vj_hlr/src/npc/zolice/gear1.wav","vj_hlr/src/npc/zolice/gear2.wav","vj_hlr/src/npc/zolice/gear3.wav"}
 			elseif zType >= 5 && zType <= 8 then
-				self.SoundTbl_FootStepAdd = {"vj_hlr/hl2_npc/zombine/gear1.wav","vj_hlr/hl2_npc/zombine/gear2.wav","vj_hlr/hl2_npc/zombine/gear3.wav"}
+				self.SoundTbl_FootStepAdd = {"vj_hlr/src/npc/zombine/gear1.wav","vj_hlr/src/npc/zombine/gear2.wav","vj_hlr/src/npc/zombine/gear3.wav"}
 			end
 		end
 		self:SetSkin(zType)
@@ -156,7 +156,7 @@ function ENT:OnInput(key, activator, caller, data)
 	elseif key == "melee" then
 		self:ExecuteMeleeAttack()
 		if self.IsBeta then
-			VJ.EmitSound(self,"vj_hlr/hl1_npc/bullchicken/bc_spithit3.wav")
+			VJ.EmitSound(self,"vj_hlr/gsrc/npc/bullchicken/bc_spithit3.wav")
 
 			local pos,ang = self:GetBonePosition(53)
 			ParticleEffect("vj_acid_impact2",pos,ang,nil)

@@ -22,11 +22,11 @@ ENT.CollisionBehavior = VJ.PROJ_COLLISION_PERSIST
 ENT.CollisionDecal = "Impact.Concrete"
 ENT.SoundTbl_Idle = "weapons/fx/nearmiss/bulletltor03.wav"
 ENT.SoundTbl_OnCollide = {
-	"vj_hlr/hl2_npc/ministrider/flechette_impact_stick1.wav",
-	"vj_hlr/hl2_npc/ministrider/flechette_impact_stick2.wav",
-	"vj_hlr/hl2_npc/ministrider/flechette_impact_stick3.wav",
-	"vj_hlr/hl2_npc/ministrider/flechette_impact_stick4.wav",
-	"vj_hlr/hl2_npc/ministrider/flechette_impact_stick5.wav",
+	"vj_hlr/src/npc/ministrider/flechette_impact_stick1.wav",
+	"vj_hlr/src/npc/ministrider/flechette_impact_stick2.wav",
+	"vj_hlr/src/npc/ministrider/flechette_impact_stick3.wav",
+	"vj_hlr/src/npc/ministrider/flechette_impact_stick4.wav",
+	"vj_hlr/src/npc/ministrider/flechette_impact_stick5.wav",
 }
 
 ENT.IdleSoundLevel = 60
@@ -42,10 +42,10 @@ function ENT:OnCollisionPersist(data, phys)
 
 	if IsValid(data.HitEntity) && data.HitEntity != Entity(0) then
 		self.SoundTbl_OnCollide = {
-			"vj_hlr/hl2_npc/ministrider/flechette_flesh_impact1.wav",
-			"vj_hlr/hl2_npc/ministrider/flechette_flesh_impact2.wav",
-			"vj_hlr/hl2_npc/ministrider/flechette_flesh_impact3.wav",
-			"vj_hlr/hl2_npc/ministrider/flechette_flesh_impact4.wav"
+			"vj_hlr/src/npc/ministrider/flechette_flesh_impact1.wav",
+			"vj_hlr/src/npc/ministrider/flechette_flesh_impact2.wav",
+			"vj_hlr/src/npc/ministrider/flechette_flesh_impact3.wav",
+			"vj_hlr/src/npc/ministrider/flechette_flesh_impact4.wav"
 		}
 		hitEnt = data.HitEntity
 		if IsValid(owner) then
@@ -77,12 +77,12 @@ function ENT:OnCollisionPersist(data, phys)
 		fakeEnt:SetAngles(self:GetAngles())
 		fakeEnt:Activate()
 		fakeEnt:Spawn()
-		local snd = "vj_hlr/hl2_npc/ministrider/hunter_flechette_preexplode" .. math.random(1,3) .. ".wav"
+		local snd = "vj_hlr/src/npc/ministrider/hunter_flechette_preexplode" .. math.random(1,3) .. ".wav"
 		VJ.CreateSound(self,snd,80)
 		sound.EmitHint(SOUND_DANGER,self:GetPos(),160,SoundDuration(snd) *1.5,fakeEnt)
 		timer.Simple(SoundDuration(snd) *1.5,function()
 			if IsValid(fakeEnt) then
-				VJ.EmitSound(fakeEnt,"vj_hlr/hl2_npc/ministrider/flechette_explode" .. math.random(1,3) .. ".wav",95)
+				VJ.EmitSound(fakeEnt,"vj_hlr/src/npc/ministrider/flechette_explode" .. math.random(1,3) .. ".wav",95)
 				ParticleEffect("hunter_projectile_explosion_1",data.HitPos,Angle(0,0,0),nil)
 				VJ.ApplyRadiusDamage(IsValid(self) && self or IsValid(owner) && owner or fakeEnt, IsValid(owner) && owner or IsValid(self) && self or fakeEnt, data.HitPos, 128, 12, bit.bor(DMG_BLAST,DMG_DISSOLVE), true, true)
 				util.Decal("Scorch",data.HitPos +data.HitNormal,data.HitPos -data.HitNormal)

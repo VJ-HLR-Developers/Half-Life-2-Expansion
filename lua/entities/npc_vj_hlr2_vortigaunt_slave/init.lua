@@ -11,19 +11,19 @@ ENT.Model = "models/vj_hlr/hl2/vortigaunt_slave.mdl"
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.AlliedWithPlayerAllies = false
 
-ENT.SoundTbl_FootStep = {"vj_hlr/hl2_npc/vort/vort_foot1.wav","vj_hlr/hl2_npc/vort/vort_foot2.wav","vj_hlr/hl2_npc/vort/vort_foot3.wav","vj_hlr/hl2_npc/vort/vort_foot4.wav"}
+ENT.SoundTbl_FootStep = {"vj_hlr/src/npc/vort/vort_foot1.wav","vj_hlr/src/npc/vort/vort_foot2.wav","vj_hlr/src/npc/vort/vort_foot3.wav","vj_hlr/src/npc/vort/vort_foot4.wav"}
 ENT.SoundTbl_Alert = {
-	"vj_hlr/hl2_npc/vort/vo/vortigese02.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese03.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese04.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese05.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese07.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese08.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese09.wav",
-	"vj_hlr/hl2_npc/vort/vo/vortigese13.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese02.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese03.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese04.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese05.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese07.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese08.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese09.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese13.wav",
 }
 ENT.SoundTbl_BeforeMeleeAttack = {
-	"vj_hlr/hl2_npc/vort/vo/vort_attack21.wav",
+	"vj_hlr/src/npc/vort/vo/vort_attack21.wav",
 }
 ENT.SoundTbl_Pain = {
 	"vo/npc/vortigaunt/vortigese03.wav",

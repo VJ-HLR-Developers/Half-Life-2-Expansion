@@ -36,14 +36,14 @@ ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 ENT.MainSoundPitch = 100
 
-ENT.SoundTbl_FootStep = {"vj_hlr/hl2_npc/zombine/gear1.wav","vj_hlr/hl2_npc/zombine/gear2.wav","vj_hlr/hl2_npc/zombine/gear3.wav"}
-ENT.SoundTbl_Idle = {"vj_hlr/hl2_npc/zombine/zombine_idle1.wav","vj_hlr/hl2_npc/zombine/zombine_idle2.wav","vj_hlr/hl2_npc/zombine/zombine_idle3.wav","vj_hlr/hl2_npc/zombine/zombine_idle4.wav"}
-ENT.SoundTbl_Alert = {"vj_hlr/hl2_npc/zombine/zombine_alert1.wav","vj_hlr/hl2_npc/zombine/zombine_alert2.wav","vj_hlr/hl2_npc/zombine/zombine_alert3.wav","vj_hlr/hl2_npc/zombine/zombine_alert4.wav","vj_hlr/hl2_npc/zombine/zombine_alert5.wav","vj_hlr/hl2_npc/zombine/zombine_alert7.wav"}
-ENT.SoundTbl_BeforeMeleeAttack = {"vj_hlr/hl2_npc/zombine/zombine_charge1.wav","vj_hlr/hl2_npc/zombine/zombine_charge2.wav"}
+ENT.SoundTbl_FootStep = {"vj_hlr/src/npc/zombine/gear1.wav","vj_hlr/src/npc/zombine/gear2.wav","vj_hlr/src/npc/zombine/gear3.wav"}
+ENT.SoundTbl_Idle = {"vj_hlr/src/npc/zombine/zombine_idle1.wav","vj_hlr/src/npc/zombine/zombine_idle2.wav","vj_hlr/src/npc/zombine/zombine_idle3.wav","vj_hlr/src/npc/zombine/zombine_idle4.wav"}
+ENT.SoundTbl_Alert = {"vj_hlr/src/npc/zombine/zombine_alert1.wav","vj_hlr/src/npc/zombine/zombine_alert2.wav","vj_hlr/src/npc/zombine/zombine_alert3.wav","vj_hlr/src/npc/zombine/zombine_alert4.wav","vj_hlr/src/npc/zombine/zombine_alert5.wav","vj_hlr/src/npc/zombine/zombine_alert7.wav"}
+ENT.SoundTbl_BeforeMeleeAttack = {"vj_hlr/src/npc/zombine/zombine_charge1.wav","vj_hlr/src/npc/zombine/zombine_charge2.wav"}
 ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_strike2.wav","npc/zombie/claw_strike3.wav"}
 ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav","npc/zombie/claw_miss2.wav"}
-ENT.SoundTbl_Pain = {"vj_hlr/hl2_npc/zombine/zombine_pain1.wav","vj_hlr/hl2_npc/zombine/zombine_pain2.wav","vj_hlr/hl2_npc/zombine/zombine_pain3.wav","vj_hlr/hl2_npc/zombine/zombine_pain4.wav"}
-ENT.SoundTbl_DeathFollow = {"vj_hlr/hl2_npc/zombine/zombine_die1.wav","vj_hlr/hl2_npc/zombine/zombine_die2.wav"}
+ENT.SoundTbl_Pain = {"vj_hlr/src/npc/zombine/zombine_pain1.wav","vj_hlr/src/npc/zombine/zombine_pain2.wav","vj_hlr/src/npc/zombine/zombine_pain3.wav","vj_hlr/src/npc/zombine/zombine_pain4.wav"}
+ENT.SoundTbl_DeathFollow = {"vj_hlr/src/npc/zombine/zombine_die1.wav","vj_hlr/src/npc/zombine/zombine_die2.wav"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetSlump(doSlump)
 	if doSlump then
@@ -118,7 +118,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 	if !self.RageState && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or !self.VJ_IsBeingControlled && dist <= 750 && math.random(1,dist *0.5) == 1) then
 		VJ.STOPSOUND(self.CurrentSpeechSound)
 		VJ.STOPSOUND(self.CurrentIdleSound)
-		VJ.CreateSound(self,"vj_hlr/hl2_npc/zombine/zombine_alert6.wav",80)
+		VJ.CreateSound(self,"vj_hlr/src/npc/zombine/zombine_alert6.wav",80)
 		self.RageState = true
 		self.RageStateTime = CurTime() +math.Rand(6,12)
 	elseif self.RageState && CurTime() > self.RageStateTime then
@@ -314,7 +314,7 @@ function ENT:OnBleed(dmginfo, hitgroup)
 		if !self.RageState && !self:IsBusy() && math.random(1,10) == 1 then
 			VJ.STOPSOUND(self.CurrentSpeechSound)
 			VJ.STOPSOUND(self.CurrentIdleSound)
-			VJ.CreateSound(self,"vj_hlr/hl2_npc/zombine/zombine_alert6.wav",80)
+			VJ.CreateSound(self,"vj_hlr/src/npc/zombine/zombine_alert6.wav",80)
 			self.RageState = true
 			self.RageStateTime = CurTime() +math.Rand(6,12)
 		end

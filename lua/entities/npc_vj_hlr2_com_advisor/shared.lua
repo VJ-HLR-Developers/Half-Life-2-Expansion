@@ -36,7 +36,7 @@ if CLIENT then
 		
 		ply.VJ_HLR_AdvisorScreenDist = dist -- Do something with this at some point
 		ply.VJ_HLR_AdvisorScreenT = CurTime() +5
-		local snd = CreateSound(ply,"vj_hlr/hl2_npc/advisor/advisorheadvx0" .. math.random(1,6) .. ".wav")
+		local snd = CreateSound(ply,"vj_hlr/src/npc/advisor/advisorheadvx0" .. math.random(1,6) .. ".wav")
 		snd:SetSoundLevel(0)
 		snd:Play()
 		snd:ChangeVolume(65)
