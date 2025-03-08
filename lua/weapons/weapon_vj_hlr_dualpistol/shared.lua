@@ -10,8 +10,6 @@ SWEP.NPC_NextPrimaryFire 				= 0.08
 SWEP.NPC_TimeUntilFire 					= 0
 SWEP.NPC_TimeUntilFireExtraTimers 		= {}
 
-SWEP.WorldModel_Invisible 				= true
-
 SWEP.Primary.Sound						= {"Weapon_Pistol.Single"}
 SWEP.Primary.DistantSound				= {"Weapon_Pistol.NPC_Single"}
 SWEP.Primary.Damage						= 6
@@ -22,6 +20,10 @@ SWEP.PrimaryEffects_SpawnShells 		= false
 
 SWEP.Primary.Force						= 5
 SWEP.Primary.Ammo						= "Pistol"
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:Init()
+	self:SetDrawWorldModel(false)
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:PrimaryAttackEffects(owner)
 	ParticleEffectAttach("vj_rifle_full",PATTACH_POINT_FOLLOW,self:GetOwner(),self.CurrentMuzzle == "left" && 1 or 2)
