@@ -120,6 +120,7 @@ if VJExists == true then
 	VJ.AddParticle("particles/vj_hlr_flechette_projectile.pcf",{"hunter_flechette_trail","hunter_projectile_explosion_1"})
 	VJ.AddParticle("particles/vj_hlr_hunter_shield.pcf",{"vj_hlr_huntershield_impact1"})
 	VJ.AddParticle("particles/vj_hlr_cremator.pcf",{"vj_hlr_cremator_range","vj_hlr_cremator_projectile","vj_hlr_cremator_projectile_impact"})
+	VJ.AddParticle("particles/vj_hlr_assassin.pcf",{"vj_hlr_assassin_bodysmoke","vj_hlr_assassin_smokegrenade","vj_hlr_assassin_smokegrenade_b"})
 
 	if CLIENT then
 		local math_abs = math.abs

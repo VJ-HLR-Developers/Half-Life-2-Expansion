@@ -6,22 +6,22 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/vj_hlr/hl2b/alien_assassin.mdl"
-ENT.StartHealth = 70
+ENT.StartHealth = 80
 ENT.HullType = HULL_HUMAN
 ENT.JumpParams = {
 	MaxRise = 620,
-	MaxDrop = 620,
-	MaxDistance = 620
+	MaxDrop = 1098,
+	MaxDistance = 890
 }
 
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
-ENT.BloodColor = VJ.BLOOD_COLOR_GREEN
+ENT.BloodColor = VJ.BLOOD_COLOR_RED
 
 ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 ENT.MeleeAttackDamage = 15
-ENT.MeleeAttackDistance = 60
-ENT.MeleeAttackDamageDistance = 85
+ENT.MeleeAttackDistance = 55
+ENT.MeleeAttackDamageDistance = 100
 ENT.TimeUntilMeleeAttackDamage = false
 ENT.MeleeAttackBleedEnemyChance = 1
 ENT.MeleeAttackBleedEnemyReps = 10
@@ -29,7 +29,6 @@ ENT.MeleeAttackPlayerSpeedTime = 5
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = {ACT_RANGE_ATTACK1,"tripwire","pests"}
-ENT.RangeAttackAnimationFaceEnemy = false
 ENT.RangeAttackMaxDistance = 1750
 ENT.RangeAttackMinDistance = 350
 ENT.TimeUntilRangeAttackProjectileRelease = false
@@ -90,12 +89,18 @@ ENT.SoundTbl_Death = {
 	"vj_hlr/src/npc/alienassassin/vox_shockwave_yell_04.wav",
 	"vj_hlr/src/npc/alienassassin/vox_shockwave_yell_05.wav",
 }
+
+ENT.Assassin_NextJumpT = 0
+ENT.Assassin_CloakLevel = 1
+ENT.Assassin_TargetCloakLevel = 1
 --
-local projKnife = "models/vj_hlr/weapons/w_knife.mdl" -- Temporary ("models/vj_hlr/hl2b/weapons/css_knife.mdl")
+local projKnife = "models/weapons/w_knife_t.mdl"
 local projPest = "models/weapons/w_bugbait.mdl"
-local projHopwire = "models/weapons/w_grenade.mdl" -- Temporary ("models/vj_hlr/hl2b/weapons/tripmine.mdl")
+local projHopwire = "models/vj_hlr/hl2b/weapons/tripwire.mdl"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
+	self:SetRenderMode(RENDERMODE_TRANSALPHA)
+
 	for i = 1,2 do
 		util.SpriteTrail(self,i +3,Color(4,255,0),true,4,1,0.35,1 /(25 +1) *0.5,"VJ_Base/sprites/trail.vmt")
 		local spriteGlow = ents.Create("env_sprite")
@@ -119,13 +124,59 @@ function ENT:Init()
 	end
 
 	self.NextJumpAwayT = 0
+	self.NextRunAwayT = CurTime() + math.Rand(1,2)
+	self.RunAwayT = 0
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnThink()
+	local prevClockLvl = self:GetColor().a
+	local targetLvl = self.Assassin_TargetCloakLevel * 255
+	local cloakLvl = math.Clamp(self.Assassin_CloakLevel * 255, 40, 255)
+	if cloakLvl < targetLvl then
+		self.Assassin_CloakLevel = math.Clamp(self.Assassin_CloakLevel + 0.05, 0, targetLvl / 255)
+	elseif cloakLvl > targetLvl then
+		self.Assassin_CloakLevel = math.Clamp(self.Assassin_CloakLevel - 0.05, 0, targetLvl / 255)
+	end
+	cloakLvl = math.Clamp(self.Assassin_CloakLevel * 255, 40, 255)
+	self:SetColor(Color(255, 255, 255, cloakLvl))
+	if cloakLvl <= 220 then
+		self:DrawShadow(false)
+		self:AddFlags(FL_NOTARGET)
+	else
+		self:DrawShadow(true)
+		self:RemoveFlags(FL_NOTARGET)
+	end
+	local curTime = CurTime()
+	local busy = self:IsBusy()
+	if curTime < self.RunAwayT then
+		if !self:IsMoving() && !busy then
+			self:SCHEDULE_COVER_ENEMY()
+		end
+		self.DisableChasingEnemy = true
+		self.Assassin_TargetCloakLevel = 0
+		return
+	elseif self.DisableChasingEnemy && curTime > self.RunAwayT then
+		self.DisableChasingEnemy = false
+		self.Assassin_TargetCloakLevel = 1
+		self:StopParticles()
+	end
+	if !busy && IsValid(self:GetEnemy()) && curTime > self.Assassin_NextJumpT && self.EnemyData.Distance < 1400 && !self.VJ_IsBeingControlled && math.random(1,30) == 1 then
+		self:ForceMoveJump(((self:GetPos() +self:GetRight() *(math.random(1, 2) == 1 && 500 or -500) +self:GetForward() *(math.random(1, 2) == 1 && 1 or -500)) -(self:GetPos() +self:OBBCenter())):GetNormal() *300 +self:GetUp() *600)
+		self.Assassin_NextJumpT = curTime + math.Rand(7, 11)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkAttack(atkType, ent)
 	if !atkType then
-		if !self:IsBusy() && self.EnemyData.Visible && self.EnemyData.DistanceNearest <= 100 && CurTime() > self.NextJumpAwayT then
+		local curTime = CurTime()
+		local data = self.EnemyData
+		local busy = self:IsBusy()
+		if !busy && data.Visible && data.DistanceNearest <= 100 && curTime > self.NextJumpAwayT then
 			self:VJ_ACT_PLAYACTIVITY("jumpbackt", true, false, true)
-			self.NextJumpAwayT = CurTime() + math.Rand(2.5,7.5)
+			self.NextJumpAwayT = curTime + math.Rand(2.5,7.5)
+			return
+		elseif !busy && data.DistanceNearest > 300 && data.DistanceNearest <= 1500 && curTime > self.NextRunAwayT then
+			self:VJ_ACT_PLAYACTIVITY("smoke", true, false, true)
 			return
 		end
 	end
@@ -219,20 +270,17 @@ function ENT:OnInput(key, activator, caller, data)
 		proj.ProjectileType = VJ.PROJ_TYPE_PROP
 		proj.DoesRadiusDamage = true
 		proj.RadiusDamageRadius = 250
-		proj.RadiusDamage = 80
+		proj.RadiusDamage = 95
 		proj.RadiusDamageUseRealisticRadius = true
 		proj.RadiusDamageType = bit.bor(DMG_BLAST,DMG_SHOCK)
 		proj.RadiusDamageForce = 90
 		proj.CollisionBehavior = VJ.PROJ_COLLISION_NONE
 		proj.SoundTbl_Idle = "vj_hlr/src/npc/alienassassin/ball_loop1.wav"
 		proj.SoundTbl_OnCollide = "weapons/hegrenade/he_bounce-1.wav"
-		proj.FuseTime = 3
+		proj.Activated = false
+		proj.FuseTime = CurTime() + ((targetPos:Distance(proj:GetPos()) / self.RangeAttackMaxDistance) *0.35)
+		// Credits: Referenced the Half-Life 2 Beta SWEPs pack to see how they did the ropes for the hopwire
 		function proj:Init()
-			timer.Simple(proj.FuseTime, function()
-				if IsValid(proj) then
-					proj:Destroy()
-				end
-			end)
 			util.SpriteTrail(proj,0,Color(0,213,255),true,8,1,0.65,1 /(25 +1) *0.5,"VJ_Base/sprites/trail.vmt")
 			local spriteGlow = ents.Create("env_sprite")
 			spriteGlow:SetKeyValue("rendercolor","0 213 255")
@@ -247,11 +295,137 @@ function ENT:OnInput(key, activator, caller, data)
 			spriteGlow:SetKeyValue("framerate","10.0")
 			spriteGlow:SetKeyValue("model","VJ_Base/sprites/glow.vmt")
 			spriteGlow:SetKeyValue("spawnflags","0")
-			spriteGlow:SetKeyValue("scale","0.1")
+			spriteGlow:SetKeyValue("scale","0.5")
 			spriteGlow:SetPos(proj:GetPos())
 			spriteGlow:SetParent(proj)
 			spriteGlow:Spawn()
 			proj:DeleteOnRemove(spriteGlow)
+		end
+		function proj:OnThink()
+			proj:NextThink(CurTime())
+			if !proj.Activated then
+				local phys = proj:GetPhysicsObject()
+				if IsValid(phys) && CurTime() > self.FuseTime && phys:GetVelocity():Length() <= 350 then
+					proj.Activated = true
+					proj.Hooks = {}
+					proj.FilterEnts = {proj,proj:GetOwner()}
+					phys:SetVelocity(Vector(0,0,0))
+					phys:ApplyForceCenter(Vector(0,0,1500))
+					for i = 1,math.random(6,10) do
+						proj.SoundTbl_Idle = nil
+						VJ.STOPSOUND(proj.CurrentIdleSound)
+						VJ.EmitSound(proj, "weapons/tripwire/mine_activate.wav", 70)
+						timer.Simple(0.25,function()
+							if IsValid(proj) then
+								timer.Simple(i *0.1,function()
+									if IsValid(proj) then
+										proj:SpawnRope(i)
+										if i == 10 then
+											phys:SetVelocity(Vector(0,0,0))
+											phys:SetAngleVelocity(Vector(0,0,0))
+										end
+									end
+								end)
+							end
+						end)
+					end
+				end
+			else
+				local hooks = proj.Hooks
+				if #hooks > 0 then
+					for _,hook in pairs(hooks) do
+						if IsValid(hook) && hook.Frozen then
+							local tr = util.TraceLine({
+								start = proj:GetPos(),
+								endpos = hook:GetPos(),
+								filter = proj.FilterEnts
+							})
+							if tr.HitNonWorld then
+								local trEnt = tr.Entity
+								if (trEnt.VJ_HLR_HopwireHook or trEnt == proj) && !VJ.HasValue(proj.FilterEnts,trEnt) or IsValid(proj:GetOwner()) && proj:GetOwner():CheckRelationship(trEnt) == D_LI then
+									table.insert(proj.FilterEnts,trEnt)
+									return
+								end
+								-- print(trEnt)
+								proj:Destroy(tr, proj:GetPhysicsObject())
+								break
+							end
+						end
+					end
+				end
+			end
+		end
+		function proj:SpawnRope(index)
+			local ropeObj = ents.Create("prop_vj_animatable")
+			ropeObj:SetModel("models/vj_hlr/hl2b/weapons/tripwire.mdl")
+			ropeObj:SetPos(proj:GetPos())
+			ropeObj:SetOwner(proj)
+			ropeObj:Spawn()
+			ropeObj:Activate()
+			ropeObj.Frozen = false
+			proj:DeleteOnRemove(ropeObj)
+			ropeObj.IdleLoop = CreateSound(ropeObj, "weapons/tripwire/ropeshoot.wav")
+			ropeObj.IdleLoop:SetSoundLevel(70)
+			ropeObj.IdleLoop:Play()
+			local trail = util.SpriteTrail(ropeObj,0,Color(255,255,255),true,1,1,5,1 /(25 +1) *0.5,"cable/physbeam")
+			local spriteGlow = ents.Create("env_sprite")
+			spriteGlow:SetKeyValue("rendercolor","0 125 255")
+			spriteGlow:SetKeyValue("GlowProxySize","2.0")
+			spriteGlow:SetKeyValue("HDRColorScale","1.0")
+			spriteGlow:SetKeyValue("renderfx","14")
+			spriteGlow:SetKeyValue("rendermode","3")
+			spriteGlow:SetKeyValue("renderamt","255")
+			spriteGlow:SetKeyValue("disablereceiveshadows","0")
+			spriteGlow:SetKeyValue("mindxlevel","0")
+			spriteGlow:SetKeyValue("maxdxlevel","0")
+			spriteGlow:SetKeyValue("framerate","10.0")
+			spriteGlow:SetKeyValue("model","VJ_Base/sprites/glow.vmt")
+			spriteGlow:SetKeyValue("spawnflags","0")
+			spriteGlow:SetKeyValue("scale","0.075")
+			spriteGlow:SetPos(ropeObj:GetPos())
+			spriteGlow:SetParent(ropeObj)
+			spriteGlow:Spawn()
+			ropeObj:DeleteOnRemove(spriteGlow)
+			function ropeObj:PhysicsCollide(data,collision)
+				ropeObj:Freeze()
+			end
+			function ropeObj:Freeze()
+				local phys = ropeObj:GetPhysicsObject()
+				if !ropeObj.Frozen && IsValid(phys) then
+					SafeRemoveEntity(trail)
+					ropeObj.Frozen = true
+					phys:EnableMotion(false)
+					ropeObj.IdleLoop:Stop()
+					VJ.EmitSound(ropeObj, "weapons/tripwire/hook.wav", 70)
+					constraint.Elastic(ropeObj:GetOwner(),ropeObj,0,0,Vector(0,0,0),Vector(0,0,0),150,24,0.1,"cable/physbeam",1,false )
+				end
+			end
+			function ropeObj:OnRemove()
+				if ropeObj.IdleLoop then
+					ropeObj.IdleLoop:Stop()
+				end
+			end
+			ropeObj:PhysicsInit(MOVETYPE_VPHYSICS)
+			ropeObj:SetMoveType(MOVETYPE_VPHYSICS)
+			ropeObj:SetMoveCollide(MOVECOLLIDE_FLY_BOUNCE)
+			ropeObj:SetSolid(SOLID_BBOX)
+			ropeObj:SetNoDraw(true)
+			ropeObj:DrawShadow(false)
+			local phys = ropeObj:GetPhysicsObject()
+			if IsValid(phys) then
+				phys:Wake()
+				phys:SetMass(1)
+				phys:EnableGravity(true)
+				phys:EnableDrag(false)
+				phys:SetBuoyancyRatio(0)
+			end
+			ropeObj:SetTrigger(true)
+			ropeObj:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
+			if IsValid(phys) then
+				phys:SetVelocity(Vector(math.Rand(-1,1) *1500,math.Rand(-1,1) *1500,math.Rand(-1,1) *1500))
+			end
+			ropeObj.VJ_HLR_HopwireHook = true
+			table.insert(proj.Hooks,ropeObj)
 		end
 		function proj:OnDamaged(dmginfo)
 			local phys = proj:GetPhysicsObject()
@@ -324,9 +498,10 @@ function ENT:OnInput(key, activator, caller, data)
 		function proj:OnDestroy()
 			local myPos = proj:GetPos()
 			VJ.EmitSound(proj, "npc/antlion/antlion_shoot3.wav", 75)
-			ParticleEffect("antlion_gib_02_gas",myPos,defAngle)
+			ParticleEffect("vj_acid_impact1_gas",myPos,defAngle)
+			ParticleEffect("vj_acid_impact1_small_splat",myPos,defAngle)
 			for i = 1,10 do
-				ParticleEffect("antlion_gib_02_floaters",myPos,defAngle)
+				ParticleEffect("vj_acid_impact1_floaters",myPos,defAngle)
 			end
 		end
 		proj:Spawn()
@@ -337,8 +512,18 @@ function ENT:OnInput(key, activator, caller, data)
 			phys:EnableGravity(true)
 			phys:EnableDrag(true)
 			phys:SetMass(1)
-			phys:SetVelocity(VJ.CalculateTrajectory(self,ent,"Curve",proj:GetPos(),IsValid(ent) && 0.75 or targetPos,50))
+			if self:GetSequenceName(self:GetSequence()) == "jumpbackt" then
+				phys:SetVelocity(VJ.CalculateTrajectory(self,ent,"Line",proj:GetPos(),IsValid(ent) && 0.75 or targetPos,1800))
+			else
+				phys:SetVelocity(VJ.CalculateTrajectory(self,ent,"Curve",proj:GetPos(),IsValid(ent) && 0.75 or targetPos,50))
+			end
 		end
+	elseif key == "smoke" then
+		ParticleEffectAttach("vj_hlr_assassin_bodysmoke",PATTACH_POINT_FOLLOW,self,0)
+		self.RunAwayT = CurTime() + math.Rand(2.5,7.5)
+		self.NextRunAwayT = self.RunAwayT + math.Rand(2.5,7.5)
+		self:StopAllSounds()
+		VJ.CreateSound(self, "vj_hlr/src/npc/alienassassin/tattle1.wav", 70)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
