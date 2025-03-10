@@ -1,5 +1,11 @@
 "VertexLitGeneric"
 {
-	// Original shader: VertexLitTexture
-	"$basetexture" "models/hl_resurgence/hl2b/alienassassin/backpack"
+	"$basetexture" 				"models/hl_resurgence/hl2b/alienassassin/backpack"
+	"$bumpmap"					"models/hl_resurgence/hl2b/alienassassin/backpack_n"
+
+	"$phong"                    "1"
+	"$phongboost"               "0.5"
+	"$phongexponent"            "10"
+	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+	"$phongwarptexture" 		"vj_hl/phongwarp_steel"
 }

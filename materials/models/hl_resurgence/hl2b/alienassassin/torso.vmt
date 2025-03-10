@@ -1,5 +1,12 @@
 "VertexLitGeneric"
 {
-	// Original shader: VertexLitTexture
-	"$basetexture" "models/hl_resurgence/hl2b/alienassassin/torso"
+	"$basetexture" 				"models/hl_resurgence/hl2b/alienassassin/torso"
+	"$bumpmap"					"models/hl_resurgence/hl2b/alienassassin/torso_n"
+
+
+	"$phong"                    "1"
+	"$phongboost"               "0.15"
+	"$phongexponent"            "10"
+	"$phongfresnelranges"       "[0.15 0.545 0.115]"
+	"$phongwarptexture" 		"vj_hl/phongwarp_steel"
 }

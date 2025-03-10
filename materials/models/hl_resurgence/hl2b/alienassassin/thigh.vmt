@@ -1,5 +1,10 @@
 "VertexLitGeneric"
 {
-	// Original shader: VertexLitTexture
-	"$basetexture" "models/hl_resurgence/hl2b/alienassassin/thigh"
+	"$basetexture" 				"models/hl_resurgence/hl2b/alienassassin/thigh"
+	"$bumpmap"					"models/hl_resurgence/hl2b/alienassassin/thigh_n"
+
+	"$phong"                    "1"
+	"$phongboost"               "0.1"
+	"$phongexponent"            "3"
+	"$phongfresnelranges"       "[0.15 0.545 0.115]"
 }

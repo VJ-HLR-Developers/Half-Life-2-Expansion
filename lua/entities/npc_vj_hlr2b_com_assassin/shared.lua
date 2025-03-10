@@ -17,11 +17,11 @@ if CLIENT && GetConVar("vj_hlr2_combine_eyeglow"):GetInt() == 1 then
 
     ENT.HLR_UsesCloakSystem = true
 
-	function ENT:Draw()
-		self:DrawModel()
-        local glowOrigin = self:GetAttachment(self:LookupAttachment("eyes")).Pos
-        render.SetMaterial(mat)
-        render.DrawSprite(glowOrigin, size, size, col)
-        render.DrawSprite(glowOrigin, size, size, col)
-    end
+	-- function ENT:Draw()
+	-- 	self:DrawModel()
+    --     local glowOrigin = self:GetAttachment(self:LookupAttachment("eyes")).Pos
+    --     render.SetMaterial(mat)
+    --     render.DrawSprite(glowOrigin, size, size, col)
+    --     render.DrawSprite(glowOrigin, size, size, col)
+    -- end
 end
