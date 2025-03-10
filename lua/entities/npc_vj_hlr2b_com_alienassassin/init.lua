@@ -389,6 +389,13 @@ function ENT:OnInput(key, activator, caller, data)
 			function ropeObj:PhysicsCollide(data,collision)
 				ropeObj:Freeze()
 			end
+			function ropeObj:Think()
+				if ropeObj:GetPos():Distance(proj:GetPos()) > 1000 then
+					ropeObj:Remove()
+					return
+				end
+				ropeObj:NextThink(CurTime())
+			end
 			function ropeObj:Freeze()
 				local phys = ropeObj:GetPhysicsObject()
 				if !ropeObj.Frozen && IsValid(phys) then
