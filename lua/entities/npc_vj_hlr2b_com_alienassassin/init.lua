@@ -182,6 +182,10 @@ function ENT:OnThinkAttack(atkType, ent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomAttackCheck_RangeAttack()
+	return self:GetNavType() != NAV_JUMP
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	-- print(key)
 	if key == "step" then
