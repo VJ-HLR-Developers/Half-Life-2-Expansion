@@ -38,26 +38,26 @@ ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 ENT.MainSoundPitch = 100
 
-ENT.SoundTbl_FootStep = {"npc/fast_zombie/foot1.wav","npc/fast_zombie/foot2.wav","npc/fast_zombie/foot3.wav","npc/fast_zombie/foot4.wav"}
-ENT.SoundTbl_DefBreath = {"npc/fast_zombie/breathe_loop1.wav","npc/fast_zombie/gurgle_loop1.wav"}
-ENT.SoundTbl_Alert = {"npc/fast_zombie/fz_alert_far1.wav","npc/fast_zombie/fz_alert_close1.wav"}
+ENT.SoundTbl_FootStep = {"npc/fast_zombie/foot1.wav", "npc/fast_zombie/foot2.wav", "npc/fast_zombie/foot3.wav", "npc/fast_zombie/foot4.wav"}
+ENT.SoundTbl_DefBreath = {"npc/fast_zombie/breathe_loop1.wav", "npc/fast_zombie/gurgle_loop1.wav"}
+ENT.SoundTbl_Alert = {"npc/fast_zombie/fz_alert_far1.wav", "npc/fast_zombie/fz_alert_close1.wav"}
 ENT.SoundTbl_BeforeMeleeAttack = {"npc/fast_zombie/leap1.wav"}
 ENT.SoundTbl_LeapAttackJump = {"npc/fast_zombie/fz_scream1.wav"}
-ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_strike2.wav","npc/zombie/claw_strike3.wav"}
-ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav","npc/zombie/claw_miss2.wav"}
+ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav", "npc/zombie/claw_strike2.wav", "npc/zombie/claw_strike3.wav"}
+ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav", "npc/zombie/claw_miss2.wav"}
 ENT.SoundTbl_Pain = {"npc/fast_zombie/wake1.wav"}
 ENT.SoundTbl_DeathFollow = {"npc/fast_zombie/wake1.wav"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetSlump(doSlump)
 	if doSlump then
 		self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
-		self.SlumpSet = math.random(1,2) == 1 && "a" or "b"
-		self.SlumpAnimation = VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)
+		self.SlumpSet = math.random(1, 2) == 1 && "a" or "b"
+		self.SlumpAnimation = VJ.SequenceToActivity(self, "slump_" .. self.SlumpSet)
 		self:SetMaxLookDistance(150)
 		self.SightAngle = 360
 		self:AddFlags(FL_NOTARGET)
 	else
-		self:PlayAnim("slumprise_" .. (self.SlumpSet == "a" && VJ.PICK({"a","c"}) or self.SlumpSet), true, false, false, 0, {OnFinish=function(interrupted, anim)
+		self:PlayAnim("slumprise_" .. (self.SlumpSet == "a" && VJ.PICK({"a", "c"}) or self.SlumpSet), true, false, false, 0, {OnFinish=function(interrupted, anim)
 			self:SetState()
 		end})
 		self:SetMaxLookDistance(10000)
@@ -86,7 +86,7 @@ function ENT:Init()
 		self.SoundTbl_Breath = self.SoundTbl_DefBreath
 	end
 
-	self:SetBodygroup(1,1)
+	self:SetBodygroup(1, 1)
 	self:SetCollisionBounds(Vector(13, 13, 50), Vector(-13, -13, 0))
 
 	self.TotalHits = 0
@@ -95,7 +95,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
-		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootstepSoundLevel)
+		VJ.EmitSound(self, self.SoundTbl_FootStep, self.FootstepSoundLevel)
 	elseif key == "melee" then
 		self:ExecuteMeleeAttack()
 	end
@@ -106,8 +106,8 @@ function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt)
 	self.TotalHits = self.TotalHits +1
 	self.LastHitT = CurTime() +0.6
 	if self.TotalHits >= 8 then
-		VJ.CreateSound(self,"npc/fast_zombie/fz_frenzy1.wav",80)
-		self:PlayAnim("BR2_Roar",true,false,true)
+		VJ.CreateSound(self, "npc/fast_zombie/fz_frenzy1.wav", 80)
+		self:PlayAnim("BR2_Roar", true, false, true)
 	end
 	return false
 end
@@ -129,7 +129,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
 	if !self.IsSlumped then
-		self.NextIdleSoundT_Reg = CurTime() +math.random(4,8)
+		self.NextIdleSoundT_Reg = CurTime() +math.random(4, 8)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -152,10 +152,10 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 		return false
 	end
 
-	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
+	VJ.CreateSound(ent, self.SoundTbl_DeathFollow, self.DeathSoundLevel)
 	local dmgtype = dmginfo:GetDamageType()
 	if hitgroup == HITGROUP_HEAD or dmgtype == DMG_BLAST then
-		ent:SetBodygroup(1,0)
+		ent:SetBodygroup(1, 0)
 		self:CreateExtraDeathCorpse(
 			"prop_ragdoll",
 			"models/headcrab.mdl",
@@ -167,8 +167,8 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 			end
 		)
 	else
-		if math.random(1,(dmgtype == DMG_CLUB or dmgtype == DMG_SLASH) && 1 or 3) == 1 then
-			ent:SetBodygroup(1,0)
+		if math.random(1, (dmgtype == DMG_CLUB or dmgtype == DMG_SLASH) && 1 or 3) == 1 then
+			ent:SetBodygroup(1, 0)
 			local crab = ents.Create(self.HeadcrabClass or "npc_vj_hlr2_headcrab_fast")
 			local enemy = self:GetEnemy()
 			crab:SetPos(self:GetAttachment(self:LookupAttachment("headcrab")).Pos or self:EyePos())
@@ -177,9 +177,9 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 			crab:SetGroundEntity(NULL) -- This fixes that issue where they snap to the ground when spawned
 			crab:SetLocalVelocity(self:GetVelocity() *dmginfo:GetDamageForce():Length())
 			if ent:IsOnFire() then
-				crab:Ignite(math.random(8,10))
+				crab:Ignite(math.random(8, 10))
 			end
-			undo.ReplaceEntity(self,crab)
+			undo.ReplaceEntity(self, crab)
 		end
 	end
 end

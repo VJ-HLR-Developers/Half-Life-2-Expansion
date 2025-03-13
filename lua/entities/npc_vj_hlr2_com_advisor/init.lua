@@ -64,14 +64,14 @@ ENT.SoundTbl_Death = {"vj_hlr/src/npc/advisor/advisor_scream.wav"}
 ENT.BreathSoundLevel = 50
 
 ENT.Spawnables = {
-	{ent="npc_vj_hlr2_com_strider",offset=0,weapons=nil},
-	{ent="npc_vj_hlr2_com_mortar",offset=50,weapons=nil},
-	{ent="npc_vj_hlr2_com_crab",offset=0,weapons=nil},
-	{ent="npc_vj_hlr2_com_hunter",offset=0,weapons=nil},
-	{ent="npc_vj_hlr2_com_soldier",offset=0,weapons={"weapon_vj_smg1","weapon_vj_smg1","weapon_vj_smg1","weapon_vj_ar2","weapon_vj_ar2"}},
-	{ent="npc_vj_hlr2_com_shotgunner",offset=0,weapons={"weapon_vj_spas12"}},
-	{ent="npc_vj_hlr2_com_elite",offset=0,weapons={"weapon_vj_ar2","weapon_vj_ar2","weapon_vj_hlr2_reager"}},
-	-- {ent="npc_vj_hlr2_com_engineer",offset=0,weapons={"weapon_vj_hlr2_reager"}},
+	{ent="npc_vj_hlr2_com_strider", offset=0, weapons=nil},
+	{ent="npc_vj_hlr2_com_mortar", offset=50, weapons=nil},
+	{ent="npc_vj_hlr2_com_crab", offset=0, weapons=nil},
+	{ent="npc_vj_hlr2_com_hunter", offset=0, weapons=nil},
+	{ent="npc_vj_hlr2_com_soldier", offset=0, weapons={"weapon_vj_smg1", "weapon_vj_smg1", "weapon_vj_smg1", "weapon_vj_ar2", "weapon_vj_ar2"}},
+	{ent="npc_vj_hlr2_com_shotgunner", offset=0, weapons={"weapon_vj_spas12"}},
+	{ent="npc_vj_hlr2_com_elite", offset=0, weapons={"weapon_vj_ar2", "weapon_vj_ar2", "weapon_vj_hlr2_reager"}},
+	-- {ent="npc_vj_hlr2_com_engineer", offset=0, weapons={"weapon_vj_hlr2_reager"}},
 }
 
 util.AddNetworkString("VJ_HLR_AdvisorScreenFX")
@@ -87,27 +87,27 @@ function ENT:RangeAttackProjVel(projectile)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(38,38,30), Vector(-38,-38,-30))
+	self:SetCollisionBounds(Vector(38, 38, 30), Vector(-38, -38, -30))
 	
-	self.NextScreenBlastT = CurTime() +math.Rand(3,8)
+	self.NextScreenBlastT = CurTime() +math.Rand(3, 8)
 	self.NextSearchForEntitiesT = 0
 	self.tbl_HeldEntities = {}
 	self.NextSpawnT = CurTime()
-	self.NextPsionicAttackT = CurTime() +math.Rand(2,4)
+	self.NextPsionicAttackT = CurTime() +math.Rand(2, 4)
 	
 	self:ShieldCode(true)
 	self:SetNW2Bool("PsionicEffect", false)
 
 	local cont = true
 	local EntsTbl = ents.GetAll()
-	for x = 1,#EntsTbl do
+	for x = 1, #EntsTbl do
 		if EntsTbl[x]:GetClass() == self:GetClass() && EntsTbl[x] != self then
 			cont = false
 		end
 	end
 	if cont then
 		self.OriginalGravity = GetConVarNumber("sv_gravity")
-		RunConsoleCommand("sv_gravity",200)
+		RunConsoleCommand("sv_gravity", 200)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ResetPsionicAttack()
 	self.PsionicAttacking = false
-	self.NextPsionicAttackT = CurTime() + math.Rand(4,7)
+	self.NextPsionicAttackT = CurTime() + math.Rand(4, 7)
 	self:SetState()
 	self:SetNW2Bool("PsionicEffect", false)
 end
@@ -131,17 +131,17 @@ function ENT:CustomAttackCheck_RangeAttack() return self.PsionicAttacking != tru
 function ENT:ShieldCode(bEnable)
 	self.HasShield = bEnable
 	if bEnable then
-		ParticleEffectAttach("advisor_psychic_shield_idle",PATTACH_ABSORIGIN_FOLLOW,self,0)
+		ParticleEffectAttach("advisor_psychic_shield_idle", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 		self.ShieldHealth = 1500
 		self.BloodParticle = {"hunter_shield_impact"}
 		return
 	end
 	self.BloodParticle = {"vj_blood_impact_yellow"}
 	self:StopParticles()
-	ParticleEffect("vj_aurora_shockwave",self:GetPos() + self:OBBCenter(),Angle(0,0,0),nil)
-	ParticleEffect("electrical_arc_01_system",self:GetPos() + self:OBBCenter(),Angle(0,0,0),nil)
-	VJ.CreateSound(self,"ambient/energy/whiteflash.wav",120)
-	for _, v in ipairs(ents.FindInSphere(self:GetPos(),8000)) do
+	ParticleEffect("vj_aurora_shockwave", self:GetPos() + self:OBBCenter(), Angle(0, 0, 0), nil)
+	ParticleEffect("electrical_arc_01_system", self:GetPos() + self:OBBCenter(), Angle(0, 0, 0), nil)
+	VJ.CreateSound(self, "ambient/energy/whiteflash.wav", 120)
+	for _, v in ipairs(ents.FindInSphere(self:GetPos(), 8000)) do
 		if VJ.IsProp(v) && self:Visible(v) then
 			local phys = v:GetPhysicsObject()
 			if IsValid(phys) && phys:GetMass() <= 6000 then
@@ -154,7 +154,7 @@ function ENT:ShieldCode(bEnable)
 			end
 		end
 	end
-	timer.Simple(20,function()
+	timer.Simple(20, function()
 		if IsValid(self) then
 			self:ShieldCode(true)
 		end
@@ -173,10 +173,10 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:GrabEntity(ent)
-	table.insert(self.tbl_HeldEntities,ent)
-	VJ.EmitSound(self,"vj_hlr/src/npc/advisor/advisor_blast6.wav")
-	VJ.EmitSound(ent,"ambient/energy/whiteflash.wav")
-	ent:GetPhysicsObject():ApplyForceCenter(ent:GetPos() +Vector(0,0,ent:GetPhysicsObject():GetMass() *1.5))
+	table.insert(self.tbl_HeldEntities, ent)
+	VJ.EmitSound(self, "vj_hlr/src/npc/advisor/advisor_blast6.wav")
+	VJ.EmitSound(ent, "ambient/energy/whiteflash.wav")
+	ent:GetPhysicsObject():ApplyForceCenter(ent:GetPos() +Vector(0, 0, ent:GetPhysicsObject():GetMass() *1.5))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkAttack(isAttacking, enemy)
@@ -195,7 +195,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 		//print(pTbl)
 		if #pTbl > 0 then -- If greater then 1, then we found an object!
 			self:SetNW2Bool("PsionicEffect", true)
-			VJ.EmitSound(self,"vj_hlr/src/npc/advisor/advisorattack03.wav", 95)
+			VJ.EmitSound(self, "vj_hlr/src/npc/advisor/advisorattack03.wav", 95)
 			self.PsionicAttacking = true
 			self:SetState(VJ_STATE_ONLY_ANIMATION)
 			for _, v in ipairs(pTbl) do
@@ -218,14 +218,14 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 					if IsValid(v) then
 						local phys = v:GetPhysicsObject()
 						if IsValid(phys) then
-							VJ.EmitSound(self,"vj_hlr/src/npc/advisor/advisorattack02.wav", 95)
+							VJ.EmitSound(self, "vj_hlr/src/npc/advisor/advisorattack02.wav", 95)
 							v.BeingControlledByAdvisor = false
 							v:SetNW2Bool("BeingControlledByAdvisor", false)
 							phys:EnableGravity(true)
 							phys:EnableDrag(true)
 							if selfValid && IsValid(self:GetEnemy()) then -- We check self here, in case self is removed, we will reset the props at least
-								local force = phys:GetMass() *math.random(3,8)
-								phys:SetVelocity(self:CalculateProjectile("Line", v:GetPos(), self:GetEnemy():GetPos(), math.Clamp(force,3000,force)))
+								local force = phys:GetMass() *math.random(3, 8)
+								phys:SetVelocity(self:CalculateProjectile("Line", v:GetPos(), self:GetEnemy():GetPos(), math.Clamp(force, 3000, force)))
 								-- self:PlayAnim(ACT_MELEE_ATTACK1, true, false, false)
 							end
 						end
@@ -245,14 +245,14 @@ function ENT:OnThink()
 		end
 	end
 
-	if CurTime() > self.NextScreenBlastT && math.random(1,20) == 1 && !VJ_CVAR_IGNOREPLAYERS then
-		for _,v in pairs(player.GetAll()) do
+	if CurTime() > self.NextScreenBlastT && math.random(1, 20) == 1 && !VJ_CVAR_IGNOREPLAYERS then
+		for _, v in pairs(player.GetAll()) do
 			net.Start("VJ_HLR_AdvisorScreenFX")
 				net.WriteEntity(v)
 				net.WriteFloat(v:GetPos():Distance(self:GetPos()))
 			net.Send(v)
 		end
-		self.NextScreenBlastT = CurTime() +math.Rand(5,12)
+		self.NextScreenBlastT = CurTime() +math.Rand(5, 12)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -279,7 +279,7 @@ end
 function ENT:CreateAlly()
 	local tr = util.TraceLine({
 		start = self:GetPos(),
-		endpos = self:GetPos() +self:GetForward() *math.Rand(-10000,10000) +self:GetRight() *math.Rand(-10000,10000) +self:GetUp() *-1000,
+		endpos = self:GetPos() +self:GetForward() *math.Rand(-10000, 10000) +self:GetRight() *math.Rand(-10000, 10000) +self:GetUp() *-1000,
 		filter = self,
 		mask = MASK_ALL,
 	})
@@ -287,7 +287,7 @@ function ENT:CreateAlly()
 	local spawnpos = tr.HitPos +tr.HitNormal *30
 	local type = VJ.PICK(self.Spawnables)
 	local ally = ents.Create(type.ent)
-	ally:SetPos(spawnpos +Vector(0,0,type.offset))
+	ally:SetPos(spawnpos +Vector(0, 0, type.offset))
 	ally:SetAngles(self:GetAngles())
 	ally:Spawn()
 	ally:Activate()
@@ -296,19 +296,19 @@ function ENT:CreateAlly()
 		ally:GetActiveWeapon():Equip(ally)
 	end
 	
-	ParticleEffect("vj_aurora_shockwave",ally:GetPos(),Angle(0,0,0),nil)
-	ParticleEffect("electrical_arc_01_system",ally:GetPos(),Angle(0,0,0),nil)
-	VJ.EmitSound(ally,"ambient/energy/whiteflash.wav",90)
+	ParticleEffect("vj_aurora_shockwave", ally:GetPos(), Angle(0, 0, 0), nil)
+	ParticleEffect("electrical_arc_01_system", ally:GetPos(), Angle(0, 0, 0), nil)
+	VJ.EmitSound(ally, "ambient/energy/whiteflash.wav", 90)
 	return ally
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
 	if self.Dead then return end
-	for _,v in pairs(ents.FindInSphere(self:GetPos(),300)) do
-		if string.find(v:GetClass(),"rocket") or string.find(v:GetClass(),"missile") then
-			ParticleEffect("vj_aurora_shockwave",v:GetPos(),Angle(0,0,0),nil)
-			ParticleEffect("electrical_arc_01_system",v:GetPos(),Angle(0,0,0),nil)
-			VJ.EmitSound(v,"ambient/energy/whiteflash.wav",90)
+	for _, v in pairs(ents.FindInSphere(self:GetPos(), 300)) do
+		if string.find(v:GetClass(), "rocket") or string.find(v:GetClass(), "missile") then
+			ParticleEffect("vj_aurora_shockwave", v:GetPos(), Angle(0, 0, 0), nil)
+			ParticleEffect("electrical_arc_01_system", v:GetPos(), Angle(0, 0, 0), nil)
+			VJ.EmitSound(v, "ambient/energy/whiteflash.wav", 90)
 			SafeRemoveEntity(v)
 		end
 	end
@@ -320,12 +320,12 @@ end
 function ENT:CustomOnRemove()
 	local cont = true
 	local EntsTbl = ents.GetAll()
-	for x = 1,#EntsTbl do
+	for x = 1, #EntsTbl do
 		if EntsTbl[x]:GetClass() == self:GetClass() && EntsTbl[x] != self then
 			cont = false
 		end
 	end
 	if cont then
-		RunConsoleCommand("sv_gravity",self.OriginalGravity)
+		RunConsoleCommand("sv_gravity", self.OriginalGravity)
 	end
 end

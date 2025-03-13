@@ -14,17 +14,17 @@ ENT.PoseParameterLooking_TurningSpeed = 25
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetCollisionBounds(Vector(13, 13, 0), Vector(-13, -13, -40))
-	self:SetPos(self:GetPos() +Vector(0,0,32))
+	self:SetPos(self:GetPos() +Vector(0, 0, 32))
 	self.RangeAttackMaxDistance = self.SightDistance
 	self.RangeAttackAngleRadius = 180
 	self.SightAngle = 90
 	
 	self.Turret_Sprite = ents.Create("env_sprite")
-	self.Turret_Sprite:SetKeyValue("model","vj_base/sprites/glow.vmt")
-	self.Turret_Sprite:SetKeyValue("scale","0.1")
-	self.Turret_Sprite:SetKeyValue("rendermode","5")
-	self.Turret_Sprite:SetKeyValue("rendercolor","255 0 0")
-	self.Turret_Sprite:SetKeyValue("spawnflags","1") -- If animated
+	self.Turret_Sprite:SetKeyValue("model", "vj_base/sprites/glow.vmt")
+	self.Turret_Sprite:SetKeyValue("scale", "0.1")
+	self.Turret_Sprite:SetKeyValue("rendermode", "5")
+	self.Turret_Sprite:SetKeyValue("rendercolor", "255 0 0")
+	self.Turret_Sprite:SetKeyValue("spawnflags", "1") -- If animated
 	self.Turret_Sprite:SetParent(self)
 	self.Turret_Sprite:Fire("SetParentAttachment", "light")
 	self.Turret_Sprite:Spawn()
@@ -39,10 +39,10 @@ function ENT:OnThinkActive()
 		self.AnimTbl_IdleStand = {"idlealert"}
 		-- Handle the light sprite
 		if self.Turret_HasLOS == true && IsValid(self:GetEnemy()) then
-			self.Turret_Sprite:Fire("Color","255 0 0") -- Red
+			self.Turret_Sprite:Fire("Color", "255 0 0") -- Red
 			self.Turret_Sprite:Fire("ShowSprite")
 		elseif self.HasPoseParameterLooking == true then -- So when the alert animation is playing, it won't replace the activating light (green)
-			self.Turret_Sprite:Fire("Color","255 165 0") -- Orange
+			self.Turret_Sprite:Fire("Color", "255 165 0") -- Orange
 			self.Turret_Sprite:Fire("ShowSprite")
 		end
 		
@@ -84,11 +84,11 @@ function ENT:OnThinkActive()
 	else
 		-- Play the retracting sequence and sound
 		if !self.Alerted && self.Turret_StandDown == false then
-			self.Turret_Sprite:Fire("Color","0 150 0") -- Green
+			self.Turret_Sprite:Fire("Color", "0 150 0") -- Green
 			self.Turret_Sprite:Fire("ShowSprite")
 			self.Turret_StandDown = true
 			self:PlayAnim({"retract"}, true, false)
-			VJ.EmitSound(self,{"npc/turret_floor/retract.wav"}, 70, 100)
+			VJ.EmitSound(self, {"npc/turret_floor/retract.wav"}, 70, 100)
 		end
 		if self.Turret_StandDown == true then
 			if self:GetPoseParameter("aim_yaw") == 0 then -- Hide the green light once it fully rests

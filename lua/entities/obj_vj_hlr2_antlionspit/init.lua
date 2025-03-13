@@ -17,8 +17,8 @@ ENT.SoundTbl_Idle = "vj_base/ambience/acid_idle.wav"
 ENT.SoundTbl_OnCollide = "vj_base/ambience/acid_splat.wav"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	ParticleEffectAttach("vj_acid_idle",PATTACH_ABSORIGIN_FOLLOW,self,0)
-	ParticleEffect("vj_acid_impact1",self:GetPos(),Angle(0,0,0))
+	ParticleEffectAttach("vj_acid_idle", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+	ParticleEffect("vj_acid_impact1", self:GetPos(), Angle(0, 0, 0))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()
@@ -26,6 +26,6 @@ function ENT:OnThink()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDestroy(data, phys)
-	ParticleEffect("vj_acid_impact1",data.HitPos,Angle(0,0,0))
-	ParticleEffect("vj_acid_impact2",data.HitPos,Angle(0,0,0))
+	ParticleEffect("vj_acid_impact1", data.HitPos, Angle(0, 0, 0))
+	ParticleEffect("vj_acid_impact2", data.HitPos, Angle(0, 0, 0))
 end

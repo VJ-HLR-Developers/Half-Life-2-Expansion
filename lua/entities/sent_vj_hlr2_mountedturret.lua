@@ -36,42 +36,42 @@ function ENT:Initialize()
     local envLight = ents.Create("env_projectedtexture")
     envLight:SetLocalPos(self:GetPos())
     envLight:SetLocalAngles(self:GetAngles())
-    envLight:SetKeyValue("lightcolor","255 247 206")
-    envLight:SetKeyValue("lightfov","50")
-    envLight:SetKeyValue("farz","2400")
-    envLight:SetKeyValue("nearz","10")
-    envLight:SetKeyValue("shadowquality","1")
-    envLight:Input("SpotlightTexture",NULL,NULL,"effects/flashlight001")
+    envLight:SetKeyValue("lightcolor", "255 247 206")
+    envLight:SetKeyValue("lightfov", "50")
+    envLight:SetKeyValue("farz", "2400")
+    envLight:SetKeyValue("nearz", "10")
+    envLight:SetKeyValue("shadowquality", "1")
+    envLight:Input("SpotlightTexture", NULL, NULL, "effects/flashlight001")
     envLight:SetOwner(self)
     envLight:SetParent(turret)
     envLight:Spawn()
-    envLight:Fire("setparentattachment","light")
+    envLight:Fire("setparentattachment", "light")
     self:DeleteOnRemove(envLight)
 
     local spotlight = ents.Create("beam_spotlight")
     spotlight:SetPos(self:GetPos())
     spotlight:SetAngles(self:GetAngles())
-    spotlight:SetKeyValue("spotlightlength",2200)
-    spotlight:SetKeyValue("spotlightwidth",50)
-    spotlight:SetKeyValue("spawnflags","2")
-    spotlight:Fire("Color","255 247 206")
+    spotlight:SetKeyValue("spotlightlength", 2200)
+    spotlight:SetKeyValue("spotlightwidth", 50)
+    spotlight:SetKeyValue("spawnflags", "2")
+    spotlight:Fire("Color", "255 247 206")
     spotlight:SetParent(turret)
     spotlight:Spawn()
     spotlight:Activate()
-    spotlight:Fire("setparentattachment","light")
+    spotlight:Fire("setparentattachment", "light")
     spotlight:Fire("lighton")
     spotlight:AddEffects(EF_PARENT_ANIMATES)
     self:DeleteOnRemove(spotlight)
 
     local glow1 = ents.Create("env_sprite")
-    glow1:SetKeyValue("model","sprites/light_ignorez.vmt")
-    glow1:SetKeyValue("scale","0.4")
-    glow1:SetKeyValue("rendermode","9")
-    glow1:SetKeyValue("rendercolor","255 247 206")
-    glow1:SetKeyValue("spawnflags","0.1")
+    glow1:SetKeyValue("model", "sprites/light_ignorez.vmt")
+    glow1:SetKeyValue("scale", "0.4")
+    glow1:SetKeyValue("rendermode", "9")
+    glow1:SetKeyValue("rendercolor", "255 247 206")
+    glow1:SetKeyValue("spawnflags", "0.1")
     glow1:SetParent(turret)
     glow1:SetOwner(self)
-    glow1:Fire("SetParentAttachment","light",0)
+    glow1:Fire("SetParentAttachment", "light", 0)
     glow1:Spawn()
     self:DeleteOnRemove(glow1)
 
@@ -129,8 +129,8 @@ function ENT:UnMan()
     operator.VJ_HLR_ApproachingTurret = false
     operator.VJ_HLR_ManningTurret = false
     local turret = self.Emplacement
-    turret:SetPoseParameter("aim_pitch",0)
-    turret:SetPoseParameter("aim_yaw",0)
+    turret:SetPoseParameter("aim_pitch", 0)
+    turret:SetPoseParameter("aim_yaw", 0)
     self.Operator = NULL
 end
 
@@ -146,12 +146,12 @@ function ENT:Think()
     if IsValid(operator) then
         if self.Gun_Status != 2 && self.Gun_Status != 1 then
             self.Emplacement:ResetSequence(animTbl["mount"])
-            self:EmitSound("weapons/shotgun/shotgun_cock.wav",70,100)
+            self:EmitSound("weapons/shotgun/shotgun_cock.wav", 70, 100)
             self.Gun_Status = 1
-            timer.Simple(1.3,function()
+            timer.Simple(1.3, function()
                 if IsValid(self) then
                     self.Gun_Status = 2
-                    self:EmitSound("buttons/combine_button1.wav",70,100)
+                    self:EmitSound("buttons/combine_button1.wav", 70, 100)
                 end
             end)
         elseif self.Gun_Status == 2 then
@@ -160,12 +160,12 @@ function ENT:Think()
     else
         if self.Gun_Status == 2 && self.Gun_Status != 1 then
             self.Emplacement:ResetSequence(animTbl["dismount"])
-            self:EmitSound("weapons/shotgun/shotgun_cock.wav",70,92)
+            self:EmitSound("weapons/shotgun/shotgun_cock.wav", 70, 92)
             self.Gun_Status = 1
-            timer.Simple(1.3,function()
+            timer.Simple(1.3, function()
                 if IsValid(self) then
                     self.Gun_Status = 0
-                    self:EmitSound("buttons/combine_button2.wav",70,100)
+                    self:EmitSound("buttons/combine_button2.wav", 70, 100)
                 end
             end)
         elseif self.Gun_Status == 0 then
@@ -187,8 +187,8 @@ function ENT:Think()
         self:UpdatePoseParamTracking(true)
         local possibleOperator = self.DetectedOperator
         if !IsValid(possibleOperator) then
-            for _,v in ipairs(ents.FindInSphere(self:GetPos(),500)) do
-                if v:IsNPC() && v:Visible(self) && v.IsVJBaseSNPC && VJ.AnimExists(v,ACT_IDLE_MANNEDGUN) && (!v.VJ_HLR_ApproachingTurret && !v.VJ_HLR_ManningTurret) then
+            for _, v in ipairs(ents.FindInSphere(self:GetPos(), 500)) do
+                if v:IsNPC() && v:Visible(self) && v.IsVJBaseSNPC && VJ.AnimExists(v, ACT_IDLE_MANNEDGUN) && (!v.VJ_HLR_ApproachingTurret && !v.VJ_HLR_ManningTurret) then
                     if v.VJ_HLR_NextApproachTurretT && v.VJ_HLR_NextApproachTurretT > curTime then return end
                     self.DetectedOperator = v
                     v.VJ_HLR_ApproachingTurret = true
@@ -240,10 +240,10 @@ function ENT:FireEmplacement()
         laserhit:SetOrigin(tr.HitPos)
         laserhit:SetNormal(tr.HitNormal)
         laserhit:SetScale(25)
-        util.Effect("AR2Impact",laserhit)
+        util.Effect("AR2Impact", laserhit)
     end
-    bullet.Spread = Vector(math.random(-45,45),math.random(-45,45),math.random(-45,45))
-    -- bullet.Spread = Vector(0.045,0.045,0)
+    bullet.Spread = Vector(math.random(-45, 45), math.random(-45, 45), math.random(-45, 45))
+    -- bullet.Spread = Vector(0.045, 0.045, 0)
     bullet.Tracer = 1
     bullet.TracerName = "AirboatGunTracer"
     bullet.Force = 3
@@ -255,22 +255,22 @@ function ENT:FireEmplacement()
     if self.Overheat >= 250 then
         self.OverheatRechargeT = CurTime() +6
         self.Overheat = 0
-        for i = 1,5 do
-            timer.Simple(i,function()
+        for i = 1, 5 do
+            timer.Simple(i, function()
                 if IsValid(self) then
-                    sound.Play("ambient/alarms/warningbell1.wav",turret:GetPos(),72,100 *GetConVarNumber("host_timescale"))
+                    sound.Play("ambient/alarms/warningbell1.wav", turret:GetPos(), 72, 100 *GetConVarNumber("host_timescale"))
                 end
             end)
         end
-        ParticleEffectAttach("vj_smoke_white_narrow",PATTACH_POINT_FOLLOW,turret,1)
-        turret.Loop = CreateSound(turret,"ambient/gas/steam2.wav")
+        ParticleEffectAttach("vj_smoke_white_narrow", PATTACH_POINT_FOLLOW, turret, 1)
+        turret.Loop = CreateSound(turret, "ambient/gas/steam2.wav")
         turret.Loop:SetSoundLevel(72)
         turret.Loop:Play()
     end
-    ParticleEffectAttach("vj_muzzle_ar2_main",PATTACH_POINT_FOLLOW,turret,1)
-    -- ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,turret,1)
+    ParticleEffectAttach("vj_muzzle_ar2_main", PATTACH_POINT_FOLLOW, turret, 1)
+    -- ParticleEffectAttach("vj_rifle_full_blue", PATTACH_POINT_FOLLOW, turret, 1)
     turret:ResetSequence("fire")
-    sound.Play("^weapons/ar1/ar1_dist2.wav",turret:GetPos(),90,100 +(self.Overheat /4) *GetConVarNumber("host_timescale"))
+    sound.Play("^weapons/ar1/ar1_dist2.wav", turret:GetPos(), 90, 100 +(self.Overheat /4) *GetConVarNumber("host_timescale"))
 end
 
 function ENT:OnRemove()

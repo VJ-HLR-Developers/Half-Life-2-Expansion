@@ -39,9 +39,9 @@ ENT.AnimTbl_TakingCover = {ACT_IDLE_ANGRY}
 
 ENT.DropDeathLoot = false
 
-ENT.SoundTbl_BeforeMeleeAttack = {"npc/metropolice/pain1.wav","npc/metropolice/pain2.wav","npc/metropolice/pain3.wav","npc/metropolice/pain4.wav"}
-ENT.SoundTbl_Pain = {"npc/combine_soldier/pain1.wav","npc/combine_soldier/pain2.wav","npc/combine_soldier/pain3.wav"}
-ENT.SoundTbl_Death = {"npc/combine_soldier/die1.wav","npc/combine_soldier/die2.wav","npc/combine_soldier/die3.wav"}
+ENT.SoundTbl_BeforeMeleeAttack = {"npc/metropolice/pain1.wav", "npc/metropolice/pain2.wav", "npc/metropolice/pain3.wav", "npc/metropolice/pain4.wav"}
+ENT.SoundTbl_Pain = {"npc/combine_soldier/pain1.wav", "npc/combine_soldier/pain2.wav", "npc/combine_soldier/pain3.wav"}
+ENT.SoundTbl_Death = {"npc/combine_soldier/die1.wav", "npc/combine_soldier/die2.wav", "npc/combine_soldier/die3.wav"}
 
 ENT.MainSoundPitch = 145
 
@@ -74,24 +74,24 @@ function ENT:SetAnimationTranslations(wepHoldType)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(13,13,60),Vector(-13,-13,0))
+	self:SetCollisionBounds(Vector(13, 13, 60), Vector(-13, -13, 0))
 	-- self:SetRenderMode(RENDERMODE_TRANSADD)
 
-		util.SpriteTrail(self,5,Color(255,0,0),true,12,1,0.25,1 /(25 +1) *0.5,"VJ_Base/sprites/trail.vmt")
+		util.SpriteTrail(self, 5, Color(255, 0, 0), true, 12, 1, 0.25, 1 /(25 +1) *0.5, "VJ_Base/sprites/trail.vmt")
 		local spriteGlow = ents.Create("env_sprite")
-		spriteGlow:SetKeyValue("rendercolor","255 0 0")
-		spriteGlow:SetKeyValue("GlowProxySize","2.0")
-		spriteGlow:SetKeyValue("HDRColorScale","1.0")
-		spriteGlow:SetKeyValue("renderfx","14")
-		spriteGlow:SetKeyValue("rendermode","3")
-		spriteGlow:SetKeyValue("renderamt","255")
-		spriteGlow:SetKeyValue("disablereceiveshadows","0")
-		spriteGlow:SetKeyValue("mindxlevel","0")
-		spriteGlow:SetKeyValue("maxdxlevel","0")
-		spriteGlow:SetKeyValue("framerate","10.0")
-		spriteGlow:SetKeyValue("model","VJ_Base/sprites/glow.vmt")
-		spriteGlow:SetKeyValue("spawnflags","0")
-		spriteGlow:SetKeyValue("scale","0.1")
+		spriteGlow:SetKeyValue("rendercolor", "255 0 0")
+		spriteGlow:SetKeyValue("GlowProxySize", "2.0")
+		spriteGlow:SetKeyValue("HDRColorScale", "1.0")
+		spriteGlow:SetKeyValue("renderfx", "14")
+		spriteGlow:SetKeyValue("rendermode", "3")
+		spriteGlow:SetKeyValue("renderamt", "255")
+		spriteGlow:SetKeyValue("disablereceiveshadows", "0")
+		spriteGlow:SetKeyValue("mindxlevel", "0")
+		spriteGlow:SetKeyValue("maxdxlevel", "0")
+		spriteGlow:SetKeyValue("framerate", "10.0")
+		spriteGlow:SetKeyValue("model", "VJ_Base/sprites/glow.vmt")
+		spriteGlow:SetKeyValue("spawnflags", "0")
+		spriteGlow:SetKeyValue("scale", "0.1")
 		spriteGlow:SetParent(self)
 		spriteGlow:Fire("SetParentAttachment", "eyes")
 		spriteGlow:Spawn()
@@ -101,15 +101,15 @@ function ENT:Init()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnCreateSound(sdData, sdFile)
-	if VJ.HasValue(self.SoundTbl_BeforeMeleeAttack,sdFile) then return end
-	VJ.EmitSound(self, "npc/combine_soldier/vo/on"..math.random(1,2)..".wav")
-	timer.Simple(SoundDuration(sdFile), function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self,"npc/combine_soldier/vo/off"..math.random(1,3)..".wav") end end)
+	if VJ.HasValue(self.SoundTbl_BeforeMeleeAttack, sdFile) then return end
+	VJ.EmitSound(self, "npc/combine_soldier/vo/on"..math.random(1, 2)..".wav")
+	timer.Simple(SoundDuration(sdFile), function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self, "npc/combine_soldier/vo/off"..math.random(1, 3)..".wav") end end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "Foot" then
-		VJ.EmitSound(self,"npc/footsteps/hardboot_generic2.wav",72,100)
-		VJ.EmitSound(self,{"npc/stalker/stalker_footstep_left1.wav","npc/stalker/stalker_footstep_left2.wav","npc/stalker/stalker_footstep_right1.wav","npc/stalker/stalker_footstep_right2.wav"},75)
+		VJ.EmitSound(self, "npc/footsteps/hardboot_generic2.wav", 72, 100)
+		VJ.EmitSound(self, {"npc/stalker/stalker_footstep_left1.wav", "npc/stalker/stalker_footstep_left2.wav", "npc/stalker/stalker_footstep_right1.wav", "npc/stalker/stalker_footstep_right2.wav"}, 75)
 	end
 	if key == "left" or key == "right" then
 		local wep = self:GetActiveWeapon()
@@ -117,7 +117,7 @@ function ENT:OnInput(key, activator, caller, data)
 			wep.CurrentMuzzle = key
 		end
 	end
-	if string.StartWith(key,"melee") then
+	if string.StartWith(key, "melee") then
 		self:ExecuteMeleeAttack()
 	end
 end
@@ -130,8 +130,8 @@ function ENT:OnThink()
 	if self.Dead then return end
 	local validEnt = IsValid(self:GetEnemy())
 	local cloaked = self:GetCloaked()
-	-- local cloaklvl = math.Clamp(self.Assassin_CloakLevel *255,40,255)
-	-- self:SetColor(Color(255,255,255,math.Clamp(self.Assassin_CloakLevel * 255, 40, 255)))
+	-- local cloaklvl = math.Clamp(self.Assassin_CloakLevel *255, 40, 255)
+	-- self:SetColor(Color(255, 255, 255, math.Clamp(self.Assassin_CloakLevel * 255, 40, 255)))
 	-- self.Assassin_CloakLevel = math.Clamp(self.Assassin_CloakLevel + 0.05, 0, 1)
 	-- if cloaklvl <= 220 then -- Yete asorme tsadz e, ere vor mouys NPC-nere chi desnen iren!
 	if cloaked && CurTime() > self:GetFireTime() && self:GetMoveVelocity():Length() <= 60 then -- Yupe sa pee pee inz la poo poo
@@ -147,17 +147,17 @@ function ENT:OnThink()
 			self.Assassin_OffGround = false
 			self:ClearSchedule()
 			self:StopMoving()
-			self:PlayAnim(ACT_LAND,true,false,false)
+			self:PlayAnim(ACT_LAND, true, false, false)
 			self.AnimTbl_IdleStand = {ACT_IDLE}
 		else
 			if self:GetActivity() != ACT_GLIDE then
-				self:PlayAnim(ACT_GLIDE,true,false,false)
+				self:PlayAnim(ACT_GLIDE, true, false, false)
 			end
 		end
 	end
 	if (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_RELOAD) or !self.VJ_IsBeingControlled && validEnt && !cloaked) && CurTime() > self.Assassin_NextCloakT then
 		self:SetCloaked(!cloaked)
-		VJ.EmitSound(self,"npc/roller/mine/combine_mine_deploy1.wav",60,self:GetCloaked() && 120 or 100)
+		VJ.EmitSound(self, "npc/roller/mine/combine_mine_deploy1.wav", 60, self:GetCloaked() && 120 or 100)
 		self.Assassin_NextCloakT = CurTime() +1
 	elseif !self.VJ_IsBeingControlled && !self.Alerted && cloaked then
 		self:SetCloaked(false)
@@ -169,15 +169,15 @@ function ENT:OnThink()
 	if validEnt && self.WeaponAttackState == VJ.WEP_ATTACK_STATE_FIRE_STAND && self.VJ_IsBeingControlled == false && CurTime() > self.Assassin_NextJumpT && !self:IsMoving() && self:GetPos():Distance(self:GetEnemy():GetPos()) < 1400 then
 		self:StopMoving()
 		self:SetGroundEntity(NULL)
-		if math.random(1,2) == 1 then
+		if math.random(1, 2) == 1 then
 			self:SetLocalVelocity(((self:GetPos() + self:GetRight()*100) - (self:GetPos() + self:OBBCenter())):GetNormal()*200 +self:GetForward()*1 +self:GetUp()*600 + self:GetRight()*1)
 		else
 			self:SetLocalVelocity(((self:GetPos() + self:GetRight()*-100) - (self:GetPos() + self:OBBCenter())):GetNormal()*200 +self:GetForward()*1 +self:GetUp()*600 + self:GetRight()*1)
 		end
 		self.AnimTbl_IdleStand = {ACT_GLIDE}
-		self:PlayAnim(ACT_JUMP,true,false,true,0,{},function(sched)
+		self:PlayAnim(ACT_JUMP, true, false, true, 0, {}, function(sched)
 			self.Assassin_OffGround = true
-			self:PlayAnim(ACT_GLIDE,true,false,false)
+			self:PlayAnim(ACT_GLIDE, true, false, false)
 		end)
 		self.Assassin_NextJumpT = CurTime() + 8
 	end
@@ -187,8 +187,8 @@ function ENT:Dodge()
 	if !self:IsBusy() then
 		if self.VJ_IsBeingControlled then
 			local ply = self.VJ_TheController
-			self:PlayAnim((ply:KeyDown(IN_MOVELEFT) && "FlipLeft") or (ply:KeyDown(IN_MOVERIGHT) && "FlipRight") or (ply:KeyDown(IN_FORWARD) && "FlipForwardB") or "flipback",true,false,true)
-			self.Assassin_NextDodgeT = CurTime() +math.Rand(2,6)
+			self:PlayAnim((ply:KeyDown(IN_MOVELEFT) && "FlipLeft") or (ply:KeyDown(IN_MOVERIGHT) && "FlipRight") or (ply:KeyDown(IN_FORWARD) && "FlipForwardB") or "flipback", true, false, true)
+			self.Assassin_NextDodgeT = CurTime() +math.Rand(2, 6)
 		else
 			local checkdist = self:VJ_CheckAllFourSides(400)
 			local randmove = {}
@@ -202,11 +202,11 @@ function ENT:Dodge()
 			if pickmove == "Left" then anim = "FlipLeft" end
 			if pickmove == "Forward" then anim = "FlipForwardB" end
 			if type(pickmove) == "table" && #pickmove == 4 then
-				anim = VJ.PICK({"flipback","FlipRight","FlipLeft","FlipForwardB"})
+				anim = VJ.PICK({"flipback", "FlipRight", "FlipLeft", "FlipForwardB"})
 			end
 			if pickmove == "Backward" or pickmove == "Right" or pickmove == "Left" then
-				self:PlayAnim(anim,true,false,true)
-				self.Assassin_NextDodgeT = CurTime() +math.Rand(2,6)
+				self:PlayAnim(anim, true, false, true)
+				self.Assassin_NextDodgeT = CurTime() +math.Rand(2, 6)
 			end
 		end
 	end

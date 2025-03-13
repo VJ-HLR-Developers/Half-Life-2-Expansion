@@ -32,9 +32,9 @@ function ENT:Init()
 	self.MinElementDist = 0
 	self.Blob_MetaBall = {}
 
-	for i = 1,self.Blob_MaxMetaBalls do
+	for i = 1, self.Blob_MaxMetaBalls do
 		local ball = ents.Create("sent_vj_hlr2_metaball")
-		ball:SetPos(self:GetPos() +VectorRand() *math.Rand(self.Blob_MB_MinDist *0.2,self.Blob_MB_MaxDist *0.2))
+		ball:SetPos(self:GetPos() +VectorRand() *math.Rand(self.Blob_MB_MinDist *0.2, self.Blob_MB_MaxDist *0.2))
 		ball:SetOwner(self)
 		ball:Spawn()
 		ball.SinePhase = math.abs(math.sin((#self.Blob_MetaBall or 0) /10))
@@ -53,19 +53,19 @@ function ENT:OnThink()
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ComputeCentroid()
-	local tempCentroid = Vector(0,0,0)
+	local tempCentroid = Vector(0, 0, 0)
 	local tbl = self.Blob_MetaBall
 	local count = table.Count(tbl)
-	for i = 1,count do
+	for i = 1, count do
 		tempCentroid = tempCentroid +tbl[i]:GetPos()
 	end
 
 	self.CentroidPos = tempCentroid /count
-	self.CentroidPos = self:GetPos() +Vector(0,0,40)
-	VJ.DEBUG_TempEnt(self.CentroidPos,Angle(0,0,0), Color(255,0,0), 5)
+	self.CentroidPos = self:GetPos() +Vector(0, 0, 40)
+	VJ.DEBUG_TempEnt(self.CentroidPos, Angle(0, 0, 0), Color(255, 0, 0), 5)
 end
 ----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:DoBlobBatchedAI(iStart,iEnd)
+function ENT:DoBlobBatchedAI(iStart, iEnd)
 	local flInterval = CurTime() -self.LastThink
 	local tbl = self.Blob_MetaBall
 	local count = table.Count(tbl)
@@ -148,7 +148,7 @@ function ENT:DoBlobBatchedAI(iStart,iEnd)
 		metaball.MoveType = self.Blob_State
 		
 		if metaball.MoveType == 3 then
-			metaball:SetVel(Vector(0,0,0))
+			metaball:SetVel(Vector(0, 0, 0))
 			local vecOrigin = metaball:GetPos()
 			local tr = util.TraceLine({
 				start = vecOrigin,
@@ -195,7 +195,7 @@ function ENT:DoBlobBatchedAI(iStart,iEnd)
 		local vecDir = Vector(0, 0, 0)
 		local vecThisElementOrigin = metaball:GetPos()
 		if bEnforceRelativePositions then
-			for j = 0,count do
+			for j = 0, count do
 				// This is the innermost loop! We should optimize here, if anywhere.
 
 				// If this element is on the wall, then don't be repelled by anyone. Repelling
@@ -239,13 +239,13 @@ function ENT:DoBlobBatchedAI(iStart,iEnd)
 		// Speed limits
 		//---
 		if bEnforceSpeedLimit == true then
-			metaball:EnforceSpeedLimits(flMinSpeed,flMaxSpeed)
+			metaball:EnforceSpeedLimits(flMinSpeed, flMaxSpeed)
 		end
 
 		//--
 		// Wall crawling
 		//--
-		metaball:ModifyVelocityForSurface(flInterval,flSpeed)
+		metaball:ModifyVelocityForSurface(flInterval, flSpeed)
 
 		// For identifying stuck elements.
 		metaball.PrevOrigin = metaball:GetPos() 

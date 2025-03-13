@@ -154,9 +154,9 @@ function ENT:Tank_Init()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnCreateSound(sdData, sdFile)
-	if VJ.HasValue(self.SoundTbl_Fire,sdFile) or VJ.HasValue(self.SoundTbl_FireRocket,sdFile) or VJ.HasValue(self.SoundTbl_Breath,sdFile) or VJ.HasValue(self.Tank_SoundTbl_DrivingEngine,sdFile) or VJ.HasValue(self.Tank_SoundTbl_Track,sdFile) then return end
+	if VJ.HasValue(self.SoundTbl_Fire, sdFile) or VJ.HasValue(self.SoundTbl_FireRocket, sdFile) or VJ.HasValue(self.SoundTbl_Breath, sdFile) or VJ.HasValue(self.Tank_SoundTbl_DrivingEngine, sdFile) or VJ.HasValue(self.Tank_SoundTbl_Track, sdFile) then return end
 	VJ.EmitSound(self, "npc/overwatch/radiovoice/on3.wav")
-	timer.Simple(SoundDuration(sdFile),function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self,"npc/overwatch/radiovoice/off2.wav") end end)
+	timer.Simple(SoundDuration(sdFile), function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self, "npc/overwatch/radiovoice/off2.wav") end end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Controller_Initialize(ply, controlEnt)
@@ -185,10 +185,10 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 	if CurTime() > self.NextRocketT && enemy:Visible(self) then
 		if self.Ammo <= 0 then
 			local t = SoundDuration("ambient/machines/thumper_shutdown1.wav")
-			VJ.CreateSound(self,"ambient/machines/thumper_shutdown1.wav",75)
-			timer.Simple(t,function()
+			VJ.CreateSound(self, "ambient/machines/thumper_shutdown1.wav", 75)
+			timer.Simple(t, function()
 				if IsValid(self) then
-					VJ.CreateSound(self,"ambient/machines/thumper_startup1.wav",75)
+					VJ.CreateSound(self, "ambient/machines/thumper_startup1.wav", 75)
 					self.Ammo = 2
 				end
 			end)
@@ -212,7 +212,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 		bullet.Num = 1
 		bullet.Src = startpos
 		bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -startpos
-		bullet.Spread = Vector(math.random(-15,15), math.random(-15,15), math.random(-15,15))
+		bullet.Spread = Vector(math.random(-15, 15), math.random(-15, 15), math.random(-15, 15))
 		bullet.Tracer = 1
 		bullet.TracerName = "AR2Tracer"
 		bullet.Force = 5
@@ -220,9 +220,9 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 		bullet.AmmoType = "AR2"
 		self:FireBullets(bullet)
 		
-		VJ.EmitSound(self,self.SoundTbl_Fire,90,math.random(100,110))
+		VJ.EmitSound(self, self.SoundTbl_Fire, 90, math.random(100, 110))
 		
-		ParticleEffect("vj_rifle_full_blue",startpos,self:GetAngles(),self)
+		ParticleEffect("vj_rifle_full_blue", startpos, self:GetAngles(), self)
 		local FireLight1 = ents.Create("light_dynamic")
 		FireLight1:SetKeyValue("brightness", "4")
 		FireLight1:SetKeyValue("distance", "120")
@@ -232,8 +232,8 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 		FireLight1:SetParent(self)
 		FireLight1:Spawn()
 		FireLight1:Activate()
-		FireLight1:Fire("TurnOn","",0)
-		FireLight1:Fire("Kill","",0.07)
+		FireLight1:Fire("TurnOn", "", 0)
+		FireLight1:Fire("Kill", "", 0.07)
 		self:DeleteOnRemove(FireLight1)
 		
 		self.NextFireT = CurTime() +0.08
@@ -247,7 +247,7 @@ function ENT:Tank_OnThink()
 	end
 	
 	-- Deploy soldiers
-	if self.Tank_Status == 1 && self.APC_HasSpawnedSoldiers == false && self.APC_DoorOpen == false && IsValid(self:GetEnemy()) && ((!self.VJ_IsBeingControlled && math.random(1,60) == 1) or (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP))) then
+	if self.Tank_Status == 1 && self.APC_HasSpawnedSoldiers == false && self.APC_DoorOpen == false && IsValid(self:GetEnemy()) && ((!self.VJ_IsBeingControlled && math.random(1, 60) == 1) or (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP))) then
 		self.APC_DoorOpen = true
 		self.APC_HasSpawnedSoldiers = true
 		timer.Simple(0.5, function()
@@ -256,13 +256,13 @@ function ENT:Tank_OnThink()
 					self.APC_HasSpawnedSoldiers = false
 				else
 					local ene = self:GetEnemy()
-					for i = 1,math.random(2,3) do
+					for i = 1, math.random(2, 3) do
 						local combine = ents.Create("npc_vj_hlr2_com_civilp")
 						local opSide = ((i % 2 == 0) and -25) or 25 -- Make every other grunt spawn to the opposite side
 						combine:SetPos(self:GetPos() + self:GetForward()*(i <= 2 and -160 or (i <= 4 and -220 or -290)) + self:GetRight()*opSide + self:GetUp()*5)
 						combine:SetAngles(Angle(0, self:GetAngles().y + 180, 0))
 						combine:Spawn()
-						combine:Give(VJ.PICK({"weapon_vj_9mmpistol","weapon_vj_smg1"}))
+						combine:Give(VJ.PICK({"weapon_vj_9mmpistol", "weapon_vj_smg1"}))
 						combine:ForceSetEnemy(ene, true)
 						combine:SetState(VJ_STATE_FREEZE)
 						timer.Simple(0.2, function()
@@ -281,7 +281,7 @@ function ENT:Tank_OnThink()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:GetNearDeathSparkPositions()
-	local randPos = math.random(1,5)
+	local randPos = math.random(1, 5)
 	if randPos == 1 then
 		self.Spark1:SetLocalPos(self:GetPos() + self:GetRight()*15 + self:GetForward()*-16 + self:GetUp()*120)
 	elseif randPos == 2 then
@@ -297,12 +297,12 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Tank_OnDeathCorpse(dmginfo, hitgroup, corpseEnt, status, statusData)
 	if status == "Override" then
-		corpseEnt:SetAngles(self:GetAngles() +Angle(0,270,0))
-		self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib02.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib03.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib04.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib05.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics","models/combine_apc_destroyed_gib06.mdl",{Pos=corpseEnt:GetPos(),Ang=corpseEnt:GetAngles()})
+		corpseEnt:SetAngles(self:GetAngles() +Angle(0, 270, 0))
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib02.mdl", {Pos=corpseEnt:GetPos(), Ang=corpseEnt:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib03.mdl", {Pos=corpseEnt:GetPos(), Ang=corpseEnt:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib04.mdl", {Pos=corpseEnt:GetPos(), Ang=corpseEnt:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib05.mdl", {Pos=corpseEnt:GetPos(), Ang=corpseEnt:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib06.mdl", {Pos=corpseEnt:GetPos(), Ang=corpseEnt:GetAngles()})
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

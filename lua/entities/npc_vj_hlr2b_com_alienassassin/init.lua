@@ -28,7 +28,7 @@ ENT.MeleeAttackBleedEnemyReps = 10
 ENT.MeleeAttackPlayerSpeedTime = 5
 
 ENT.HasRangeAttack = true
-ENT.AnimTbl_RangeAttack = {ACT_RANGE_ATTACK1,"tripwire","pests"}
+ENT.AnimTbl_RangeAttack = {ACT_RANGE_ATTACK1, "tripwire", "pests"}
 ENT.RangeAttackMaxDistance = 1750
 ENT.RangeAttackMinDistance = 350
 ENT.TimeUntilRangeAttackProjectileRelease = false
@@ -101,22 +101,22 @@ local projHopwire = "models/vj_hlr/hl2b/weapons/tripwire.mdl"
 function ENT:Init()
 	self:SetRenderMode(RENDERMODE_TRANSALPHA)
 
-	for i = 1,2 do
-		util.SpriteTrail(self,i +3,Color(4,255,0),true,4,1,0.35,1 /(25 +1) *0.5,"VJ_Base/sprites/trail.vmt")
+	for i = 1, 2 do
+		util.SpriteTrail(self, i +3, Color(4, 255, 0), true, 4, 1, 0.35, 1 /(25 +1) *0.5, "VJ_Base/sprites/trail.vmt")
 		local spriteGlow = ents.Create("env_sprite")
-		spriteGlow:SetKeyValue("rendercolor","4 255 0")
-		spriteGlow:SetKeyValue("GlowProxySize","2.0")
-		spriteGlow:SetKeyValue("HDRColorScale","1.0")
-		spriteGlow:SetKeyValue("renderfx","14")
-		spriteGlow:SetKeyValue("rendermode","3")
-		spriteGlow:SetKeyValue("renderamt","255")
-		spriteGlow:SetKeyValue("disablereceiveshadows","0")
-		spriteGlow:SetKeyValue("mindxlevel","0")
-		spriteGlow:SetKeyValue("maxdxlevel","0")
-		spriteGlow:SetKeyValue("framerate","10.0")
-		spriteGlow:SetKeyValue("model","VJ_Base/sprites/glow.vmt")
-		spriteGlow:SetKeyValue("spawnflags","0")
-		spriteGlow:SetKeyValue("scale","0.075")
+		spriteGlow:SetKeyValue("rendercolor", "4 255 0")
+		spriteGlow:SetKeyValue("GlowProxySize", "2.0")
+		spriteGlow:SetKeyValue("HDRColorScale", "1.0")
+		spriteGlow:SetKeyValue("renderfx", "14")
+		spriteGlow:SetKeyValue("rendermode", "3")
+		spriteGlow:SetKeyValue("renderamt", "255")
+		spriteGlow:SetKeyValue("disablereceiveshadows", "0")
+		spriteGlow:SetKeyValue("mindxlevel", "0")
+		spriteGlow:SetKeyValue("maxdxlevel", "0")
+		spriteGlow:SetKeyValue("framerate", "10.0")
+		spriteGlow:SetKeyValue("model", "VJ_Base/sprites/glow.vmt")
+		spriteGlow:SetKeyValue("spawnflags", "0")
+		spriteGlow:SetKeyValue("scale", "0.075")
 		spriteGlow:SetParent(self)
 		spriteGlow:Fire("SetParentAttachment", "light" .. i)
 		spriteGlow:Spawn()
@@ -124,7 +124,7 @@ function ENT:Init()
 	end
 
 	self.NextJumpAwayT = 0
-	self.NextRunAwayT = CurTime() + math.Rand(1,2)
+	self.NextRunAwayT = CurTime() + math.Rand(1, 2)
 	self.RunAwayT = 0
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -160,7 +160,7 @@ function ENT:OnThink()
 		self.Assassin_TargetCloakLevel = 1
 		self:StopParticles()
 	end
-	if !busy && IsValid(self:GetEnemy()) && curTime > self.Assassin_NextJumpT && self.EnemyData.Distance < 1400 && !self.VJ_IsBeingControlled && math.random(1,30) == 1 then
+	if !busy && IsValid(self:GetEnemy()) && curTime > self.Assassin_NextJumpT && self.EnemyData.Distance < 1400 && !self.VJ_IsBeingControlled && math.random(1, 30) == 1 then
 		self:ForceMoveJump(((self:GetPos() +self:GetRight() *(math.random(1, 2) == 1 && 500 or -500) +self:GetForward() *(math.random(1, 2) == 1 && 1 or -500)) -(self:GetPos() +self:OBBCenter())):GetNormal() *300 +self:GetUp() *600)
 		self.Assassin_NextJumpT = curTime + math.Rand(7, 11)
 	end
@@ -173,7 +173,7 @@ function ENT:OnThinkAttack(atkType, ent)
 		local busy = self:IsBusy()
 		if !busy && data.Visible && data.DistanceNearest <= 100 && curTime > self.NextJumpAwayT then
 			self:VJ_ACT_PLAYACTIVITY("jumpbackt", true, false, true)
-			self.NextJumpAwayT = curTime + math.Rand(2.5,7.5)
+			self.NextJumpAwayT = curTime + math.Rand(2.5, 7.5)
 			return
 		elseif !busy && data.DistanceNearest > 300 && data.DistanceNearest <= 1500 && curTime > self.NextRunAwayT then
 			self:VJ_ACT_PLAYACTIVITY("smoke", true, false, true)
@@ -245,7 +245,7 @@ function ENT:OnInput(key, activator, caller, data)
 		local proj = ents.Create("obj_vj_projectile_base")
 		proj:SetModel(projKnife)
 		proj:SetPos(att.Pos)
-		proj:SetAngles((targetPos -proj:GetPos()):Angle() +Angle(-90,0,0))
+		proj:SetAngles((targetPos -proj:GetPos()):Angle() +Angle(-90, 0, 0))
 		proj:SetOwner(self)
 		proj:SetNoDraw(false)
 		proj:DrawShadow(true)
@@ -257,7 +257,7 @@ function ENT:OnInput(key, activator, caller, data)
 
 		local phys = proj:GetPhysicsObject()
 		if IsValid(phys) then
-			phys:SetVelocity(VJ.CalculateTrajectory(self,ent,"Line",proj:GetPos(),IsValid(ent) && 0.75 or targetPos,4000))
+			phys:SetVelocity(VJ.CalculateTrajectory(self, ent, "Line", proj:GetPos(), IsValid(ent) && 0.75 or targetPos, 4000))
 		end
 	elseif key == "attack_tripwire" then
 		SafeRemoveEntity(self.HoldObject)
@@ -267,7 +267,7 @@ function ENT:OnInput(key, activator, caller, data)
 		local proj = ents.Create("obj_vj_projectile_base")
 		proj:SetModel(projHopwire)
 		proj:SetPos(att.Pos)
-		proj:SetAngles((targetPos -proj:GetPos()):Angle() +Angle(-90,0,0))
+		proj:SetAngles((targetPos -proj:GetPos()):Angle() +Angle(-90, 0, 0))
 		proj:SetOwner(self)
 		proj:SetNoDraw(false)
 		proj:DrawShadow(true)
@@ -276,7 +276,7 @@ function ENT:OnInput(key, activator, caller, data)
 		proj.RadiusDamageRadius = 250
 		proj.RadiusDamage = 95
 		proj.RadiusDamageUseRealisticRadius = true
-		proj.RadiusDamageType = bit.bor(DMG_BLAST,DMG_SHOCK)
+		proj.RadiusDamageType = bit.bor(DMG_BLAST, DMG_SHOCK)
 		proj.RadiusDamageForce = 90
 		proj.CollisionBehavior = VJ.PROJ_COLLISION_NONE
 		proj.SoundTbl_Idle = "vj_hlr/src/npc/alienassassin/ball_loop1.wav"
@@ -285,21 +285,21 @@ function ENT:OnInput(key, activator, caller, data)
 		proj.FuseTime = CurTime() + ((targetPos:Distance(proj:GetPos()) / self.RangeAttackMaxDistance) *0.35)
 		// Credits: Referenced the Half-Life 2 Beta SWEPs pack to see how they did the ropes for the hopwire
 		function proj:Init()
-			util.SpriteTrail(proj,0,Color(0,213,255),true,8,1,0.65,1 /(25 +1) *0.5,"VJ_Base/sprites/trail.vmt")
+			util.SpriteTrail(proj, 0, Color(0, 213, 255), true, 8, 1, 0.65, 1 /(25 +1) *0.5, "VJ_Base/sprites/trail.vmt")
 			local spriteGlow = ents.Create("env_sprite")
-			spriteGlow:SetKeyValue("rendercolor","0 213 255")
-			spriteGlow:SetKeyValue("GlowProxySize","2.0")
-			spriteGlow:SetKeyValue("HDRColorScale","1.0")
-			spriteGlow:SetKeyValue("renderfx","14")
-			spriteGlow:SetKeyValue("rendermode","3")
-			spriteGlow:SetKeyValue("renderamt","255")
-			spriteGlow:SetKeyValue("disablereceiveshadows","0")
-			spriteGlow:SetKeyValue("mindxlevel","0")
-			spriteGlow:SetKeyValue("maxdxlevel","0")
-			spriteGlow:SetKeyValue("framerate","10.0")
-			spriteGlow:SetKeyValue("model","VJ_Base/sprites/glow.vmt")
-			spriteGlow:SetKeyValue("spawnflags","0")
-			spriteGlow:SetKeyValue("scale","0.5")
+			spriteGlow:SetKeyValue("rendercolor", "0 213 255")
+			spriteGlow:SetKeyValue("GlowProxySize", "2.0")
+			spriteGlow:SetKeyValue("HDRColorScale", "1.0")
+			spriteGlow:SetKeyValue("renderfx", "14")
+			spriteGlow:SetKeyValue("rendermode", "3")
+			spriteGlow:SetKeyValue("renderamt", "255")
+			spriteGlow:SetKeyValue("disablereceiveshadows", "0")
+			spriteGlow:SetKeyValue("mindxlevel", "0")
+			spriteGlow:SetKeyValue("maxdxlevel", "0")
+			spriteGlow:SetKeyValue("framerate", "10.0")
+			spriteGlow:SetKeyValue("model", "VJ_Base/sprites/glow.vmt")
+			spriteGlow:SetKeyValue("spawnflags", "0")
+			spriteGlow:SetKeyValue("scale", "0.5")
 			spriteGlow:SetPos(proj:GetPos())
 			spriteGlow:SetParent(proj)
 			spriteGlow:Spawn()
@@ -312,21 +312,21 @@ function ENT:OnInput(key, activator, caller, data)
 				if IsValid(phys) && CurTime() > self.FuseTime && phys:GetVelocity():Length() <= 350 then
 					proj.Activated = true
 					proj.Hooks = {}
-					proj.FilterEnts = {proj,proj:GetOwner()}
-					phys:SetVelocity(Vector(0,0,0))
-					phys:ApplyForceCenter(Vector(0,0,1500))
-					for i = 1,math.random(6,10) do
+					proj.FilterEnts = {proj, proj:GetOwner()}
+					phys:SetVelocity(Vector(0, 0, 0))
+					phys:ApplyForceCenter(Vector(0, 0, 1500))
+					for i = 1, math.random(6, 10) do
 						proj.SoundTbl_Idle = nil
 						VJ.STOPSOUND(proj.CurrentIdleSound)
 						VJ.EmitSound(proj, "weapons/tripwire/mine_activate.wav", 70)
-						timer.Simple(0.25,function()
+						timer.Simple(0.25, function()
 							if IsValid(proj) then
-								timer.Simple(i *0.1,function()
+								timer.Simple(i *0.1, function()
 									if IsValid(proj) then
 										proj:SpawnRope(i)
 										if i == 10 then
-											phys:SetVelocity(Vector(0,0,0))
-											phys:SetAngleVelocity(Vector(0,0,0))
+											phys:SetVelocity(Vector(0, 0, 0))
+											phys:SetAngleVelocity(Vector(0, 0, 0))
 										end
 									end
 								end)
@@ -337,7 +337,7 @@ function ENT:OnInput(key, activator, caller, data)
 			else
 				local hooks = proj.Hooks
 				if #hooks > 0 then
-					for _,hook in pairs(hooks) do
+					for _, hook in pairs(hooks) do
 						if IsValid(hook) && hook.Frozen then
 							local tr = util.TraceLine({
 								start = proj:GetPos(),
@@ -346,8 +346,8 @@ function ENT:OnInput(key, activator, caller, data)
 							})
 							if tr.HitNonWorld then
 								local trEnt = tr.Entity
-								if (trEnt.VJ_HLR_HopwireHook or trEnt == proj) && !VJ.HasValue(proj.FilterEnts,trEnt) or IsValid(proj:GetOwner()) && proj:GetOwner():CheckRelationship(trEnt) == D_LI then
-									table.insert(proj.FilterEnts,trEnt)
+								if (trEnt.VJ_HLR_HopwireHook or trEnt == proj) && !VJ.HasValue(proj.FilterEnts, trEnt) or IsValid(proj:GetOwner()) && proj:GetOwner():CheckRelationship(trEnt) == D_LI then
+									table.insert(proj.FilterEnts, trEnt)
 									return
 								end
 								-- print(trEnt)
@@ -371,26 +371,26 @@ function ENT:OnInput(key, activator, caller, data)
 			ropeObj.IdleLoop = CreateSound(ropeObj, "weapons/tripwire/ropeshoot.wav")
 			ropeObj.IdleLoop:SetSoundLevel(70)
 			ropeObj.IdleLoop:Play()
-			local trail = util.SpriteTrail(ropeObj,0,Color(255,255,255),true,1,1,5,1 /(25 +1) *0.5,"cable/physbeam")
+			local trail = util.SpriteTrail(ropeObj, 0, Color(255, 255, 255), true, 1, 1, 5, 1 /(25 +1) *0.5, "cable/physbeam")
 			local spriteGlow = ents.Create("env_sprite")
-			spriteGlow:SetKeyValue("rendercolor","0 125 255")
-			spriteGlow:SetKeyValue("GlowProxySize","2.0")
-			spriteGlow:SetKeyValue("HDRColorScale","1.0")
-			spriteGlow:SetKeyValue("renderfx","14")
-			spriteGlow:SetKeyValue("rendermode","3")
-			spriteGlow:SetKeyValue("renderamt","255")
-			spriteGlow:SetKeyValue("disablereceiveshadows","0")
-			spriteGlow:SetKeyValue("mindxlevel","0")
-			spriteGlow:SetKeyValue("maxdxlevel","0")
-			spriteGlow:SetKeyValue("framerate","10.0")
-			spriteGlow:SetKeyValue("model","VJ_Base/sprites/glow.vmt")
-			spriteGlow:SetKeyValue("spawnflags","0")
-			spriteGlow:SetKeyValue("scale","0.075")
+			spriteGlow:SetKeyValue("rendercolor", "0 125 255")
+			spriteGlow:SetKeyValue("GlowProxySize", "2.0")
+			spriteGlow:SetKeyValue("HDRColorScale", "1.0")
+			spriteGlow:SetKeyValue("renderfx", "14")
+			spriteGlow:SetKeyValue("rendermode", "3")
+			spriteGlow:SetKeyValue("renderamt", "255")
+			spriteGlow:SetKeyValue("disablereceiveshadows", "0")
+			spriteGlow:SetKeyValue("mindxlevel", "0")
+			spriteGlow:SetKeyValue("maxdxlevel", "0")
+			spriteGlow:SetKeyValue("framerate", "10.0")
+			spriteGlow:SetKeyValue("model", "VJ_Base/sprites/glow.vmt")
+			spriteGlow:SetKeyValue("spawnflags", "0")
+			spriteGlow:SetKeyValue("scale", "0.075")
 			spriteGlow:SetPos(ropeObj:GetPos())
 			spriteGlow:SetParent(ropeObj)
 			spriteGlow:Spawn()
 			ropeObj:DeleteOnRemove(spriteGlow)
-			function ropeObj:PhysicsCollide(data,collision)
+			function ropeObj:PhysicsCollide(data, collision)
 				ropeObj:Freeze()
 			end
 			function ropeObj:Think()
@@ -408,7 +408,7 @@ function ENT:OnInput(key, activator, caller, data)
 					phys:EnableMotion(false)
 					ropeObj.IdleLoop:Stop()
 					VJ.EmitSound(ropeObj, "weapons/tripwire/hook.wav", 70)
-					constraint.Elastic(ropeObj:GetOwner(),ropeObj,0,0,Vector(0,0,0),Vector(0,0,0),150,24,0.1,"cable/physbeam",1,false )
+					constraint.Elastic(ropeObj:GetOwner(), ropeObj, 0, 0, Vector(0, 0, 0), Vector(0, 0, 0), 150, 24, 0.1, "cable/physbeam", 1, false )
 				end
 			end
 			function ropeObj:OnRemove()
@@ -433,10 +433,10 @@ function ENT:OnInput(key, activator, caller, data)
 			ropeObj:SetTrigger(true)
 			ropeObj:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 			if IsValid(phys) then
-				phys:SetVelocity(Vector(math.Rand(-1,1) *1500,math.Rand(-1,1) *1500,math.Rand(-1,1) *1500))
+				phys:SetVelocity(Vector(math.Rand(-1, 1) *1500, math.Rand(-1, 1) *1500, math.Rand(-1, 1) *1500))
 			end
 			ropeObj.VJ_HLR_HopwireHook = true
-			table.insert(proj.Hooks,ropeObj)
+			table.insert(proj.Hooks, ropeObj)
 		end
 		function proj:OnDamaged(dmginfo)
 			local phys = proj:GetPhysicsObject()
@@ -461,9 +461,9 @@ function ENT:OnInput(key, activator, caller, data)
 			
 			VJ.EmitSound(proj, "vj_hlr/src/npc/alienassassin/ball_zap1.wav", 75)
 			VJ.EmitSound(proj, "vj_hlr/src/npc/alienassassin/ball_shoot1.wav", 75)
-			for i = 1,5 do
-				ParticleEffect("vj_aurora_shockwave",myPos,defAngle)
-				ParticleEffect("electrical_arc_01_system",myPos,defAngle)
+			for i = 1, 5 do
+				ParticleEffect("vj_aurora_shockwave", myPos, defAngle)
+				ParticleEffect("electrical_arc_01_system", myPos, defAngle)
 			end
 		
 			local expLight = ents.Create("light_dynamic")
@@ -485,7 +485,7 @@ function ENT:OnInput(key, activator, caller, data)
 
 		local phys = proj:GetPhysicsObject()
 		if IsValid(phys) then
-			phys:SetVelocity(VJ.CalculateTrajectory(self,ent,"Curve",proj:GetPos(),IsValid(ent) && 0.75 or targetPos,50))
+			phys:SetVelocity(VJ.CalculateTrajectory(self, ent, "Curve", proj:GetPos(), IsValid(ent) && 0.75 or targetPos, 50))
 		end
 	elseif key == "attack_pests" then
 		SafeRemoveEntity(self.HoldObject)
@@ -495,7 +495,7 @@ function ENT:OnInput(key, activator, caller, data)
 		local proj = ents.Create("obj_vj_projectile_base")
 		proj:SetModel(projPest)
 		proj:SetPos(att.Pos)
-		proj:SetAngles((targetPos -proj:GetPos()):Angle() +Angle(-90,0,0))
+		proj:SetAngles((targetPos -proj:GetPos()):Angle() +Angle(-90, 0, 0))
 		proj:SetOwner(self)
 		proj:SetNoDraw(false)
 		proj:DrawShadow(true)
@@ -509,10 +509,10 @@ function ENT:OnInput(key, activator, caller, data)
 		function proj:OnDestroy()
 			local myPos = proj:GetPos()
 			VJ.EmitSound(proj, "npc/antlion/antlion_shoot3.wav", 75)
-			ParticleEffect("vj_acid_impact1_gas",myPos,defAngle)
-			ParticleEffect("vj_acid_impact1_small_splat",myPos,defAngle)
-			for i = 1,10 do
-				ParticleEffect("vj_acid_impact1_floaters",myPos,defAngle)
+			ParticleEffect("vj_acid_impact1_gas", myPos, defAngle)
+			ParticleEffect("vj_acid_impact1_small_splat", myPos, defAngle)
+			for i = 1, 10 do
+				ParticleEffect("vj_acid_impact1_floaters", myPos, defAngle)
 			end
 		end
 		proj:Spawn()
@@ -524,15 +524,15 @@ function ENT:OnInput(key, activator, caller, data)
 			phys:EnableDrag(true)
 			phys:SetMass(1)
 			if self:GetSequenceName(self:GetSequence()) == "jumpbackt" then
-				phys:SetVelocity(VJ.CalculateTrajectory(self,ent,"Line",proj:GetPos(),IsValid(ent) && 0.75 or targetPos,1800))
+				phys:SetVelocity(VJ.CalculateTrajectory(self, ent, "Line", proj:GetPos(), IsValid(ent) && 0.75 or targetPos, 1800))
 			else
-				phys:SetVelocity(VJ.CalculateTrajectory(self,ent,"Curve",proj:GetPos(),IsValid(ent) && 0.75 or targetPos,50))
+				phys:SetVelocity(VJ.CalculateTrajectory(self, ent, "Curve", proj:GetPos(), IsValid(ent) && 0.75 or targetPos, 50))
 			end
 		end
 	elseif key == "smoke" then
-		ParticleEffectAttach("vj_hlr_assassin_bodysmoke",PATTACH_POINT_FOLLOW,self,0)
-		self.RunAwayT = CurTime() + math.Rand(2.5,7.5)
-		self.NextRunAwayT = self.RunAwayT + math.Rand(2.5,7.5)
+		ParticleEffectAttach("vj_hlr_assassin_bodysmoke", PATTACH_POINT_FOLLOW, self, 0)
+		self.RunAwayT = CurTime() + math.Rand(2.5, 7.5)
+		self.NextRunAwayT = self.RunAwayT + math.Rand(2.5, 7.5)
 		self:StopAllSounds()
 		VJ.CreateSound(self, "vj_hlr/src/npc/alienassassin/tattle1.wav", 70)
 	end

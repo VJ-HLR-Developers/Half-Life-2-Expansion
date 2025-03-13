@@ -115,7 +115,7 @@ ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(20,20,90),Vector(-20,-20,0))
+	self:SetCollisionBounds(Vector(20, 20, 90), Vector(-20, -20, 0))
 
 	self.NextKnockdownT = 0
 end
@@ -127,9 +127,9 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt,isProp)
+function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)
 	if hitEnt:IsPlayer() then
-		hitEnt:ViewPunch(Angle(-20,-100,0))
+		hitEnt:ViewPunch(Angle(-20, -100, 0))
 	end
 	return false
 end
@@ -149,7 +149,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnRangeAttack(status, enemy)
 	if status == "PostInit" then
-		self:PlayAnim(ACT_RANGE_ATTACK1,true,false,false)
+		self:PlayAnim(ACT_RANGE_ATTACK1, true, false, false)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -199,7 +199,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 		end
 	elseif status == "PostDamage" then
 		local explosion = dmginfo:IsExplosionDamage()
-		if self:Health() > 0 && (explosion or bit_band(dmginfo:GetDamageType(),DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
+		if self:Health() > 0 && (explosion or bit_band(dmginfo:GetDamageType(), DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
 			local dmgAng = ((explosion && dmginfo:GetDamagePosition() or dmginfo:GetAttacker():GetPos()) -self:GetPos()):Angle()
 			dmgAng.p = 0
 			dmgAng.r = 0
@@ -209,8 +209,8 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 			self:ClearGoal()
 			self:SetAngles(dmgAng)
 			self:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK)
-			local _,dur = self:PlayAnim("physfall",true,false,false,0,{OnFinish=function(interrupted)
-				self:PlayAnim("physgetup",true,false,false,0,{OnFinish=function(interrupted)
+			local _, dur = self:PlayAnim("physfall", true, false, false, 0, {OnFinish=function(interrupted)
+				self:PlayAnim("physgetup", true, false, false, 0, {OnFinish=function(interrupted)
 					self:SetState()
 				end})
 			end})
@@ -223,13 +223,13 @@ end
 function ENT:OnDeath(dmginfo, hitgroup, status)
 	if status == "Init" then
 		local explosion = dmginfo:IsExplosionDamage()
-		if (explosion or bit_band(dmginfo:GetDamageType(),DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
+		if (explosion or bit_band(dmginfo:GetDamageType(), DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
 			self.HasDeathAnimation = true
 			self.AnimTbl_Death = "physfall"
-			self.DeathDelayTime = self:DecideAnimationLength("physfall",false) + self:DecideAnimationLength("physdeath",false) - 1
-			timer.Simple(self:DecideAnimationLength("physfall",false),function()
+			self.DeathDelayTime = self:DecideAnimationLength("physfall", false) + self:DecideAnimationLength("physdeath", false) - 1
+			timer.Simple(self:DecideAnimationLength("physfall", false), function()
 				if IsValid(self) then
-					self:PlayAnim("physdeath",true,false,false)
+					self:PlayAnim("physdeath", true, false, false)
 				end
 			end)
 		end
@@ -254,13 +254,13 @@ function ENT:WarpCannon(tPos)
 	beam:SetOrigin(attackpos)
 	beam:SetEntity(self)
 	beam:SetAttachment(1)
-	util.Effect("VJ_HLR_StriderBeam",beam)
+	util.Effect("VJ_HLR_StriderBeam", beam)
 	
-	local hitTime = 1 /math.min(1,self:GetAttachment(1).Pos:Distance(attackpos) /10000)
-	hitTime = math.Clamp(hitTime,0,1) ^0.5
-	timer.Simple(hitTime,function()
+	local hitTime = 1 /math.min(1, self:GetAttachment(1).Pos:Distance(attackpos) /10000)
+	hitTime = math.Clamp(hitTime, 0, 1) ^0.5
+	timer.Simple(hitTime, function()
 		if IsValid(self) then
-			VJ.ApplyRadiusDamage(self,self,attackpos,300,500,bit.bor(DMG_DISSOLVE,DMG_BLAST),true,false,{Force=175})
+			VJ.ApplyRadiusDamage(self, self, attackpos, 300, 500, bit.bor(DMG_DISSOLVE, DMG_BLAST), true, false, {Force=175})
 			local FireLight1 = ents.Create("light_dynamic")
 			FireLight1:SetKeyValue("brightness", "8")
 			FireLight1:SetKeyValue("distance", "300")
@@ -270,17 +270,17 @@ function ENT:WarpCannon(tPos)
 			FireLight1:SetParent(self)
 			FireLight1:Spawn()
 			FireLight1:Activate()
-			FireLight1:Fire("TurnOn","",0)
-			FireLight1:Fire("Kill","",0.1)
+			FireLight1:Fire("TurnOn", "", 0)
+			FireLight1:Fire("Kill", "", 0.1)
 			self:DeleteOnRemove(FireLight1)
 		end
 	end)
-	timer.Simple(0.49,function()
+	timer.Simple(0.49, function()
 		if IsValid(self) then
-			VJ.EmitSound(self,"^npc/strider/fire.wav",130,math.random(100,110))
+			VJ.EmitSound(self, "^npc/strider/fire.wav", 130, math.random(100, 110))
 
-			ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,2)
-			timer.Simple(0.2,function() if IsValid(self) then self:StopParticles() end end)
+			ParticleEffectAttach("vj_rifle_full_blue", PATTACH_POINT_FOLLOW, self, 2)
+			timer.Simple(0.2, function() if IsValid(self) then self:StopParticles() end end)
 			local FireLight1 = ents.Create("light_dynamic")
 			FireLight1:SetKeyValue("brightness", "4")
 			FireLight1:SetKeyValue("distance", "120")
@@ -290,51 +290,51 @@ function ENT:WarpCannon(tPos)
 			FireLight1:SetParent(self)
 			FireLight1:Spawn()
 			FireLight1:Activate()
-			FireLight1:Fire("TurnOn","",0)
-			FireLight1:Fire("Kill","",0.07)
+			FireLight1:Fire("TurnOn", "", 0)
+			FireLight1:Fire("Kill", "", 0.07)
 			self:DeleteOnRemove(FireLight1)
 		end
 	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:StartWarpCannon(doLastPos)
-	VJ.CreateSound(self,"^npc/strider/charging.wav",110)
+	VJ.CreateSound(self, "^npc/strider/charging.wav", 110)
 
 	local pinch = ents.Create("env_sprite")
-	pinch:SetKeyValue("model","effects/strider_pinch_dudv.vmt")
-	pinch:SetKeyValue("scale",tostring(math.Rand(0.2,0.4)))
-	pinch:SetKeyValue("GlowProxySize","2.0") -- Size of the glow to be rendered for visibility testing.
-	pinch:SetKeyValue("HDRColorScale","1.0")
-	pinch:SetKeyValue("renderfx","14")
-	pinch:SetKeyValue("rendermode","3") -- Set the render mode to "3" (Glow)
-	pinch:SetKeyValue("renderamt","255") -- Transparency
-	pinch:SetKeyValue("disablereceiveshadows","0") -- Disable receiving shadows
-	pinch:SetKeyValue("framerate","10.0") -- Rate at which the sprite should animate, if at all.
-	pinch:SetKeyValue("spawnflags","0")
+	pinch:SetKeyValue("model", "effects/strider_pinch_dudv.vmt")
+	pinch:SetKeyValue("scale", tostring(math.Rand(0.2, 0.4)))
+	pinch:SetKeyValue("GlowProxySize", "2.0") -- Size of the glow to be rendered for visibility testing.
+	pinch:SetKeyValue("HDRColorScale", "1.0")
+	pinch:SetKeyValue("renderfx", "14")
+	pinch:SetKeyValue("rendermode", "3") -- Set the render mode to "3" (Glow)
+	pinch:SetKeyValue("renderamt", "255") -- Transparency
+	pinch:SetKeyValue("disablereceiveshadows", "0") -- Disable receiving shadows
+	pinch:SetKeyValue("framerate", "10.0") -- Rate at which the sprite should animate, if at all.
+	pinch:SetKeyValue("spawnflags", "0")
 	pinch:SetParent(self)
-	pinch:Fire("SetParentAttachment","muzzle")
+	pinch:Fire("SetParentAttachment", "muzzle")
 	pinch:SetAngles(Angle(math.random(-100, 100), math.random(-100, 100), math.random(-100, 100)))
 	pinch:Spawn()
 	pinch:Activate()
-	pinch:Fire("Kill","",SoundDuration("npc/strider/charging.wav") +1)
+	pinch:Fire("Kill", "", SoundDuration("npc/strider/charging.wav") +1)
 
 	local muz = ents.Create("env_sprite")
-	muz:SetKeyValue("model","effects/strider_bulge_dx60.vmt")
-	muz:SetKeyValue("scale",tostring(math.Rand(1,1.5)))
-	muz:SetKeyValue("GlowProxySize","2.0") -- Size of the glow to be rendered for visibility testing.
-	muz:SetKeyValue("HDRColorScale","1.0")
-	muz:SetKeyValue("renderfx","14")
-	muz:SetKeyValue("rendermode","3") -- Set the render mode to "3" (Glow)
-	muz:SetKeyValue("renderamt","255") -- Transparency
-	muz:SetKeyValue("disablereceiveshadows","0") -- Disable receiving shadows
-	muz:SetKeyValue("framerate","10.0") -- Rate at which the sprite should animate, if at all.
-	muz:SetKeyValue("spawnflags","0")
+	muz:SetKeyValue("model", "effects/strider_bulge_dx60.vmt")
+	muz:SetKeyValue("scale", tostring(math.Rand(1, 1.5)))
+	muz:SetKeyValue("GlowProxySize", "2.0") -- Size of the glow to be rendered for visibility testing.
+	muz:SetKeyValue("HDRColorScale", "1.0")
+	muz:SetKeyValue("renderfx", "14")
+	muz:SetKeyValue("rendermode", "3") -- Set the render mode to "3" (Glow)
+	muz:SetKeyValue("renderamt", "255") -- Transparency
+	muz:SetKeyValue("disablereceiveshadows", "0") -- Disable receiving shadows
+	muz:SetKeyValue("framerate", "10.0") -- Rate at which the sprite should animate, if at all.
+	muz:SetKeyValue("spawnflags", "0")
 	muz:SetParent(self)
-	muz:Fire("SetParentAttachment","muzzle")
+	muz:Fire("SetParentAttachment", "muzzle")
 	muz:SetAngles(Angle(math.random(-100, 100), math.random(-100, 100), math.random(-100, 100)))
 	muz:Spawn()
 	muz:Activate()
-	muz:Fire("Kill","",SoundDuration("npc/strider/charging.wav") +0.3)
+	muz:Fire("Kill", "", SoundDuration("npc/strider/charging.wav") +0.3)
 
 	local target = self:GetEnemy()
 	local targetPos = self:GetPos() +self:GetForward() *1250

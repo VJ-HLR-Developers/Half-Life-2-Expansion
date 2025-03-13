@@ -85,27 +85,27 @@ ENT.SoundTbl_Death = {
 ENT.Bullsquid_MoveType = 0 -- 0 = Normal | 1 = Swimming
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(40,40,40),Vector(-40,-40,0))
+	self:SetCollisionBounds(Vector(40, 40, 40), Vector(-40, -40, 0))
 
-	self:ManipulateBoneJiggle(3,1)
-	self:ManipulateBoneJiggle(4,1)
-	self:ManipulateBoneJiggle(5,1)
-	self:ManipulateBoneJiggle(6,1)
-	self:ManipulateBoneJiggle(7,1)
-	self:ManipulateBoneJiggle(8,1)
-	self:ManipulateBoneJiggle(9,1)
-	self:ManipulateBoneJiggle(10,1)
-	self:ManipulateBoneJiggle(11,1)
-	self:ManipulateBoneJiggle(12,1)
-	self:ManipulateBoneJiggle(13,1)
-	self:ManipulateBoneJiggle(14,1)
-	self:ManipulateBoneJiggle(15,1)
-	self:ManipulateBoneJiggle(16,1)
-	self:ManipulateBoneJiggle(17,1)
-	self:ManipulateBoneJiggle(18,1)
-	self:ManipulateBoneJiggle(19,1)
-	self:ManipulateBoneJiggle(20,1)
-	self:ManipulateBoneJiggle(21,1)
+	self:ManipulateBoneJiggle(3, 1)
+	self:ManipulateBoneJiggle(4, 1)
+	self:ManipulateBoneJiggle(5, 1)
+	self:ManipulateBoneJiggle(6, 1)
+	self:ManipulateBoneJiggle(7, 1)
+	self:ManipulateBoneJiggle(8, 1)
+	self:ManipulateBoneJiggle(9, 1)
+	self:ManipulateBoneJiggle(10, 1)
+	self:ManipulateBoneJiggle(11, 1)
+	self:ManipulateBoneJiggle(12, 1)
+	self:ManipulateBoneJiggle(13, 1)
+	self:ManipulateBoneJiggle(14, 1)
+	self:ManipulateBoneJiggle(15, 1)
+	self:ManipulateBoneJiggle(16, 1)
+	self:ManipulateBoneJiggle(17, 1)
+	self:ManipulateBoneJiggle(18, 1)
+	self:ManipulateBoneJiggle(19, 1)
+	self:ManipulateBoneJiggle(20, 1)
+	self:ManipulateBoneJiggle(21, 1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
@@ -116,7 +116,7 @@ function ENT:OnInput(key, activator, caller, data)
 		self:ExecuteMeleeAttack()
 	end
 	if key == "range" then
-		for i = 1,math.random(2,4) do
+		for i = 1, math.random(2, 4) do
 			self:ExecuteRangeAttack()
 		end
 	end
@@ -133,7 +133,7 @@ function ENT:OnThinkActive()
 			self.Bullsquid_MoveType = 1
 		end
 		if IsValid(self:GetEnemy()) && self:GetEnemy():WaterLevel() < 3 then
-			self:AA_MoveTo(self:GetEnemy(),true)
+			self:AA_MoveTo(self:GetEnemy(), true)
 		end
 	else
 		if self.Bullsquid_MoveType != 0 then
@@ -162,11 +162,11 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnAlert(ent)
 	if self:WaterLevel() < 2 then
-		if ent.VJ_ID_Headcrab && math.random(1,2) == 1 then
-			self:PlayAnim("hc_spot",true,false,true)
+		if ent.VJ_ID_Headcrab && math.random(1, 2) == 1 then
+			self:PlayAnim("hc_spot", true, false, true)
 		else
-			if math.random(1,3) == 1 then
-				self:PlayAnim(ACT_HOP,true,false,true)
+			if math.random(1, 3) == 1 then
+				self:PlayAnim(ACT_HOP, true, false, true)
 			end
 		end
 	end

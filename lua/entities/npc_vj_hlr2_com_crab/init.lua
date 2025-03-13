@@ -45,10 +45,10 @@ ENT.SoundTbl_MeleeAttackExtra = "vj_hlr/src/npc/crab/stab.wav"
 ENT.SoundTbl_MeleeAttackMiss = "vj_hlr/src/npc/crab/step2.wav"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(45,45,100), Vector(-45,-45,0))
+	self:SetCollisionBounds(Vector(45, 45, 100), Vector(-45, -45, 0))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:Controller_Initialize(ply,controlEnt)
+function ENT:Controller_Initialize(ply, controlEnt)
 	function controlEnt:OnThink()
 		self.VJC_BullseyeTracking = self.VJCE_NPC:GetIdealActivity() == ACT_WALK
 	end
@@ -87,10 +87,10 @@ function ENT:OnInput(key, activator, caller, data)
 		VJ.EmitSound(self, "vj_hlr/src/npc/crab/charge_cannon.wav", 80)
 	elseif key == "gun_fire" then
 		VJ.EmitSound(self, "vj_hlr/src/npc/crab/fire.wav", 150)
-		ParticleEffectAttach("vj_muzzle_ar2_main",PATTACH_POINT_FOLLOW,self,1)
+		ParticleEffectAttach("vj_muzzle_ar2_main", PATTACH_POINT_FOLLOW, self, 1)
 		local att = self:GetAttachment(1)
 		local targetPos = IsValid(self:GetEnemy()) && self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() or self:GetPos() +self:GetForward() *1500
-		for i = 1,2 do
+		for i = 1, 2 do
 			local bullet = {}
 			bullet.Num = 1
 			bullet.Src = att.Pos
@@ -100,11 +100,11 @@ function ENT:OnInput(key, activator, caller, data)
 				laserhit:SetOrigin(tr.HitPos)
 				laserhit:SetNormal(tr.HitNormal)
 				laserhit:SetScale(25)
-				util.Effect("AR2Impact",laserhit)
+				util.Effect("AR2Impact", laserhit)
 
 				util.ScreenShake(tr.HitPos, 16, 100, 0.2, 100, true)
 			end
-			bullet.Spread = Vector(math.random(-45,45),math.random(-45,45),math.random(-45,45))
+			bullet.Spread = Vector(math.random(-45, 45), math.random(-45, 45), math.random(-45, 45))
 			bullet.Tracer = 1
 			bullet.TracerName = "AirboatGunTracer"
 			bullet.Force = 3
@@ -142,10 +142,10 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 			self.HasBloodParticle = true
 			self.HasBloodDecal = true
 			dmginfo:SetDamage(dmginfo:GetDamage() *4.5)
-			VJ.EmitSound(self,"ambient/energy/zap"..math.random(1,9)..".wav",70)
+			VJ.EmitSound(self, "ambient/energy/zap"..math.random(1, 9)..".wav", 70)
 			local spark = ents.Create("env_spark")
-			spark:SetKeyValue("Magnitude","1")
-			spark:SetKeyValue("Spark Trail Length","1")
+			spark:SetKeyValue("Magnitude", "1")
+			spark:SetKeyValue("Spark Trail Length", "1")
 			spark:SetPos(dmginfo:GetDamagePosition())
 			spark:SetAngles(self:GetAngles())
 			spark:SetParent(self)

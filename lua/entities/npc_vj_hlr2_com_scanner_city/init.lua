@@ -11,7 +11,7 @@ ENT.HullType = HULL_TINY
 ENT.MovementType = VJ_MOVETYPE_AERIAL
 ENT.TurningUseAllAxis = true
 
-ENT.PoseParameterLooking_Names = {pitch={"flex_vert","tail_control"}, yaw={"flex_horz"}, roll={}}
+ENT.PoseParameterLooking_Names = {pitch={"flex_vert", "tail_control"}, yaw={"flex_horz"}, roll={}}
 
 ENT.Aerial_FlyingSpeed_Calm = 180
 ENT.Aerial_FlyingSpeed_Alerted = 250
@@ -63,20 +63,20 @@ ENT.SoundTbl_Pain = {
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(12,12,15), Vector(-12,-12,-15))
+	self:SetCollisionBounds(Vector(12, 12, 15), Vector(-12, -12, -15))
 
 	self.DoingCameraAttack = false
 	self.NextCameraAttackT = 0
 
 	self.EyeSprite = ents.Create("env_sprite")
-	self.EyeSprite:SetKeyValue("model","vj_base/sprites/glow.vmt")
-	self.EyeSprite:SetKeyValue("scale","0.1")
-	self.EyeSprite:SetKeyValue("rendermode","9")
-	self.EyeSprite:SetKeyValue("rendercolor","255 110 0")
-	self.EyeSprite:SetKeyValue("spawnflags","1")
+	self.EyeSprite:SetKeyValue("model", "vj_base/sprites/glow.vmt")
+	self.EyeSprite:SetKeyValue("scale", "0.1")
+	self.EyeSprite:SetKeyValue("rendermode", "9")
+	self.EyeSprite:SetKeyValue("rendercolor", "255 110 0")
+	self.EyeSprite:SetKeyValue("spawnflags", "1")
 	self.EyeSprite:SetParent(self)
 	self.EyeSprite:SetOwner(self)
-	self.EyeSprite:Fire("SetParentAttachment",self:LookupAttachment("eye") > 0 && "eye" or "eyes",0)
+	self.EyeSprite:Fire("SetParentAttachment", self:LookupAttachment("eye") > 0 && "eye" or "eyes", 0)
 	self.EyeSprite:Spawn()
 	self:DeleteOnRemove(self.EyeSprite)
 
@@ -84,60 +84,60 @@ function ENT:Init()
 		local envLight = ents.Create("env_projectedtexture")
 		envLight:SetLocalPos(self:GetPos())
 		envLight:SetLocalAngles(self:GetAngles())
-		envLight:SetKeyValue("lightcolor","255 255 255")
-		envLight:SetKeyValue("lightfov","40")
-		envLight:SetKeyValue("farz","1000")
-		envLight:SetKeyValue("nearz","10")
-		envLight:SetKeyValue("shadowquality","1")
-		envLight:Input("SpotlightTexture",NULL,NULL,"effects/flashlight001")
+		envLight:SetKeyValue("lightcolor", "255 255 255")
+		envLight:SetKeyValue("lightfov", "40")
+		envLight:SetKeyValue("farz", "1000")
+		envLight:SetKeyValue("nearz", "10")
+		envLight:SetKeyValue("shadowquality", "1")
+		envLight:Input("SpotlightTexture", NULL, NULL, "effects/flashlight001")
 		envLight:SetOwner(self)
 		envLight:SetParent(self)
 		envLight:Spawn()
-		envLight:Fire("setparentattachment","light")
+		envLight:Fire("setparentattachment", "light")
 		self:DeleteOnRemove(envLight)
 
 		local spotlight = ents.Create("beam_spotlight")
 		spotlight:SetPos(self:GetPos())
 		spotlight:SetAngles(self:GetAngles())
-		spotlight:SetKeyValue("spotlightlength",700)
-		spotlight:SetKeyValue("spotlightwidth",30)
-		spotlight:SetKeyValue("spawnflags","2")
-		spotlight:Fire("Color","255 255 255")
+		spotlight:SetKeyValue("spotlightlength", 700)
+		spotlight:SetKeyValue("spotlightwidth", 30)
+		spotlight:SetKeyValue("spawnflags", "2")
+		spotlight:Fire("Color", "255 255 255")
 		spotlight:SetParent(self)
 		spotlight:Spawn()
 		spotlight:Activate()
-		spotlight:Fire("setparentattachment","light")
+		spotlight:Fire("setparentattachment", "light")
 		spotlight:Fire("lighton")
 		spotlight:AddEffects(EF_PARENT_ANIMATES)
 		self:DeleteOnRemove(spotlight)
 	end
 
 	local glow1 = ents.Create("env_sprite")
-	glow1:SetKeyValue("model","sprites/light_ignorez.vmt")
-	glow1:SetKeyValue("scale","0.6")
-	glow1:SetKeyValue("rendermode","9")
-	glow1:SetKeyValue("rendercolor","255 255 255")
-	glow1:SetKeyValue("spawnflags","0.1")
+	glow1:SetKeyValue("model", "sprites/light_ignorez.vmt")
+	glow1:SetKeyValue("scale", "0.6")
+	glow1:SetKeyValue("rendermode", "9")
+	glow1:SetKeyValue("rendercolor", "255 255 255")
+	glow1:SetKeyValue("spawnflags", "0.1")
 	glow1:SetParent(self)
 	glow1:SetOwner(self)
-	glow1:Fire("SetParentAttachment","light",0)
+	glow1:Fire("SetParentAttachment", "light", 0)
 	glow1:Spawn()
 	self:DeleteOnRemove(glow1)
 
 	local glowLight = ents.Create("light_dynamic")
-	glowLight:SetKeyValue("brightness","4")
-	glowLight:SetKeyValue("distance","30")
+	glowLight:SetKeyValue("brightness", "4")
+	glowLight:SetKeyValue("distance", "30")
 	glowLight:SetLocalPos(self:GetPos() +self:OBBCenter())
 	glowLight:SetLocalAngles(self:GetAngles())
 	glowLight:Fire("Color", "255 255 255")
 	glowLight:SetParent(self)
 	glowLight:SetOwner(self)
 	glowLight:Spawn()
-	glowLight:Fire("TurnOn","",0)
-	glowLight:Fire("SetParentAttachment","light",0)
+	glowLight:Fire("TurnOn", "", 0)
+	glowLight:Fire("SetParentAttachment", "light", 0)
 	self:DeleteOnRemove(glowLight)
 
-	self.ScanLoop = CreateSound(self,VJ.PICK{"npc/scanner/scanner_scan_loop1.wav","npc/scanner/scanner_scan_loop2.wav","npc/scanner/combat_scan_loop1.wav","npc/scanner/combat_scan_loop2.wav","npc/scanner/combat_scan_loop4.wav","npc/scanner/combat_scan_loop6.wav"})
+	self.ScanLoop = CreateSound(self, VJ.PICK{"npc/scanner/scanner_scan_loop1.wav", "npc/scanner/scanner_scan_loop2.wav", "npc/scanner/combat_scan_loop1.wav", "npc/scanner/combat_scan_loop2.wav", "npc/scanner/combat_scan_loop4.wav", "npc/scanner/combat_scan_loop6.wav"})
 	self.ScanLoop:SetSoundLevel(70)
 
 -- dynamo_wheel: 0.5 ( -180, 180 )
@@ -149,24 +149,24 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
 	-- local vel = self:GetVelocity()
-	-- self:SetPoseParameter("flex_vert",vel.z)
-	-- self:SetPoseParameter("flex_horz",-vel.x)
-	-- self:SetPoseParameter("tail_control",vel.y)
-	self:SetPoseParameter("dynamo_wheel",Lerp(FrameTime() *3,self:GetPoseParameter("dynamo_wheel"),self:GetPoseParameter("dynamo_wheel") +1))
-	self:SetPoseParameter("alert_control",IsValid(self:GetEnemy()) && Lerp(FrameTime() *5,self:GetPoseParameter("alert_control"),1) || Lerp(FrameTime() *3,self:GetPoseParameter("alert_control"),0))
+	-- self:SetPoseParameter("flex_vert", vel.z)
+	-- self:SetPoseParameter("flex_horz", -vel.x)
+	-- self:SetPoseParameter("tail_control", vel.y)
+	self:SetPoseParameter("dynamo_wheel", Lerp(FrameTime() *3, self:GetPoseParameter("dynamo_wheel"), self:GetPoseParameter("dynamo_wheel") +1))
+	self:SetPoseParameter("alert_control", IsValid(self:GetEnemy()) && Lerp(FrameTime() *5, self:GetPoseParameter("alert_control"), 1) || Lerp(FrameTime() *3, self:GetPoseParameter("alert_control"), 0))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkAttack(isAttacking, enemy)
 	local dist = self.EnemyData.DistanceNearest
 	if dist <= self.LimitChaseDistance_Max && CurTime() > self.NextCameraAttackT && !self.DoingCameraAttack && math.random(1, 20) == 1 then
 		self.DoingCameraAttack = true
-		VJ.CreateSound(self,"npc/scanner/scanner_blip1.wav",75)
+		VJ.CreateSound(self, "npc/scanner/scanner_blip1.wav", 75)
 		if !self.HLR_IsClawScanner then
-			self:PlayAnim("flare",true,false,false,0,{OnFinish=function(interrupted,anim)
-				VJ.CreateSound(self,"npc/scanner/scanner_photo1.wav",75)
-				for _,v in pairs(ents.FindInSphere(self:GetPos() +self:GetForward(),175)) do
+			self:PlayAnim("flare", true, false, false, 0, {OnFinish=function(interrupted, anim)
+				VJ.CreateSound(self, "npc/scanner/scanner_photo1.wav", 75)
+				for _, v in pairs(ents.FindInSphere(self:GetPos() +self:GetForward(), 175)) do
 					if v:IsPlayer() then
-						v:ScreenFade(SCREENFADE.IN,Color(255,255,255),1,2)
+						v:ScreenFade(SCREENFADE.IN, Color(255, 255, 255), 1, 2)
 					end
 				end
 				local att = self:GetAttachment(self:LookupAttachment("light"))
@@ -178,23 +178,23 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 
 				local effectdata = EffectData()
 				effectdata:SetOrigin(tr.HitPos)
-				util.Effect("camera_flash",effectdata,true)
-				self:PlayAnim("retract",true,false,false,0,{OnFinish=function(interrupted,anim)
+				util.Effect("camera_flash", effectdata, true)
+				self:PlayAnim("retract", true, false, false, 0, {OnFinish=function(interrupted, anim)
 					self.DoingCameraAttack = false
 					self.NextCameraAttackT = CurTime() +10
 				end})
 			end})
 		else
-			VJ.CreateSound(self,"npc/scanner/scanner_photo1.wav",75)
-			for _,v in pairs(ents.FindByClass("npc_vj_hlr2_com_strider")) do
+			VJ.CreateSound(self, "npc/scanner/scanner_photo1.wav", 75)
+			for _, v in pairs(ents.FindByClass("npc_vj_hlr2_com_strider")) do
 				if v:CheckRelationship(v) == D_LI && !IsValid(v:GetEnemy()) && !v:IsBusy() then
-					v:ForceSetEnemy(self,true)
+					v:ForceSetEnemy(self, true)
 					v:SCHEDULE_ALERT_CHASE(true)
 				end
 			end
-			for _,v in pairs(ents.FindInSphere(self:GetPos() +self:GetForward(),175)) do
+			for _, v in pairs(ents.FindInSphere(self:GetPos() +self:GetForward(), 175)) do
 				if v:IsPlayer() then
-					v:ScreenFade(SCREENFADE.IN,Color(255,255,255),1,2)
+					v:ScreenFade(SCREENFADE.IN, Color(255, 255, 255), 1, 2)
 				end
 			end
 			local att = self:GetAttachment(self:LookupAttachment("light"))
@@ -206,7 +206,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 
 			local effectdata = EffectData()
 			effectdata:SetOrigin(tr.HitPos)
-			util.Effect("camera_flash",effectdata,true)
+			util.Effect("camera_flash", effectdata, true)
 
 			self.DoingCameraAttack = false
 			self.NextCameraAttackT = CurTime() +10
@@ -218,9 +218,9 @@ function ENT:OnAlert(ent)
 	self.ScanLoop:Stop()
 	self.ScanLoop:Play()
 	if self.HLR_IsClawScanner then
-		for _,v in pairs(ents.FindByClass("npc_vj_hlr2_com_strider")) do
+		for _, v in pairs(ents.FindByClass("npc_vj_hlr2_com_strider")) do
 			if v:CheckRelationship(v) == D_LI && !IsValid(v:GetEnemy()) && !v:IsBusy() then
-				v:ForceSetEnemy(self,true)
+				v:ForceSetEnemy(self, true)
 				v:SCHEDULE_ALERT_CHASE(true)
 			end
 		end
@@ -233,10 +233,10 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDeath(dmginfo, hitgroup, status)
 	if status == "Init" then
-		ParticleEffect("explosion_turret_break",self:GetPos(),Angle(0,0,0),nil)
-		ParticleEffect("electrical_arc_01_system",self:GetPos(),Angle(0,0,0),nil)
-		util.BlastDamage(self,self,self:GetPos(),80,20)
-		VJ.EmitSound(self,"npc/scanner/scanner_electric2.wav",80)
+		ParticleEffect("explosion_turret_break", self:GetPos(), Angle(0, 0, 0), nil)
+		ParticleEffect("electrical_arc_01_system", self:GetPos(), Angle(0, 0, 0), nil)
+		util.BlastDamage(self, self, self:GetPos(), 80, 20)
+		VJ.EmitSound(self, "npc/scanner/scanner_electric2.wav", 80)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

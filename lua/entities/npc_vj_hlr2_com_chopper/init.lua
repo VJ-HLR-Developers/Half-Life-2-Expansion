@@ -24,7 +24,7 @@ ENT.AA_MoveDecelerate = 4
 
 ENT.PoseParameterLooking_InvertPitch = true
 ENT.PoseParameterLooking_InvertYaw = true
-ENT.PoseParameterLooking_Names = {pitch={"weapon_pitch"},yaw={"weapon_yaw"},roll={}}
+ENT.PoseParameterLooking_Names = {pitch={"weapon_pitch"}, yaw={"weapon_yaw"}, roll={}}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 
@@ -77,19 +77,19 @@ ENT.PainSoundLevel = 150
 ENT.DeathSoundLevel = 150
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackProjVel(projectile)
-	return self:CalculateProjectile("Line",self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos,self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),500)
+	return self:CalculateProjectile("Line", self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos, self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(), 500)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(140,140,100),Vector(-140,-140,-75))
-	self:SetPos(self:GetPos() +Vector(0,0,400))
+	self:SetCollisionBounds(Vector(140, 140, 100), Vector(-140, -140, -75))
+	self:SetPos(self:GetPos() +Vector(0, 0, 400))
 	
-	self.IdleLP = CreateSound(self,"npc/attack_helicopter/aheli_rotor_loop1.wav")
+	self.IdleLP = CreateSound(self, "npc/attack_helicopter/aheli_rotor_loop1.wav")
 	self.IdleLP:SetSoundLevel(105)
 	self.IdleLP:Play()
 	self.IdleLP:ChangeVolume(1)
 	
-	self.FireLP = CreateSound(self,"npc/attack_helicopter/aheli_weapon_fire_loop3.wav")
+	self.FireLP = CreateSound(self, "npc/attack_helicopter/aheli_weapon_fire_loop3.wav")
 	self.FireLP:SetSoundLevel(120)
 	self.FireLP:ChangeVolume(1)
 	
@@ -105,20 +105,20 @@ function ENT:Init()
 	self.RangeUseAttachmentForPosID = "Damage0"
 
 	local eyeglow = ents.Create("env_sprite")
-	eyeglow:SetKeyValue("model","sprites/light_glow01.vmt")
-	eyeglow:SetKeyValue("scale","5")
-	eyeglow:SetKeyValue("rendermode","9")
-	eyeglow:SetKeyValue("rendercolor","225 225 225 0")
-	eyeglow:SetKeyValue("spawnflags","1") -- If animated
+	eyeglow:SetKeyValue("model", "sprites/light_glow01.vmt")
+	eyeglow:SetKeyValue("scale", "5")
+	eyeglow:SetKeyValue("rendermode", "9")
+	eyeglow:SetKeyValue("rendercolor", "225 225 225 0")
+	eyeglow:SetKeyValue("spawnflags", "1") -- If animated
 	eyeglow:SetParent(self)
-	eyeglow:Fire("SetParentAttachment","spotlight",0)
+	eyeglow:Fire("SetParentAttachment", "spotlight", 0)
 	eyeglow:Spawn()
 	eyeglow:Activate()
 	self:DeleteOnRemove(eyeglow)
 
 	local spotlight = ents.Create("env_projectedtexture")
 	spotlight:SetPos( self:GetPos() + Vector(0, 0, 0) )
-	spotlight:SetAngles( self:GetAngles() + Angle(0,0,0) )
+	spotlight:SetAngles( self:GetAngles() + Angle(0, 0, 0) )
 	spotlight:SetKeyValue("lightcolor", "225 225 225 255")
 	spotlight:SetKeyValue("lightfov", "75")
 	spotlight:SetKeyValue("farz", "2500")
@@ -145,18 +145,18 @@ end
 function ENT:OnRangeAttackExecute(status, enemy, projectile)
 	if status == "PostSpawn" then
 		self.RangeUseAttachmentForPosID = self.RangeUseAttachmentForPosID == "Damage0" && "Damage3" or "Damage0"
-		VJ.CreateSound(projectile,"weapons/rpg/rocketfire1.wav",80)
-		VJ.CreateSound(projectile,"vj_base/weapons/rpg/rpg1_single_dist.wav",120)
+		VJ.CreateSound(projectile, "weapons/rpg/rocketfire1.wav", 80)
+		VJ.CreateSound(projectile, "vj_base/weapons/rpg/rpg1_single_dist.wav", 120)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:BarrageFire()
 	local bomb = self.CarpetBombing
-	timer.Create("vj_timer_fire_" .. self:EntIndex(),0.1,50,function()
+	timer.Create("vj_timer_fire_" .. self:EntIndex(), 0.1, 50, function()
 		if IsValid(self:GetEnemy()) && !self.Dead then
 			if bomb then timer.Remove("vj_timer_fire_" .. self:EntIndex()) return end
 			sound.EmitHint(SOUND_DANGER, self:GetEnemy():GetPos(), 250, 0.25, self)
-			for i = 1,3 do
+			for i = 1, 3 do
 				local att = self:GetAttachment(2)
 				local bullet = {}
 				bullet.Num = 1
@@ -167,10 +167,10 @@ function ENT:BarrageFire()
 					laserhit:SetOrigin(tr.HitPos)
 					laserhit:SetNormal(tr.HitNormal)
 					laserhit:SetScale(25)
-					util.Effect("AR2Impact",laserhit)
-					dmginfo:SetDamageType(bit.bor(2,4098,2147483648))
+					util.Effect("AR2Impact", laserhit)
+					dmginfo:SetDamageType(bit.bor(2, 4098, 2147483648))
 				end
-				bullet.Spread = Vector(0.05,0.05,0)
+				bullet.Spread = Vector(0.05, 0.05, 0)
 				bullet.Tracer = 1
 				bullet.TracerName = "AirboatGunTracer"
 				bullet.Force = 3
@@ -179,17 +179,17 @@ function ENT:BarrageFire()
 				self:FireBullets(bullet)
 			end
 
-			ParticleEffectAttach("vj_rifle_full_blue",PATTACH_POINT_FOLLOW,self,2)
+			ParticleEffectAttach("vj_rifle_full_blue", PATTACH_POINT_FOLLOW, self, 2)
 			local FireLight1 = ents.Create("light_dynamic")
-			FireLight1:SetKeyValue("brightness",8)
-			FireLight1:SetKeyValue("distance",300)
+			FireLight1:SetKeyValue("brightness", 8)
+			FireLight1:SetKeyValue("distance", 300)
 			FireLight1:SetLocalPos(self:GetAttachment(2).Pos)
 			FireLight1:SetLocalAngles(self:GetAngles())
-			FireLight1:Fire("Color","0 161 255 255")
+			FireLight1:Fire("Color", "0 161 255 255")
 			FireLight1:Spawn()
 			FireLight1:Activate()
-			FireLight1:Fire("TurnOn","",0)
-			FireLight1:Fire("Kill","",0.07)
+			FireLight1:Fire("TurnOn", "", 0)
+			FireLight1:Fire("Kill", "", 0.07)
 			self:DeleteOnRemove(FireLight1)
 		else
 			timer.Remove("vj_timer_fire_" .. self:EntIndex())
@@ -200,11 +200,11 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "explosion" then
-		local pos,ang = self:GetBonePosition(0)
-		VJ.EmitSound(self,"vj_base/ambience/explosion2.wav",100,100)
-		util.BlastDamage(self,self,pos,200,40)
+		local pos, ang = self:GetBonePosition(0)
+		VJ.EmitSound(self, "vj_base/ambience/explosion2.wav", 100, 100)
+		util.BlastDamage(self, self, pos, 200, 40)
 		util.ScreenShake(pos, 100, 200, 1, 2500)
-		if self.HasGibOnDeathEffects then ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil) end
+		if self.HasGibOnDeathEffects then ParticleEffect("vj_explosion2", pos, Angle(0, 0, 0), nil) end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -237,27 +237,27 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 				if resMe:Distance(self.CarpetBombPos) <= 100 then
 					self:AA_StopMoving()
 					self.CarpetBombing = false
-					self.NextCarpetBombT = CurTime() +math.Rand(30,60)
+					self.NextCarpetBombT = CurTime() +math.Rand(30, 60)
 					return
 				end
 				self:SetEnemy(NULL)
 				-- self:SetTurnTarget(self.CarpetBombPos)
 				if CurTime() > self.NextDropCarpetT then
 					local pos = {
-						[1] = {SpawnPos=self:GetAttachment(3).Pos,Right=0},
-						[2] = {SpawnPos=self:GetAttachment(3).Pos +self:GetRight() *50,Right=-1000},
-						[3] = {SpawnPos=self:GetAttachment(3).Pos +self:GetRight() *-50,Right=1000}
+						[1] = {SpawnPos=self:GetAttachment(3).Pos, Right=0},
+						[2] = {SpawnPos=self:GetAttachment(3).Pos +self:GetRight() *50, Right=-1000},
+						[3] = {SpawnPos=self:GetAttachment(3).Pos +self:GetRight() *-50, Right=1000}
 					}
-					for i = 1,3 do
+					for i = 1, 3 do
 						local bomb = ents.Create("grenade_helicopter")
 						bomb:SetPos(pos[i].SpawnPos)
-						bomb:Fire("ExplodeIn",3)
+						bomb:Fire("ExplodeIn", 3)
 						bomb:Spawn()
 						local phys = bomb:GetPhysicsObject()
 						if IsValid(phys) then
-							phys:SetVelocity(((self:GetPos() +Vector(0,0,-500) +self:GetRight() *pos[i].Right) -self:GetPos()))
+							phys:SetVelocity(((self:GetPos() +Vector(0, 0, -500) +self:GetRight() *pos[i].Right) -self:GetPos()))
 						end
-						constraint.NoCollide(bomb,self,0,0)
+						constraint.NoCollide(bomb, self, 0, 0)
 					end
 					self.NextDropCarpetT = CurTime() +0.35
 				end
@@ -268,8 +268,8 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 			local tr = util.TraceHull({
 				start = self:GetPos(),
 				endpos = (self:GetPos() +self:GetUp() *-15000),
-				mins = Vector(-100,-100,-100),
-				maxs = Vector(100,100,100),
+				mins = Vector(-100, -100, -100),
+				maxs = Vector(100, 100, 100),
 				filter = self
 			})
 			if IsValid(tr.Entity) && self:Disposition(tr.Entity) == D_HT then
@@ -279,27 +279,27 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 					[2] = self:GetAttachment(3).Pos +self:GetRight() *50,
 					[3] = self:GetAttachment(3).Pos +self:GetRight() *-50
 				}
-				for i = 1,count do
+				for i = 1, count do
 					local bomb = ents.Create("grenade_helicopter")
 					bomb:SetPos(pos[i])
 					bomb:Spawn()
-					local offset = i > 1 && (tr.Entity:GetRight() *math.Rand(-400,400)) or Vector(0, 0, 0)
+					local offset = i > 1 && (tr.Entity:GetRight() *math.Rand(-400, 400)) or Vector(0, 0, 0)
 					local phys = bomb:GetPhysicsObject()
 					if IsValid(phys) then
 						phys:SetVelocity(((tr.Entity:GetPos() +offset) -bomb:LocalToWorld(Vector(0, 0, 0))))
 					end
-					constraint.NoCollide(bomb,self,0,0)
+					constraint.NoCollide(bomb, self, 0, 0)
 				end
 			end
-			self.NextBombT = CurTime() +math.Rand(2,4)
+			self.NextBombT = CurTime() +math.Rand(2, 4)
 		end
 		if dist <= 4000 && self:Visible(self:GetEnemy()) then
 			if CurTime() > self.NextFireT then
 				if !self.Charged then
 					if !self.Charging then
 						self.Charging = true
-						VJ.EmitSound(self,"npc/attack_helicopter/aheli_charge_up.wav",105)
-						timer.Simple(SoundDuration("npc/attack_helicopter/aheli_charge_up.wav"),function()
+						VJ.EmitSound(self, "npc/attack_helicopter/aheli_charge_up.wav", 105)
+						timer.Simple(SoundDuration("npc/attack_helicopter/aheli_charge_up.wav"), function()
 							if IsValid(self) then
 								self.Charged = true
 								self.Charging = false
@@ -329,45 +329,45 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDeath(dmginfo, hitgroup, status)
 	if status == "Init" then
-		ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,self,8)
-		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,4)
-		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,self,6)
+		ParticleEffectAttach("fire_large_01", PATTACH_POINT_FOLLOW, self, 8)
+		ParticleEffectAttach("smoke_burning_engine_01", PATTACH_POINT_FOLLOW, self, 4)
+		ParticleEffectAttach("smoke_burning_engine_01", PATTACH_POINT_FOLLOW, self, 6)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpseEnt)
-	local pos,ang = self:GetBonePosition(0)
+	local pos, ang = self:GetBonePosition(0)
 	corpseEnt:SetPos(pos)
 	corpseEnt:GetPhysicsObject():SetVelocity(((self:GetPos() +self:GetRight() *-700 +self:GetForward() *-300 +self:GetUp() *-200) -self:GetPos()))
 	util.BlastDamage(self, self, corpseEnt:GetPos(), 400, 40)
 	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
 
-	VJ.EmitSound(self,"vj_base/ambience/explosion2.wav",100,100)
-	VJ.EmitSound(self,"vj_base/ambience/explosion3.wav",100,100)
-	util.BlastDamage(self,self,corpseEnt:GetPos(),200,40)
+	VJ.EmitSound(self, "vj_base/ambience/explosion2.wav", 100, 100)
+	VJ.EmitSound(self, "vj_base/ambience/explosion3.wav", 100, 100)
+	util.BlastDamage(self, self, corpseEnt:GetPos(), 200, 40)
 	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
-	if self.HasGibOnDeathEffects then ParticleEffect("vj_explosion2",corpseEnt:GetPos(),Angle(0,0,0),nil) end
+	if self.HasGibOnDeathEffects then ParticleEffect("vj_explosion2", corpseEnt:GetPos(), Angle(0, 0, 0), nil) end
 
-	if math.random(1,3) == 1 then
-		self:CreateExtraDeathCorpse("prop_ragdoll","models/combine_soldier.mdl",{Pos=corpseEnt:GetPos()+corpseEnt:GetUp()*90+corpseEnt:GetRight()*-30,Vel=Vector(math.Rand(-600,600), math.Rand(-600,600),500)},function(extraent) extraent:Ignite(math.Rand(8,10),0); extraent:SetColor(Color(90,90,90)) end)
+	if math.random(1, 3) == 1 then
+		self:CreateExtraDeathCorpse("prop_ragdoll", "models/combine_soldier.mdl", {Pos=corpseEnt:GetPos()+corpseEnt:GetUp()*90+corpseEnt:GetRight()*-30, Vel=Vector(math.Rand(-600, 600), math.Rand(-600, 600), 500)}, function(extraent) extraent:Ignite(math.Rand(8, 10), 0); extraent:SetColor(Color(90, 90, 90)) end)
 	end
 
 	if self.HasGibOnDeathEffects then
-		ParticleEffect("vj_explosion3",corpseEnt:GetPos(),Angle(0,0,0),nil)
-		ParticleEffect("vj_explosion2",corpseEnt:GetPos() +corpseEnt:GetForward()*-130,Angle(0,0,0),nil)
-		ParticleEffect("vj_explosion2",corpseEnt:GetPos() +corpseEnt:GetForward()*130,Angle(0,0,0),nil)
-		ParticleEffectAttach("fire_large_01",PATTACH_POINT_FOLLOW,corpseEnt,8)
-		ParticleEffectAttach("smoke_burning_engine_01",PATTACH_POINT_FOLLOW,corpseEnt,1)
+		ParticleEffect("vj_explosion3", corpseEnt:GetPos(), Angle(0, 0, 0), nil)
+		ParticleEffect("vj_explosion2", corpseEnt:GetPos() +corpseEnt:GetForward()*-130, Angle(0, 0, 0), nil)
+		ParticleEffect("vj_explosion2", corpseEnt:GetPos() +corpseEnt:GetForward()*130, Angle(0, 0, 0), nil)
+		ParticleEffectAttach("fire_large_01", PATTACH_POINT_FOLLOW, corpseEnt, 8)
+		ParticleEffectAttach("smoke_burning_engine_01", PATTACH_POINT_FOLLOW, corpseEnt, 1)
 		
 		local explosioneffect = EffectData()
 		explosioneffect:SetOrigin(corpseEnt:GetPos())
-		util.Effect("VJ_Medium_Explosion1",explosioneffect)
+		util.Effect("VJ_Medium_Explosion1", explosioneffect)
 		util.Effect("Explosion", explosioneffect)
 		
 		local dusteffect = EffectData()
 		dusteffect:SetOrigin(corpseEnt:GetPos())
 		dusteffect:SetScale(800)
-		util.Effect("ThumperDust",dusteffect)
+		util.Effect("ThumperDust", dusteffect)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

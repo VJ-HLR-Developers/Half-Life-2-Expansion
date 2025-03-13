@@ -55,8 +55,8 @@ ENT.SoundTbl_Death = {
 ENT.MainSoundPitch = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(20,20,65),Vector(-20,-20,0))
-	self.Laser = CreateSound(self,"npc/stalker/laser_burn.wav")
+	self:SetCollisionBounds(Vector(20, 20, 65), Vector(-20, -20, 0))
+	self.Laser = CreateSound(self, "npc/stalker/laser_burn.wav")
 	self.Laser:SetSoundLevel(75)
 	self.NextLAnimT = 0
 end
@@ -83,9 +83,9 @@ function ENT:FireLaser()
 			elec:SetOrigin(hitpos)
 			elec:SetEntity(self)
 			elec:SetAttachment(1)
-			util.Effect("VJ_HLR_StalkerBeam",elec)
+			util.Effect("VJ_HLR_StalkerBeam", elec)
 
-			VJ.ApplyRadiusDamage(self,self,hitpos,30,2,DMG_BURN,true,false,{Force=1})
+			VJ.ApplyRadiusDamage(self, self, hitpos, 30, 2, DMG_BURN, true, false, {Force=1})
 		end
 	end
 end
@@ -102,11 +102,11 @@ function ENT:OnThink()
 	self.DisableChasingEnemy = self.IsLaserAttacking
 	if self.IsLaserAttacking then
 		-- if CurTime() > self.NextLAnimT then
-			-- self:PlayAnim(ACT_RANGE_ATTACK1,true,false,true)
+			-- self:PlayAnim(ACT_RANGE_ATTACK1, true, false, true)
 			-- self.NextLAnimT = CurTime() +self:SequenceDuration(self:LookupSequence("rangeattack")) -0.1
 		-- end
-		local moveCheck = VJ.PICK(self:VJ_CheckAllFourSides(math.random(150,400),true,"0111"))
-		if moveCheck && math.random(1,50) == 1 then
+		local moveCheck = VJ.PICK(self:VJ_CheckAllFourSides(math.random(150, 400), true, "0111"))
+		if moveCheck && math.random(1, 50) == 1 then
 			self:StopMoving()
 			self:SetLastPosition(moveCheck)
 			self:SCHEDULE_GOTO_POSITION(math.random(1, 2) == 1 and "TASK_RUN_PATH" or "TASK_WALK_PATH", function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.TurnData = {Type = VJ.FACE_ENEMY} end)
@@ -125,7 +125,7 @@ function ENT:OnThink()
 			if self:Visible(ent) && ent:GetPos():Distance(self:GetPos()) < self.LimitChaseDistance_Max then
 				if !self.IsLaserAttacking then
 					self.IsLaserAttacking = true
-					VJ.EmitSound(self,"vj_hlr/src/npc/beta_stalker/laser_start.wav",70,100)
+					VJ.EmitSound(self, "vj_hlr/src/npc/beta_stalker/laser_start.wav", 70, 100)
 				end
 			else
 				if self.IsLaserAttacking then
@@ -137,7 +137,7 @@ function ENT:OnThink()
 		if self.VJ_TheController:KeyDown(IN_ATTACK2) then
 			if !self.IsLaserAttacking then
 				self.IsLaserAttacking = true
-				VJ.EmitSound(self,"vj_hlr/src/npc/beta_stalker/laser_start.wav",70,100)
+				VJ.EmitSound(self, "vj_hlr/src/npc/beta_stalker/laser_start.wav", 70, 100)
 			end
 		else
 			if self.IsLaserAttacking then

@@ -7,5 +7,5 @@ include("shared.lua")
 -----------------------------------------------*/
 function ENT:Init()
 	self:SetModel("models/vj_hlr/hl2b/headcrab_poison.mdl")
-	self:SetCollisionBounds(Vector(14,14,15), Vector(-14,-14,0))
+	self:SetCollisionBounds(Vector(14, 14, 15), Vector(-14, -14, 0))
 end

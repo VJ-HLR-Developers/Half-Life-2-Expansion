@@ -77,15 +77,15 @@ function ENT:OnCollisionPersist(data, phys)
 		fakeEnt:SetAngles(self:GetAngles())
 		fakeEnt:Activate()
 		fakeEnt:Spawn()
-		local snd = "vj_hlr/src/npc/ministrider/hunter_flechette_preexplode" .. math.random(1,3) .. ".wav"
-		VJ.CreateSound(self,snd,80)
-		sound.EmitHint(SOUND_DANGER,self:GetPos(),160,SoundDuration(snd) *1.5,fakeEnt)
-		timer.Simple(SoundDuration(snd) *1.5,function()
+		local snd = "vj_hlr/src/npc/ministrider/hunter_flechette_preexplode" .. math.random(1, 3) .. ".wav"
+		VJ.CreateSound(self, snd, 80)
+		sound.EmitHint(SOUND_DANGER, self:GetPos(), 160, SoundDuration(snd) *1.5, fakeEnt)
+		timer.Simple(SoundDuration(snd) *1.5, function()
 			if IsValid(fakeEnt) then
-				VJ.EmitSound(fakeEnt,"vj_hlr/src/npc/ministrider/flechette_explode" .. math.random(1,3) .. ".wav",95)
-				ParticleEffect("hunter_projectile_explosion_1",data.HitPos,Angle(0,0,0),nil)
-				VJ.ApplyRadiusDamage(IsValid(self) && self or IsValid(owner) && owner or fakeEnt, IsValid(owner) && owner or IsValid(self) && self or fakeEnt, data.HitPos, 128, 12, bit.bor(DMG_BLAST,DMG_DISSOLVE), true, true)
-				util.Decal("Scorch",data.HitPos +data.HitNormal,data.HitPos -data.HitNormal)
+				VJ.EmitSound(fakeEnt, "vj_hlr/src/npc/ministrider/flechette_explode" .. math.random(1, 3) .. ".wav", 95)
+				ParticleEffect("hunter_projectile_explosion_1", data.HitPos, Angle(0, 0, 0), nil)
+				VJ.ApplyRadiusDamage(IsValid(self) && self or IsValid(owner) && owner or fakeEnt, IsValid(owner) && owner or IsValid(self) && self or fakeEnt, data.HitPos, 128, 12, bit.bor(DMG_BLAST, DMG_DISSOLVE), true, true)
+				util.Decal("Scorch", data.HitPos +data.HitNormal, data.HitPos -data.HitNormal)
 				fakeEnt:Remove()
 			end
 		end)

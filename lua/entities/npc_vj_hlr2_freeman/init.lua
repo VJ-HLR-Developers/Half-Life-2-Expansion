@@ -54,15 +54,15 @@ ENT.WeaponsList = {
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self.NextWeaponSwitchT = CurTime() + math.Rand(2,4)
+	self.NextWeaponSwitchT = CurTime() + math.Rand(2, 4)
 
-	for _,category in pairs(self.WeaponsList) do
-		for _,wep in pairs(category) do
+	for _, category in pairs(self.WeaponsList) do
+		for _, wep in pairs(category) do
 			self:Give(wep)
 		end
 	end
 
-	self:DoChangeWeapon(VJ.PICK(self.WeaponsList["Normal"]),true)
+	self:DoChangeWeapon(VJ.PICK(self.WeaponsList["Normal"]), true)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnAlert(ent)
@@ -86,10 +86,10 @@ function ENT:OnThinkActive()
 			selectType = "Close"
 		end
 
-		if selectType != false && !self:IsBusy() && CurTime() > self.NextWeaponSwitchT && math.random(1,wep:Clip1() > 0 && (wep:Clip1() <= wep:GetMaxClip1() *0.35) && 1 or (selectType == "Close" && 20 or 150)) == 1 then
-			self:DoChangeWeapon(VJ.PICK(self.WeaponsList[selectType]),true)
+		if selectType != false && !self:IsBusy() && CurTime() > self.NextWeaponSwitchT && math.random(1, wep:Clip1() > 0 && (wep:Clip1() <= wep:GetMaxClip1() *0.35) && 1 or (selectType == "Close" && 20 or 150)) == 1 then
+			self:DoChangeWeapon(VJ.PICK(self.WeaponsList[selectType]), true)
 			wep = self:GetActiveWeapon()
-			self.NextWeaponSwitchT = CurTime() + math.Rand(6,math.Round(math.Clamp(wep:Clip1() *0.5,1,wep:Clip1())))
+			self.NextWeaponSwitchT = CurTime() + math.Rand(6, math.Round(math.Clamp(wep:Clip1() *0.5, 1, wep:Clip1())))
 		end
 	end
 end
@@ -146,10 +146,10 @@ end
 function ENT:OnDeath(dmginfo, hitgroup, status)
 	if status == "Finish" then
 		local myCenterPos = self:GetPos() + self:OBBCenter()
-		for _,category in pairs(self.WeaponsList) do
-			for _,wep in pairs(category) do
+		for _, category in pairs(self.WeaponsList) do
+			for _, wep in pairs(category) do
 				local e = ents.Create(wep)
-				e:SetPos(myCenterPos +VectorRand(-30,30))
+				e:SetPos(myCenterPos +VectorRand(-30, 30))
 				e:SetAngles(self:GetAngles())
 				e:Spawn()
 				local phys = e:GetPhysicsObject()

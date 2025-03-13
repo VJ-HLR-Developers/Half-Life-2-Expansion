@@ -26,7 +26,7 @@ ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
 ENT.MeleeAttackDistance = 70
 ENT.MeleeAttackDamageDistance = 150
 ENT.MeleeAttackDamage = 25
-ENT.MeleeAttackDamageType = bit.bor(DMG_SLASH,DMG_CRUSH)
+ENT.MeleeAttackDamageType = bit.bor(DMG_SLASH, DMG_CRUSH)
 ENT.HasMeleeAttackKnockBack = true
 
 ENT.FootstepSoundTimerRun = 0.21
@@ -35,8 +35,8 @@ ENT.HasExtraMeleeAttackSounds = true
 ENT.MainSoundPitch = 100
 
 -- ENT.SoundTbl_Breath = {"npc/antlion_guard/growl_idle.wav"}
-ENT.SoundTbl_FootStep = {"npc/antlion_guard/foot_heavy1.wav","npc/antlion_guard/foot_heavy2.wav","npc/antlion_guard/foot_light1.wav","npc/antlion_guard/foot_light2.wav"}
-ENT.SoundTbl_Death = {"npc/antlion_guard/antlion_guard_die1.wav","npc/antlion_guard/antlion_guard_die2.wav"}
+ENT.SoundTbl_FootStep = {"npc/antlion_guard/foot_heavy1.wav", "npc/antlion_guard/foot_heavy2.wav", "npc/antlion_guard/foot_light1.wav", "npc/antlion_guard/foot_light2.wav"}
+ENT.SoundTbl_Death = {"npc/antlion_guard/antlion_guard_die1.wav", "npc/antlion_guard/antlion_guard_die2.wav"}
 ENT.SoundTbl_BeforeMeleeAttack = {"npc/antlion_guard/angry1.wav"}
 ENT.SoundTbl_MeleeAttackExtra = {"npc/antlion_guard/shove1.wav"}
 
@@ -55,13 +55,13 @@ ENT.Guard_AnimationCache = {}
 ENT.Guard_Antlions = {}
 --
 function ENT:Init()
-	self:SetCollisionBounds(Vector(40,40,80),Vector(-40,-40,0))
+	self:SetCollisionBounds(Vector(40, 40, 80), Vector(-40, -40, 0))
 	self.IsDiging = false
 	self.ChargeAnim = VJ.SequenceToActivity(self, "charge_loop")
-	self.Breath = CreateSound(self,"npc/antlion_guard/growl_idle.wav")
-	self.Breath:PlayEx(0.65,100)
-	self.ChargeBreath = CreateSound(self,"npc/antlion_guard/growl_high.wav")
-	self.ChargeBreath:PlayEx(0,0)
+	self.Breath = CreateSound(self, "npc/antlion_guard/growl_idle.wav")
+	self.Breath:PlayEx(0.65, 100)
+	self.ChargeBreath = CreateSound(self, "npc/antlion_guard/growl_high.wav")
+	self.ChargeBreath:PlayEx(0, 0)
 
 	self.NextSummonT = CurTime() +6
 	self.NextChargeT = CurTime() +5
@@ -76,63 +76,63 @@ function ENT:Init()
 	if self.IsGuardian then
 		self:SetSkin(1)
 		self.MeleeAttackDamage = 110
-		self.MeleeAttackDamageType = bit.bor(DMG_SLASH,DMG_POISON,DMG_CRUSH)
+		self.MeleeAttackDamageType = bit.bor(DMG_SLASH, DMG_POISON, DMG_CRUSH)
 		self.Immune_Toxic = true
 	end
 	if self:IsDirt(self:GetPos()) then
 		self.IsDiging = true
 		self:SetNoDraw(true)
-		timer.Simple(0.000001,function()
-			self:PlayAnim("floor_break",true,VJ.AnimDuration(self,"floor_break"),false)
+		timer.Simple(0.000001, function()
+			self:PlayAnim("floor_break", true, VJ.AnimDuration(self, "floor_break"), false)
 			self.HasMeleeAttack = false
-			timer.Simple(0.5,function()
+			timer.Simple(0.5, function()
 				if IsValid(self) then
 					self:SetNoDraw(false)
-					self:EmitSound("physics/concrete/concrete_break2.wav",110,100)
-					ParticleEffect("advisor_plat_break",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("strider_impale_ground",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("advisor_plat_break",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("strider_impale_ground",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
+					self:EmitSound("physics/concrete/concrete_break2.wav", 110, 100)
+					ParticleEffect("advisor_plat_break", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("strider_impale_ground", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("advisor_plat_break", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("strider_impale_ground", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
 					if self.IsGuardian then self:CreateEffects() end
 				end
 			end)
-			timer.Simple(0.7,function()
+			timer.Simple(0.7, function()
 				if IsValid(self) then
-					self:EmitSound("physics/concrete/concrete_break2.wav",110,100)
-					ParticleEffect("advisor_plat_break",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("strider_impale_ground",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("advisor_plat_break",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("strider_impale_ground",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
+					self:EmitSound("physics/concrete/concrete_break2.wav", 110, 100)
+					ParticleEffect("advisor_plat_break", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("strider_impale_ground", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("advisor_plat_break", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("strider_impale_ground", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
 				end
 			end)
-			timer.Simple(1.4,function()
+			timer.Simple(1.4, function()
 				if IsValid(self) then
-					self:EmitSound("physics/concrete/concrete_break2.wav",110,100)
-					ParticleEffect("advisor_plat_break",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("strider_impale_ground",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("advisor_plat_break",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("strider_impale_ground",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
+					self:EmitSound("physics/concrete/concrete_break2.wav", 110, 100)
+					ParticleEffect("advisor_plat_break", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("strider_impale_ground", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("advisor_plat_break", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("strider_impale_ground", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
 				end
 			end)
-			timer.Simple(2,function()
+			timer.Simple(2, function()
 				if IsValid(self) then
-					self:EmitSound("physics/concrete/concrete_break2.wav",110,100)
-					ParticleEffect("advisor_plat_break",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("strider_impale_ground",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("advisor_plat_break",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("strider_impale_ground",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
+					self:EmitSound("physics/concrete/concrete_break2.wav", 110, 100)
+					ParticleEffect("advisor_plat_break", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("strider_impale_ground", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("advisor_plat_break", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("strider_impale_ground", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
 				end
 			end)
-			timer.Simple(2.5,function()
+			timer.Simple(2.5, function()
 				if IsValid(self) then
-					self:EmitSound("physics/concrete/concrete_break2.wav",110,100)
-					ParticleEffect("advisor_plat_break",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("strider_impale_ground",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("advisor_plat_break",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
-					ParticleEffect("strider_impale_ground",self:GetPos() +VectorRand() *50,self:GetAngles(),nil)
+					self:EmitSound("physics/concrete/concrete_break2.wav", 110, 100)
+					ParticleEffect("advisor_plat_break", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("strider_impale_ground", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("advisor_plat_break", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
+					ParticleEffect("strider_impale_ground", self:GetPos() +VectorRand() *50, self:GetAngles(), nil)
 				end
 			end)
-			timer.Simple(VJ.AnimDuration(self,"floor_break"),function()
+			timer.Simple(VJ.AnimDuration(self, "floor_break"), function()
 				if IsValid(self) then
 					self.IsDiging = false
 					self.HasMeleeAttack = true
@@ -147,79 +147,79 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CreateEffects()
 	local glow1 = ents.Create("env_sprite")
-	glow1:SetKeyValue("model","vj_base/sprites/glow.vmt")
-	glow1:SetKeyValue("scale","1")
-	glow1:SetKeyValue("rendermode","5")
-	glow1:SetKeyValue("rendercolor","127 225 0")
-	glow1:SetKeyValue("spawnflags","1")
+	glow1:SetKeyValue("model", "vj_base/sprites/glow.vmt")
+	glow1:SetKeyValue("scale", "1")
+	glow1:SetKeyValue("rendermode", "5")
+	glow1:SetKeyValue("rendercolor", "127 225 0")
+	glow1:SetKeyValue("spawnflags", "1")
 	glow1:SetParent(self)
-	glow1:Fire("SetParentAttachment","attach_glow1",0)
+	glow1:Fire("SetParentAttachment", "attach_glow1", 0)
 	glow1:Spawn()
 	glow1:Activate()
 	self:DeleteOnRemove(glow1)
 	local glow2 = ents.Create("env_sprite")
-	glow2:SetKeyValue("model","vj_base/sprites/glow.vmt")
-	glow2:SetKeyValue("scale","0.4")
-	glow2:SetKeyValue("rendermode","5")
-	glow2:SetKeyValue("rendercolor","127 225 0")
-	glow2:SetKeyValue("spawnflags","1")
+	glow2:SetKeyValue("model", "vj_base/sprites/glow.vmt")
+	glow2:SetKeyValue("scale", "0.4")
+	glow2:SetKeyValue("rendermode", "5")
+	glow2:SetKeyValue("rendercolor", "127 225 0")
+	glow2:SetKeyValue("spawnflags", "1")
 	glow2:SetParent(self)
-	glow2:Fire("SetParentAttachment","attach_glow2",0)
+	glow2:Fire("SetParentAttachment", "attach_glow2", 0)
 	glow2:Spawn()
 	glow2:Activate()
 	self:DeleteOnRemove(glow2)
 	local glow3 = ents.Create("env_sprite")
-	glow3:SetKeyValue("model","vj_base/sprites/glow.vmt")
-	glow3:SetKeyValue("scale","0.4")
-	glow3:SetKeyValue("rendermode","5")
-	glow3:SetKeyValue("rendercolor","127 225 0")
-	glow3:SetKeyValue("spawnflags","1")
+	glow3:SetKeyValue("model", "vj_base/sprites/glow.vmt")
+	glow3:SetKeyValue("scale", "0.4")
+	glow3:SetKeyValue("rendermode", "5")
+	glow3:SetKeyValue("rendercolor", "127 225 0")
+	glow3:SetKeyValue("spawnflags", "1")
 	glow3:SetParent(self)
-	glow3:Fire("SetParentAttachment","0",0)
+	glow3:Fire("SetParentAttachment", "0", 0)
 	glow3:Spawn()
 	glow3:Activate()
 	self:DeleteOnRemove(glow3)
 	local glow4 = ents.Create("env_sprite")
-	glow4:SetKeyValue("model","vj_base/sprites/glow.vmt")
-	glow4:SetKeyValue("scale","0.4")
-	glow4:SetKeyValue("rendermode","5")
-	glow4:SetKeyValue("rendercolor","127 225 0")
-	glow4:SetKeyValue("spawnflags","1")
+	glow4:SetKeyValue("model", "vj_base/sprites/glow.vmt")
+	glow4:SetKeyValue("scale", "0.4")
+	glow4:SetKeyValue("rendermode", "5")
+	glow4:SetKeyValue("rendercolor", "127 225 0")
+	glow4:SetKeyValue("spawnflags", "1")
 	glow4:SetParent(self)
-	glow4:Fire("SetParentAttachment","1",0)
+	glow4:Fire("SetParentAttachment", "1", 0)
 	glow4:Spawn()
 	glow4:Activate()
 	self:DeleteOnRemove(glow4)
 	local glowlight = ents.Create("light_dynamic")
-	glowlight:SetKeyValue("_light","127 225 0 200")
-	glowlight:SetKeyValue("brightness","1")
-	glowlight:SetKeyValue("distance","300")
-	glowlight:SetKeyValue("style","0")
+	glowlight:SetKeyValue("_light", "127 225 0 200")
+	glowlight:SetKeyValue("brightness", "1")
+	glowlight:SetKeyValue("distance", "300")
+	glowlight:SetKeyValue("style", "0")
 	glowlight:SetPos(self:GetPos())
 	glowlight:SetParent(self)
 	glowlight:Spawn()
 	glowlight:Activate()
-	glowlight:Fire("SetParentAttachment","attach_glow2")
-	glowlight:Fire("TurnOn","",0)
+	glowlight:Fire("SetParentAttachment", "attach_glow2")
+	glowlight:Fire("TurnOn", "", 0)
 	glowlight:DeleteOnRemove(self)
 	local glowlight_top = ents.Create("light_dynamic")
-	glowlight_top:SetKeyValue("_light","127 225 0 200")
-	glowlight_top:SetKeyValue("brightness","2")
-	glowlight_top:SetKeyValue("distance","300")
-	glowlight_top:SetKeyValue("style","0")
+	glowlight_top:SetKeyValue("_light", "127 225 0 200")
+	glowlight_top:SetKeyValue("brightness", "2")
+	glowlight_top:SetKeyValue("distance", "300")
+	glowlight_top:SetKeyValue("style", "0")
 	glowlight_top:SetPos(self:GetPos())
 	glowlight_top:SetParent(self)
 	glowlight_top:Spawn()
 	glowlight_top:Activate()
-	glowlight_top:Fire("SetParentAttachment","attach_glow1")
-	glowlight_top:Fire("TurnOn","",0)
+	glowlight_top:Fire("SetParentAttachment", "attach_glow1")
+	glowlight_top:Fire("TurnOn", "", 0)
 	glowlight_top:DeleteOnRemove(self)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:IsDirt(pos)
 	local tr = util.TraceLine({
 		start = pos,
-		endpos = pos -Vector(0,0,40),
+		endpos = pos -Vector(0, 0, 40),
 		filter = self,
 		mask = MASK_NPCWORLDSTATIC
 	})
@@ -227,12 +227,12 @@ function ENT:IsDirt(pos)
 	return tr.HitWorld && (mat == MAT_SAND || mat == MAT_DIRT || mat == MAT_FOLIAGE || mat == MAT_SLOSH || mat == 85)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:FindNodesNearPoint(checkPos,total,dist,minDist)
+function ENT:FindNodesNearPoint(checkPos, total, dist, minDist)
 	local nodegraph = table.Copy(VJ_Nodegraph.Data.Nodes)
 	local closestNode = NULL
 	local closestDist = 999999
 	local minDist = minDist or 0
-	for _,v in pairs(nodegraph) do
+	for _, v in pairs(nodegraph) do
 		local dist = v.pos:Distance(checkPos)
 		if dist < closestDist && dist > minDist then
 			closestNode = v
@@ -240,9 +240,9 @@ function ENT:FindNodesNearPoint(checkPos,total,dist,minDist)
 		end
 	end
 	local savedPoints = {}
-	for _,v in pairs(nodegraph) do
+	for _, v in pairs(nodegraph) do
 		if v.pos:Distance(closestNode.pos) <= (dist or 1024) then
-			table.insert(savedPoints,v.pos)
+			table.insert(savedPoints, v.pos)
 		end
 	end
 	return #savedPoints > 0 && savedPoints or false
@@ -251,65 +251,65 @@ end
 function ENT:SummonAllies(anim)
 	if self:IsBusy("Activities") or self.Charging then return end
 	local anim = anim or "bark"
-	self:PlayAnim(anim,true,false,false)
-	timer.Simple(0.5,function()
+	self:PlayAnim(anim, true, false, false)
+	timer.Simple(0.5, function()
 		if IsValid(self) then
-			VJ.CreateSound(self,"npc/antlion_guard/angry2.wav",95,100)
-			for i = 1,math.random(4,self.IsGuardian && 10 or 6) do
-				local pos = self:FindNodesNearPoint(self:GetPos(),16,1024,256)
-				self:CreateAntlion(VJ.PICK(pos) or self:GetPos() +self:GetRight() *math.Rand(-512,512) +self:GetForward() *math.Rand(-512,512))
+			VJ.CreateSound(self, "npc/antlion_guard/angry2.wav", 95, 100)
+			for i = 1, math.random(4, self.IsGuardian && 10 or 6) do
+				local pos = self:FindNodesNearPoint(self:GetPos(), 16, 1024, 256)
+				self:CreateAntlion(VJ.PICK(pos) or self:GetPos() +self:GetRight() *math.Rand(-512, 512) +self:GetForward() *math.Rand(-512, 512))
 			end
 		end
 	end)
 	if anim == "bark" then
-		timer.Simple(1,function()
+		timer.Simple(1, function()
 			if IsValid(self) then
-				VJ.CreateSound(self,"npc/antlion_guard/angry3.wav",95,100)
+				VJ.CreateSound(self, "npc/antlion_guard/angry3.wav", 95, 100)
 			end
 		end)
-		timer.Simple(1.65,function()
+		timer.Simple(1.65, function()
 			if IsValid(self) then
-				self:EmitSound("npc/antlion_guard/angry2.wav",95,100)
+				self:EmitSound("npc/antlion_guard/angry2.wav", 95, 100)
 			end
 		end)
 	else
-		timer.Simple(1.4,function()
+		timer.Simple(1.4, function()
 			if IsValid(self) then
-				VJ.CreateSound(self,"npc/antlion_guard/angry1.wav",95,100)
+				VJ.CreateSound(self, "npc/antlion_guard/angry1.wav", 95, 100)
 			end
 		end)
 	end
-	self.NextSummonT = CurTime() +math.Rand(25,45)
+	self.NextSummonT = CurTime() +math.Rand(25, 45)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnAlert(ent)
 	if self:IsBusy("Activities") or self.Charging then return end
 	self.NextChargeT = CurTime() +5
-	if math.random(1,3) == 1 && CurTime() > self.NextSummonT then
-		self:SummonAllies(VJ.PICK({"bark","roar"}))
+	if math.random(1, 3) == 1 && CurTime() > self.NextSummonT then
+		self:SummonAllies(VJ.PICK({"bark", "roar"}))
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CreateAntlion(pos)
 	-- print(pos)
 	local class = "npc_vj_hlr2_antlion"
-	if math.random(1,3) == 1 then
+	if math.random(1, 3) == 1 then
 		class = "npc_vj_hlr2_antlion_worker"
 	end
 	local antlion = ents.Create(class)
-	antlion:SetPos(pos +Vector(0,0,10))
+	antlion:SetPos(pos +Vector(0, 0, 10))
 	antlion:SetAngles(self:GetAngles())
 	antlion:Spawn()
 	antlion:Activate()
 	antlion.VJ_NPC_Class = self.VJ_NPC_Class
 	antlion:Dig(true)
-	table.insert(self.Guard_Antlions,antlion)
-	ParticleEffect("advisor_plat_break",antlion:GetPos(),antlion:GetAngles(),antlion)
-	ParticleEffect("strider_impale_ground",antlion:GetPos(),antlion:GetAngles(),antlion)
+	table.insert(self.Guard_Antlions, antlion)
+	ParticleEffect("advisor_plat_break", antlion:GetPos(), antlion:GetAngles(), antlion)
+	ParticleEffect("strider_impale_ground", antlion:GetPos(), antlion:GetAngles(), antlion)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MeleeAttackKnockbackVelocity(hitEnt)
-	return self:GetForward() *math.random(400,500) +self:GetUp() *300
+	return self:GetForward() *math.random(400, 500) +self:GetUp() *300
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDamaged(dmginfo, hitgroup, status)
@@ -329,7 +329,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 			self.DisableChasingEnemy = false
 			self.HasMeleeAttack = true
 			self:CapabilitiesAdd(CAP_MOVE_JUMP)
-			self:PlayAnim("charge_stop",true,false,false)
+			self:PlayAnim("charge_stop", true, false, false)
 			self.ChargeBreath:Stop()
 			return
 		end
@@ -346,11 +346,11 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 			maxs = self:OBBMaxs() *0.85,
 		})
 		self:SetLastPosition(tr.HitPos +tr.HitNormal *200)
-		self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.TurnData = {Type = VJ.FACE_ENEMY} end)
+		self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH", function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.TurnData = {Type = VJ.FACE_ENEMY} end)
 		if self:OnGround() then
 			self:SetVelocity(self:GetMoveVelocity() *1.01)
 		end
-		-- VJ.DEBUG_TempEnt(self:GetLastPosition(), self:GetAngles(), Color(255,0,0), 5)
+		-- VJ.DEBUG_TempEnt(self:GetLastPosition(), self:GetAngles(), Color(255, 0, 0), 5)
 		if tr.Hit then
 			self:SetMaxYawSpeed(self.TurningSpeed)
 			self.IsCharging = false
@@ -361,14 +361,14 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 			self:SetState()
 			self.ChargeBreath:Stop()
 			if tr.HitWorld then
-				self:PlayAnim({"charge_crash","charge_crash02","charge_crash03"},true,false,false)
-				util.ScreenShake(self:GetPos(),1000,100,1,500)
-				VJ.CreateSound(self,"npc/antlion_guard/shove1.wav",75)
+				self:PlayAnim({"charge_crash", "charge_crash02", "charge_crash03"}, true, false, false)
+				util.ScreenShake(self:GetPos(), 1000, 100, 1, 500)
+				VJ.CreateSound(self, "npc/antlion_guard/shove1.wav", 75)
 			else
-				self:PlayAnim("charge_stop",true,false,false)
+				self:PlayAnim("charge_stop", true, false, false)
 				local gest = self:AddGestureSequence(self:LookupSequence("charge_hit"))
-				self:SetLayerPriority(gest,1)
-				self:SetLayerPlaybackRate(gest,0.5)
+				self:SetLayerPriority(gest, 1)
+				self:SetLayerPlaybackRate(gest, 0.5)
 				local ent = tr.Entity
 				local isProp = IsValid(ent) && VJ.IsProp(ent) or false
 				if IsValid(ent) && (isProp or self:CheckRelationship(ent) == D_HT) then
@@ -384,7 +384,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 					end
 					local dmginfo = DamageInfo()
 					dmginfo:SetDamage(50)
-					dmginfo:SetDamageType(bit.bor(DMG_SLASH,DMG_CRUSH))
+					dmginfo:SetDamageType(bit.bor(DMG_SLASH, DMG_CRUSH))
 					dmginfo:SetDamageForce(self:GetForward() *1000)
 					dmginfo:SetAttacker(self)
 					dmginfo:SetInflictor(self)
@@ -393,20 +393,20 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 				end
 			end
 			-- PrintTable(tr)
-			-- VJ.DEBUG_TempEnt(tr.HitPos, self:GetAngles(), Color(255,0,0), 5)
+			-- VJ.DEBUG_TempEnt(tr.HitPos, self:GetAngles(), Color(255, 0, 0), 5)
 		end
 		return
 	end
 
 	local controlled = self.VJ_IsBeingControlled
 	local ply = self.VJ_TheController
-	if (controlled && ply:KeyDown(IN_ATTACK2) or !controlled && eneData.Visible && dist > 500 && dist <= 2500 && !self:IsBusy() && math.random(1,50) == 1 && math.abs(self:GetPos().z -enemy:GetPos().z) <= 128) && !self.IsCharging then
+	if (controlled && ply:KeyDown(IN_ATTACK2) or !controlled && eneData.Visible && dist > 500 && dist <= 2500 && !self:IsBusy() && math.random(1, 50) == 1 && math.abs(self:GetPos().z -enemy:GetPos().z) <= 128) && !self.IsCharging then
 		self.IsCharging = true
 		self.ChargeT = CurTime() +6
-		VJ.CreateSound(self,{"npc/antlion_guard/angry1.wav","npc/antlion_guard/angry2.wav","npc/antlion_guard/angry3.wav"},72)
+		VJ.CreateSound(self, {"npc/antlion_guard/angry1.wav", "npc/antlion_guard/angry2.wav", "npc/antlion_guard/angry3.wav"}, 72)
 		self.ChargeBreath:Play()
-		self.ChargeBreath:ChangeVolume(1,1)
-		self:PlayAnim("charge_startfast",true,false,true, 0, {OnFinish=function(interrupted, anim)
+		self.ChargeBreath:ChangeVolume(1, 1)
+		self:PlayAnim("charge_startfast", true, false, true, 0, {OnFinish=function(interrupted, anim)
 			if interrupted then
 				return
 			end
@@ -415,7 +415,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 		return
 	end
 
-	if ((controlled && ply:KeyDown(IN_RELOAD)) or !controlled && math.random(1,75) == 1) && CurTime() > self.NextSummonT then
+	if ((controlled && ply:KeyDown(IN_RELOAD)) or !controlled && math.random(1, 75) == 1) && CurTime() > self.NextSummonT then
 		self:SummonAllies()
 	end
 end
@@ -424,7 +424,7 @@ function ENT:OnThinkActive()
 	local hasEnemy = IsValid(self:GetEnemy())
 
 	self.BreathPitch = Lerp(FrameTime() *10, self.BreathPitch, hasEnemy && 110 or 90)
-	self.Breath:ChangeVolume(hasEnemy && 1 or 0.65,1)
+	self.Breath:ChangeVolume(hasEnemy && 1 or 0.65, 1)
 	self.Breath:ChangePitch(self.BreathPitch)
 	self.ChargeBreath:ChangePitch(self.BreathPitch)
 end

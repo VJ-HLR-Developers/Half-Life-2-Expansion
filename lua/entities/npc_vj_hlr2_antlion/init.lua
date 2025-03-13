@@ -28,7 +28,7 @@ ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.BloodParticle = {"blood_impact_yellow_01"}
 
 ENT.HasMeleeAttack = true
-ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1,"pounce","pounce2"}
+ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1, "pounce", "pounce2"}
 ENT.MeleeAttackDistance = 50
 ENT.MeleeAttackDamageDistance = 85
 ENT.TimeUntilMeleeAttackDamage = false
@@ -55,7 +55,7 @@ ENT.ConstantlyFaceEnemy = true
 ENT.ConstantlyFaceEnemy_Postures = "Moving"
 ENT.ConstantlyFaceEnemy_MinDistance = 500
 
-ENT.SoundTbl_FootStep = {"npc/antlion/foot1.wav","npc/antlion/foot2.wav","npc/antlion/foot3.wav","npc/antlion/foot4.wav"}
+ENT.SoundTbl_FootStep = {"npc/antlion/foot1.wav", "npc/antlion/foot2.wav", "npc/antlion/foot3.wav", "npc/antlion/foot4.wav"}
 ENT.SoundTbl_Idle = {
 	"npc/antlion/idle1.wav",
 	"npc/antlion/idle2.wav",
@@ -97,7 +97,7 @@ end
 function ENT:IsDirt(pos)
 	local tr = util.TraceLine({
 		start = pos,
-		endpos = pos -Vector(0,0,40),
+		endpos = pos -Vector(0, 0, 40),
 		filter = self,
 		mask = MASK_NPCWORLDSTATIC
 	})
@@ -109,24 +109,24 @@ function ENT:Dig(ignoreDirt)
 	if !ignoreDirt && self:IsDirt(self:GetPos()) or ignoreDirt then
 		self:SetNoDraw(true)
 		self.IsDigging = true
-		timer.Simple(0.02,function()
+		timer.Simple(0.02, function()
 			if IsValid(self) then
-				self:EmitSound("physics/concrete/concrete_break2.wav",80,100)
-				VJ.EmitSound(self,"npc/antlion/digup1.wav",75,100)
-				ParticleEffect("advisor_plat_break",self:GetPos(),self:GetAngles(),self)
-				ParticleEffect("strider_impale_ground",self:GetPos(),self:GetAngles(),self)
-				self:PlayAnim("digout",true,VJ.AnimDuration(self,"digout"),false)
+				self:EmitSound("physics/concrete/concrete_break2.wav", 80, 100)
+				VJ.EmitSound(self, "npc/antlion/digup1.wav", 75, 100)
+				ParticleEffect("advisor_plat_break", self:GetPos(), self:GetAngles(), self)
+				ParticleEffect("strider_impale_ground", self:GetPos(), self:GetAngles(), self)
+				self:PlayAnim("digout", true, VJ.AnimDuration(self, "digout"), false)
 				self.HasMeleeAttack = false
-				timer.Simple(0.15,function() if IsValid(self) then self:SetNoDraw(false) end end)
-				timer.Simple(VJ.AnimDuration(self,"digout"),function() if IsValid(self) then self.HasMeleeAttack = true self.IsDigging = false end end)
+				timer.Simple(0.15, function() if IsValid(self) then self:SetNoDraw(false) end end)
+				timer.Simple(VJ.AnimDuration(self, "digout"), function() if IsValid(self) then self.HasMeleeAttack = true self.IsDigging = false end end)
 			end
 		end)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(20,20,64),Vector(-20,-20,0))
-	self:SetSkin(math.random(0,3))
+	self:SetCollisionBounds(Vector(20, 20, 64), Vector(-20, -20, 0))
+	self:SetSkin(math.random(0, 3))
 	self.DefaultDamage = self.MeleeAttackDamage
 	if self:GetSkin() > 0 && !self.HasDeathAnimation then
 		local mul = self:GetSkin()
@@ -139,7 +139,7 @@ function ENT:Init()
 		self.DefaultDamage = self.MeleeAttackDamage *mul
 		self.MeleeAttackDamage = self.DefaultDamage
 	end
-	self.FlyLoop = CreateSound(self,"npc/antlion/fly1.wav")
+	self.FlyLoop = CreateSound(self, "npc/antlion/fly1.wav")
 	self.FlyLoop:SetSoundLevel(80)
 	self.IsDigging = false
 	self:Dig()
@@ -151,22 +151,22 @@ end
 function ENT:OnThinkActive()
 	if self.Antlion_StartedLeapAttack && self:OnGround() then
 		self.Antlion_StartedLeapAttack = false
-		self:PlayAnim("jump_stop",true,false,false)
+		self:PlayAnim("jump_stop", true, false, false)
 	end
 	if self.FlyLoop:IsPlaying() then
 		if self:GetSequenceActivity(self:GetSequence()) == 27 or self:GetSequenceActivity(self:GetSequence()) == 30 then
 			return
 		end
 		self.FlyLoop:Stop()
-		self:SetBodygroup(1,0)
+		self:SetBodygroup(1, 0)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnAlert(ent)
 	if self.IsDiging == true then return end
-	if math.random(1,6) == 1 then
-		local tbl = VJ.PICK({"distract","roar"})
-		self:PlayAnim(tbl,true,VJ.AnimDuration(self,tbl),false)
+	if math.random(1, 6) == 1 then
+		local tbl = VJ.PICK({"distract", "roar"})
+		self:PlayAnim(tbl, true, VJ.AnimDuration(self, tbl), false)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -183,30 +183,30 @@ function ENT:OnInput(key, activator, caller, data)
 		self:PlayFootstepSound()
 	end
 	if key == "scream" then
-		VJ.EmitSound(self,"npc/antlion/antlion_preburst_scream" .. math.random(1,2) .. ".wav",75,100)
+		VJ.EmitSound(self, "npc/antlion/antlion_preburst_scream" .. math.random(1, 2) .. ".wav", 75, 100)
 	end
 	if key == "explode" then
-		VJ.EmitSound(self,"npc/antlion/antlion_burst" .. math.random(1,2) .. ".wav",75,100)
+		VJ.EmitSound(self, "npc/antlion/antlion_burst" .. math.random(1, 2) .. ".wav", 75, 100)
 	end
 	if key == "range" then
-		for i = 1,math.random(2,4) do
+		for i = 1, math.random(2, 4) do
 			self:ExecuteRangeAttack()
 		end
 	end
 	if key == "step_heavy" then
-		VJ.EmitSound(self,"npc/antlion/shell_impact" .. math.random(1,4) .. ".wav",75,100)
+		VJ.EmitSound(self, "npc/antlion/shell_impact" .. math.random(1, 4) .. ".wav", 75, 100)
 	end
 	if key == 78 then
-		VJ.EmitSound(self,"npc/antlion/attack_double" .. math.random(1,3) .. ".wav",75,100)
+		VJ.EmitSound(self, "npc/antlion/attack_double" .. math.random(1, 3) .. ".wav", 75, 100)
 	end
 	if key == "on" then
-		self:SetBodygroup(1,1)
+		self:SetBodygroup(1, 1)
 		self.FlyLoop:Play()
 	end
 	if key == "off" then
-		self:SetBodygroup(1,0)
+		self:SetBodygroup(1, 0)
 		self.FlyLoop:Stop()
-		VJ.EmitSound(self,"npc/antlion/land1.wav",75,100)
+		VJ.EmitSound(self, "npc/antlion/land1.wav", 75, 100)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

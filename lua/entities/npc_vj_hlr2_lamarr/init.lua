@@ -12,10 +12,10 @@ ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
 ENT.AlliedWithPlayerAllies = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(8,10,15), Vector(-8,-10,0))
+	self:SetCollisionBounds(Vector(8, 10, 15), Vector(-8, -10, 0))
 
 	self.Headcrab_Sleeping = false
-	self.Headcrab_NextSleepT = CurTime() +math.random(20,30)
+	self.Headcrab_NextSleepT = CurTime() +math.random(20, 30)
 	self.Headcrab_WakeUpT = 0
 	self.Headcrab_SleepAnimT = 0
 end
@@ -30,7 +30,7 @@ function ENT:OnBleed(dmginfo, hitgroup)
 	if self.Headcrab_Sleeping then
 		self.Headcrab_WakeUpT = 0
 	else
-		self.Headcrab_NextSleepT = CurTime() +math.random(20,30)
+		self.Headcrab_NextSleepT = CurTime() +math.random(20, 30)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -38,8 +38,8 @@ function ENT:OnThinkActive()
 
 	if self.Headcrab_Sleeping then
 		if CurTime() > self.Headcrab_SleepAnimT then
-			self:PlayAnim("SleepLoop",true,false,false)
-			VJ.EmitSound(self,"npc/headcrab/idle2.wav",65,100)
+			self:PlayAnim("SleepLoop", true, false, false)
+			VJ.EmitSound(self, "npc/headcrab/idle2.wav", 65, 100)
 			self.Headcrab_SleepAnimT = CurTime() +self:SequenceDuration("SleepLoop")
 		elseif CurTime() > self.Headcrab_WakeUpT then
 			self.Headcrab_Sleeping = false

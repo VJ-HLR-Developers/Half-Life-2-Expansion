@@ -21,72 +21,72 @@ ENT.Acceleration = 85 -- Obsolete
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AA_StopMoving()
 	if self:GetVelocity():Length() > 0 then
-		self:SetLocalVelocity(LerpVector(0.1,self:GetVelocity(),Vector(0, 0, 0)))
-		self:SetPoseParameter("move_yaw",Lerp(0.2,self:GetPoseParameter("move_yaw"),0))
+		self:SetLocalVelocity(LerpVector(0.1, self:GetVelocity(), Vector(0, 0, 0)))
+		self:SetPoseParameter("move_yaw", Lerp(0.2, self:GetPoseParameter("move_yaw"), 0))
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:Between(pos,a,b)
+function ENT:Between(pos, a, b)
 	local ang = (pos -self:GetPos()):Angle()
-	local dif = math.AngleDifference(self:GetAngles().y,ang.y)
+	local dif = math.AngleDifference(self:GetAngles().y, ang.y)
 	return dif < a && dif > b
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DecideYaw(pos)
 	local y = 0
-	if self:Between(pos,30,-30) then
+	if self:Between(pos, 30, -30) then
 		y = 0
-	elseif self:Between(pos,50,70) then
+	elseif self:Between(pos, 50, 70) then
 		y = -45
-	elseif self:Between(pos,120,70) then
+	elseif self:Between(pos, 120, 70) then
 		y = -90
-	elseif self:Between(pos,150,120) then
+	elseif self:Between(pos, 150, 120) then
 		y = -135
-	elseif !self:Between(pos,150,-150) then
+	elseif !self:Between(pos, 150, -150) then
 		y = 180
-	elseif self:Between(pos,-110,-150) then
+	elseif self:Between(pos, -110, -150) then
 		y = 135
-	elseif self:Between(pos,-70,-110) then
+	elseif self:Between(pos, -70, -110) then
 		y = 90
-	elseif self:Between(pos,-30,-70) then
+	elseif self:Between(pos, -30, -70) then
 		y = 45
 	end
 	
 	self.CurrentTargetYaw = y
-	self:SetPoseParameter("move_yaw",Lerp(0.5,self:GetPoseParameter("move_yaw"),y))
+	self:SetPoseParameter("move_yaw", Lerp(0.5, self:GetPoseParameter("move_yaw"), y))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AA_IdleWander()
 	local rand = 2500
 	local randZMin = 800
 	local randZMax = 1250
-	self:AAMove_FlyToPosition(self:GetPos() +Vector(math.Rand(-rand,rand),math.Rand(-rand,rand),math.Rand(-randZMin,randZMax)),true)
+	self:AAMove_FlyToPosition(self:GetPos() +Vector(math.Rand(-rand, rand), math.Rand(-rand, rand), math.Rand(-randZMin, randZMax)), true)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:AAMove_FlyToPosition(Pos,isWander,ovSpeed)
+function ENT:AAMove_FlyToPosition(Pos, isWander, ovSpeed)
 	self.AA_CanPlayMoveAnimation = true
 	self.AA_CurrentMoveAnimType = "Calm"
 
 	local speed = ovSpeed or self.FlySpeed
-	-- local speed = math.Clamp(self:GetVelocity():Length() +self.Acceleration,5,self.FlySpeed)
+	-- local speed = math.Clamp(self:GetVelocity():Length() +self.Acceleration, 5, self.FlySpeed)
 	self:DecideYaw(Pos)
 	if self:GetPoseParameter("move_yaw") -self.CurrentTargetYaw > 30 then
-		-- speed = math.Clamp(self:GetVelocity():Length() -self:GetVelocity():Length() /2,5,self.FlySpeed)
+		-- speed = math.Clamp(self:GetVelocity():Length() -self:GetVelocity():Length() /2, 5, self.FlySpeed)
 	end
-	local tr = util.TraceLine({start=self:GetPos(),endpos=Pos,filter={self,self.VJ_TheController}})
+	local tr = util.TraceLine({start=self:GetPos(), endpos=Pos, filter={self, self.VJ_TheController}})
 	if tr.Hit && tr.HitWorld then
 		Pos = tr.HitPos -tr.HitNormal *self:OBBMaxs()
 	end
-	local tr = util.TraceLine({start=Pos,endpos=Pos +Vector(0,0,-800),filter={self,self.VJ_TheController}})
+	local tr = util.TraceLine({start=Pos, endpos=Pos +Vector(0, 0, -800), filter={self, self.VJ_TheController}})
 	if tr.Hit then
-		Pos = Pos +Vector(0,0,800)
+		Pos = Pos +Vector(0, 0, 800)
 	end
 	local GoToPos = (Pos -self:GetPos()):GetNormal() *speed
 
 	-- if vel_stop == false then
 		self.AA_CurrentTurnAng = self:GetTurnAngle(self:GetTurnAngle((Pos):Angle()))
 		self:SetLocalVelocity(GoToPos)
-		-- self:SetLocalVelocity(LerpVector(0.1,self:GetVelocity(),GoToPos))
+		-- self:SetLocalVelocity(LerpVector(0.1, self:GetVelocity(), GoToPos))
 		-- self:AddVelocity(GoToPos)
 		-- self:SetTurnTarget(GoToPos)
 		local moveTime = ((self:GetPos():Distance(Pos)) /self:GetVelocity():Length())
@@ -97,7 +97,7 @@ function ENT:AAMove_FlyToPosition(Pos,isWander,ovSpeed)
 			self.AA_MoveLength_Wander = vel_len
 			self.AA_MoveLength_Chase = 0
 			self:SetTurnTarget(GoToPos)
-			-- self:SetIdealYawAndUpdate(Angle(0,(Pos -self:GetPos()):Angle().y,0).y,speed)
+			-- self:SetIdealYawAndUpdate(Angle(0, (Pos -self:GetPos()):Angle().y, 0).y, speed)
 		else
 			self.AA_MoveLength_Wander = 0
 			self.AA_MoveLength_Chase = vel_len

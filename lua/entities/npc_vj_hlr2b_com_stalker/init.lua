@@ -69,7 +69,7 @@ ENT.SoundTbl_BeforeMeleeAttack = {
 	"vj_hlr/src/npc/beta_stalker/attack9.wav",
 	"vj_hlr/src/npc/beta_stalker/attack10.wav",
 }
-ENT.SoundTbl_MeleeAttackExtra = {"vj_hlr/gsrc/npc/zombie/claw_strike1.wav","vj_hlr/gsrc/npc/zombie/claw_strike2.wav","vj_hlr/gsrc/npc/zombie/claw_strike3.wav"}
+ENT.SoundTbl_MeleeAttackExtra = {"vj_hlr/gsrc/npc/zombie/claw_strike1.wav", "vj_hlr/gsrc/npc/zombie/claw_strike2.wav", "vj_hlr/gsrc/npc/zombie/claw_strike3.wav"}
 ENT.SoundTbl_Pain = {
 	"vj_hlr/src/npc/beta_stalker/pain1.wav",
 	"vj_hlr/src/npc/beta_stalker/pain2.wav",
@@ -85,8 +85,8 @@ ENT.SoundTbl_Death = {
 ENT.MainSoundPitch = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(20,20,65),Vector(-20,-20,0))
-	self.Laser = CreateSound(self,"vj_hlr/src/npc/beta_stalker/laser_burn.wav")
+	self:SetCollisionBounds(Vector(20, 20, 65), Vector(-20, -20, 0))
+	self.Laser = CreateSound(self, "vj_hlr/src/npc/beta_stalker/laser_burn.wav")
 	self.Laser:SetSoundLevel(75)
 	self.NextLAnimT = 0
 	self.NextRunAwayT = 0
@@ -117,9 +117,9 @@ function ENT:FireLaser()
 			elec:SetOrigin(hitpos)
 			elec:SetEntity(self)
 			elec:SetAttachment(1)
-			util.Effect("VJ_HLR_StalkerBeam",elec)
+			util.Effect("VJ_HLR_StalkerBeam", elec)
 
-			VJ.ApplyRadiusDamage(self,self,hitpos,30,2,DMG_BURN,true,false,{Force=1})
+			VJ.ApplyRadiusDamage(self, self, hitpos, 30, 2, DMG_BURN, true, false, {Force=1})
 		end
 	end
 end
@@ -135,7 +135,7 @@ end
 function ENT:OnThink()
 	if self.IsLaserAttacking then
 		if CurTime() > self.NextLAnimT then
-			self:PlayAnim(ACT_RANGE_ATTACK1,true,false,true)
+			self:PlayAnim(ACT_RANGE_ATTACK1, true, false, true)
 			self.NextLAnimT = CurTime() +self:SequenceDuration(self:LookupSequence("rangeattack")) -0.1
 		end
 		self:FireLaser()
@@ -151,7 +151,7 @@ function ENT:OnThink()
 			if self:Visible(ent) && (CurTime() > self.NextRunAwayT) && ent:GetPos():Distance(self:GetPos()) < self.LimitChaseDistance_Max && ent:GetPos():Distance(self:GetPos()) > self.LimitChaseDistance_Min then
 				if !self.IsLaserAttacking then
 					self.IsLaserAttacking = true
-					VJ.EmitSound(self,"vj_hlr/src/npc/beta_stalker/laser_start.wav",70,100)
+					VJ.EmitSound(self, "vj_hlr/src/npc/beta_stalker/laser_start.wav", 70, 100)
 				end
 			else
 				if self.IsLaserAttacking then
@@ -163,7 +163,7 @@ function ENT:OnThink()
 		if self.VJ_TheController:KeyDown(IN_ATTACK2) then
 			if !self.IsLaserAttacking then
 				self.IsLaserAttacking = true
-				VJ.EmitSound(self,"vj_hlr/src/npc/beta_stalker/laser_start.wav",70,100)
+				VJ.EmitSound(self, "vj_hlr/src/npc/beta_stalker/laser_start.wav", 70, 100)
 			end
 		else
 			if self.IsLaserAttacking then
@@ -183,8 +183,8 @@ end
 function ENT:OnDamaged(dmginfo, hitgroup, status)
 	if status == "PostDamage" && CurTime() > self.NextRunAwayT && !self.VJ_IsBeingControlled then
 		self:LaserReset()
-		VJ.CreateSound(self,self.SoundTbl_Scramble,80,100)
-		self:SCHEDULE_COVER_ENEMY("TASK_RUN_PATH",function(x) x.RunCode_OnFail = function() self.NextRunAwayT = 0 end end)
+		VJ.CreateSound(self, self.SoundTbl_Scramble, 80, 100)
+		self:SCHEDULE_COVER_ENEMY("TASK_RUN_PATH", function(x) x.RunCode_OnFail = function() self.NextRunAwayT = 0 end end)
 		self.NextRunAwayT = CurTime() + 5
 	end
 end

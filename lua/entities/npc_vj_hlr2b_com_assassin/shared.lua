@@ -6,8 +6,8 @@ ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
 ENT.Category		= "Half-Life Resurgence"
 
 function ENT:SetupDataTables()
-	self:NetworkVar("Bool",0,"Cloaked")
-	self:NetworkVar("Float",0,"FireTime")
+	self:NetworkVar("Bool", 0, "Cloaked")
+	self:NetworkVar("Float", 0, "FireTime")
 end
 
 if CLIENT && GetConVar("vj_hlr2_combine_eyeglow"):GetInt() == 1 then

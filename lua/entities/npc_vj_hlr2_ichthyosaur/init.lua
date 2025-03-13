@@ -57,7 +57,7 @@ ENT.MainSoundPitch = 100
 ENT.Icky_Idle = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(40,40,40), Vector(-40,-40,-40))
+	self:SetCollisionBounds(Vector(40, 40, 40), Vector(-40, -40, -40))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
@@ -68,27 +68,27 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnMeleeAttack_BeforeChecks()
 	local pos = self:GetPos() +self:GetAngles():Forward() *35
-	effects.Bubbles(pos +Vector(-32,-32,-32),pos +Vector(32,32,32),math.random(16,32),math.random(100,300),1)
+	effects.Bubbles(pos +Vector(-32, -32, -32), pos +Vector(32, 32, 32), math.random(16, 32), math.random(100, 300), 1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnMeleeAttack_AfterChecks(v, isProp)
 	self:SetHealth(math.Clamp(self:Health() + ((self.MeleeAttackDamage > v:Health() && v:Health()) or self.MeleeAttackDamage), self:Health(), self:GetMaxHealth()*2))
-	self:PlayAnim(ACT_RANGE_ATTACK1_LOW,true,false,true)
+	self:PlayAnim(ACT_RANGE_ATTACK1_LOW, true, false, true)
 	if v:IsPlayer() then
-		v:ScreenFade(SCREENFADE.IN,Color(64,0,0),0.5,0)
+		v:ScreenFade(SCREENFADE.IN, Color(64, 0, 0), 0.5, 0)
 	end
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnMeleeAttack_Miss()
-	self:PlayAnim(ACT_RANGE_ATTACK2_LOW,true,false,false)
-	VJ.CreateSound(self,"npc/ichthyosaur/snap_miss.wav",75)
+	self:PlayAnim(ACT_RANGE_ATTACK2_LOW, true, false, false)
+	VJ.CreateSound(self, "npc/ichthyosaur/snap_miss.wav", 75)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
 	local waterLevel = self:WaterLevel()
-	if math.random(1,10) == 1 && waterLevel > 0 then
-		effects.Bubbles(self:GetPos() +(self:OBBMins() *0.5),self:GetPos() +(self:OBBMaxs() *0.5),math.random(1,4),math.random(100,300),1)
+	if math.random(1, 10) == 1 && waterLevel > 0 then
+		effects.Bubbles(self:GetPos() +(self:OBBMins() *0.5), self:GetPos() +(self:OBBMaxs() *0.5), math.random(1, 4), math.random(100, 300), 1)
 	end
 	if self.Icky_Idle == 0 && waterLevel == 0 then
 		self.Icky_Idle = 1

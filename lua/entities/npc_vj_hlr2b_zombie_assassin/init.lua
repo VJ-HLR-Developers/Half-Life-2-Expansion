@@ -68,9 +68,9 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
-		VJ.EmitSound(self,self.SoundTbl_FootStep,60)
+		VJ.EmitSound(self, self.SoundTbl_FootStep, 60)
 	elseif key == "step_run" then
-		VJ.EmitSound(self,self.SoundTbl_FootStep_Run,68)
+		VJ.EmitSound(self, self.SoundTbl_FootStep_Run, 68)
 	elseif key == "melee" then
 		self:ExecuteMeleeAttack()
 	end
@@ -82,20 +82,20 @@ function ENT:OnThinkActive()
 	local enemy = self:GetEnemy()
 	if IsValid(enemy) && !controlled then
 		local dist = self.EnemyData.DistanceNearest
-		if CurTime() > self.NextScreamT && math.random(1,15) == 1 && dist < 200 then
-			VJ.CreateSound(self,"^npc/stalker/go_alert2a.wav",100,65)
+		if CurTime() > self.NextScreamT && math.random(1, 15) == 1 && dist < 200 then
+			VJ.CreateSound(self, "^npc/stalker/go_alert2a.wav", 100, 65)
 			util.ScreenShake(self:GetPos(), 10, 120, 2, 400)
 			sound.EmitHint(SOUND_DANGER, self:GetPos(), 400, 1.5, self)
-			for _,v in pairs(ents.FindInSphere(self:GetPos(), 400)) do
+			for _, v in pairs(ents.FindInSphere(self:GetPos(), 400)) do
 				if v:IsPlayer() && self:CheckRelationship(v) == D_HT then
 					local time = ((400 /self:GetPos():Distance(v:GetPos())) -1) *1.5
-					self:DoMeleeAttackPlayerSpeed(v,70,90,time)
+					self:DoMeleeAttackPlayerSpeed(v, 70, 90, time)
 					net.Start("VJ_HLR2_ZombieAssassinScream")
 						net.WriteEntity(v)
 					net.Send(v)
 				end
 			end
-			self.NextScreamT = CurTime() +math.Rand(10,25)
+			self.NextScreamT = CurTime() +math.Rand(10, 25)
 		end
 		if !(enemy:GetForward():Dot((self:GetPos() -enemy:GetPos()):GetNormalized()) > math.cos(math.rad(60))) && dist > 600 then
 			if set != 1 then
@@ -121,10 +121,10 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 		return false
 	end
 
-	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
+	VJ.CreateSound(ent, self.SoundTbl_DeathFollow, self.DeathSoundLevel)
 	local dmgtype = dmginfo:GetDamageType()
 	if hitgroup == HITGROUP_HEAD then
-		ent:SetBodygroup(0,1)
+		ent:SetBodygroup(0, 1)
 		self:CreateExtraDeathCorpse(
 			"prop_ragdoll",
 			"models/headcrabclassic.mdl",
@@ -134,8 +134,8 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 			end
 		)
 	else
-		if math.random(1,(dmgtype == DMG_CLUB or dmgtype == DMG_SLASH or DMG_BLAST) && 1 or 3) == 1 then
-			ent:SetBodygroup(0,1)
+		if math.random(1, (dmgtype == DMG_CLUB or dmgtype == DMG_SLASH or DMG_BLAST) && 1 or 3) == 1 then
+			ent:SetBodygroup(0, 1)
 			local crab = ents.Create("npc_vj_hlr2b_headcrab")
 			local enemy = self:GetEnemy()
 			crab:SetPos(self:EyePos())
@@ -144,9 +144,9 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 			crab:SetGroundEntity(NULL) -- This fixes that issue where they snap to the ground when spawned
 			crab:SetLocalVelocity(self:GetVelocity() *dmginfo:GetDamageForce():Length())
 			if ent:IsOnFire() then
-				crab:Ignite(math.random(8,10))
+				crab:Ignite(math.random(8, 10))
 			end
-			undo.ReplaceEntity(self,crab)
+			undo.ReplaceEntity(self, crab)
 		end
 	end
 end

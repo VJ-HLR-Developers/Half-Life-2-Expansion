@@ -44,8 +44,8 @@ ENT.AnimTbl_Death = ACT_DIESIMPLE
 ENT.DeathCorpseEntityClass = "prop_vj_animatable"
 
 ENT.SoundTbl_Idle = {"vj_hlr/gsrc/npc/barnacle/bcl_tongue1.wav"}
-ENT.SoundTbl_MeleeAttack = {"vj_hlr/gsrc/npc/barnacle/bcl_chew1.wav","vj_hlr/gsrc/npc/barnacle/bcl_chew2.wav","vj_hlr/gsrc/npc/barnacle/bcl_chew3.wav"}
-ENT.SoundTbl_Death = {"vj_hlr/gsrc/npc/barnacle/bcl_die1.wav","vj_hlr/gsrc/npc/barnacle/bcl_die3.wav"}
+ENT.SoundTbl_MeleeAttack = {"vj_hlr/gsrc/npc/barnacle/bcl_chew1.wav", "vj_hlr/gsrc/npc/barnacle/bcl_chew2.wav", "vj_hlr/gsrc/npc/barnacle/bcl_chew3.wav"}
+ENT.SoundTbl_Death = {"vj_hlr/gsrc/npc/barnacle/bcl_die1.wav", "vj_hlr/gsrc/npc/barnacle/bcl_die3.wav"}
 
 ENT.MainSoundPitch = 100
 
@@ -59,13 +59,13 @@ ENT.Barnacle_NextPullSoundT = 0
 function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpseEnt)
 	corpseEnt:DrawShadow(false)
 	corpseEnt:SetPoseParameter("tongue_height", self.Barnacle_LastHeight)
-	self:SetBoneController(0,self.Barnacle_LastHeight)
+	self:SetBoneController(0, self.Barnacle_LastHeight)
 	corpseEnt:ResetSequence("Death")
 	corpseEnt:SetCycle(1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(18,18,10),Vector(-18,-18,-50))
+	self:SetCollisionBounds(Vector(18, 18, 10), Vector(-18, -18, -50))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
@@ -74,21 +74,21 @@ function ENT:OnInput(key, activator, caller, data)
 		self:ExecuteMeleeAttack()
 	end
 	if key == "death_gibs" then
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh1.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-25))})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh2.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-25))})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh3.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-25))})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh4.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-25))})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hgib_b_bone.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-25))})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hgib_b_gib.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-25))})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hgib_guts.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-25))})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hgib_hmeat.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-25))})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hgib_lung.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-25))})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hgib_skull.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-25))})
-		self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/hgib_legbone.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-25))})
+		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh1.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -25))})
+		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh2.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -25))})
+		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh3.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -25))})
+		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh4.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -25))})
+		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/hgib_b_bone.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -25))})
+		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/hgib_b_gib.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -25))})
+		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/hgib_guts.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -25))})
+		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/hgib_hmeat.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -25))})
+		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/hgib_lung.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -25))})
+		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/hgib_skull.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -25))})
+		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/hgib_legbone.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -25))})
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-hook.Add("SetupMove","VJ_Barnacle_SetupMove", function(ply, mv)
+hook.Add("SetupMove", "VJ_Barnacle_SetupMove", function(ply, mv)
 	-- Make the player not be able to walk
 	if ply.Barnacle_Grabbed == true then
     	mv:SetMaxClientSpeed(0)
@@ -99,7 +99,7 @@ function ENT:Barnacle_CalculateTongue()
 	-- print(self:GetBoneController(0))
 	-- print(self.Barnacle_LastHeight)
 	-- print(self:GetPoseParameter("tongue_height"))
-	-- self:SetPoseParameter("tongue_height",0)
+	-- self:SetPoseParameter("tongue_height", 0)
 	local tr = util.TraceLine({
 		start = self:GetPos(),
 		endpos = self:GetPos() +self:GetUp() *-1024,
@@ -108,8 +108,8 @@ function ENT:Barnacle_CalculateTongue()
 	local trent = tr.Entity
 	local trpos = tr.HitPos
 	local height = self:GetPos():Distance(trpos) +250
-	self.Barnacle_LastHeight = math.Clamp(height,128,1024)
-	self:SetPoseParameter("tongue_height",-math.Clamp(height,-128,1024))
+	self.Barnacle_LastHeight = math.Clamp(height, 128, 1024)
+	self:SetPoseParameter("tongue_height", -math.Clamp(height, -128, 1024))
 
 	if IsValid(trent) && (trent:IsNPC() or trent:IsPlayer()) && self:CheckRelationship(trent) == D_HT && trent.VJ_ID_Boss != true then
 		-- If the grabbed enemy is a new enemy then reset the enemy values
@@ -121,7 +121,7 @@ function ENT:Barnacle_CalculateTongue()
 		trent.Barnacle_Grabbed = true
 		if trent:IsNPC() then
 			trent:StopMoving()
-			trent:SetVelocity(Vector(0,0,2))
+			trent:SetVelocity(Vector(0, 0, 2))
 			trent:SetMoveType(MOVETYPE_FLY)
 			if trent.IsVJBaseSNPC == true then
 				trent:SetState(VJ_STATE_FREEZE, 10)
@@ -141,14 +141,14 @@ function ENT:Barnacle_CalculateTongue()
 				self.Barnacle_NextPullSoundT = CurTime() + SoundDuration("vj_hlr/gsrc/npc/barnacle/bcl_alert2.wav")
 			end
 		end
-		-- self:SetPoseParameter("tongue_height",self.Barnacle_LastHeight)
-		-- self:SetBoneController(0,-(self:GetPos():Distance(trpos + self:GetUp()*125)))
+		-- self:SetPoseParameter("tongue_height", self.Barnacle_LastHeight)
+		-- self:SetBoneController(0, -(self:GetPos():Distance(trpos + self:GetUp()*125)))
 		return true
 	else
 		self:Barnacle_ResetEnt()
 	end
-	-- self:SetPoseParameter("tongue_height",self.Barnacle_LastHeight)
-	-- self:SetBoneController(0,-(self:GetPos():Distance(trpos + self:GetUp()*193)))
+	-- self:SetPoseParameter("tongue_height", self.Barnacle_LastHeight)
+	-- self:SetBoneController(0, -(self:GetPos():Distance(trpos + self:GetUp()*193)))
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -194,31 +194,31 @@ function ENT:HandleGibOnDeath(dmginfo, hitgroup)
 	if self.HasGibOnDeathEffects then
 		local bloodeffect = EffectData()
 		bloodeffect:SetOrigin(self:GetPos() + self:OBBCenter())
-		bloodeffect:SetColor(VJ.Color2Byte(Color(130,19,10)))
+		bloodeffect:SetColor(VJ.Color2Byte(Color(130, 19, 10)))
 		bloodeffect:SetScale(120)
-		util.Effect("VJ_Blood1",bloodeffect)
+		util.Effect("VJ_Blood1", bloodeffect)
 		
 		local bloodspray = EffectData()
 		bloodspray:SetOrigin(self:GetPos())
 		bloodspray:SetScale(8)
 		bloodspray:SetFlags(3)
 		bloodspray:SetColor(0)
-		util.Effect("bloodspray",bloodspray)
-		util.Effect("bloodspray",bloodspray)
+		util.Effect("bloodspray", bloodspray)
+		util.Effect("bloodspray", bloodspray)
 	end
 	
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh1.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh2.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh3.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh4.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh1.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh2.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh3.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh4.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh1.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh2.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh3.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
-	self:CreateGibEntity("obj_vj_gib","models/vj_hlr/gibs/flesh4.mdl",{CollisionDecal="VJ_HLR1_Blood_Red",Pos=self:LocalToWorld(Vector(0,0,-20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh1.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh2.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh3.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh4.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh1.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh2.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh3.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh4.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh1.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh2.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh3.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
+	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh4.mdl", {CollisionDecal="VJ_HLR1_Blood_Red", Pos=self:LocalToWorld(Vector(0, 0, -20))})
 	
 	self:PlaySoundSystem("Gib", "vj_base/gib/splat.wav")
 	return true, {AllowSound = true}

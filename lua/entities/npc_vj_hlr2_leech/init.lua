@@ -28,9 +28,9 @@ ENT.MeleeAttackDamageDistance = 20
 ENT.HasDeathCorpse = false
 ENT.PropInteraction = false
 
-ENT.SoundTbl_Idle = {"vj_hlr/gsrc/npc/leech/leech_alert1.wav","vj_hlr/gsrc/npc/leech/leech_alert2.wav"}
-//ENT.SoundTbl_Alert = {"vj_hlr/gsrc/npc/leech/leech_alert1.wav","vj_hlr/gsrc/npc/leech/leech_alert2.wav"}
-ENT.SoundTbl_MeleeAttack = {"vj_hlr/gsrc/npc/leech/leech_bite1.wav","vj_hlr/gsrc/npc/leech/leech_bite2.wav","vj_hlr/gsrc/npc/leech/leech_bite3.wav"}
+ENT.SoundTbl_Idle = {"vj_hlr/gsrc/npc/leech/leech_alert1.wav", "vj_hlr/gsrc/npc/leech/leech_alert2.wav"}
+//ENT.SoundTbl_Alert = {"vj_hlr/gsrc/npc/leech/leech_alert1.wav", "vj_hlr/gsrc/npc/leech/leech_alert2.wav"}
+ENT.SoundTbl_MeleeAttack = {"vj_hlr/gsrc/npc/leech/leech_bite1.wav", "vj_hlr/gsrc/npc/leech/leech_bite2.wav", "vj_hlr/gsrc/npc/leech/leech_bite3.wav"}
 
 -- Custom
 ENT.Leech_FollowOffsetPos = 0
@@ -38,7 +38,7 @@ ENT.Leech_FollowOffsetPos = 0
 Leech_Leader = NULL
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(4,4,3),Vector(-4,-4,-2))
+	self:SetCollisionBounds(Vector(4, 4, 3), Vector(-4, -4, -2))
 	self.Leech_FollowOffsetPos = Vector(math.random(-50, 50), math.random(-120, 120), math.random(-150, 150))
 	if !IsValid(Leech_Leader) then
 		Leech_Leader = self
@@ -53,7 +53,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()
 	if !self.Dead && self:WaterLevel() == 0 then
-		self:TakeDamage(1,self,self)
+		self:TakeDamage(1, self, self)
 	end
 	if IsValid(Leech_Leader) then
 		if Leech_Leader != self then

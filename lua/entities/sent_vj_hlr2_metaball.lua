@@ -11,8 +11,8 @@ ENT.PrintName 		= "Blob"
 ENT.Author 			= ""
 ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
 
-local BLOB_HEIGHTVEC = Vector(0,0,8)
-local BLOB_VEC0 = Vector(0,0,0)
+local BLOB_HEIGHTVEC = Vector(0, 0, 8)
+local BLOB_VEC0 = Vector(0, 0, 0)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then
 	VJ.AddKillIcon("sent_vj_hlr2_metaball", ENT.PrintName)
@@ -29,16 +29,16 @@ function ENT:Initialize()
 	self:SetMoveType(MOVETYPE_FLY)
 	self:SetMoveCollide(MOVECOLLIDE_FLY_SLIDE)
 	self:SetSolid(SOLID_NONE)
-	self:AddSolidFlags(bit.bor(FSOLID_NOT_STANDABLE,FSOLID_NOT_SOLID))
+	self:AddSolidFlags(bit.bor(FSOLID_NOT_STANDABLE, FSOLID_NOT_SOLID))
 	self:AddEffects(EF_NOSHADOW)
 
 	-- self:PhysicsInit(SOLID_VPHYSICS)
 	-- self:SetMoveType(MOVETYPE_VPHYSICS)
 	-- self:SetSolid(SOLID_VPHYSICS)
 
-	self.Scale = math.Rand(0.8,1)
+	self.Scale = math.Rand(0.8, 1)
 	self.MoveType = 0
-	self.LastPosition = Vector(0,0,0)
+	self.LastPosition = Vector(0, 0, 0)
 	self.SinePhase = 0
 	self.SineFrequency = 0
 	self.SineAmplitude = 0
@@ -54,8 +54,8 @@ function ENT:Initialize()
 		phys:EnableGravity(false)
 	end
 
-	local rAng = Angle(0,0,0)
-	rAng.y = math.Rand(0,360)
+	local rAng = Angle(0, 0, 0)
+	rAng.y = math.Rand(0, 360)
 	self:SetAngles(rAng)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -71,13 +71,13 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Think()
 	-- if IsValid(self:GetOwner()) && IsValid(self:GetOwner():GetEnemy()) then
-		-- self:MoveTowardsTargetEntity(187,self:GetOwner():GetEnemy())
+		-- self:MoveTowardsTargetEntity(187, self:GetOwner():GetEnemy())
 	-- end
-	-- util.ParticleTracerEx("Weapon_Combine_Ion_Cannon_Beam",self:GetPos(), self.LastPosition, false, self:EntIndex(), 0)
-	-- VJ.DEBUG_TempEnt(self.LastPosition, Angle(0,0,0), Color(145,255,0), 5)
+	-- util.ParticleTracerEx("Weapon_Combine_Ion_Cannon_Beam", self:GetPos(), self.LastPosition, false, self:EntIndex(), 0)
+	-- VJ.DEBUG_TempEnt(self.LastPosition, Angle(0, 0, 0), Color(145, 255, 0), 5)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:ModifyVelocityForSurface(flInterval,flSpeed)
+function ENT:ModifyVelocityForSurface(flInterval, flSpeed)
 	local vecStart = self:GetPos()
 	local up = BLOB_HEIGHTVEC
 	local vecWishedGoal = vecStart +(self:GetAbsVelocity() *flInterval)
@@ -110,7 +110,7 @@ function ENT:ModifyVelocityForSurface(flInterval,flSpeed)
 				local vecMassCenter = phys:GetMassCenter()
 				local vecMassCenterWorld = phys:LocalToWorld(vecMassCenter)
 				if tr.HitPos.z > vecMassCenterWorld.z then
-					phys:ApplyForceOffset((-150 *self:GetModelScale()) *tr.HitNormal,tr.HitPos)
+					phys:ApplyForceOffset((-150 *self:GetModelScale()) *tr.HitNormal, tr.HitPos)
 				end
 			end
 		end
@@ -120,7 +120,7 @@ function ENT:ModifyVelocityForSurface(flInterval,flSpeed)
 	self:SetVel(vecDir *flSpeed)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:MoveTowardsTargetEntity(speed,ent)
+function ENT:MoveTowardsTargetEntity(speed, ent)
 	ent = ent or (self:GetOwner() && self:GetOwner():GetEnemy())
 
 	if IsValid(ent) then
@@ -139,24 +139,24 @@ function ENT:MoveTowardsTargetEntity(speed,ent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:MoveTowardsTargetLocation(speed,pos)
+function ENT:MoveTowardsTargetLocation(speed, pos)
 	self.LastPosition = pos
 	local vecDir = pos -self:GetPos()
 	local dist = pos:Distance(self:GetPos())
 	if dist <= 8 then
 		self:SetActiveMovementRule(BLOB_MOVE_DONT_MOVE)
 	end
-	speed = math.min(dist,speed)
+	speed = math.min(dist, speed)
 	self:SetVel(vecDir *speed)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ReconfigureRandomParams()
-	self.SinePhase = math.Rand(0.01,0.9)
-	self.SineFrequency = math.Rand(10,20)
-	self.SineAmplitude = math.Rand(0.5,1.5)
+	self.SinePhase = math.Rand(0.01, 0.9)
+	self.SineFrequency = math.Rand(10, 20)
+	self.SineAmplitude = math.Rand(0.5, 1.5)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:EnforceSpeedLimits(flMinSpeed,flMaxSpeed)
+function ENT:EnforceSpeedLimits(flMinSpeed, flMaxSpeed)
 	local vecVelocity = self:GetAbsVelocity()
 	local flSpeed = vecVelocity:Normalize() or 0
 
@@ -170,17 +170,17 @@ end
 function ENT:PhysicsCollide(data, physobj)
 	local velSpeed = physobj:GetVelocity():Length()
 	if velSpeed > 50 then
-		VJ.EmitSound(self,"ambient/water/water_spray" .. math.random(1,3) .. ".wav",75,math.random(90,110))
+		VJ.EmitSound(self, "ambient/water/water_spray" .. math.random(1, 3) .. ".wav", 75, math.random(90, 110))
 	end
 	local hitEnt = data.HitEntity
 	if IsValid(hitEnt) && (hitEnt:IsNPC() or hitEnt:IsPlayer()) then
 		local dmg = DamageInfo()
 		dmg:SetDamage(5)
-		dmg:SetDamageType(bit.bor(DMG_SLASH,DMG_DROWN))
+		dmg:SetDamageType(bit.bor(DMG_SLASH, DMG_DROWN))
 		dmg:SetAttacker(IsValid(self:GetOwner()) && self:GetOwner() or self)
 		dmg:SetInflictor(self)
 		dmg:SetDamagePosition(data.HitPos)
-		hitEnt:TakeDamageInfo(dmg,self)
+		hitEnt:TakeDamageInfo(dmg, self)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

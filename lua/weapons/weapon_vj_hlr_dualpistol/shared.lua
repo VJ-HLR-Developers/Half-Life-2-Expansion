@@ -26,7 +26,7 @@ function SWEP:Init()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:PrimaryAttackEffects(owner)
-	ParticleEffectAttach("vj_rifle_full",PATTACH_POINT_FOLLOW,self:GetOwner(),self.CurrentMuzzle == "left" && 1 or 2)
+	ParticleEffectAttach("vj_rifle_full", PATTACH_POINT_FOLLOW, self:GetOwner(), self.CurrentMuzzle == "left" && 1 or 2)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:OnAnimEvent(pos, ang, event, options)

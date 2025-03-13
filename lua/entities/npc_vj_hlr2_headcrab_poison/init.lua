@@ -18,7 +18,7 @@ ENT.ControllerParams = {
     FirstP_Offset = Vector(1, 0, 2),
 }
 
-ENT.AnimTbl_IdleStand = {ACT_IDLE,"IdleSumo","IdleSniff"}
+ENT.AnimTbl_IdleStand = {ACT_IDLE, "IdleSumo", "IdleSniff"}
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 ENT.BloodParticle = {"blood_impact_yellow_01"}
@@ -44,7 +44,7 @@ ENT.TimeUntilLeapAttackVelocity = 1.48
 ENT.LeapAttackVelocityForward = 70
 ENT.LeapAttackVelocityUp = 200
 ENT.LeapAttackDamageType = DMG_SLASH
-ENT.LeapAttackExtraTimers = {1.7,1.9,2.1,2.3}
+ENT.LeapAttackExtraTimers = {1.7, 1.9, 2.1, 2.3}
 ENT.LeapAttackStopOnHit = true
 ENT.LeapAttackDamageDistance = 40
 ENT.LeapAttackDamage = 0
@@ -59,15 +59,15 @@ ENT.HasExtraMeleeAttackSounds = true
 ENT.FootstepSoundTimerRun = 0.5
 ENT.FootstepSoundTimerWalk = 0.5
 
-ENT.SoundTbl_FootStep = {"npc/headcrab_poison/ph_step1.wav","npc/headcrab_poison/ph_step2.wav","npc/headcrab_poison/ph_step3.wav","npc/headcrab_poison/ph_step4.wav"}
-ENT.SoundTbl_AlertAnim = {"npc/headcrab_poison/ph_warning1.wav","npc/headcrab_poison/ph_warning2.wav","npc/headcrab_poison/ph_warning3.wav"}
+ENT.SoundTbl_FootStep = {"npc/headcrab_poison/ph_step1.wav", "npc/headcrab_poison/ph_step2.wav", "npc/headcrab_poison/ph_step3.wav", "npc/headcrab_poison/ph_step4.wav"}
+ENT.SoundTbl_AlertAnim = {"npc/headcrab_poison/ph_warning1.wav", "npc/headcrab_poison/ph_warning2.wav", "npc/headcrab_poison/ph_warning3.wav"}
 ENT.SoundTbl_CombatIdle = {"npc/headcrab_poison/ph_hiss1.wav"}
-ENT.SoundTbl_BeforeRangeAttack = {"npc/headcrab_poison/ph_scream1.wav","npc/headcrab_poison/ph_scream2.wav","npc/headcrab_poison/ph_scream3.wav"}
-ENT.SoundTbl_BeforeLeapAttack = {"npc/headcrab_poison/ph_scream1.wav","npc/headcrab_poison/ph_scream2.wav","npc/headcrab_poison/ph_scream3.wav"}
-ENT.SoundTbl_LeapAttackDamage = {"npc/headcrab_poison/ph_poisonbite1.wav","npc/headcrab_poison/ph_poisonbite2.wav","npc/headcrab_poison/ph_poisonbite3.wav"}
-ENT.SoundTbl_LeapAttackJump = {"npc/headcrab_poison/ph_jump1.wav","npc/headcrab_poison/ph_jump2.wav","npc/headcrab_poison/ph_jump3.wav"}
-ENT.SoundTbl_Pain = {"npc/headcrab_poison/ph_pain1.wav","npc/headcrab_poison/ph_pain2.wav","npc/headcrab_poison/ph_pain3.wav","npc/headcrab_poison/ph_wallpain1.wav","npc/headcrab_poison/ph_wallpain2.wav","npc/headcrab_poison/ph_wallpain3.wav"}
-ENT.SoundTbl_Death = {"npc/headcrab_poison/ph_rattle1.wav","npc/headcrab_poison/ph_rattle2.wav","npc/headcrab_poison/ph_rattle3.wav"}
+ENT.SoundTbl_BeforeRangeAttack = {"npc/headcrab_poison/ph_scream1.wav", "npc/headcrab_poison/ph_scream2.wav", "npc/headcrab_poison/ph_scream3.wav"}
+ENT.SoundTbl_BeforeLeapAttack = {"npc/headcrab_poison/ph_scream1.wav", "npc/headcrab_poison/ph_scream2.wav", "npc/headcrab_poison/ph_scream3.wav"}
+ENT.SoundTbl_LeapAttackDamage = {"npc/headcrab_poison/ph_poisonbite1.wav", "npc/headcrab_poison/ph_poisonbite2.wav", "npc/headcrab_poison/ph_poisonbite3.wav"}
+ENT.SoundTbl_LeapAttackJump = {"npc/headcrab_poison/ph_jump1.wav", "npc/headcrab_poison/ph_jump2.wav", "npc/headcrab_poison/ph_jump3.wav"}
+ENT.SoundTbl_Pain = {"npc/headcrab_poison/ph_pain1.wav", "npc/headcrab_poison/ph_pain2.wav", "npc/headcrab_poison/ph_pain3.wav", "npc/headcrab_poison/ph_wallpain1.wav", "npc/headcrab_poison/ph_wallpain2.wav", "npc/headcrab_poison/ph_wallpain3.wav"}
+ENT.SoundTbl_Death = {"npc/headcrab_poison/ph_rattle1.wav", "npc/headcrab_poison/ph_rattle2.wav", "npc/headcrab_poison/ph_rattle3.wav"}
 ENT.SoundTbl_Idle = {
 	"npc/headcrab_poison/ph_idle1.wav",
 	"npc/headcrab_poison/ph_idle2.wav",
@@ -99,10 +99,10 @@ ENT.MainSoundPitch = 100
 ENT.AnimationSet = 0 -- 0 = Default, 1 = Scurry, 2 = Custom
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	self:SetCollisionBounds(Vector(14,14,15), Vector(-14,-14,0))
+	self:SetCollisionBounds(Vector(14, 14, 15), Vector(-14, -14, 0))
 
-	self.ScurryAnimation = VJ.SequenceToActivity(self,"Scurry")
-	self.FlyAnimation = VJ.SequenceToActivity(self,"Drown")
+	self.ScurryAnimation = VJ.SequenceToActivity(self, "Scurry")
+	self.FlyAnimation = VJ.SequenceToActivity(self, "Drown")
 
 	self.WasThrown = false
 	self.HasRanThrownDamage = false
@@ -127,8 +127,8 @@ function ENT:OnAlert(ent)
 
 	VJ.STOPSOUND(self.CurrentIdleSound)
 	self.NextIdleSoundT = self.NextIdleSoundT + 2
-	self.CurrentSpeechSound = VJ.CreateSound(self,VJ.PICK(self.SoundTbl_AlertAnim),self.AlertSoundLevel,self:GetSoundPitch(self.AlertSoundPitch))
-	self:PlayAnim("Threatdisplay",true,VJ.AnimDuration(self,"Threatdisplay"),false)
+	self.CurrentSpeechSound = VJ.CreateSound(self, VJ.PICK(self.SoundTbl_AlertAnim), self.AlertSoundLevel, self:GetSoundPitch(self.AlertSoundPitch))
+	self:PlayAnim("Threatdisplay", true, VJ.AnimDuration(self, "Threatdisplay"), false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:TranslateActivity(act)
@@ -173,7 +173,7 @@ end
 function ENT:DoPoisonHeadcrabDamage(v)
 	if !IsValid(v) then return end
 
-	VJ.EmitSound(self,self.SoundTbl_LeapAttackDamage,75)
+	VJ.EmitSound(self, self.SoundTbl_LeapAttackDamage, 75)
 
 	if v:Health() > 1 then
 		local poisonDMG = DamageInfo()

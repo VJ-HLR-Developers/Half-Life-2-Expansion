@@ -36,14 +36,14 @@ ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 ENT.MainSoundPitch = 100
 
-ENT.SoundTbl_FootStep = {"vj_hlr/src/npc/zombine/gear1.wav","vj_hlr/src/npc/zombine/gear2.wav","vj_hlr/src/npc/zombine/gear3.wav"}
-ENT.SoundTbl_Idle = {"vj_hlr/src/npc/zombine/zombine_idle1.wav","vj_hlr/src/npc/zombine/zombine_idle2.wav","vj_hlr/src/npc/zombine/zombine_idle3.wav","vj_hlr/src/npc/zombine/zombine_idle4.wav"}
-ENT.SoundTbl_Alert = {"vj_hlr/src/npc/zombine/zombine_alert1.wav","vj_hlr/src/npc/zombine/zombine_alert2.wav","vj_hlr/src/npc/zombine/zombine_alert3.wav","vj_hlr/src/npc/zombine/zombine_alert4.wav","vj_hlr/src/npc/zombine/zombine_alert5.wav","vj_hlr/src/npc/zombine/zombine_alert7.wav"}
-ENT.SoundTbl_BeforeMeleeAttack = {"vj_hlr/src/npc/zombine/zombine_charge1.wav","vj_hlr/src/npc/zombine/zombine_charge2.wav"}
-ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav","npc/zombie/claw_strike2.wav","npc/zombie/claw_strike3.wav"}
-ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav","npc/zombie/claw_miss2.wav"}
-ENT.SoundTbl_Pain = {"vj_hlr/src/npc/zombine/zombine_pain1.wav","vj_hlr/src/npc/zombine/zombine_pain2.wav","vj_hlr/src/npc/zombine/zombine_pain3.wav","vj_hlr/src/npc/zombine/zombine_pain4.wav"}
-ENT.SoundTbl_DeathFollow = {"vj_hlr/src/npc/zombine/zombine_die1.wav","vj_hlr/src/npc/zombine/zombine_die2.wav"}
+ENT.SoundTbl_FootStep = {"vj_hlr/src/npc/zombine/gear1.wav", "vj_hlr/src/npc/zombine/gear2.wav", "vj_hlr/src/npc/zombine/gear3.wav"}
+ENT.SoundTbl_Idle = {"vj_hlr/src/npc/zombine/zombine_idle1.wav", "vj_hlr/src/npc/zombine/zombine_idle2.wav", "vj_hlr/src/npc/zombine/zombine_idle3.wav", "vj_hlr/src/npc/zombine/zombine_idle4.wav"}
+ENT.SoundTbl_Alert = {"vj_hlr/src/npc/zombine/zombine_alert1.wav", "vj_hlr/src/npc/zombine/zombine_alert2.wav", "vj_hlr/src/npc/zombine/zombine_alert3.wav", "vj_hlr/src/npc/zombine/zombine_alert4.wav", "vj_hlr/src/npc/zombine/zombine_alert5.wav", "vj_hlr/src/npc/zombine/zombine_alert7.wav"}
+ENT.SoundTbl_BeforeMeleeAttack = {"vj_hlr/src/npc/zombine/zombine_charge1.wav", "vj_hlr/src/npc/zombine/zombine_charge2.wav"}
+ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav", "npc/zombie/claw_strike2.wav", "npc/zombie/claw_strike3.wav"}
+ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav", "npc/zombie/claw_miss2.wav"}
+ENT.SoundTbl_Pain = {"vj_hlr/src/npc/zombine/zombine_pain1.wav", "vj_hlr/src/npc/zombine/zombine_pain2.wav", "vj_hlr/src/npc/zombine/zombine_pain3.wav", "vj_hlr/src/npc/zombine/zombine_pain4.wav"}
+ENT.SoundTbl_DeathFollow = {"vj_hlr/src/npc/zombine/zombine_die1.wav", "vj_hlr/src/npc/zombine/zombine_die2.wav"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetSlump(doSlump)
 	if doSlump then
@@ -56,7 +56,7 @@ function ENT:SetSlump(doSlump)
 			filter = self
 		})
 		self.SlumpSet = tr.Hit && "a" or "b"
-		self.SlumpAnimation = VJ.SequenceToActivity(self,"slump_" .. self.SlumpSet)
+		self.SlumpAnimation = VJ.SequenceToActivity(self, "slump_" .. self.SlumpSet)
 		self:SetMaxLookDistance(150)
 		self.SightAngle = 360
 		self:AddFlags(FL_NOTARGET)
@@ -79,7 +79,7 @@ function ENT:OnAlert(ent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	local zType = self.ZombieType or math.random(0,3)
+	local zType = self.ZombieType or math.random(0, 3)
 	self.SlumpAnimation = ACT_IDLE
 
 	if self.Slump then
@@ -100,12 +100,12 @@ function ENT:Init()
 		self:SetSkin(zType)
 	end
 
-	self:SetBodygroup(1,1)
+	self:SetBodygroup(1, 1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
-		VJ.EmitSound(self,self.SoundTbl_FootStep,self.FootstepSoundLevel)
+		VJ.EmitSound(self, self.SoundTbl_FootStep, self.FootstepSoundLevel)
 	elseif key == "pin" then
 		self:CreateGrenade()
 	elseif key == "melee" then
@@ -115,27 +115,27 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkAttack(isAttacking, enemy)
 	local dist = self.EnemyData.DistanceNearest
-	if !self.RageState && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or !self.VJ_IsBeingControlled && dist <= 750 && math.random(1,dist *0.5) == 1) then
+	if !self.RageState && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP) or !self.VJ_IsBeingControlled && dist <= 750 && math.random(1, dist *0.5) == 1) then
 		VJ.STOPSOUND(self.CurrentSpeechSound)
 		VJ.STOPSOUND(self.CurrentIdleSound)
-		VJ.CreateSound(self,"vj_hlr/src/npc/zombine/zombine_alert6.wav",80)
+		VJ.CreateSound(self, "vj_hlr/src/npc/zombine/zombine_alert6.wav", 80)
 		self.RageState = true
-		self.RageStateTime = CurTime() +math.Rand(6,12)
+		self.RageStateTime = CurTime() +math.Rand(6, 12)
 	elseif self.RageState && CurTime() > self.RageStateTime then
 		self.RageState = false
 	end
 
-	if !self.GrenadePulled && !self:IsBusy() && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2) or !self.VJ_IsBeingControlled && math.random(1,(self:Health() < self:GetMaxHealth() *0.25) && 15 or 150) == 1 && dist < 300) then
+	if !self.GrenadePulled && !self:IsBusy() && (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_ATTACK2) or !self.VJ_IsBeingControlled && math.random(1, (self:Health() < self:GetMaxHealth() *0.25) && 15 or 150) == 1 && dist < 300) then
 		self.GrenadePulled = true
 		self.GrenadeTime = CurTime() +20
-		VJ.CreateSound(self,"npc/zombine/zombine_readygrenade" .. math.random(1,2) .. ".wav",80,100)
-		self:PlayAnim("pullGrenade",true,false,true)
+		VJ.CreateSound(self, "npc/zombine/zombine_readygrenade" .. math.random(1, 2) .. ".wav", 80, 100)
+		self:PlayAnim("pullGrenade", true, false, true)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
 	if self.IsSlumped then
-		self.NextIdleSoundT_Reg = CurTime() +math.random(4,8)
+		self.NextIdleSoundT_Reg = CurTime() +math.random(4, 8)
 	else
 		if self.GrenadePulled && CurTime() > self.GrenadeTime then
 			self:SetHealth(0)
@@ -202,10 +202,10 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 		util.SpriteTrail(grenent, 1, Color(200, 0, 0), true, 15, 15, 0.35, 0.0167, "VJ_Base/sprites/trail.vmt")
 	end
 
-	VJ.CreateSound(ent,self.SoundTbl_DeathFollow,self.DeathSoundLevel)
+	VJ.CreateSound(ent, self.SoundTbl_DeathFollow, self.DeathSoundLevel)
 	local dmgtype = dmginfo:GetDamageType()
 	if hitgroup == HITGROUP_HEAD or dmgtype == DMG_BLAST then
-		ent:SetBodygroup(1,0)
+		ent:SetBodygroup(1, 0)
 		self:CreateExtraDeathCorpse(
 			"prop_ragdoll",
 			"models/headcrabclassic.mdl",
@@ -217,8 +217,8 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 			end
 		)
 	else
-		if math.random(1,(dmgtype == DMG_CLUB or dmgtype == DMG_SLASH) && 1 or 3) == 1 then
-			ent:SetBodygroup(1,0)
+		if math.random(1, (dmgtype == DMG_CLUB or dmgtype == DMG_SLASH) && 1 or 3) == 1 then
+			ent:SetBodygroup(1, 0)
 			local crab = ents.Create(self.HeadcrabClass or "npc_vj_hlr2_headcrab")
 			local enemy = self:GetEnemy()
 			crab:SetPos(self:GetAttachment(self:LookupAttachment("headcrab")).Pos or self:EyePos())
@@ -227,16 +227,16 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 			crab:SetGroundEntity(NULL) -- This fixes that issue where they snap to the ground when spawned
 			crab:SetLocalVelocity(self:GetVelocity() *dmginfo:GetDamageForce():Length())
 			if ent:IsOnFire() then
-				crab:Ignite(math.random(8,10))
+				crab:Ignite(math.random(8, 10))
 			end
-			undo.ReplaceEntity(self,crab)
+			undo.ReplaceEntity(self, crab)
 		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnCreateSound(sdData, sdFile)
 	if VJ.HasValue(self.SoundTbl_Pain, sdFile) then return end
-	VJ.EmitSound(self,"npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav")
+	VJ.EmitSound(self, "npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CreateGrenade()
@@ -247,7 +247,7 @@ function ENT:CreateGrenade()
 	grenent:SetAngles(self:GetAttachment(self:LookupAttachment("grenade_attachment")).Ang)
 	grenent:SetOwner(self)
 	grenent:SetParent(self)
-	grenent:Fire("SetParentAttachment","grenade_attachment",0)
+	grenent:Fire("SetParentAttachment", "grenade_attachment", 0)
 	grenent.FuseTime = 3.5
 	grenent.CurFuss = CurTime() +3.5
 	grenent:Spawn()
@@ -270,7 +270,7 @@ function ENT:CreateGrenade()
 	grenent:DeleteOnRemove(redGlow)
 	util.SpriteTrail(grenent, 1, Color(200, 0, 0), true, 15, 15, 0.35, 0.0167, "VJ_Base/sprites/trail.vmt")
 
-	-- timer.Simple(3.485,function()
+	-- timer.Simple(3.485, function()
 	-- 	if IsValid(self) && IsValid(grenent) then
 	-- 		grenent:SetOwner(NULL)
 	-- 		grenent:SetParent(NULL)
@@ -290,8 +290,8 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 			if math.random(1, 3) == 1 then
 				dmginfo:ScaleDamage(0.50)
 				local spark = ents.Create("env_spark")
-				spark:SetKeyValue("Magnitude","1")
-				spark:SetKeyValue("Spark Trail Length","1")
+				spark:SetKeyValue("Magnitude", "1")
+				spark:SetKeyValue("Spark Trail Length", "1")
 				spark:SetPos(dmginfo:GetDamagePosition())
 				spark:SetAngles(self:GetAngles())
 				spark:SetParent(self)
@@ -311,12 +311,12 @@ function ENT:OnBleed(dmginfo, hitgroup)
 	if self.IsSlumped then
 		self:SetSlump(false)
 	else
-		if !self.RageState && !self:IsBusy() && math.random(1,10) == 1 then
+		if !self.RageState && !self:IsBusy() && math.random(1, 10) == 1 then
 			VJ.STOPSOUND(self.CurrentSpeechSound)
 			VJ.STOPSOUND(self.CurrentIdleSound)
-			VJ.CreateSound(self,"vj_hlr/src/npc/zombine/zombine_alert6.wav",80)
+			VJ.CreateSound(self, "vj_hlr/src/npc/zombine/zombine_alert6.wav", 80)
 			self.RageState = true
-			self.RageStateTime = CurTime() +math.Rand(6,12)
+			self.RageStateTime = CurTime() +math.Rand(6, 12)
 		end
 	end
 end

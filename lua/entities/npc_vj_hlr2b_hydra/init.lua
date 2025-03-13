@@ -69,20 +69,20 @@ ENT.SoundTbl_Pain = {
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetCollisionBounds(Vector(20, 20, 250), Vector(-20, -20, 0))
-	self.HeartBeatSnd = "vj_hlr/src/npc/hydra/hydra_heartloop" .. math.random(1,2) .. ".wav"
-	self.HeartBeat = CreateSound(self,self.HeartBeatSnd)
+	self.HeartBeatSnd = "vj_hlr/src/npc/hydra/hydra_heartloop" .. math.random(1, 2) .. ".wav"
+	self.HeartBeat = CreateSound(self, self.HeartBeatSnd)
 	self.HeartBeat:SetSoundLevel(70)
 	self.NextHeartBeatT = CurTime()
 	-- self.NextRefreshRate = 0
 	-- self.tbl_HydraBones = {}
-	-- for i = 0,BONE_COUNT do
+	-- for i = 0, BONE_COUNT do
 	-- 	print("Added bone " .. i)
-	-- 	local pos,ang = self:GetBonePosition(i)
+	-- 	local pos, ang = self:GetBonePosition(i)
 	-- 	local add = i +1
 	-- 	if i == 47 then
 	-- 		add = i
 	-- 	end
-	-- 	local posB,angB = self:GetBonePosition(add)
+	-- 	local posB, angB = self:GetBonePosition(add)
 	-- 	self.tbl_HydraBones[i] = {
 	-- 		Length = self:BoneLength(i),
 	-- 		Pos = pos,
@@ -91,13 +91,13 @@ function ENT:Init()
 	-- 		MaxStretch = (posB -pos):Length() +(posB -pos):Length()
 	-- 	}
 	-- end
-	-- self:CalcChain(self:GetPos(),self.tbl_HydraBones)
+	-- self:CalcChain(self:GetPos(), self.tbl_HydraBones)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CalcChain(pos,bones)
+function ENT:CalcChain(pos, bones)
 	local tblData = {}
 	local doRun = false
-	for i = 0,#bones do
+	for i = 0, #bones do
 		if i > 0 then
 			if (bones[i].Pos -bones[i -1].Pos):LengthSqr() > 0.0 then
 				doRun = true
@@ -108,7 +108,7 @@ function ENT:CalcChain(pos,bones)
 	local totalLength = 0
 	local maxPossibleLength = 0
 	local relaxedLength = 0
-	for i = 0,#bones do
+	for i = 0, #bones do
 		tblData[i] = {}
 		if i != 0 then
 			maxPossibleLength = maxPossibleLength +bones[i].MaxStretch
@@ -116,10 +116,10 @@ function ENT:CalcChain(pos,bones)
 			relaxedLength = bones[i].Length
 		end
 	end
-	totalLength = math.Clamp(totalLength,1,maxPossibleLength)
+	totalLength = math.Clamp(totalLength, 1, maxPossibleLength)
 	local scale = relaxedLength /totalLength
 	local dist = -16
-	for i = 0,#bones do
+	for i = 0, #bones do
 		if i != 0 then
 			local dt = (bones[i].Pos -bones[i -1].Pos):Length() *scale
 			local len = bones[i].Length
@@ -151,19 +151,19 @@ function ENT:CalcChain(pos,bones)
 end
 local lerp = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:MoveHead(pos,rate,bones)
+function ENT:MoveHead(pos, rate, bones)
 	if CurTime() > self.NextRefreshRate then
-		for i = 0,#bones do
+		for i = 0, #bones do
 			if i > 0 then
-				print(pos,bones[47].Pos)
+				print(pos, bones[47].Pos)
 				if i != 47 then
-					lerp = Lerp(1 *FrameTime(),lerp,1)
-					self:ManipulateBonePosition(i,LerpVector(math.Clamp(lerp,bones[i].Length,bones[i].MaxStretch),bones[i].Pos,bones[47].Pos))
-					self:ManipulateBoneAngles(i,LerpAngle(math.Clamp(lerp *0.6,0,1)*1,bones[i].Ang,bones[i].Ang,(bones[i].Pos +pos):Angle()))
+					lerp = Lerp(1 *FrameTime(), lerp, 1)
+					self:ManipulateBonePosition(i, LerpVector(math.Clamp(lerp, bones[i].Length, bones[i].MaxStretch), bones[i].Pos, bones[47].Pos))
+					self:ManipulateBoneAngles(i, LerpAngle(math.Clamp(lerp *0.6, 0, 1)*1, bones[i].Ang, bones[i].Ang, (bones[i].Pos +pos):Angle()))
 				else
-					lerp = Lerp(1 *FrameTime(),lerp,1)
-					self:ManipulateBoneAngles(i,LerpAngle(math.Clamp(lerp *0.6,0,1)*1,bones[i].Ang,(bones[i].Pos +pos):Angle()))
-					self:ManipulateBonePosition(i,LerpVector(math.Clamp(lerp *0.6,0,1)*1,bones[i].Pos,bones[i].Ang:Forward() *5))
+					lerp = Lerp(1 *FrameTime(), lerp, 1)
+					self:ManipulateBoneAngles(i, LerpAngle(math.Clamp(lerp *0.6, 0, 1)*1, bones[i].Ang, (bones[i].Pos +pos):Angle()))
+					self:ManipulateBonePosition(i, LerpVector(math.Clamp(lerp *0.6, 0, 1)*1, bones[i].Pos, bones[i].Ang:Forward() *5))
 				end
 			end
 		end
@@ -189,23 +189,23 @@ function ENT:OnThink()
 	local ent = self:GetEnemy()
 	if IsValid(ent) then
 		local dist = self.EnemyData.DistanceNearest or 0
-		self.IdleLength = math.Clamp((dist /460) *90,0,90)
+		self.IdleLength = math.Clamp((dist /460) *90, 0, 90)
 		self.MeleeAttackDistance = 500 *toMax
 		self.MeleeAttackDamageDistance = 550 *toMax
 	else
 		self.IdleLength = 0
 	end
-	self:SetPoseParameter("idle_length",Lerp(FrameTime() *10,self:GetPoseParameter("idle_length"),self.IdleLength))
+	self:SetPoseParameter("idle_length", Lerp(FrameTime() *10, self:GetPoseParameter("idle_length"), self.IdleLength))
 
-	-- self:CalcChain(nil,self.tbl_HydraBones)
+	-- self:CalcChain(nil, self.tbl_HydraBones)
 	-- if IsValid(self:GetEnemy()) then
 		-- self.AnimTbl_IdleStand = {ACT_IDLE_ANGRY}
-		-- self:MoveHead(self:GetEnemy():GetPos(),1,self.tbl_HydraBones)
+		-- self:MoveHead(self:GetEnemy():GetPos(), 1, self.tbl_HydraBones)
 	-- else
 		-- self.AnimTbl_IdleStand = {ACT_IDLE}
 	-- end
-	-- local pos,ang = self:GetBonePosition(47)
-	-- self:ManipulateBonePosition(47,pos +self:GetForward() *0.1)
+	-- local pos, ang = self:GetBonePosition(47)
+	-- self:ManipulateBonePosition(47, pos +self:GetForward() *0.1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove() self.HeartBeat:Stop() end
