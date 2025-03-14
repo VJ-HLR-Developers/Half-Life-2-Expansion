@@ -125,8 +125,7 @@ ENT.Flechette_Speed = 3000
 function ENT:OnCallForHelp(ally)
 	if ally:GetClass() == self:GetClass() && !ally:IsBusy("Activities") && !IsValid(ally:GetEnemy()) then
 		ally:PlaySoundSystem("CallForHelp")
-		local pickanim = VJ.PICK(ally.AnimTbl_CallForHelp)
-		ally:PlayAnim(pickanim, ally.CallForHelpStopAnimations, ally:DecideAnimationLength(pickanim, ally.CallForHelpStopAnimationsTime), ally.CallForHelpAnimFaceEnemy, 0, {PlayBackRateCalculated=true})
+		ally:PlayAnim(ally.AnimTbl_CallForHelp, true, false, ally.CallForHelpAnimFaceEnemy)
 		ally.NextCallForHelpAnimationT = CurTime() +ally.CallForHelpAnimCooldown
 	end
 end

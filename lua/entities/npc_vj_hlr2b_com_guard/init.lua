@@ -226,8 +226,8 @@ function ENT:OnDeath(dmginfo, hitgroup, status)
 		if (explosion or bit_band(dmginfo:GetDamageType(), DMG_VEHICLE) == DMG_VEHICLE) && CurTime() > self.NextKnockdownT then
 			self.HasDeathAnimation = true
 			self.AnimTbl_Death = "physfall"
-			self.DeathDelayTime = self:DecideAnimationLength("physfall", false) + self:DecideAnimationLength("physdeath", false) - 1
-			timer.Simple(self:DecideAnimationLength("physfall", false), function()
+			self.DeathDelayTime = VJ.AnimDurationEx(self, "physfall", false) + VJ.AnimDurationEx(self, "physdeath", false) - 1
+			timer.Simple(VJ.AnimDurationEx(self, "physfall", false), function()
 				if IsValid(self) then
 					self:PlayAnim("physdeath", true, false, false)
 				end
