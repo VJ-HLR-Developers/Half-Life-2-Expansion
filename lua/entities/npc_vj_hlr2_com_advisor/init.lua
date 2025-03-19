@@ -124,9 +124,17 @@ function ENT:ResetPsionicAttack()
 	self:SetNW2Bool("PsionicEffect", false)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttackCheck_MeleeAttack() return self.PsionicAttacking != true end -- Not returning true will not let the melee attack code run!
+function ENT:OnMeleeAttack(status, enemy)
+	if status == "PreInit" then
+		return self.PsionicAttacking
+	end
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttackCheck_RangeAttack() return self.PsionicAttacking != true end -- Not returning true will not let the melee attack code run!
+function ENT:OnRangeAttack(status, enemy)
+	if status == "PreInit" then
+		return self.PsionicAttacking
+	end
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ShieldCode(bEnable)
 	self.HasShield = bEnable

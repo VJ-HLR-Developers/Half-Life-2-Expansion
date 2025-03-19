@@ -182,8 +182,10 @@ function ENT:OnThinkAttack(atkType, ent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttackCheck_RangeAttack()
-	return self:GetNavType() != NAV_JUMP
+function ENT:OnRangeAttack(status, enemy)
+	if status == "PreInit" then
+		return self:GetNavType() == NAV_JUMP
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
