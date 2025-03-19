@@ -127,11 +127,10 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)
-	if hitEnt:IsPlayer() then
-		hitEnt:ViewPunch(Angle(-20, -100, 0))
+function ENT:OnMeleeAttackExecute(status, ent, isProp)
+	if status == "PreDamage" && ent:IsPlayer() then
+		ent:ViewPunch(Angle(-20, -100, 0))
 	end
-	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)

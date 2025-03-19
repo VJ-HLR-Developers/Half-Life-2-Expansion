@@ -101,15 +101,16 @@ function ENT:OnInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt)
-	if CurTime() > self.LastHitT then self.TotalHits = 0 end
-	self.TotalHits = self.TotalHits +1
-	self.LastHitT = CurTime() +0.6
-	if self.TotalHits >= 8 then
-		VJ.CreateSound(self, "npc/fast_zombie/fz_frenzy1.wav", 80)
-		self:PlayAnim("BR2_Roar", true, false, true)
+function ENT:OnMeleeAttackExecute(status, ent, isProp)
+	if status == "PreDamage" then
+		if CurTime() > self.LastHitT then self.TotalHits = 0 end
+		self.TotalHits = self.TotalHits +1
+		self.LastHitT = CurTime() +0.6
+		if self.TotalHits >= 8 then
+			VJ.CreateSound(self, "npc/fast_zombie/fz_frenzy1.wav", 80)
+			self:PlayAnim("BR2_Roar", true, false, true)
+		end
 	end
-	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:TranslateActivity(act)

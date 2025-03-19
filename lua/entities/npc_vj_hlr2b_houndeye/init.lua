@@ -97,15 +97,17 @@ function ENT:OnAlert(ent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnMeleeAttack_BeforeChecks()
-	effects.BeamRingPoint(self:GetPos() +Vector(0, 0, 5), 0.3, 2, 400, 16, 0, Color(248, 0, 35), {material="vj_hl/sprites/shockwave", framerate=20, flags=0})
-	effects.BeamRingPoint(self:GetPos() +Vector(0, 0, 5), 0.3, 2, 200, 16, 0, Color(248, 0, 35), {material="vj_hl/sprites/shockwave", framerate=20, flags=0})
+function ENT:OnMeleeAttackExecute(status, ent, isProp)
+	if status == "Init" then
+		effects.BeamRingPoint(self:GetPos() +Vector(0, 0, 5), 0.3, 2, 400, 16, 0, Color(248, 0, 35), {material="vj_hl/sprites/shockwave", framerate=20, flags=0})
+		effects.BeamRingPoint(self:GetPos() +Vector(0, 0, 5), 0.3, 2, 200, 16, 0, Color(248, 0, 35), {material="vj_hl/sprites/shockwave", framerate=20, flags=0})
 
-	if self.HasSounds && self.HasMeleeAttackSounds then
-		VJ.EmitSound(self, "vj_hlr/src/npc/houndeye/he_blast"..math.random(1, 3)..".wav", 100, math.random(80, 100))
+		if self.HasSounds && self.HasMeleeAttackSounds then
+			VJ.EmitSound(self, "vj_hlr/src/npc/houndeye/he_blast"..math.random(1, 3)..".wav", 100, math.random(80, 100))
+		end
+
+		VJ.ApplyRadiusDamage(self, self, self:GetPos(), 400, self.MeleeAttackDamage, self.MeleeAttackDamageType, true, true, {DisableVisibilityCheck=true, Force=80})
 	end
-
-	VJ.ApplyRadiusDamage(self, self, self:GetPos(), 400, self.MeleeAttackDamage, self.MeleeAttackDamageType, true, true, {DisableVisibilityCheck=true, Force=80})
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnFlinch(dmginfo, hitgroup, status)

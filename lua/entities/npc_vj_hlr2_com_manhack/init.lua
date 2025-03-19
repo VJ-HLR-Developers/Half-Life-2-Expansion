@@ -248,10 +248,6 @@ function ENT:OnTouch(ent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)
-	-- self:Manhack_Displacement(65)
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDamaged(dmginfo, hitgroup, status)
 	if status == "PostDamage" then
 		-- self:Manhack_Displacement(100, nil, nil, dmginfo:GetInflictor() or dmginfo:GetAttacker())

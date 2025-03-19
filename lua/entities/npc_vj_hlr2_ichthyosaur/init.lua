@@ -66,23 +66,20 @@ function ENT:OnInput(key, activator, caller, data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnMeleeAttack_BeforeChecks()
-	local pos = self:GetPos() +self:GetAngles():Forward() *35
-	effects.Bubbles(pos +Vector(-32, -32, -32), pos +Vector(32, 32, 32), math.random(16, 32), math.random(100, 300), 1)
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnMeleeAttack_AfterChecks(v, isProp)
-	self:SetHealth(math.Clamp(self:Health() + ((self.MeleeAttackDamage > v:Health() && v:Health()) or self.MeleeAttackDamage), self:Health(), self:GetMaxHealth()*2))
-	self:PlayAnim(ACT_RANGE_ATTACK1_LOW, true, false, true)
-	if v:IsPlayer() then
-		v:ScreenFade(SCREENFADE.IN, Color(64, 0, 0), 0.5, 0)
+function ENT:OnMeleeAttackExecute(status, ent, isProp)
+	if status == "Init" then
+		local pos = self:GetPos() +self:GetAngles():Forward() *35
+		effects.Bubbles(pos +Vector(-32, -32, -32), pos +Vector(32, 32, 32), math.random(16, 32), math.random(100, 300), 1)
+	elseif status == "PreDamage" then
+		self:SetHealth(math.Clamp(self:Health() + ((self.MeleeAttackDamage > ent:Health() && ent:Health()) or self.MeleeAttackDamage), self:Health(), self:GetMaxHealth()*2))
+		self:PlayAnim(ACT_RANGE_ATTACK1_LOW, true, false, true)
+		if ent:IsPlayer() then
+			ent:ScreenFade(SCREENFADE.IN, Color(64, 0, 0), 0.5, 0)
+		end
+	elseif status == "Miss" then
+		self:PlayAnim(ACT_RANGE_ATTACK2_LOW, true, false, false)
+		VJ.CreateSound(self, "npc/ichthyosaur/snap_miss.wav", 75)
 	end
-	return false
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnMeleeAttack_Miss()
-	self:PlayAnim(ACT_RANGE_ATTACK2_LOW, true, false, false)
-	VJ.CreateSound(self, "npc/ichthyosaur/snap_miss.wav", 75)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
