@@ -308,7 +308,7 @@ function ENT:CreateAntlion(pos)
 	ParticleEffect("strider_impale_ground", antlion:GetPos(), antlion:GetAngles(), antlion)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:MeleeAttackKnockbackVelocity(hitEnt)
+function ENT:MeleeAttackKnockbackVelocity(ent)
 	return self:GetForward() *math.random(400, 500) +self:GetUp() *300
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

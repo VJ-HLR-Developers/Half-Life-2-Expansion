@@ -319,37 +319,37 @@ function ENT:OnDeath(dmginfo, hitgroup, status)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpseEnt)
+function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpse)
 	local pos, ang = self:GetBonePosition(0)
-	corpseEnt:SetPos(pos)
-	corpseEnt:GetPhysicsObject():SetVelocity(((self:GetPos() +self:GetRight() *-700 +self:GetForward() *-300 +self:GetUp() *-200) -self:GetPos()))
-	util.BlastDamage(self, self, corpseEnt:GetPos(), 400, 40)
-	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
+	corpse:SetPos(pos)
+	corpse:GetPhysicsObject():SetVelocity(((self:GetPos() +self:GetRight() *-700 +self:GetForward() *-300 +self:GetUp() *-200) -self:GetPos()))
+	util.BlastDamage(self, self, corpse:GetPos(), 400, 40)
+	util.ScreenShake(corpse:GetPos(), 100, 200, 1, 2500)
 
 	VJ.EmitSound(self, "vj_base/ambience/explosion2.wav", 100, 100)
 	VJ.EmitSound(self, "vj_base/ambience/explosion3.wav", 100, 100)
-	util.BlastDamage(self, self, corpseEnt:GetPos(), 200, 40)
-	util.ScreenShake(corpseEnt:GetPos(), 100, 200, 1, 2500)
-	if self.HasGibOnDeathEffects then ParticleEffect("vj_explosion2", corpseEnt:GetPos(), Angle(0, 0, 0), nil) end
+	util.BlastDamage(self, self, corpse:GetPos(), 200, 40)
+	util.ScreenShake(corpse:GetPos(), 100, 200, 1, 2500)
+	if self.HasGibOnDeathEffects then ParticleEffect("vj_explosion2", corpse:GetPos(), Angle(0, 0, 0), nil) end
 
 	if math.random(1, 3) == 1 then
-		self:CreateExtraDeathCorpse("prop_ragdoll", "models/combine_soldier.mdl", {Pos=corpseEnt:GetPos()+corpseEnt:GetUp()*90+corpseEnt:GetRight()*-30, Vel=Vector(math.Rand(-600, 600), math.Rand(-600, 600), 500)}, function(extraent) extraent:Ignite(math.Rand(8, 10), 0); extraent:SetColor(Color(90, 90, 90)) end)
+		self:CreateExtraDeathCorpse("prop_ragdoll", "models/combine_soldier.mdl", {Pos=corpse:GetPos()+corpse:GetUp()*90+corpse:GetRight()*-30, Vel=Vector(math.Rand(-600, 600), math.Rand(-600, 600), 500)}, function(extraent) extraent:Ignite(math.Rand(8, 10), 0); extraent:SetColor(Color(90, 90, 90)) end)
 	end
 
 	if self.HasGibOnDeathEffects then
-		ParticleEffect("vj_explosion3", corpseEnt:GetPos(), Angle(0, 0, 0), nil)
-		ParticleEffect("vj_explosion2", corpseEnt:GetPos() +corpseEnt:GetForward()*-130, Angle(0, 0, 0), nil)
-		ParticleEffect("vj_explosion2", corpseEnt:GetPos() +corpseEnt:GetForward()*130, Angle(0, 0, 0), nil)
-		ParticleEffectAttach("fire_large_01", PATTACH_POINT_FOLLOW, corpseEnt, 8)
-		ParticleEffectAttach("smoke_burning_engine_01", PATTACH_POINT_FOLLOW, corpseEnt, 1)
+		ParticleEffect("vj_explosion3", corpse:GetPos(), Angle(0, 0, 0), nil)
+		ParticleEffect("vj_explosion2", corpse:GetPos() +corpse:GetForward()*-130, Angle(0, 0, 0), nil)
+		ParticleEffect("vj_explosion2", corpse:GetPos() +corpse:GetForward()*130, Angle(0, 0, 0), nil)
+		ParticleEffectAttach("fire_large_01", PATTACH_POINT_FOLLOW, corpse, 8)
+		ParticleEffectAttach("smoke_burning_engine_01", PATTACH_POINT_FOLLOW, corpse, 1)
 		
 		local explosioneffect = EffectData()
-		explosioneffect:SetOrigin(corpseEnt:GetPos())
+		explosioneffect:SetOrigin(corpse:GetPos())
 		util.Effect("VJ_Medium_Explosion1", explosioneffect)
 		util.Effect("Explosion", explosioneffect)
 		
 		local dusteffect = EffectData()
-		dusteffect:SetOrigin(corpseEnt:GetPos())
+		dusteffect:SetOrigin(corpse:GetPos())
 		dusteffect:SetScale(800)
 		util.Effect("ThumperDust", dusteffect)
 	end

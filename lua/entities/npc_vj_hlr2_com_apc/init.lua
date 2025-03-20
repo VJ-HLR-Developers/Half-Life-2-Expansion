@@ -163,7 +163,7 @@ function ENT:Controller_Initialize(ply, controlEnt)
 	ply:ChatPrint("JUMP: Deploy Civil-Protection Squad (1 time)")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:UpdateMoveParticles()
+function ENT:Tank_UpdateMoveParticles()
 	local effectData = EffectData()
 	effectData:SetScale(1)
 	effectData:SetEntity(self)
@@ -295,14 +295,14 @@ function ENT:GetNearDeathSparkPositions()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:Tank_OnDeathCorpse(dmginfo, hitgroup, corpseEnt, status, statusData)
+function ENT:Tank_OnDeathCorpse(dmginfo, hitgroup, corpse, status, statusData)
 	if status == "Override" then
-		corpseEnt:SetAngles(self:GetAngles() +Angle(0, 270, 0))
-		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib02.mdl", {Pos=corpseEnt:GetPos(), Ang=corpseEnt:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib03.mdl", {Pos=corpseEnt:GetPos(), Ang=corpseEnt:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib04.mdl", {Pos=corpseEnt:GetPos(), Ang=corpseEnt:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib05.mdl", {Pos=corpseEnt:GetPos(), Ang=corpseEnt:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib06.mdl", {Pos=corpseEnt:GetPos(), Ang=corpseEnt:GetAngles()})
+		corpse:SetAngles(self:GetAngles() +Angle(0, 270, 0))
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib02.mdl", {Pos=corpse:GetPos(), Ang=corpse:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib03.mdl", {Pos=corpse:GetPos(), Ang=corpse:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib04.mdl", {Pos=corpse:GetPos(), Ang=corpse:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib05.mdl", {Pos=corpse:GetPos(), Ang=corpse:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib06.mdl", {Pos=corpse:GetPos(), Ang=corpse:GetAngles()})
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

@@ -56,12 +56,12 @@ ENT.Barnacle_CurEntMoveType = MOVETYPE_WALK
 ENT.Barnacle_Status = 0
 ENT.Barnacle_NextPullSoundT = 0
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpseEnt)
-	corpseEnt:DrawShadow(false)
-	corpseEnt:SetPoseParameter("tongue_height", self.Barnacle_LastHeight)
+function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpse)
+	corpse:DrawShadow(false)
+	corpse:SetPoseParameter("tongue_height", self.Barnacle_LastHeight)
 	self:SetBoneController(0, self.Barnacle_LastHeight)
-	corpseEnt:ResetSequence("Death")
-	corpseEnt:SetCycle(1)
+	corpse:ResetSequence("Death")
+	corpse:SetCycle(1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
