@@ -25,12 +25,12 @@ ENT.FlinchChance = 8
 ENT.FlinchCooldown = 3
 ENT.AnimTbl_Flinch = ACT_FLINCH_PHYSICS
 ENT.FlinchHitGroupMap = {
-	{HitGroup = {HITGROUP_HEAD}, Animation = {"vjges_flinch_head"}},
-	{HitGroup = {HITGROUP_CHEST}, Animation = {"vjges_flinch_chest"}},
-	{HitGroup = {HITGROUP_LEFTARM}, Animation = {"vjges_flinch_leftArm"}},
-	{HitGroup = {HITGROUP_RIGHTARM}, Animation = {"vjges_flinch_rightArm"}},
-	{HitGroup = {HITGROUP_LEFTLEG}, Animation = {ACT_FLINCH_LEFTLEG}},
-	{HitGroup = {HITGROUP_RIGHTLEG}, Animation = {ACT_FLINCH_RIGHTLEG}}
+	{HitGroup = HITGROUP_HEAD, Animation = "vjges_flinch_head"},
+	{HitGroup = HITGROUP_CHEST, Animation = "vjges_flinch_chest"},
+	{HitGroup = HITGROUP_LEFTARM, Animation = "vjges_flinch_leftArm"},
+	{HitGroup = HITGROUP_RIGHTARM, Animation = "vjges_flinch_rightArm"},
+	{HitGroup = HITGROUP_LEFTLEG, Animation = ACT_FLINCH_LEFTLEG},
+	{HitGroup = HITGROUP_RIGHTLEG, Animation = ACT_FLINCH_RIGHTLEG}
 }
 
 ENT.DisableFootStepSoundTimer = true
