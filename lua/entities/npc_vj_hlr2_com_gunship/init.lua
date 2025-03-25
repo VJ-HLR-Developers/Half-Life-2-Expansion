@@ -304,7 +304,7 @@ function ENT:OnDeath(dmginfo, hitgroup, status)
 				end
 			end
 			self.Corpse:Fire("FadeAndRemove", "", 360)
-			self.Corpse:CallOnRemove("vj_"..self.Corpse:EntIndex(), function(ent, exttbl)
+			self.Corpse:CallOnRemove("vj_" .. self.Corpse:EntIndex(), function(ent, exttbl)
 				if !exttbl then return end
 				for _, v in ipairs(exttbl) do
 					if IsValid(v) then

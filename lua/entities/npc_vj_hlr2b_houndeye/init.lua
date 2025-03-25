@@ -87,7 +87,7 @@ function ENT:OnInput(key, activator, caller, data)
 		self:PlayFootstepSound()
 	end
 	if key == "hunt" then
-		VJ.EmitSound(self, "vj_hlr/src/npc/houndeye/he_hunt"..math.random(1, 4)..".wav")
+		VJ.EmitSound(self, "vj_hlr/src/npc/houndeye/he_hunt" .. math.random(1, 4) .. ".wav")
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ function ENT:OnMeleeAttackExecute(status, ent, isProp)
 		effects.BeamRingPoint(self:GetPos() +Vector(0, 0, 5), 0.3, 2, 200, 16, 0, Color(248, 0, 35), {material="vj_hl/sprites/shockwave", framerate=20, flags=0})
 
 		if self.HasSounds && self.HasMeleeAttackSounds then
-			VJ.EmitSound(self, "vj_hlr/src/npc/houndeye/he_blast"..math.random(1, 3)..".wav", 100, math.random(80, 100))
+			VJ.EmitSound(self, "vj_hlr/src/npc/houndeye/he_blast" .. math.random(1, 3) .. ".wav", 100, math.random(80, 100))
 		end
 
 		VJ.ApplyRadiusDamage(self, self, self:GetPos(), 400, self.MeleeAttackDamage, self.MeleeAttackDamageType, true, true, {DisableVisibilityCheck=true, Force=80})

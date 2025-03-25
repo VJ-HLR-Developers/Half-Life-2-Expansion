@@ -102,8 +102,8 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnCreateSound(sdData, sdFile)
 	if VJ.HasValue(self.SoundTbl_BeforeMeleeAttack, sdFile) then return end
-	VJ.EmitSound(self, "npc/combine_soldier/vo/on"..math.random(1, 2)..".wav")
-	timer.Simple(SoundDuration(sdFile), function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self, "npc/combine_soldier/vo/off"..math.random(1, 3)..".wav") end end)
+	VJ.EmitSound(self, "npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav")
+	timer.Simple(SoundDuration(sdFile), function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self, "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav") end end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)

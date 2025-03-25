@@ -142,7 +142,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 			self.HasBloodParticle = true
 			self.HasBloodDecal = true
 			dmginfo:SetDamage(dmginfo:GetDamage() *4.5)
-			VJ.EmitSound(self, "ambient/energy/zap"..math.random(1, 9)..".wav", 70)
+			VJ.EmitSound(self, "ambient/energy/zap" .. math.random(1, 9) .. ".wav", 70)
 			local spark = ents.Create("env_spark")
 			spark:SetKeyValue("Magnitude", "1")
 			spark:SetKeyValue("Spark Trail Length", "1")

@@ -9,7 +9,7 @@ if CLIENT then
 	local mat = Material("vj_hl/renderfx/render_advisor")
 	function ENT:Initialize()
 		local index = self:EntIndex()
-		hook.Add("RenderScreenspaceEffects", "VJ_HLR_Advisor_FX"..index, function()
+		hook.Add("RenderScreenspaceEffects", "VJ_HLR_Advisor_FX" .. index, function()
 			if IsValid(self) then
 				if self:GetNW2Bool("PsionicEffect") then
 					for _, prop in pairs(ents.FindByClass("prop_*")) do

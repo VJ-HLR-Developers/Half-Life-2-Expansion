@@ -30,10 +30,10 @@ end
 function ENT:OnDealDamage(data, phys, hitEnts)
 	if hitEnts then
 		for _, v in pairs(hitEnts) do
-			v:EmitSound("ambient/energy/weld"..math.random(1, 2)..".wav", 60, 100)
+			v:EmitSound("ambient/energy/weld" .. math.random(1, 2) .. ".wav", 60, 100)
 			if IsValid(v) then
 				local zapEnt = v
-				timer.Create("VJ_HLR2_ZapEffect"..self:EntIndex()..tostring(zapEnt), 0.2, 15, function()
+				timer.Create("VJ_HLR2_ZapEffect" .. self:EntIndex() .. tostring(zapEnt), 0.2, 15, function()
 					if IsValid(zapEnt) then
 						local effect = EffectData()
 						effect:SetOrigin(zapEnt:GetPos())
@@ -48,7 +48,7 @@ function ENT:OnDealDamage(data, phys, hitEnts)
 					local wep = v:GetActiveWeapon()
 					v:DropWeapon(wep)
 					local zapWep = wep
-					timer.Create("VJ_HLR2_ZapEffect_PWep"..self:EntIndex()..tostring(zapWep), 0.2, 15, function()
+					timer.Create("VJ_HLR2_ZapEffect_PWep" .. self:EntIndex() .. tostring(zapWep), 0.2, 15, function()
 						if IsValid(zapWep) then
 							local effect = EffectData()
 							effect:SetOrigin(zapWep:GetPos())
@@ -70,7 +70,7 @@ function ENT:OnDealDamage(data, phys, hitEnts)
 					end
 					v:GetActiveWeapon():Remove()
 					local zapNWep = ent
-					timer.Create("VJ_HLR2_ZapEffect_NWep"..self:EntIndex()..tostring(zapNWep), 0.2, 15, function()
+					timer.Create("VJ_HLR2_ZapEffect_NWep" .. self:EntIndex() .. tostring(zapNWep), 0.2, 15, function()
 						if IsValid(zapNWep) then
 							local effect = EffectData()
 							effect:SetOrigin(zapNWep:GetPos())
