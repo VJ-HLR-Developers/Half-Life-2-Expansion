@@ -10,6 +10,14 @@ ENT.StartHealth = 850
 ENT.HullType = HULL_HUMAN
 ENT.TurningSpeed = 12
 
+ENT.ControllerParams = {
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, 0),
+	FirstP_Bone = "Bip02 Neck",
+	FirstP_Offset = Vector(30, 0, 10),
+	FirstP_ShrinkBone = false,
+}
+
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = VJ.BLOOD_COLOR_BLUE
 
