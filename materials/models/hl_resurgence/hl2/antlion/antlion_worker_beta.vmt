@@ -9,9 +9,9 @@
 	"$phongfresnelranges"	"[0.3 0.7 1]"
 
 	$emissiveBlendEnabled 1
-	$emissiveBlendTexture    "dev/null"
+	$emissiveBlendTexture    "vgui/white"
 	$emissiveBlendBaseTexture    "models\hl_resurgence\hl2\antlion\antlion_worker_beta"
-	$emissiveBlendFlowTexture    "dev/null"
+	$emissiveBlendFlowTexture    "vgui/white"
 	$emissiveBlendTint "[1 1 1]"
 	$emissiveBlendStrength 0.5
 	$emissiveBlendScrollVector "[0 0]"
@@ -22,6 +22,13 @@
 		{
 			"scale" "1"
 			"resultvar" "$emissiveBlendEnabled"
+		}
+		"EfxEmissive"
+		{
+			"index" 		1
+			"color" 		$emissiveBlendTint
+			"brightness" 	0.1
+			"emissivetexture" $emissiveBlendBaseTexture
 		}
 	}
 }
