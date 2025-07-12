@@ -1,5 +1,4 @@
 AddCSLuaFile("shared.lua")
-include("movetype_aa.lua")
 include("shared.lua")
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2025 by DrVrej, All rights reserved. ***
@@ -7,15 +6,18 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = "models/vj_hlr/hl2/advisor_ep2.mdl"
-ENT.StartHealth = 500
+ENT.StartHealth = 1000
 ENT.HullType = HULL_TINY
 ENT.VJ_ID_Boss = true
 ENT.MovementType = VJ_MOVETYPE_AERIAL
-ENT.Aerial_FlyingSpeed_Calm = 200
-ENT.Aerial_FlyingSpeed_Alerted = 325
+ENT.Aerial_FlyingSpeed_Calm = 700
+ENT.Aerial_FlyingSpeed_Alerted = 450
+ENT.AA_MoveAccelerate = 3
+ENT.AA_MoveDecelerate = 1
 ENT.Aerial_AnimTbl_Calm = ACT_IDLE
 ENT.Aerial_AnimTbl_Alerted = ACT_IDLE_ANGRY
----------------------------------------------------------------------------------------------------------------------------------------------
+ENT.TurningUseAllAxis = true
+
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
 
@@ -61,7 +63,7 @@ ENT.SoundTbl_BeforeMeleeAttack = {"vj_hlr/src/npc/advisor/advisorattack03.wav"}
 ENT.SoundTbl_Pain = {"vj_hlr/src/npc/advisor/pain.wav"}
 ENT.SoundTbl_Death = {"vj_hlr/src/npc/advisor/advisor_scream.wav"}
 
-ENT.BreathSoundLevel = 50
+ENT.BreathSoundLevel = 60
 
 ENT.Spawnables = {
 	{ent="npc_vj_hlr2_com_strider", offset=0, weapons=nil},
@@ -77,9 +79,28 @@ ENT.Spawnables = {
 util.AddNetworkString("VJ_HLR_AdvisorScreenFX")
 
 ENT.PsionicAttacking = false
+ENT.PropRange = 5000
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackProjPos(projectile)
 	return self:GetPos() + self:GetUp() * 35 + self:GetForward() * 70
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnRangeAttackExecute(status, ent, projectile)
+	if status == "Init" then
+		if !IsValid(ent) then return end
+		for _,v in pairs(ents.GetAll()) do
+			if v.VJ_HLR_AdvisorProp && !v:IsNPC() then
+				local phys = v:GetPhysicsObject()
+				if IsValid(phys) then
+					local direction = (ent:GetPos() +ent:OBBCenter()) -v:GetPos()
+					direction:Normalize()
+					phys:SetVelocity(Vector())
+					phys:ApplyForceCenter(direction *v:GetPhysicsObject():GetMass() *math.random(1000,2000))
+				end
+			end
+		end
+		return true
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackProjVel(projectile)
@@ -109,6 +130,21 @@ function ENT:Init()
 		self.OriginalGravity = GetConVarNumber("sv_gravity")
 		RunConsoleCommand("sv_gravity", 200)
 	end
+
+	hook.Add("Think",self,function(self)
+		for _,v in pairs(ents.GetAll()) do
+			if v.VJ_HLR_AdvisorProp && v:GetPos():Distance(self:GetPos()) > self.PropRange then
+				v.VJ_HLR_AdvisorProp = nil
+				local phys = v:GetPhysicsObject()
+				if IsValid(phys) then
+					phys:EnableMotion(true)
+					phys:Wake()
+					phys:EnableGravity(true)
+					phys:EnableDrag(true)
+				end
+			end
+		end
+	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnInput(key, activator, caller, data)
@@ -130,11 +166,11 @@ function ENT:OnMeleeAttack(status, enemy)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnRangeAttack(status, enemy)
-	if status == "PreInit" then
-		return self.PsionicAttacking
-	end
-end
+-- function ENT:OnRangeAttack(status, enemy)
+-- 	if status == "PreInit" then
+-- 		return self.PsionicAttacking
+-- 	end
+-- end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ShieldCode(bEnable)
 	self.HasShield = bEnable
@@ -187,69 +223,101 @@ function ENT:GrabEntity(ent)
 	ent:GetPhysicsObject():ApplyForceCenter(ent:GetPos() +Vector(0, 0, ent:GetPhysicsObject():GetMass() *1.5))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnThinkAttack(isAttacking, enemy)
-	if CurTime() > self.NextPsionicAttackT && self.EnemyData.Distance <= 8500 && !self:IsBusy("Activities") && self.PsionicAttacking == false && self:Visible(self:GetEnemy()) then
-		//print("SEARCH ----")
-		local pTbl = {} -- Table of props that it found
-		for _, v in ipairs(ents.FindInSphere(self:GetEnemy():GetPos(), 2000)) do
-			if VJ.IsProp(v) && self:Visible(v) && self:GetEnemy():Visible(v) then
-				local phys = v:GetPhysicsObject()
-				if IsValid(phys) && phys:GetMass() <= 4000 && v.BeingControlledByAdvisor != true then
-					//print("Prop -", v)
-					pTbl[#pTbl + 1] = v
-				end
-			end
-		end
-		//print(pTbl)
-		if #pTbl > 0 then -- If greater then 1, then we found an object!
-			self:SetNW2Bool("PsionicEffect", true)
-			VJ.EmitSound(self, "vj_hlr/src/npc/advisor/advisorattack03.wav", 95)
-			self.PsionicAttacking = true
-			self:SetState(VJ_STATE_ONLY_ANIMATION)
-			for _, v in ipairs(pTbl) do
-				local phys = v:GetPhysicsObject()
-				if IsValid(phys) then
-					v.BeingControlledByAdvisor = true
-					v:SetNW2Bool("BeingControlledByAdvisor", true)
-					constraint.RemoveConstraints(v, "Weld")
-					phys:EnableMotion(true)
-					phys:Wake()
-					phys:EnableGravity(false)
-					phys:EnableDrag(false)
-					phys:ApplyForceCenter(v:GetUp() *phys:GetMass())
-					phys:AddAngleVelocity(v:GetForward() *600 + v:GetRight() *600)
-				end
-			end
-			timer.Simple(3.42225, function()
-				local selfValid = IsValid(self)
-				for _, v in ipairs(pTbl) do
-					if IsValid(v) then
-						local phys = v:GetPhysicsObject()
-						if IsValid(phys) then
-							VJ.EmitSound(self, "vj_hlr/src/npc/advisor/advisorattack02.wav", 95)
-							v.BeingControlledByAdvisor = false
-							v:SetNW2Bool("BeingControlledByAdvisor", false)
-							phys:EnableGravity(true)
-							phys:EnableDrag(true)
-							if selfValid && IsValid(self:GetEnemy()) then -- We check self here, in case self is removed, we will reset the props at least
-								local force = phys:GetMass() *math.random(3, 8)
-								phys:SetVelocity(self:CalculateProjectile("Line", v:GetPos(), self:GetEnemy():GetPos(), math.Clamp(force, 3000, force)))
-								-- self:PlayAnim(ACT_MELEE_ATTACK1, true, false, false)
-							end
-						end
-					end
-				end
-				if selfValid then self:ResetPsionicAttack() end -- Here so in case the prop is deleted, we make sure to still reset
-			end)
-		end
+-- function ENT:OnThinkAttack(isAttacking, enemy)
+-- 	if CurTime() > self.NextPsionicAttackT && self.EnemyData.Distance <= 8500 && !self:IsBusy("Activities") && self.PsionicAttacking == false && self:Visible(self:GetEnemy()) then
+-- 		//print("SEARCH ----")
+-- 		local pTbl = {} -- Table of props that it found
+-- 		for _, v in ipairs(ents.FindInSphere(self:GetEnemy():GetPos(), 2000)) do
+-- 			if VJ.IsProp(v) && self:Visible(v) && self:GetEnemy():Visible(v) then
+-- 				local phys = v:GetPhysicsObject()
+-- 				if IsValid(phys) && phys:GetMass() <= 4000 && v.BeingControlledByAdvisor != true then
+-- 					//print("Prop -", v)
+-- 					pTbl[#pTbl + 1] = v
+-- 				end
+-- 			end
+-- 		end
+-- 		//print(pTbl)
+-- 		if #pTbl > 0 then -- If greater then 1, then we found an object!
+-- 			self:SetNW2Bool("PsionicEffect", true)
+-- 			VJ.EmitSound(self, "vj_hlr/src/npc/advisor/advisorattack03.wav", 95)
+-- 			self.PsionicAttacking = true
+-- 			self:SetState(VJ_STATE_ONLY_ANIMATION)
+-- 			for _, v in ipairs(pTbl) do
+-- 				local phys = v:GetPhysicsObject()
+-- 				if IsValid(phys) then
+-- 					v.BeingControlledByAdvisor = true
+-- 					v:SetNW2Bool("BeingControlledByAdvisor", true)
+-- 					constraint.RemoveConstraints(v, "Weld")
+-- 					phys:EnableMotion(true)
+-- 					phys:Wake()
+-- 					phys:EnableGravity(false)
+-- 					phys:EnableDrag(false)
+-- 					phys:ApplyForceCenter(v:GetUp() *phys:GetMass())
+-- 					phys:AddAngleVelocity(v:GetForward() *600 + v:GetRight() *600)
+-- 				end
+-- 			end
+-- 			timer.Simple(3.42225, function()
+-- 				local selfValid = IsValid(self)
+-- 				for _, v in ipairs(pTbl) do
+-- 					if IsValid(v) then
+-- 						local phys = v:GetPhysicsObject()
+-- 						if IsValid(phys) then
+-- 							VJ.EmitSound(self, "vj_hlr/src/npc/advisor/advisorattack02.wav", 95)
+-- 							v.BeingControlledByAdvisor = false
+-- 							v:SetNW2Bool("BeingControlledByAdvisor", false)
+-- 							phys:EnableGravity(true)
+-- 							phys:EnableDrag(true)
+-- 							if selfValid && IsValid(self:GetEnemy()) then -- We check self here, in case self is removed, we will reset the props at least
+-- 								local force = phys:GetMass() *math.random(3, 8)
+-- 								phys:SetVelocity(self:CalculateProjectile("Line", v:GetPos(), self:GetEnemy():GetPos(), math.Clamp(force, 3000, force)))
+-- 								-- self:PlayAnim(ACT_MELEE_ATTACK1, true, false, false)
+-- 							end
+-- 						end
+-- 					end
+-- 				end
+-- 				if selfValid then self:ResetPsionicAttack() end -- Here so in case the prop is deleted, we make sure to still reset
+-- 			end)
+-- 		end
+-- 	end
+-- end
+---------------------------------------------------------------------------------------------------------------------------------------------
+//local attractionForce = 500
+local function CalculateAttractionForce(selfEntity, propEntity)
+    local direction = selfEntity:GetPos() -propEntity:GetPos()
+    local distance = direction:Length()
+    direction:Normalize()
+	local attractionForce = propEntity:GetPhysicsObject():GetMass() *3
+	if distance <= 1000 then
+		attractionForce = attractionForce *-1.5
 	end
+    //local forceMagnitude = (attractionForce *propEntity:GetPhysicsObject():GetMass()) /(distance ^2)
+    return direction * attractionForce
 end
+--
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()
-	if self.AA_MoveTimeCur > CurTime() then
-		local remaining = self.AA_MoveTimeCur -CurTime()
-		if remaining < 2 then
-			self:AA_StopMoving()
+	self:SetPhysicsDamageScale(0)
+	local pTbl = {}
+	for _, v in ipairs(ents.FindInSphere(self:GetPos(), self.PropRange)) do
+		if /*VJ.IsProp(v) &&*/ !v:IsPlayer() && (!v:IsNPC() or v:IsNPC() && v:GetMoveType() == MOVETYPE_VPHYSICS) && IsValid(v:GetPhysicsObject()) && self:Visible(v) then
+			local phys = v:GetPhysicsObject()
+			if !v:IsNPC() && phys:GetMass() <= 5000 or v:IsNPC() then
+				pTbl[#pTbl + 1] = v
+			end
+		end
+	end
+	if #pTbl > 0 then
+		for _, v in ipairs(pTbl) do
+			v.VJ_HLR_AdvisorProp = true
+			local phys = v:GetPhysicsObject()
+			if IsValid(phys) then
+				phys:EnableMotion(true)
+				phys:Wake()
+				phys:EnableGravity(false)
+				phys:EnableDrag(false)
+				local force = CalculateAttractionForce(self, v)
+				phys:ApplyForceCenter(force)
+			end
 		end
 	end
 
@@ -326,6 +394,18 @@ function ENT:OnThinkActive()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
+	for _,v in pairs(ents.GetAll()) do
+		if v.VJ_HLR_AdvisorProp then
+			v.VJ_HLR_AdvisorProp = nil
+			local phys = v:GetPhysicsObject()
+			if IsValid(phys) then
+				phys:EnableMotion(true)
+				phys:Wake()
+				phys:EnableGravity(true)
+				phys:EnableDrag(true)
+			end
+		end
+	end
 	local cont = true
 	local EntsTbl = ents.GetAll()
 	for x = 1, #EntsTbl do
