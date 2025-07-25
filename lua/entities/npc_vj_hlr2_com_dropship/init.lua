@@ -15,6 +15,9 @@ ENT.Immune_Bullet = true
 
 ENT.DisableWandering = true
 ENT.DisableChasingEnemy = true
+ENT.IdleAlwaysWander = true
+
+ENT.ConstantlyFaceEnemy = false
 
 ENT.SoundTbl_Idle = {
 	"npc/combine_gunship/gunship_moan.wav",
@@ -210,11 +213,12 @@ function ENT:DropOffCargo()
 	if !IsValid(cargo) then return end
 
 	self:SetMaxYawSpeed(0)
-	self:SetLocalVelocity(self:GetVelocity() *0.8)
+	self:SetLocalVelocity(self:GetVelocity() *0.5)
 	self.HasDroppedOffCargo = true
 	self.EngineLoop:Stop()
 	self.EngineLoopB:Play()
 	self.CargoLoop:Play()
+	-- self:SetDropshipState(LandingState.LANDING_UNLOADING)
 
 	if self.CargoType == CRATE_TYPES.CRATE_SOLDIER then
 		cargo:ResetSequence("open_idle")
@@ -231,11 +235,13 @@ function ENT:DropOffCargo()
 					soldier:Spawn()
 					soldier.VJ_NPC_Class = self.VJ_NPC_Class
 					soldier:Activate()
+					soldier:SetMoveType(MOVETYPE_FLY)
 					soldier:Give(VJ.PICK(list.Get("NPC")[class].Weapons))
 					soldier:SetOwner(cargo)
 					timer.Simple(0, function()
 						if IsValid(soldier) then
 							local _, dur = soldier:PlayAnim("vjseq_Dropship_Deploy", true, false, false, 0, {OnFinish=function()
+								soldier:SetMoveType(MOVETYPE_STEP)
 								soldier:SetLastPosition(soldier:GetPos() +soldier:GetForward() *math.random(200, 400) +soldier:GetRight() *math.random(-400, 400) +soldier:GetUp() *math.random(0, 25))
 								soldier:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH", function(x)
 									x.CanShootWhenMoving = true
@@ -253,6 +259,7 @@ function ENT:DropOffCargo()
 									self.EngineLoop:Play()
 									self.EngineLoopB:Stop()
 									self.CargoLoop:Stop()
+									self:SetDropshipState(LandingState.LANDING_LIFTOFF)
 								end
 							end})
 							soldier:SetState(VJ_STATE_ONLY_ANIMATION_NOATTACK, dur)
@@ -439,7 +446,7 @@ function ENT:Flight()
 					randPos = self:GetPos() +VectorRand() *math.random(1024, 2048)
 				end
 				self:SetDesiredPosition(randPos)
-				self.NextWanderPointT = CurTime() +math.Rand(6, 12)
+				self.NextWanderPointT = CurTime() +(self:GetPos():Distance(randPos) /(DROPSHIP_MAX_SPEED *1.5)) +math.Rand(0.2, 1.5)
 			end
 		end
 	end
@@ -494,6 +501,9 @@ function ENT:Flight()
 				self:SetPoseParameter("body_sway", 0)
 				self:SetPoseParameter("cargo_body_accel", 0)
 				self:SetPoseParameter("cargo_body_sway", 0)
+				if !self.EngineLoopB:IsPlaying() then
+					self:SetLocalVelocity(self:GetVelocity() *0.1)
+				end
 				self.EngineLoop:Stop()
 				self.EngineLoopB:Play()
 				self.CargoLoop:Stop()
@@ -501,11 +511,27 @@ function ENT:Flight()
 				self:DropOffCargo()
 			end
 		else
+			if self.CargoDropOffPoint then
+				local tr = util.TraceHull({
+					start = self:GetPos(),
+					endpos = self:GetPos() -Vector(0, 0, 150),
+					filter = {self, self.Cargo},
+					mins = DROPSHIP_BBOX_CRATE_MAX /2,
+					maxs = DROPSHIP_BBOX_CRATE_MIN /2,
+					mask = MASK_SOLID_BRUSHONLY,
+				})
+				-- Entity(1):ChatPrint("Trace Hull: " .. tostring(tr.Hit) .. " " .. tostring(tr.HitPos))
+				if tr.HitWorld then
+					flPos = tr.HitPos +tr.HitNormal
+					self:SetLocalVelocity(self:GetVelocity() *0.1)
+					self:DropOffCargo()
+				end
+			end
 			if desiredSpeed < ((DROPSHIP_MAX_SPEED *(self.Alerted && 1 or 0.4)) *(self.CargoDropOffPoint && 0.25 or 1)) then
 				desiredSpeed = desiredSpeed +accel
 			end
 			self:SetLocalVelocity(vel +(dir *accel))
-			self:SetTurnTarget(self.Alerted && self:GetEnemy() or flPos, 0.2)
+			self:SetTurnTarget(flPos, 0.2)
 		end
 	end
 end

@@ -15,6 +15,8 @@ ENT.Turret_BulletAttachment = "muzzle"
 ENT.TimeUntilRangeAttackProjectileRelease = 0.001
 ENT.NextRangeAttackTime = 1.2
 ENT.NextAnyAttackTime_Range = 1.2
+ENT.RangeAttackProjectiles = nil
+ENT.RangeAttackEntityToSpawn = nil
 ENT.Turret_FireSound = {"^vj_hlr/src/npc/ioncannon/ion_cannon_shot1.wav", "^vj_hlr/src/npc/ioncannon/ion_cannon_shot2.wav", "^vj_hlr/src/npc/ioncannon/ion_cannon_shot3.wav"}
 
 ENT.GibOnDeathFilter = false
@@ -43,6 +45,7 @@ function ENT:Init()
 	prop:SetAngles(self:GetAngles())
 	prop:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
 	prop:Spawn()
+	prop:AddEFlags(EFL_DONTBLOCKLOS)
 	self:DeleteOnRemove(prop)
 	self.MainStand = prop
 
@@ -52,6 +55,7 @@ function ENT:Init()
 	prop1:SetAngles(self:GetAngles())
 	-- prop1:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
 	prop1:Spawn()
+	prop1:AddEFlags(EFL_DONTBLOCKLOS)
 	self:DeleteOnRemove(prop1)
 	self.SmallStand = prop1
 
@@ -153,7 +157,7 @@ function ENT:Init()
 			if i == 1 then self.Turret1 = t else self.Turret2 = t end
 			self:DeleteOnRemove(t)
 		end
-		self.Obstacles = {self.Generator, self.MainStand, self.SmallStand, self.Turret1, self.Turret2}
+		self.Obstacles = {self, self.Generator, self.MainStand, self.SmallStand, self.Turret1, self.Turret2}
 		self.Turret1.Obstacles = {self.Generator, self.MainStand, self.SmallStand, self, self.Turret2}
 		self.Turret2.Obstacles = {self.Generator, self.MainStand, self.SmallStand, self, self.Turret1}
 
@@ -175,11 +179,14 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DoTrace()
 	-- if IsValid(self:GetEnemy()) then return end
-	local tracedata = {}
-	tracedata.start = self:GetAttachment(1).Pos
-	tracedata.endpos = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() +VectorRand() *60
-	tracedata.filter = self.Obstacles
-	return util.TraceLine(tracedata).HitPos
+	local tr = util.TraceLine({
+		start = self:GetAttachment(1).Pos,
+		endpos = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() +VectorRand() *60,
+		filter = self.Obstacles,
+		-- mask = MASK_SHOT_HULL
+	})
+	PrintTable(self.Obstacles)
+	return tr.HitPos
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnRangeAttackExecute(status, enemy, projectile)
@@ -213,6 +220,7 @@ function ENT:OnRangeAttackExecute(status, enemy, projectile)
 		FireLight1:Fire("TurnOn", "", 0)
 		FireLight1:Fire("Kill", "", 0.07)
 		self:DeleteOnRemove(FireLight1)
+		return true
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

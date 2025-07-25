@@ -11,6 +11,7 @@ ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = VJ.BLOOD_COLOR_RED
+ENT.Behavior = VJ_BEHAVIOR_NEUTRAL
 
 ENT.HasMeleeAttack = false
 
@@ -96,6 +97,10 @@ function ENT:LaserReset()
 	self:StopAttacks(true)
 	self.NextChaseTime = CurTime()
 	self.NextIdleTime = CurTime()
+	if IsValid(self.EyeGlow) then
+		self.EyeGlow:Remove()
+		self.EyeGlow = nil
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThink()
@@ -115,6 +120,18 @@ function ENT:OnThink()
 		self:FireLaser()
 		if !self.Laser:IsPlaying() then
 			self.Laser:Play()
+			local eyeGlow = ents.Create("env_sprite")
+			eyeGlow:SetKeyValue("model","vj_base/sprites/glow.vmt")
+			eyeGlow:SetKeyValue("scale","0.2")
+			eyeGlow:SetKeyValue("rendermode","5")
+			eyeGlow:SetKeyValue("rendercolor","255 0 0")
+			eyeGlow:SetKeyValue("spawnflags","1")
+			eyeGlow:SetParent(self)
+			eyeGlow:Fire("SetParentAttachment","eyes",0)
+			eyeGlow:Spawn()
+			eyeGlow:Activate()
+			self:DeleteOnRemove(eyeGlow)
+			self.EyeGlow = eyeGlow
 		end
 	else
 		self.NextLAnimT = 0

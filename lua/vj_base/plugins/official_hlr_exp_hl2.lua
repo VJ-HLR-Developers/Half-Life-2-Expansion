@@ -27,7 +27,7 @@ local spawnCategory = "HL Resurgence: Source"
 	-- Antlions
 	-- VJ.AddNPC("Antlion (Beta)", "npc_vj_hlr2b_antlion", spawnCategory)
 
-	VJ.AddNPC("Antlion Worker (EP2 Beta)", "npc_vj_hlr2b_antlion_worker", spawnCategory)
+	-- VJ.AddNPC("Antlion Worker (EP2 Beta)", "npc_vj_hlr2b_antlion_worker", spawnCategory)
 
 	VJ.AddNPC("Antlion", "npc_vj_hlr2_antlion", spawnCategory)
 	VJ.AddNPC("Antlion Worker", "npc_vj_hlr2_antlion_worker", spawnCategory)
@@ -61,7 +61,7 @@ local spawnCategory = "HL Resurgence: Source"
 	VJ.AddNPC("Overwatch Hunter Chopper", "npc_vj_hlr2_com_chopper", spawnCategory)
 	VJ.AddNPC("Overwatch Heavy Chopper", "npc_vj_hlr2_com_chopper_heavy", spawnCategory)
 	VJ.AddNPC("Overwatch Gunship Synth", "npc_vj_hlr2_com_gunship", spawnCategory)
-	-- VJ.AddNPC("Overwatch Dropship Synth", "npc_vj_hlr2_com_dropship", spawnCategory) -- Very unfinished
+	VJ.AddNPC("Overwatch Dropship Synth", "npc_vj_hlr2_com_dropship", spawnCategory)
 	VJ.AddNPC("Vortigaunt Slave", "npc_vj_hlr2_vortigaunt_slave", spawnCategory)
 	
 	-- Unknown
