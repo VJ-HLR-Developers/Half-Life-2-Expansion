@@ -106,6 +106,13 @@ local spawnCategory = "HL Resurgence: Source"
 		-- VJ.AddCeilingNPC("Barnacle", "npc_vj_hlr2_barnacle", spawnCategory)
 		-- VJ.AddNPC("Sand Barnacle", "npc_vj_hlr2b_barnacle_sand", spawnCategory)
 
+-- Weapons --
+VJ.AddNPCWeapon("VJ_HL2B_HMG1", "weapon_vj_hlr2b_hmg1", spawnCategory)
+-- VJ.AddNPCWeapon("VJ_HL2B_SMG1", "weapon_vj_hlr2b_mp5k", spawnCategory)
+-- VJ.AddNPCWeapon("VJ_HL2B_SMG2", "weapon_vj_hlr2b_mp7", spawnCategory)
+-- VJ.AddNPCWeapon("VJ_HL2B_AR1", "weapon_vj_hlr2b_ar1", spawnCategory)
+-- VJ.AddNPCWeapon("VJ_HL2B_MissileLauncher", "weapon_vj_hlr2b_missilelauncher", spawnCategory)
+
 -- ConVars --
 VJ.AddParticle("particles/advisor.pcf", {})
 VJ.AddParticle("particles/advisor_fx.pcf", {})
