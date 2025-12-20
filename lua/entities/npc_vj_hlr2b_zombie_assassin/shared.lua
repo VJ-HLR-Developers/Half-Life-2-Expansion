@@ -5,6 +5,8 @@ ENT.Author 			= "DrVrej"
 ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
 ENT.Category		= "Half-Life 2"
 
+ENT.VJ_ID_Undead = true
+
 if CLIENT then
     net.Receive("VJ_HLR2_ZombieAssassinScream", function()
         local ply = net.ReadEntity()
