@@ -6,7 +6,7 @@ include("shared.lua")
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.VJ_ID_Boss = true
-ENT.Model = {"models/vj_hlr/hl2/combine_heavychopper.mdl"}
+ENT.Model = "models/vj_hlr/hl2/combine_heavychopper.mdl"
 ENT.StartHealth = 4000
 ENT.SightAngle = 360
 ENT.HullType = HULL_LARGE

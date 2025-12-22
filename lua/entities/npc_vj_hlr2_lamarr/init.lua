@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/Lamarr.mdl"}
+ENT.Model = "models/Lamarr.mdl"
 ENT.StartHealth = 200
 
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
@@ -15,7 +15,7 @@ function ENT:Init()
 	self:SetCollisionBounds(Vector(8, 10, 15), Vector(-8, -10, 0))
 
 	self.Headcrab_Sleeping = false
-	self.Headcrab_NextSleepT = CurTime() +math.random(20, 30)
+	self.Headcrab_NextSleepT = CurTime() + math.random(20, 30)
 	self.Headcrab_WakeUpT = 0
 	self.Headcrab_SleepAnimT = 0
 end
@@ -30,7 +30,7 @@ function ENT:OnBleed(dmginfo, hitgroup)
 	if self.Headcrab_Sleeping then
 		self.Headcrab_WakeUpT = 0
 	else
-		self.Headcrab_NextSleepT = CurTime() +math.random(20, 30)
+		self.Headcrab_NextSleepT = CurTime() + math.random(20, 30)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

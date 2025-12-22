@@ -5,12 +5,12 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/vj_hlr/hl2/combine_gunship.mdl"}
+ENT.Model = "models/vj_hlr/hl2/combine_gunship.mdl"
 ENT.StartHealth = 1000
-ENT.Aerial_FlyingSpeed_Calm = 520 -- The speed it should fly with, when it"s wandering, moving slowly, etc. | Basically walking compared to ground NPCs
+ENT.Aerial_FlyingSpeed_Calm = 520
 ENT.Aerial_FlyingSpeed_Alerted = 600
-ENT.Aerial_AnimTbl_Calm = {ACT_IDLE} -- Animations it plays when it"s wandering around while idle
-ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE} -- Animations it plays when it"s moving while alerted
+ENT.Aerial_AnimTbl_Calm = {ACT_IDLE}
+ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE}
 
 ENT.PoseParameterLooking_InvertPitch = false
 ENT.PoseParameterLooking_InvertYaw = false
@@ -30,8 +30,8 @@ ENT.ControllerParams = {
 
 ENT.SoundTbl_Idle = {"npc/combine_gunship/ping_patrol.wav", "npc/combine_gunship/ping_search.wav", "npc/combine_gunship/gunship_ping_search.wav"}
 ENT.SoundTbl_Alert = {"npc/combine_gunship/gunship_moan.wav", "npc/combine_gunship/see_enemy.wav"}
-ENT.SoundTbl_Pain = {"npc/combine_gunship/gunship_pain.wav"}
-ENT.SoundTbl_Death = {"npc/combine_gunship/gunship_explode2.wav"}
+ENT.SoundTbl_Pain = "npc/combine_gunship/gunship_pain.wav"
+ENT.SoundTbl_Death = "npc/combine_gunship/gunship_explode2.wav"
 
 ENT.AlertSoundLevel = 150
 ENT.PainSoundLevel = 150

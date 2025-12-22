@@ -9,8 +9,8 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
--- ENT.Model = {"models/barnacle.mdl"}
-ENT.Model = {"models/vj_hlr/hl2/barnacle.mdl"}
+-- ENT.Model = "models/barnacle.mdl"
+ENT.Model = "models/vj_hlr/hl2/barnacle.mdl"
 ENT.SightDistance = 1024
 ENT.SightAngle = 360
 ENT.StartHealth = 30

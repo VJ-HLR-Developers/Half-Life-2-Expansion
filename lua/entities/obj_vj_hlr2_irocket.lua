@@ -33,23 +33,23 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if !SERVER then return end
 
-ENT.Model = {"models/weapons/w_missile_launch.mdl"}
+ENT.Model = "models/weapons/w_missile_launch.mdl"
 ENT.DoesRadiusDamage = true
 ENT.RadiusDamageRadius = 300
 ENT.RadiusDamage = 100
 ENT.RadiusDamageUseRealisticRadius = true
 ENT.RadiusDamageType = bit.bor(DMG_BLAST, DMG_SHOCK, DMG_DISSOLVE)
 ENT.RadiusDamageForce = 90
-ENT.CollisionDecal = {"Scorch"}
-ENT.SoundTbl_Idle = {"weapons/rpg/rocket1.wav"}
-ENT.SoundTbl_OnCollide = {"ambient/explosions/explode_8.wav"}
+ENT.CollisionDecal = "Scorch"
+ENT.SoundTbl_Idle = "weapons/rpg/rocket1.wav"
+ENT.SoundTbl_OnCollide = "ambient/explosions/explode_8.wav"
 
 -- Custom
 ENT.Rocket_Follow = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
-	-- ParticleEffectAttach("vj_rocket_idle1_smoke", PATTACH_ABSORIGIN_FOLLOW, self, 0)
-	-- ParticleEffectAttach("vj_rocket_idle2_smoke2", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+	//ParticleEffectAttach("vj_rocket_idle1_smoke", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+	//ParticleEffectAttach("vj_rocket_idle2_smoke2", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 	ParticleEffectAttach("electrical_arc_01_system", PATTACH_POINT_FOLLOW, self, 0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

@@ -5,7 +5,7 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/gman.mdl"}
+ENT.Model = "models/gman.mdl"
 ENT.StartHealth = 999999
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -14,15 +14,13 @@ ENT.Behavior = VJ_BEHAVIOR_PASSIVE
 ENT.Passive_RunOnTouch = false
 ENT.DamageResponse = false
 ENT.EnemyDetection = false
-
+ENT.YieldToAlliedPlayers = false
+ENT.HasOnPlayerSight = true
 ENT.GodMode = true
 ENT.BloodColor = VJ.BLOOD_COLOR_RED
 
 ENT.HasMeleeAttack = false
 
-ENT.YieldToAlliedPlayers = false
-
-ENT.HasOnPlayerSight = true
 ENT.DisableFootStepSoundTimer = true
 
 -- ENT.SoundTbl_IdleDialogue = {"vo/gman_misc/gman_riseshine.wav"}
@@ -43,7 +41,7 @@ local dur1 = SoundDuration("vo/gman_misc/gman_riseshine.wav")
 local dur2 = SoundDuration("vo/gman_misc/gman_02.wav")
 local dur3 = SoundDuration("vo/gman_misc/gman_03.wav")
 local dur4 = SoundDuration("vo/gman_misc/gman_04.wav")
---------
+--
 function ENT:FreemanSpeech(ent)
 	if CurTime() > self.NextDialogueTreeT then
 		self.Freeman = ent
