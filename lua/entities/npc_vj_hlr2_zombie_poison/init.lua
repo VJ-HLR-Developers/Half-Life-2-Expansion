@@ -230,7 +230,7 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 		self:CreateExtraDeathCorpse(
 			"prop_ragdoll",
 			mdl,
-			{Pos=self:GetAttachment(self:LookupAttachment("headcrab1")).Pos or self:EyePos()})
+			{Pos = self:GetAttachment(self:LookupAttachment("headcrab1")).Pos or self:EyePos()})
 	else
 		if math.random(1, (dmgtype == DMG_CLUB or dmgtype == DMG_SLASH or DMG_BLAST) && 1 or 3) == 1 then
 			ent:SetBodygroup(1, 0)

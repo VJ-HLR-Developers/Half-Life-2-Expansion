@@ -128,7 +128,7 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 		self:CreateExtraDeathCorpse(
 			"prop_ragdoll",
 			"models/headcrabclassic.mdl",
-			{Pos=self:EyePos()},
+			{Pos = self:EyePos()},
 			function(crab)
 				crab:SetMaterial("models/hl_resurgence/hl2b/headcrab/headcrabsheet")
 			end

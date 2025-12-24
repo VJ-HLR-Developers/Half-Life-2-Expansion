@@ -60,7 +60,7 @@ function ENT:OnThink()
 			self.DisableWandering = true
 			self.AA_ConstantlyMove = false
 			if !IsValid(self:GetEnemy()) then
-				self:AA_MoveTo(Leech_Leader, true, "Calm", {AddPos=self.Leech_FollowOffsetPos}) -- Medzavorin haladz e (Kharen deghme)
+				self:AA_MoveTo(Leech_Leader, true, "Calm", {AddPos = self.Leech_FollowOffsetPos}) -- Medzavorin haladz e (Kharen deghme)
 			end
 		end
 	else

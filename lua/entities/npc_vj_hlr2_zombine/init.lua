@@ -209,7 +209,7 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 		self:CreateExtraDeathCorpse(
 			"prop_ragdoll",
 			"models/headcrabclassic.mdl",
-			{Pos=self:GetAttachment(self:LookupAttachment("headcrab")).Pos or self:EyePos()},
+			{Pos = self:GetAttachment(self:LookupAttachment("headcrab")).Pos or self:EyePos()},
 			function(crab)
 				if self.HeadcrabClass == "npc_vj_hlr2b_headcrab" then
 					crab:SetMaterial("models/hl_resurgence/hl2b/headcrab/headcrabsheet")

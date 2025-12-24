@@ -333,7 +333,7 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpse)
 	if self.HasGibOnDeathEffects then ParticleEffect("vj_explosion2", corpse:GetPos(), Angle(0, 0, 0), nil) end
 
 	if math.random(1, 3) == 1 then
-		self:CreateExtraDeathCorpse("prop_ragdoll", "models/combine_soldier.mdl", {Pos=corpse:GetPos()+corpse:GetUp()*90+corpse:GetRight()*-30, Vel=Vector(math.Rand(-600, 600), math.Rand(-600, 600), 500)}, function(extraent) extraent:Ignite(math.Rand(8, 10), 0); extraent:SetColor(Color(90, 90, 90)) end)
+		self:CreateExtraDeathCorpse("prop_ragdoll", "models/combine_soldier.mdl", {Pos = corpse:GetPos()+corpse:GetUp()*90+corpse:GetRight()*-30, Vel = Vector(math.Rand(-600, 600), math.Rand(-600, 600), 500)}, function(extraent) extraent:Ignite(math.Rand(8, 10), 0); extraent:SetColor(Color(90, 90, 90)) end)
 	end
 
 	if self.HasGibOnDeathEffects then

@@ -146,7 +146,7 @@ function ENT:OnThink()
 		end
 		local dest = self:GetEnemy():GetPos() +Vector(0, 0, 1200)
 		-- if CurTime() > self.AA_CurrentMoveTime then
-			self:AA_MoveTo(dest, true, "Calm", {FaceDest=true, IgnoreGround=true})
+			self:AA_MoveTo(dest, true, "Calm", {FaceDest=true, IgnoreGround = true})
 		-- end
 		if self:GetPos():Distance(dest) <= 100 then
 			self:BellyCannon()

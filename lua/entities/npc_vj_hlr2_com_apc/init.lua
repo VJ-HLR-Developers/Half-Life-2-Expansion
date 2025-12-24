@@ -298,11 +298,11 @@ end
 function ENT:Tank_OnDeathCorpse(dmginfo, hitgroup, corpse, status, statusData)
 	if status == "Override" then
 		corpse:SetAngles(self:GetAngles() +Angle(0, 270, 0))
-		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib02.mdl", {Pos=corpse:GetPos(), Ang=corpse:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib03.mdl", {Pos=corpse:GetPos(), Ang=corpse:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib04.mdl", {Pos=corpse:GetPos(), Ang=corpse:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib05.mdl", {Pos=corpse:GetPos(), Ang=corpse:GetAngles()})
-		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib06.mdl", {Pos=corpse:GetPos(), Ang=corpse:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib02.mdl", {Pos = corpse:GetPos(), Ang = corpse:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib03.mdl", {Pos = corpse:GetPos(), Ang = corpse:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib04.mdl", {Pos = corpse:GetPos(), Ang = corpse:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib05.mdl", {Pos = corpse:GetPos(), Ang = corpse:GetAngles()})
+		self:CreateExtraDeathCorpse("prop_physics", "models/combine_apc_destroyed_gib06.mdl", {Pos = corpse:GetPos(), Ang = corpse:GetAngles()})
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

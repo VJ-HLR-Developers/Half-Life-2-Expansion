@@ -46,11 +46,11 @@ function ENT:HandleGibOnDeath(dmginfo, hitgroup)
 			//local lB = self:GetPos() +self:GetForward() *-45 +self:GetRight() *-15 +self:GetUp() *30
 			local rF = self:GetPos() +self:GetForward() *40 +self:GetRight() *15 +self:GetUp() *30
 			//local rB = self:GetPos() +self:GetForward() *-45 +self:GetRight() *15 +self:GetUp() *30
-			self:CreateGibEntity("prop_ragdoll", "models/gibs/antlion_worker_gibs_backlegl.mdl", {BloodType="Yellow", Pos=lF})
-			self:CreateGibEntity("prop_ragdoll", "models/gibs/antlion_worker_gibs_backlegr.mdl", {BloodType="Yellow", Pos=rF})
-			self:CreateGibEntity("prop_ragdoll", "models/gibs/antlion_worker_gibs_frontlegl.mdl", {BloodType="Yellow", Pos=lF})
-			self:CreateGibEntity("prop_ragdoll", "models/gibs/antlion_worker_gibs_frontlegr.mdl", {BloodType="Yellow", Pos=rF})
-			self:CreateGibEntity("obj_vj_gib", "models/gibs/antlion_worker_gibs_head.mdl", {BloodType="Yellow", Pos=head})
+			self:CreateGibEntity("prop_ragdoll", "models/gibs/antlion_worker_gibs_backlegl.mdl", {BloodType = "Yellow", Pos = lF})
+			self:CreateGibEntity("prop_ragdoll", "models/gibs/antlion_worker_gibs_backlegr.mdl", {BloodType = "Yellow", Pos = rF})
+			self:CreateGibEntity("prop_ragdoll", "models/gibs/antlion_worker_gibs_frontlegl.mdl", {BloodType = "Yellow", Pos = lF})
+			self:CreateGibEntity("prop_ragdoll", "models/gibs/antlion_worker_gibs_frontlegr.mdl", {BloodType = "Yellow", Pos = rF})
+			self:CreateGibEntity("obj_vj_gib", "models/gibs/antlion_worker_gibs_head.mdl", {BloodType = "Yellow", Pos = head})
 		end
 	end)
 	return true, {AllowAnim = true}
