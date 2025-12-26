@@ -15,12 +15,13 @@ local render_SetBlend = render.SetBlend
 local render_MaterialOverride = render.Material
 local IsValid = IsValid
 local pairs = pairs
+local ents_FindByClass = ents.FindByClass
 function ENT:Initialize()
 	local index = self:EntIndex()
 	hook.Add("RenderScreenspaceEffects", "VJ_HLR_Advisor_FX" .. index, function()
 		if IsValid(self) then
 			if self:GetNW2Bool("PsionicEffect") then
-				for _, prop in pairs(ents.FindByClass("prop_*")) do
+				for _, prop in pairs(ents_FindByClass("prop_*")) do
 					if prop:GetNW2Bool("BeingControlledByAdvisor") then
 						cam_Start3D(EyePos(), EyeAngles())
 							render_SetBlend(1)
