@@ -1,2 +1,0 @@
-TAI - 7 Hour War Combine
-AlexVestin - Combine Weaponry
