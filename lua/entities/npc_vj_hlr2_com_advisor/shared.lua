@@ -57,7 +57,7 @@ end)
 
 local surface_SetTexture = surface.SetTexture
 local surface_GetTextureID = surface.GetTextureID
-local surface_SetDrawColor = surace.SetDrawColor
+local surface_SetDrawColor = surface.SetDrawColor
 local surface_DrawTexturedRect = surface.DrawTexturedRect
 -- Entities are loaded after postprocess. If you don't believe me, see
 -- https://wiki.facepunch.com/gmod/Lua_Loading_Order#clientloadingorder
