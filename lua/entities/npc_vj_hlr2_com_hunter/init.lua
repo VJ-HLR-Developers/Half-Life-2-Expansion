@@ -46,72 +46,72 @@ ENT.ControllerParams = {
 ENT.DisableFootStepSoundTimer = true
 ENT.HasExtraMeleeAttackSounds = true
 
--- ENT.SoundTbl_Breath = {"npc/combine_gunship/gunship_engine_loop3.wav"}
+-- ENT.SoundTbl_Breath = "npc/combine_gunship/gunship_engine_loop3.wav"
 ENT.SoundTbl_FootStep = {
 	"npc/ministrider/ministrider_footstep1.wav",
 	"npc/ministrider/ministrider_footstep2.wav",
 	"npc/ministrider/ministrider_footstep3.wav",
 	"npc/ministrider/ministrider_footstep4.wav",
-	"npc/ministrider/ministrider_footstep5.wav",
+	"npc/ministrider/ministrider_footstep5.wav"
 }
 ENT.SoundTbl_Idle = {
 	"npc/ministrider/hunter_idle1.wav",
 	"npc/ministrider/hunter_idle2.wav",
-	"npc/ministrider/hunter_idle3.wav",
+	"npc/ministrider/hunter_idle3.wav"
 }
 ENT.SoundTbl_CombatIdle = {
 	"npc/ministrider/hunter_angry1.wav",
 	"npc/ministrider/hunter_angry2.wav",
-	"npc/ministrider/hunter_angry3.wav",
+	"npc/ministrider/hunter_angry3.wav"
 }
 ENT.SoundTbl_Alert = {
 	"npc/ministrider/hunter_alert1.wav",
 	"npc/ministrider/hunter_alert2.wav",
-	"npc/ministrider/hunter_alert3.wav",
+	"npc/ministrider/hunter_alert3.wav"
 }
 ENT.SoundTbl_CallForHelp = {
 	"npc/ministrider/hunter_foundenemy1.wav",
 	"npc/ministrider/hunter_foundenemy2.wav",
-	"npc/ministrider/hunter_foundenemy3.wav",
+	"npc/ministrider/hunter_foundenemy3.wav"
 }
 ENT.SoundTbl_ReceiveOrder = {
 	"npc/ministrider/hunter_foundenemy_ack1.wav",
 	"npc/ministrider/hunter_foundenemy_ack2.wav",
-	"npc/ministrider/hunter_foundenemy_ack3.wav",
+	"npc/ministrider/hunter_foundenemy_ack3.wav"
 }
 ENT.SoundTbl_Investigate = {
 	"npc/ministrider/hunter_scan1.wav",
 	"npc/ministrider/hunter_scan2.wav",
 	"npc/ministrider/hunter_scan3.wav",
-	"npc/ministrider/hunter_scan4.wav",
+	"npc/ministrider/hunter_scan4.wav"
 }
 ENT.SoundTbl_LostEnemy = {
 	"npc/ministrider/hunter_scan1.wav",
 	"npc/ministrider/hunter_scan2.wav",
 	"npc/ministrider/hunter_scan3.wav",
-	"npc/ministrider/hunter_scan4.wav",
+	"npc/ministrider/hunter_scan4.wav"
 }
 ENT.SoundTbl_KilledEnemy = {
 	"npc/ministrider/hunter_laugh1.wav",
 	"npc/ministrider/hunter_laugh2.wav",
 	"npc/ministrider/hunter_laugh3.wav",
 	"npc/ministrider/hunter_laugh4.wav",
-	"npc/ministrider/hunter_laugh5.wav",
+	"npc/ministrider/hunter_laugh5.wav"
 }
 ENT.SoundTbl_Pain = {
 	"npc/ministrider/hunter_pain2.wav",
-	"npc/ministrider/hunter_pain4.wav",
+	"npc/ministrider/hunter_pain4.wav"
 }
 ENT.SoundTbl_AllyDeath = {
 	"npc/ministrider/hunter_defendstrider1.wav",
 	"npc/ministrider/hunter_defendstrider2.wav",
-	"npc/ministrider/hunter_defendstrider3.wav",
+	"npc/ministrider/hunter_defendstrider3.wav"
 }
-ENT.SoundTbl_BeforeMeleeAttack = {"npc/ministrider/hunter_prestrike1.wav"}
-ENT.SoundTbl_MeleeAttackExtra = {"npc/ministrider/ministrider_skewer1.wav"}
+ENT.SoundTbl_BeforeMeleeAttack = "npc/ministrider/hunter_prestrike1.wav"
+ENT.SoundTbl_MeleeAttackExtra = "npc/ministrider/ministrider_skewer1.wav"
 ENT.SoundTbl_Death = {
 	"npc/ministrider/hunter_die2.wav",
-	"npc/ministrider/hunter_die3.wav",
+	"npc/ministrider/hunter_die3.wav"
 }
 
 ENT.IdleSoundLevel = 90
@@ -174,7 +174,7 @@ function ENT:FireFlechette()
 
 		VJ.EmitSound(self, "^npc/ministrider/ministrider_fire1.wav", 105, 100)
 		ParticleEffectAttach("vj_rifle_full_blue", PATTACH_POINT_FOLLOW, self, self.CurrentEye)
-	
+
 		local FireLight1 = ents.Create("light_dynamic")
 		FireLight1:SetKeyValue("brightness", "4")
 		FireLight1:SetKeyValue("distance", "120")
@@ -420,7 +420,7 @@ function ENT:Controller_Movement(cont, ply, bullseyePos)
 		if self.IsCharging then
 			return
 		end
-		
+
 		if ply:KeyDown(IN_FORWARD) then
 			if self.MovementType == VJ_MOVETYPE_AERIAL or self.MovementType == VJ_MOVETYPE_AQUATIC then
 				self:AA_MoveTo(cont.VJCE_Bullseye, true, gerta_arak and "Alert" or "Calm", {IgnoreGround = true})

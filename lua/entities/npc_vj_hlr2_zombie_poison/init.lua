@@ -12,7 +12,7 @@ ENT.HullType = HULL_HUMAN
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.BloodParticle = {"blood_impact_green_01"}
+ENT.BloodParticle = "blood_impact_green_01"
 
 ENT.MeleeAttackDamage = 18
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
@@ -87,10 +87,10 @@ function ENT:Init()
 			self:SetHealth(hp)
 			self:SetMaxHealth(hp)
 			if (zType == 1 && zType == 3) or (zType >= 5 && zType <= 7) then
-				self.DeathLoot = {"weapon_frag"}
+				self.DeathLoot = "weapon_frag"
 				self.DeathLootChance = 12
 			elseif zType == 8 then
-				self.DeathLoot = {"item_ammo_ar2_altfire"}
+				self.DeathLoot = "item_ammo_ar2_altfire"
 				self.DeathLootChance = 6
 			end
 			if zType == 3 then

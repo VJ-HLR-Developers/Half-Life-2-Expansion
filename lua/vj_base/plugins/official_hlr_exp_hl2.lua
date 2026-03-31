@@ -4,7 +4,7 @@
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 VJ.AddPlugin("Half-Life Resurgence: Half Life 2", "NPC")
-	
+
 /*
 	Credits:
 
@@ -19,7 +19,7 @@ end
 
 -- Source Engine -------------------------------------------------------
 local spawnCategory = "HL Resurgence: Source"
-	
+
 	-- Misc.
 	VJ.AddNPC("Mounted Turret", "sent_vj_hlr2_mountedturret", spawnCategory)
 	-- VJ.AddNPC("Suppression Device", "sent_vj_hlr2_mortarturret", spawnCategory)
@@ -63,13 +63,14 @@ local spawnCategory = "HL Resurgence: Source"
 	VJ.AddNPC("Overwatch Gunship Synth", "npc_vj_hlr2_com_gunship", spawnCategory)
 	VJ.AddNPC("Overwatch Dropship Synth", "npc_vj_hlr2_com_dropship", spawnCategory)
 	VJ.AddNPC("Vortigaunt Slave", "npc_vj_hlr2_vortigaunt_slave", spawnCategory)
-	
+
 	-- Unknown
 	VJ.AddNPC("G-Man", "npc_vj_hlr2_gman", spawnCategory)
 
 	-- Resistance
 	VJ.AddNPC("Vortigaunt", "npc_vj_hlr2_vortigaunt", spawnCategory)
 	VJ.AddNPC_HUMAN("Gordon Freeman", "npc_vj_hlr2_freeman", {"weapon_vj_smg1", "weapon_vj_ar2", "weapon_vj_spas12"}, spawnCategory)
+    VJ.AddNPC_HUMAN("Isaac Kleiner", "npc_vj_hlr2_kleiner", {"weapon_vj_spas12"}, spawnCategory)
 	VJ.AddNPC("Lamarr", "npc_vj_hlr2_lamarr", spawnCategory)
 
 	-- Xen Creatures
@@ -95,7 +96,7 @@ local spawnCategory = "HL Resurgence: Source"
 		VJ.AddNPC("Headcrab (Beta)", "npc_vj_hlr2b_headcrab", spawnCategory)
 		VJ.AddNPC("Fast Headcrab (Beta)", "npc_vj_hlr2b_headcrab_fast", spawnCategory)
 		VJ.AddNPC("Poison Headcrab (Beta)", "npc_vj_hlr2b_headcrab_poison", spawnCategory)
-	
+
 		-- Wild Life
 		-- VJ.AddNPC("Blob", "npc_vj_hlr2_blob", spawnCategory) -- Probably won't keep
 		VJ.AddNPC("Leech", "npc_vj_hlr2_leech", spawnCategory)
@@ -133,7 +134,7 @@ if CLIENT then
 		end,
 		bind = function(self, mat, ent)
 			if (!IsValid(ent)) then return end
-			
+
 			local parent = ent:GetParent()
 			local checkEnt = IsValid(parent) && parent or ent
 			ent.Mat_cloakfactor = ent.Mat_cloakfactor or (IsValid(parent) && parent.Mat_cloakfactor or 0)

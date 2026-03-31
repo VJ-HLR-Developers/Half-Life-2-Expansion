@@ -9,8 +9,8 @@ ENT.Model = "models/vj_hlr/hl2/combine_gunship.mdl"
 ENT.StartHealth = 1000
 ENT.Aerial_FlyingSpeed_Calm = 520
 ENT.Aerial_FlyingSpeed_Alerted = 600
-ENT.Aerial_AnimTbl_Calm = {ACT_IDLE}
-ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE}
+ENT.Aerial_AnimTbl_Calm = ACT_IDLE
+ENT.Aerial_AnimTbl_Alerted = ACT_IDLE
 
 ENT.PoseParameterLooking_InvertPitch = false
 ENT.PoseParameterLooking_InvertYaw = false
@@ -40,30 +40,30 @@ ENT.DeathSoundLevel = 150
 function ENT:Init()
 	self:SetCollisionBounds(Vector(140, 140, 100), Vector(-140, -140, -75))
 	self:SetPos(self:GetPos() +Vector(0, 0, 400))
-	
+
 	self.IdleLP1 = CreateSound(self, "npc/combine_gunship/gunship_engine_loop3.wav")
 	self.IdleLP1:SetSoundLevel(105)
 	self.IdleLP1:Play()
 	self.IdleLP1:ChangeVolume(1)
-	
+
 	self.IdleLP2 = CreateSound(self, "npc/combine_gunship/engine_rotor_loop1.wav")
 	self.IdleLP2:SetSoundLevel(110)
 	self.IdleLP2:Play()
 	self.IdleLP2:ChangeVolume(1)
-	
+
 	self.IdleLP3 = CreateSound(self, "npc/combine_gunship/engine_whine_loop1.wav")
 	self.IdleLP3:SetSoundLevel(105)
 	self.IdleLP3:Play()
 	self.IdleLP3:ChangeVolume(1)
-	
+
 	self.FireLP = CreateSound(self, "npc/combine_gunship/gunship_weapon_fire_loop6.wav")
 	self.FireLP:SetSoundLevel(120)
 	self.FireLP:ChangeVolume(1)
-	
+
 	self.NextFireT = 0
 	self.NextBombT = 0
 	self.CarpetBombing = false
-	
+
 	self.PP_Vert = 0
 	self.PP_Horz = 0
 	self.PP_Accel = 0
@@ -154,7 +154,7 @@ function ENT:OnThink()
 		end
 		return
 	end
-	
+
 	if !IsValid(self:GetEnemy()) then
 		local gesture = self:AddGestureSequence(self:LookupSequence("scanning"))
 		self:SetLayerPriority(gesture, 1)
@@ -239,7 +239,7 @@ function ENT:OnDeath(dmginfo, hitgroup, status)
 		deathCorpse:Activate()
 		local phys = deathCorpse:GetPhysicsObject()
 		phys:SetVelocity(self:GetVelocity() +self:GetForward() *math.random(900, 1500))
-		
+
 		ParticleEffectAttach("smoke_burning_engine_01", PATTACH_POINT_FOLLOW, deathCorpse, 5)
 
 		local function Explode(ent, pos)
@@ -256,11 +256,11 @@ function ENT:OnDeath(dmginfo, hitgroup, status)
 				local expPos = self:GetPos() + Vector(math.Rand(-150, 150), math.Rand(-150, 150), math.Rand(-150, -50))
 				Explode(deathCorpse, expPos)
 			end
-		
+
 			self:NextThink(CurTime())
 			return true
 		end
-		
+
 		function deathCorpse:PhysicsCollide(data, phys)
 			if self.Dead then return end
 			if data.HitEntity.IsVJBaseCorpse_Gib then return end
@@ -318,7 +318,7 @@ function ENT:OnDeath(dmginfo, hitgroup, status)
 
 			local phys = self.Corpse:GetPhysicsObject()
 			phys:SetVelocity(self:GetVelocity() +self:GetForward() *math.random(1400, 1750))
-			
+
 			local corpse = self.Corpse
 			for i = 1, 6 do
 				timer.Simple(i *math.Rand(0.25, 0.45), function()
@@ -351,7 +351,7 @@ function ENT:WarpCannon()
 	beam:SetEntity(self)
 	beam:SetAttachment(2)
 	util.Effect("VJ_HLR_StriderBeam", beam)
-	
+
 	local hitTime = 1 /math.min(1, self:GetAttachment(2).Pos:Distance(attackpos) /10000)
 	hitTime = math.Clamp(hitTime, 0, 1) ^0.5
 	timer.Simple(hitTime, function()

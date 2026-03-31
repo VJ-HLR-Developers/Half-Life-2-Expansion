@@ -12,7 +12,7 @@ ENT.HullType = HULL_HUMAN
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.BloodParticle = {"blood_impact_green_01"}
+ENT.BloodParticle = "blood_impact_green_01"
 
 ENT.MeleeAttackDamage = 6
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
@@ -41,12 +41,12 @@ ENT.MainSoundPitch = 100
 ENT.SoundTbl_FootStep = {"npc/fast_zombie/foot1.wav", "npc/fast_zombie/foot2.wav", "npc/fast_zombie/foot3.wav", "npc/fast_zombie/foot4.wav"}
 ENT.SoundTbl_DefBreath = {"npc/fast_zombie/breathe_loop1.wav", "npc/fast_zombie/gurgle_loop1.wav"}
 ENT.SoundTbl_Alert = {"npc/fast_zombie/fz_alert_far1.wav", "npc/fast_zombie/fz_alert_close1.wav"}
-ENT.SoundTbl_BeforeMeleeAttack = {"npc/fast_zombie/leap1.wav"}
-ENT.SoundTbl_LeapAttackJump = {"npc/fast_zombie/fz_scream1.wav"}
+ENT.SoundTbl_BeforeMeleeAttack = "npc/fast_zombie/leap1.wav"
+ENT.SoundTbl_LeapAttackJump = "npc/fast_zombie/fz_scream1.wav"
 ENT.SoundTbl_MeleeAttackExtra = {"npc/zombie/claw_strike1.wav", "npc/zombie/claw_strike2.wav", "npc/zombie/claw_strike3.wav"}
 ENT.SoundTbl_MeleeAttackMiss = {"npc/zombie/claw_miss1.wav", "npc/zombie/claw_miss2.wav"}
-ENT.SoundTbl_Pain = {"npc/fast_zombie/wake1.wav"}
-ENT.SoundTbl_DeathFollow = {"npc/fast_zombie/wake1.wav"}
+ENT.SoundTbl_Pain = "npc/fast_zombie/wake1.wav"
+ENT.SoundTbl_DeathFollow = "npc/fast_zombie/wake1.wav"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetSlump(doSlump)
 	if doSlump then

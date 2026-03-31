@@ -32,7 +32,7 @@ ENT.HasExtraMeleeAttackSounds = true
 ENT.SoundTbl_MeleeAttackExtra = {
 	"npc/manhack/grind_flesh1.wav",
 	"npc/manhack/grind_flesh2.wav",
-	"npc/manhack/grind_flesh3.wav",
+	"npc/manhack/grind_flesh3.wav"
 }
 ENT.SoundTbl_Pain = "npc/manhack/bat_away.wav"
 ENT.SoundTbl_Death = "npc/manhack/gib.wav"
@@ -66,7 +66,7 @@ function ENT:Init()
 	self.Panels = 0
 	self.Manhack_HasHit = false
 	self.Manhack_HitID = 0
-	
+
 	local spr = ents.Create("env_sprite")
 	spr:SetKeyValue("model", "sprites/glow1.vmt")
 	spr:SetKeyValue("scale", "0.6")

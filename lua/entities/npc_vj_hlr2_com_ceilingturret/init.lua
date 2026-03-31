@@ -18,7 +18,7 @@ function ENT:Init()
 	self.RangeAttackMaxDistance = self.SightDistance
 	self.RangeAttackAngleRadius = 180
 	self.SightAngle = 90
-	
+
 	self.Turret_Sprite = ents.Create("env_sprite")
 	self.Turret_Sprite:SetKeyValue("model", "vj_base/sprites/glow.vmt")
 	self.Turret_Sprite:SetKeyValue("scale", "0.1")
@@ -36,7 +36,7 @@ end
 function ENT:OnThinkActive()
 	if IsValid(self:GetEnemy()) or self.Alerted then
 		self.Turret_StandDown = false
-		self.AnimTbl_IdleStand = {"idlealert"}
+		self.AnimTbl_IdleStand = "idlealert"
 		-- Handle the light sprite
 		if self.Turret_HasLOS == true && IsValid(self:GetEnemy()) then
 			self.Turret_Sprite:Fire("Color", "255 0 0") -- Red
@@ -45,10 +45,10 @@ function ENT:OnThinkActive()
 			self.Turret_Sprite:Fire("Color", "255 165 0") -- Orange
 			self.Turret_Sprite:Fire("ShowSprite")
 		end
-		
+
 		local scan = false
 		local pyaw = self:GetPoseParameter("aim_yaw")
-		
+
 		-- Make it scan around if the enemy is behind, which is unreachable for it!
 		if IsValid(self:GetEnemy()) && self.Turret_HasLOS == false && (self:GetForward():Dot((self:GetEnemy():GetPos() - self:GetPos()):GetNormalized()) <= math.cos(math.rad(self.RangeAttackAngleRadius))) then
 			scan = true
@@ -56,12 +56,12 @@ function ENT:OnThinkActive()
 		else
 			self.HasPoseParameterLooking = true
 		end
-		
+
 		 -- Look around randomly when the enemy is not found
 		if !IsValid(self:GetEnemy()) or scan == true then
 			-- Playing a beeping noise
 			if self.Turret_NextScanBeepT < CurTime() then
-				VJ.EmitSound(self, {"npc/turret_floor/ping.wav"}, 75, 100)
+				VJ.EmitSound(self, "npc/turret_floor/ping.wav", 75, 100)
 				self.Turret_NextScanBeepT = CurTime() + 1
 			end
 			-- LEFT TO RIGHT
@@ -88,7 +88,7 @@ function ENT:OnThinkActive()
 			self.Turret_Sprite:Fire("ShowSprite")
 			self.Turret_StandDown = true
 			self:PlayAnim({"retract"}, true, false)
-			VJ.EmitSound(self, {"npc/turret_floor/retract.wav"}, 70, 100)
+			VJ.EmitSound(self, "npc/turret_floor/retract.wav", 70, 100)
 		end
 		if self.Turret_StandDown == true then
 			if self:GetPoseParameter("aim_yaw") == 0 then -- Hide the green light once it fully rests

@@ -19,7 +19,7 @@ ENT.ControllerParams = {
 }
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.BloodParticle = {"blood_impact_green_01"}
+ENT.BloodParticle = "blood_impact_green_01"
 
 ENT.MeleeAttackDamage = 15
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
@@ -31,7 +31,7 @@ ENT.SoundTbl_FootStep = {
 	"physics/flesh/flesh_squishy_impact_hard1.wav",
 	"physics/flesh/flesh_squishy_impact_hard2.wav",
 	"physics/flesh/flesh_squishy_impact_hard3.wav",
-	"physics/flesh/flesh_squishy_impact_hard4.wav",
+	"physics/flesh/flesh_squishy_impact_hard4.wav"
 }
 ENT.SoundTbl_FootStep_Run = {"physics/flesh/flesh_strider_impact_bullet1.wav", "physics/flesh/flesh_strider_impact_bullet2.wav"}
 ENT.SoundTbl_Breath = "npc/zombie_poison/pz_breathe_loop1.wav"
@@ -51,7 +51,7 @@ ENT.SoundTbl_Investigate = {
 	"vo/npc/male01/moan03.wav",
 	"vo/npc/male01/overhere01.wav",
 	"vo/npc/male01/gordead_ans06.wav",
-	"vo/npc/male01/gordead_ans19.wav",
+	"vo/npc/male01/gordead_ans19.wav"
 }
 
 ENT.DisableFootStepSoundTimer = true
@@ -99,18 +99,18 @@ function ENT:OnThinkActive()
 		end
 		if !(enemy:GetForward():Dot((self:GetPos() -enemy:GetPos()):GetNormalized()) > math.cos(math.rad(60))) && dist > 600 then
 			if set != 1 then
-				self.AnimTbl_Run = {ACT_WALK}
+				self.AnimTbl_Run = ACT_WALK
 				self.AnimationSet = 1
 			end
 		else
 			if set != 0 then
-				self.AnimTbl_Run = {ACT_RUN}
+				self.AnimTbl_Run = ACT_RUN
 				self.AnimationSet = 0
 			end
 		end
 	else
 		if set != 0 then
-			self.AnimTbl_Run = {ACT_RUN}
+			self.AnimTbl_Run = ACT_RUN
 			self.AnimationSet = 0
 		end
 	end

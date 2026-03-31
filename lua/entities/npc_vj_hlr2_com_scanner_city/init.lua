@@ -18,8 +18,8 @@ ENT.Aerial_FlyingSpeed_Alerted = 250
 ENT.AA_GroundLimit = 30
 ENT.AA_MinWanderDist = 250
 ENT.AA_MoveAccelerate = 3
-ENT.Aerial_AnimTbl_Calm = {ACT_IDLE}
-ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE}
+ENT.Aerial_AnimTbl_Calm = ACT_IDLE
+ENT.Aerial_AnimTbl_Alerted = ACT_IDLE
 
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 
@@ -34,7 +34,7 @@ ENT.LimitChaseDistance = true
 ENT.LimitChaseDistance_Max = 250
 ENT.LimitChaseDistance_Min = 1
 
-ENT.SoundTbl_Breath = {"npc/scanner/cbot_fly_loop.wav"}
+ENT.SoundTbl_Breath = "npc/scanner/cbot_fly_loop.wav"
 ENT.SoundTbl_CombatIdle = {
 	"npc/scanner/combat_scan1.wav",
 	"npc/scanner/combat_scan2.wav",
@@ -54,9 +54,9 @@ ENT.SoundTbl_Alert = {
 	"npc/scanner/scanner_alert1.wav",
 	"npc/scanner/cbot_servoscared.wav"
 }
-ENT.SoundTbl_CallForHelp = {
+ENT.SoundTbl_CallForHelp =
 	"npc/scanner/scanner_siren2.wav"
-}
+
 ENT.SoundTbl_Pain = {
 	"npc/scanner/scanner_pain1.wav",
 	"npc/scanner/scanner_pain2.wav"

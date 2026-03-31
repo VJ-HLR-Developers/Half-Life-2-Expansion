@@ -26,7 +26,7 @@ ENT.SoundTbl_OnCollide = {
 	"vj_hlr/src/npc/ministrider/flechette_impact_stick2.wav",
 	"vj_hlr/src/npc/ministrider/flechette_impact_stick3.wav",
 	"vj_hlr/src/npc/ministrider/flechette_impact_stick4.wav",
-	"vj_hlr/src/npc/ministrider/flechette_impact_stick5.wav",
+	"vj_hlr/src/npc/ministrider/flechette_impact_stick5.wav"
 }
 
 ENT.IdleSoundLevel = 60

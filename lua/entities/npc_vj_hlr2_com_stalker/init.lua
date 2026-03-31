@@ -25,32 +25,32 @@ ENT.SoundTbl_FootStep = {
 	"npc/stalker/stalker_footstep_left1.wav",
 	"npc/stalker/stalker_footstep_left2.wav",
 	"npc/stalker/stalker_footstep_right1.wav",
-	"npc/stalker/stalker_footstep_right2.wav",
+	"npc/stalker/stalker_footstep_right2.wav"
 }
 ENT.SoundTbl_Idle = {
 	"npc/stalker/breathing3.wav",
 	"npc/stalker/stalker_alert1b.wav",
 	"npc/stalker/stalker_alert2b.wav",
 	"npc/stalker/stalker_alert3b.wav",
-	"npc/stalker/stalker_ambient01.wav",
+	"npc/stalker/stalker_ambient01.wav"
 }
 ENT.SoundTbl_Alert = {
 	"npc/stalker/stalker_scream1.wav",
 	"npc/stalker/stalker_scream2.wav",
 	"npc/stalker/stalker_scream3.wav",
-	"npc/stalker/stalker_scream4.wav",
+	"npc/stalker/stalker_scream4.wav"
 }
-ENT.SoundTbl_CallForHelp = {
-	"npc/stalker/go_alert2a.wav",
-}
+ENT.SoundTbl_CallForHelp =
+	"npc/stalker/go_alert2a.wav"
+
 ENT.SoundTbl_Pain = {
 	"npc/stalker/stalker_pain1.wav",
 	"npc/stalker/stalker_pain2.wav",
-	"npc/stalker/stalker_pain3.wav",
+	"npc/stalker/stalker_pain3.wav"
 }
 ENT.SoundTbl_Death = {
 	"npc/stalker/stalker_die1.wav",
-	"npc/stalker/stalker_die2.wav",
+	"npc/stalker/stalker_die2.wav"
 }
 
 ENT.MainSoundPitch = 100
@@ -121,13 +121,13 @@ function ENT:OnThink()
 		if !self.Laser:IsPlaying() then
 			self.Laser:Play()
 			local eyeGlow = ents.Create("env_sprite")
-			eyeGlow:SetKeyValue("model","vj_base/sprites/glow.vmt")
-			eyeGlow:SetKeyValue("scale","0.2")
-			eyeGlow:SetKeyValue("rendermode","5")
-			eyeGlow:SetKeyValue("rendercolor","255 0 0")
-			eyeGlow:SetKeyValue("spawnflags","1")
+			eyeGlow:SetKeyValue("model", "vj_base/sprites/glow.vmt")
+			eyeGlow:SetKeyValue("scale", "0.2")
+			eyeGlow:SetKeyValue("rendermode", "5")
+			eyeGlow:SetKeyValue("rendercolor", "255 0 0")
+			eyeGlow:SetKeyValue("spawnflags", "1")
 			eyeGlow:SetParent(self)
-			eyeGlow:Fire("SetParentAttachment","eyes",0)
+			eyeGlow:Fire("SetParentAttachment", "eyes",0)
 			eyeGlow:Spawn()
 			eyeGlow:Activate()
 			self:DeleteOnRemove(eyeGlow)

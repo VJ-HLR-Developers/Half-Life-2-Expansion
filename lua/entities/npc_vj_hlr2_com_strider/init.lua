@@ -56,7 +56,7 @@ ENT.ControllerParams = {
 }
 
 ENT.CanFlinch = "DamageTypes"
-ENT.FlinchDamageTypes = {DMG_BLAST}
+ENT.FlinchDamageTypes = DMG_BLAST
 ENT.FlinchChance = 1
 ENT.FlinchCooldown = 2
 ENT.AnimTbl_Flinch = {"dodgeleft", "dodgeright"}
@@ -69,31 +69,31 @@ ENT.SoundTbl_FootStep = {
 	-- "npc/strider/strider_step3.wav",
 	-- "npc/strider/strider_step4.wav",
 	-- "npc/strider/strider_step5.wav",
-	-- "npc/strider/strider_step6.wav",
+	-- "npc/strider/strider_step6.wav"
 }
 ENT.SoundTbl_Alert = {
 	-- "NPC_Strider.Alert"
 	"npc/strider/striderx_alert2.wav",
 	"npc/strider/striderx_alert4.wav",
 	"npc/strider/striderx_alert5.wav",
-	"npc/strider/striderx_alert6.wav",
+	"npc/strider/striderx_alert6.wav"
 }
-ENT.SoundTbl_IdleCombat = {
+ENT.SoundTbl_IdleCombat =
 	"NPC_Strider.Hunt"
-}
+
 ENT.SoundTbl_BeforeMeleeAttack = {
 	-- "NPC_Strider.Creak"
 	"npc/strider/creak1.wav",
 	"npc/strider/creak2.wav",
 	"npc/strider/creak3.wav",
-	"npc/strider/creak4.wav",
+	"npc/strider/creak4.wav"
 }
 ENT.SoundTbl_Pain = {
 	-- "NPC_Strider.Pain"
 	"npc/strider/striderx_pain2.wav",
 	"npc/strider/striderx_pain5.wav",
 	"npc/strider/striderx_pain7.wav",
-	"npc/strider/striderx_pain8.wav",
+	"npc/strider/striderx_pain8.wav"
 }
 ENT.SoundTbl_Death = {
 	-- "NPC_Strider.Death",
@@ -186,7 +186,7 @@ function ENT:WarpCannon(tPos)
 	beam:SetEntity(self)
 	beam:SetAttachment(2)
 	util.Effect("VJ_HLR_StriderBeam", beam)
-	
+
 	local hitTime = 1 /math.min(1, self:GetAttachment(2).Pos:Distance(attackpos) /10000)
 	hitTime = math.Clamp(hitTime, 0, 1) ^0.5
 	timer.Simple(hitTime, function()
@@ -339,7 +339,7 @@ function ENT:ControllAI(enemy, dist, cos)
 				muz:Spawn()
 				muz:Activate()
 				muz:Fire("Kill", "", 0.09)
-				
+
 				local FireLight1 = ents.Create("light_dynamic")
 				FireLight1:SetKeyValue("brightness", 8)
 				FireLight1:SetKeyValue("distance", 300)
@@ -413,7 +413,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 				muz:Spawn()
 				muz:Activate()
 				muz:Fire("Kill", "", 0.09)
-				
+
 				local FireLight1 = ents.Create("light_dynamic")
 				FireLight1:SetKeyValue("brightness", 8)
 				FireLight1:SetKeyValue("distance", 300)

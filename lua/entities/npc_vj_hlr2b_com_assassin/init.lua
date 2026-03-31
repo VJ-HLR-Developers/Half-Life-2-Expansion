@@ -31,11 +31,11 @@ ENT.AnimTbl_WeaponAttackGesture = true
 
 ENT.AnimTbl_CallForHelp = false
 
-ENT.AnimTbl_ShootWhileMovingRun = {ACT_SPRINT} -- Animations it will play when shooting while running | NOTE: Weapon may translate the animation that they see fit!
-ENT.AnimTbl_ShootWhileMovingWalk = {ACT_RUN} -- Animations it will play when shooting while walking | NOTE: Weapon may translate the animation that they see fit!
+ENT.AnimTbl_ShootWhileMovingRun = ACT_SPRINT -- Animations it will play when shooting while running | NOTE: Weapon may translate the animation that they see fit!
+ENT.AnimTbl_ShootWhileMovingWalk = ACT_RUN -- Animations it will play when shooting while walking | NOTE: Weapon may translate the animation that they see fit!
 
 ENT.DisableFootStepSoundTimer = true
-ENT.AnimTbl_TakingCover = {ACT_IDLE_ANGRY}
+ENT.AnimTbl_TakingCover = ACT_IDLE_ANGRY
 
 ENT.DropDeathLoot = false
 
@@ -58,15 +58,15 @@ function ENT:SetAnimationTranslations(wepHoldType)
 	self.AnimationTranslations[ACT_RELOAD] 						= ACT_IDLE_ANGRY
 	self.AnimationTranslations[ACT_COVER_LOW] 					= ACT_IDLE_ANGRY
 	self.AnimationTranslations[ACT_RELOAD_LOW] 					= ACT_IDLE_ANGRY
-	
+
 	self.AnimationTranslations[ACT_IDLE] 						= ACT_IDLE
 	self.AnimationTranslations[ACT_IDLE_ANGRY] 					= ACT_IDLE_ANGRY
-	
+
 	self.AnimationTranslations[ACT_WALK] 						= ACT_WALK
 	self.AnimationTranslations[ACT_WALK_AIM] 					= ACT_WALK
 	self.AnimationTranslations[ACT_WALK_CROUCH] 				= ACT_WALK
 	self.AnimationTranslations[ACT_WALK_CROUCH_AIM] 			= ACT_WALK
-	
+
 	self.AnimationTranslations[ACT_RUN] 						= ACT_RUN
 	self.AnimationTranslations[ACT_RUN_AIM] 					= ACT_RUN
 	self.AnimationTranslations[ACT_RUN_CROUCH] 					= ACT_RUN
@@ -174,7 +174,7 @@ function ENT:OnThink()
 		else
 			self:SetLocalVelocity(((self:GetPos() + self:GetRight()*-100) - (self:GetPos() + self:OBBCenter())):GetNormal()*200 +self:GetForward()*1 +self:GetUp()*600 + self:GetRight()*1)
 		end
-		self.AnimTbl_IdleStand = {ACT_GLIDE}
+		self.AnimTbl_IdleStand = ACT_GLIDE
 		self:PlayAnim(ACT_JUMP, true, false, true, 0, {}, function(sched)
 			self.Assassin_OffGround = true
 			self:PlayAnim(ACT_GLIDE, true, false, false)

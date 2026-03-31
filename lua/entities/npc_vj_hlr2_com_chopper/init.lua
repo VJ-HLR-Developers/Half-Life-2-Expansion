@@ -15,8 +15,8 @@ ENT.TurningSpeed = 2
 ENT.MovementType = VJ_MOVETYPE_AERIAL
 ENT.Aerial_FlyingSpeed_Alerted = 450
 ENT.Aerial_FlyingSpeed_Calm = 400
-ENT.Aerial_AnimTbl_Calm = {ACT_IDLE}
-ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE}
+ENT.Aerial_AnimTbl_Calm = ACT_IDLE
+ENT.Aerial_AnimTbl_Alerted = ACT_IDLE
 ENT.AA_GroundLimit = 1200
 ENT.AA_MinWanderDist = 1000
 ENT.AA_MoveAccelerate = 8
@@ -68,9 +68,9 @@ ENT.LimitChaseDistance_Max = 4000
 ENT.LimitChaseDistance_Min = 0
 	-- ====== Sound File Paths ====== --
 -- Leave blank if you don"t want any sounds to play
-ENT.SoundTbl_Alert = {"npc/attack_helicopter/aheli_megabomb_siren1.wav"}
-ENT.SoundTbl_Pain = {"npc/attack_helicopter/aheli_damaged_alarm1.wav"}
--- ENT.SoundTbl_Death = {"npc/attack_helicopter/aheli_crash_alert2.wav"}
+ENT.SoundTbl_Alert = "npc/attack_helicopter/aheli_megabomb_siren1.wav"
+ENT.SoundTbl_Pain = "npc/attack_helicopter/aheli_damaged_alarm1.wav"
+-- ENT.SoundTbl_Death = "npc/attack_helicopter/aheli_crash_alert2.wav"
 
 ENT.AlertSoundLevel = 150
 ENT.PainSoundLevel = 150
@@ -83,16 +83,16 @@ end
 function ENT:Init()
 	self:SetCollisionBounds(Vector(140, 140, 100), Vector(-140, -140, -75))
 	self:SetPos(self:GetPos() +Vector(0, 0, 400))
-	
+
 	self.IdleLP = CreateSound(self, "npc/attack_helicopter/aheli_rotor_loop1.wav")
 	self.IdleLP:SetSoundLevel(105)
 	self.IdleLP:Play()
 	self.IdleLP:ChangeVolume(1)
-	
+
 	self.FireLP = CreateSound(self, "npc/attack_helicopter/aheli_weapon_fire_loop3.wav")
 	self.FireLP:SetSoundLevel(120)
 	self.FireLP:ChangeVolume(1)
-	
+
 	self.Charged = false
 	self.Charging = false
 	self.NextFireT = 0
@@ -101,7 +101,7 @@ function ENT:Init()
 	self.CarpetBombPos = Vector(0, 0, 0)
 	self.NextCarpetBombT = 0
 	self.NextDropCarpetT = 0
-	
+
 	self.RangeUseAttachmentForPosID = "Damage0"
 
 	local eyeglow = ents.Create("env_sprite")
@@ -132,7 +132,7 @@ function ENT:Init()
 	spotlight:Activate()
 	spotlight:Fire("setparentattachment", "spotlight")
 	self:DeleteOnRemove(spotlight)
-	
+
 	self:CreateBoneFollowers()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -319,7 +319,7 @@ end
 function ENT:OnThink()
 	self.ConstantlyFaceEnemy = !self.CarpetBombing
 	self:SetPoseParameter("move_yaw", Lerp(FrameTime()*4, self:GetPoseParameter("move_yaw"), self:GetVelocity():GetNormal().y))
-	
+
 	if timer.Exists("vj_timer_fire_" .. self:EntIndex()) then
 		self.FireLP:Play()
 	else
@@ -358,12 +358,12 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpse)
 		ParticleEffect("vj_explosion2", corpse:GetPos() +corpse:GetForward()*130, Angle(0, 0, 0), nil)
 		ParticleEffectAttach("fire_large_01", PATTACH_POINT_FOLLOW, corpse, 8)
 		ParticleEffectAttach("smoke_burning_engine_01", PATTACH_POINT_FOLLOW, corpse, 1)
-		
+
 		local explosioneffect = EffectData()
 		explosioneffect:SetOrigin(corpse:GetPos())
 		util.Effect("VJ_Medium_Explosion1", explosioneffect)
 		util.Effect("Explosion", explosioneffect)
-		
+
 		local dusteffect = EffectData()
 		dusteffect:SetOrigin(corpse:GetPos())
 		dusteffect:SetScale(800)

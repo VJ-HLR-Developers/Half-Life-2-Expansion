@@ -11,7 +11,7 @@ ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
 ENT.BloodColor = VJ.BLOOD_COLOR_RED
-ENT.BloodParticle = {"blood_impact_red_01_mist"}
+ENT.BloodParticle = "blood_impact_red_01_mist"
 
 ENT.MeleeAttackDamage = 15
 ENT.TimeUntilMeleeAttackDamage = false
@@ -35,7 +35,7 @@ ENT.SoundTbl_FootStep = {
 	"vj_hlr/src/npc/beta_stalker/stalker_footstep_left1.wav",
 	"vj_hlr/src/npc/beta_stalker/stalker_footstep_left2.wav",
 	"vj_hlr/src/npc/beta_stalker/stalker_footstep_right1.wav",
-	"vj_hlr/src/npc/beta_stalker/stalker_footstep_right2.wav",
+	"vj_hlr/src/npc/beta_stalker/stalker_footstep_right2.wav"
 }
 ENT.SoundTbl_Scramble = {
 	"vj_hlr/src/npc/beta_stalker/scramble1.wav",
@@ -47,7 +47,7 @@ ENT.SoundTbl_Scramble = {
 	"vj_hlr/src/npc/beta_stalker/scramble7.wav",
 	"vj_hlr/src/npc/beta_stalker/scramble8.wav",
 	"vj_hlr/src/npc/beta_stalker/scramble9.wav",
-	"vj_hlr/src/npc/beta_stalker/scramble10.wav",
+	"vj_hlr/src/npc/beta_stalker/scramble10.wav"
 }
 ENT.SoundTbl_Alert = {
 	"vj_hlr/src/npc/beta_stalker/go_alert1.wav",
@@ -55,7 +55,7 @@ ENT.SoundTbl_Alert = {
 	"vj_hlr/src/npc/beta_stalker/go_alert3.wav",
 	"vj_hlr/src/npc/beta_stalker/announce1.wav",
 	"vj_hlr/src/npc/beta_stalker/announce2.wav",
-	"vj_hlr/src/npc/beta_stalker/announce3.wav",
+	"vj_hlr/src/npc/beta_stalker/announce3.wav"
 }
 ENT.SoundTbl_BeforeMeleeAttack = {
 	"vj_hlr/src/npc/beta_stalker/attack1.wav",
@@ -67,19 +67,19 @@ ENT.SoundTbl_BeforeMeleeAttack = {
 	"vj_hlr/src/npc/beta_stalker/attack7.wav",
 	"vj_hlr/src/npc/beta_stalker/attack8.wav",
 	"vj_hlr/src/npc/beta_stalker/attack9.wav",
-	"vj_hlr/src/npc/beta_stalker/attack10.wav",
+	"vj_hlr/src/npc/beta_stalker/attack10.wav"
 }
 ENT.SoundTbl_MeleeAttackExtra = {"vj_hlr/gsrc/npc/zombie/claw_strike1.wav", "vj_hlr/gsrc/npc/zombie/claw_strike2.wav", "vj_hlr/gsrc/npc/zombie/claw_strike3.wav"}
 ENT.SoundTbl_Pain = {
 	"vj_hlr/src/npc/beta_stalker/pain1.wav",
 	"vj_hlr/src/npc/beta_stalker/pain2.wav",
 	"vj_hlr/src/npc/beta_stalker/pain3.wav",
-	"vj_hlr/src/npc/beta_stalker/pain4.wav",
+	"vj_hlr/src/npc/beta_stalker/pain4.wav"
 }
 ENT.SoundTbl_Death = {
 	"vj_hlr/src/npc/beta_stalker/die1.wav",
 	"vj_hlr/src/npc/beta_stalker/die2.wav",
-	"vj_hlr/src/npc/beta_stalker/die3.wav",
+	"vj_hlr/src/npc/beta_stalker/die3.wav"
 }
 
 ENT.MainSoundPitch = 100
@@ -146,13 +146,13 @@ function ENT:OnThink()
 		if !self.Laser:IsPlaying() then
 			self.Laser:Play()
 			local eyeGlow = ents.Create("env_sprite")
-			eyeGlow:SetKeyValue("model","vj_base/sprites/glow.vmt")
-			eyeGlow:SetKeyValue("scale","0.2")
-			eyeGlow:SetKeyValue("rendermode","5")
-			eyeGlow:SetKeyValue("rendercolor","255 0 0")
-			eyeGlow:SetKeyValue("spawnflags","1")
+			eyeGlow:SetKeyValue("model", "vj_base/sprites/glow.vmt")
+			eyeGlow:SetKeyValue("scale", "0.2")
+			eyeGlow:SetKeyValue("rendermode", "5")
+			eyeGlow:SetKeyValue("rendercolor", "255 0 0")
+			eyeGlow:SetKeyValue("spawnflags", "1")
 			eyeGlow:SetParent(self)
-			eyeGlow:Fire("SetParentAttachment","0",0)
+			eyeGlow:Fire("SetParentAttachment", "0",0)
 			eyeGlow:Spawn()
 			eyeGlow:Activate()
 			self:DeleteOnRemove(eyeGlow)

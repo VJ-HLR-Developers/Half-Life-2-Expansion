@@ -19,12 +19,12 @@ ENT.IdleAlwaysWander = true
 
 ENT.ConstantlyFaceEnemy = false
 
-ENT.SoundTbl_Idle = {
-	"npc/combine_gunship/gunship_moan.wav",
-}
-ENT.SoundTbl_Pain = {
-	"npc/combine_gunship/ping_patrol.wav",
-}
+ENT.SoundTbl_Idle =
+	"npc/combine_gunship/gunship_moan.wav"
+
+ENT.SoundTbl_Pain =
+	"npc/combine_gunship/ping_patrol.wav"
+
 
 ENT.IdleSoundLevel = 120
 ENT.PainSoundLevel = 120
@@ -89,20 +89,20 @@ function ENT:Init()
 	self.NextWanderPointT = CurTime() +math.Rand(6, 12)
 	self.NextFireT = 0
 	self.NextFindDropOffT = 0
-	
+
 	self.FireLoop = CreateSound(self, "npc/combine_gunship/gunship_fire_loop1.wav")
 	self.FireLoop:SetSoundLevel(120)
 	self.FireLoop:ChangeVolume(1)
-	
+
 	self.EngineLoop = CreateSound(self, "npc/combine_gunship/dropship_engine_near_loop1.wav")
 	self.EngineLoop:SetSoundLevel(120)
 	self.EngineLoop:ChangeVolume(1)
 	self.EngineLoop:Play()
-	
+
 	self.EngineLoopB = CreateSound(self, "npc/combine_gunship/dropship_onground_loop1.wav")
 	self.EngineLoopB:SetSoundLevel(120)
 	self.EngineLoopB:ChangeVolume(1)
-	
+
 	self.CargoLoop = CreateSound(self, "npc/combine_gunship/dropship_dropping_pod_loop1.wav")
 	self.CargoLoop:SetSoundLevel(120)
 	self.CargoLoop:ChangeVolume(1)
@@ -312,7 +312,7 @@ function ENT:GetCalculatedPosition(pos, calcType)
 			mins = DROPSHIP_BBOX_MAX,
 			maxs = DROPSHIP_BBOX_MIN,
 		})
-		
+
 		if trDown.Hit then
 			return trDown.HitPos +trDown.HitNormal *self:GetCollisionBounds().z
 		end

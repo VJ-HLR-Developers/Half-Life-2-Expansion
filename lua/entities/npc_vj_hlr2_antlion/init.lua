@@ -25,7 +25,7 @@ ENT.ControllerParams = {
 }
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.BloodParticle = {"blood_impact_yellow_01"}
+ENT.BloodParticle = "blood_impact_yellow_01"
 
 ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1, "pounce", "pounce2"}
@@ -61,23 +61,23 @@ ENT.SoundTbl_Idle = {
 	"npc/antlion/idle2.wav",
 	"npc/antlion/idle3.wav",
 	"npc/antlion/idle4.wav",
-	"npc/antlion/idle5.wav",
+	"npc/antlion/idle5.wav"
 }
-ENT.SoundTbl_Alert = {
-	"npc/antlion/distract1.wav",
-}
+ENT.SoundTbl_Alert =
+	"npc/antlion/distract1.wav"
+
 ENT.SoundTbl_BeforeMeleeAttack = {
 	"npc/antlion/attack_single1.wav",
 	"npc/antlion/attack_single2.wav",
-	"npc/antlion/attack_single3.wav",
+	"npc/antlion/attack_single3.wav"
 }
 ENT.SoundTbl_Pain = {
 	"npc/antlion/pain1.wav",
-	"npc/antlion/pain2.wav",
+	"npc/antlion/pain2.wav"
 }
 ENT.SoundTbl_Death = {
 	"npc/antlion/pain1.wav",
-	"npc/antlion/pain2.wav",
+	"npc/antlion/pain2.wav"
 }
 
 ENT.Antlion_StartedLeapAttack = false

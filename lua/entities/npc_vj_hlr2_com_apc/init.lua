@@ -15,9 +15,9 @@ ENT.ControllerParams = {
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_COMBINE"}
-ENT.DeathCorpseModel = {"models/combine_apc_destroyed_gib01.mdl"}
+ENT.DeathCorpseModel = "models/combine_apc_destroyed_gib01.mdl"
 
-ENT.SoundTbl_Breath = {"vehicles/apc/apc_idle1.wav"}
+ENT.SoundTbl_Breath = "vehicles/apc/apc_idle1.wav"
 ENT.SoundTbl_Idle = {
 	"npc/overwatch/radiovoice/accomplicesoperating.wav",
 	"npc/overwatch/radiovoice/politistablizationmarginal.wav",
@@ -26,7 +26,7 @@ ENT.SoundTbl_Idle = {
 	"npc/overwatch/radiovoice/reporton.wav",
 	"npc/overwatch/radiovoice/reportplease.wav",
 	"npc/overwatch/radiovoice/rewardnotice.wav",
-	"npc/overwatch/radiovoice/teamsreportstatus.wav",
+	"npc/overwatch/radiovoice/teamsreportstatus.wav"
 }
 ENT.SoundTbl_CombatIdle = {
 	"npc/overwatch/radiovoice/engagingteamisnoncohesive.wav",
@@ -38,18 +38,18 @@ ENT.SoundTbl_CombatIdle = {
 	"npc/overwatch/radiovoice/riot404.wav",
 	"npc/overwatch/radiovoice/socialfractureinprogress.wav",
 	"npc/overwatch/radiovoice/youarechargedwithterminal.wav",
-	"npc/overwatch/radiovoice/youarejudgedguilty.wav",
+	"npc/overwatch/radiovoice/youarejudgedguilty.wav"
 }
 ENT.SoundTbl_ReceiveOrder = {
 	"npc/overwatch/radiovoice/beginscanning10-0.wav",
-	"npc/overwatch/radiovoice/officerclosingonsuspect.wav",
+	"npc/overwatch/radiovoice/officerclosingonsuspect.wav"
 }
 ENT.SoundTbl_LostEnemy = {
 	"npc/overwatch/radiovoice/allunitsreturntocode12.wav",
 	"npc/overwatch/radiovoice/disengaged647e.wav",
 	"npc/overwatch/radiovoice/recievingconflictingdata.wav",
 	"npc/overwatch/radiovoice/recklessoperation99.wav",
-	"npc/overwatch/radiovoice/switchcomtotac3.wav",
+	"npc/overwatch/radiovoice/switchcomtotac3.wav"
 }
 ENT.SoundTbl_Investigate = {
 	"npc/overwatch/radiovoice/allunitsbolfor243suspect.wav",
@@ -57,7 +57,7 @@ ENT.SoundTbl_Investigate = {
 	"npc/overwatch/radiovoice/recalibratesocioscan.wav",
 	"npc/overwatch/radiovoice/statuson243suspect.wav",
 	"npc/overwatch/radiovoice/suspendnegotiations.wav",
-	"npc/overwatch/radiovoice/switchtotac5reporttocp.wav",
+	"npc/overwatch/radiovoice/switchtotac5reporttocp.wav"
 }
 ENT.SoundTbl_Alert = {
 	"npc/overwatch/radiovoice/allunitsbeginwhitnesssterilization.wav",
@@ -74,7 +74,7 @@ ENT.SoundTbl_Alert = {
 	"npc/overwatch/radiovoice/prepareforfinalsentencing.wav",
 	"npc/overwatch/radiovoice/preparetoreceiveverdict.wav",
 	"npc/overwatch/radiovoice/violationofcivictrust.wav",
-	"npc/overwatch/radiovoice/weapon94.wav",
+	"npc/overwatch/radiovoice/weapon94.wav"
 }
 ENT.SoundTbl_CallForHelp = {
 	"npc/overwatch/radiovoice/allteamsrespondcode3.wav",
@@ -87,18 +87,18 @@ ENT.SoundTbl_CallForHelp = {
 	"npc/overwatch/radiovoice/preparevisualdownload.wav",
 	"npc/overwatch/radiovoice/threattoproperty51b.wav",
 	"npc/overwatch/radiovoice/reinforcementteamscode3.wav",
-	"npc/overwatch/radiovoice/unlawfulentry603.wav",
+	"npc/overwatch/radiovoice/unlawfulentry603.wav"
 }
 ENT.SoundTbl_OnPlayerSight = {
 	"npc/overwatch/radiovoice/freeman.wav",
 	"npc/overwatch/radiovoice/fugitive17f.wav",
-	"npc/overwatch/radiovoice/highpriorityregion.wav",
+	"npc/overwatch/radiovoice/highpriorityregion.wav"
 }
 ENT.SoundTbl_KilledEnemy = {
 	"npc/overwatch/radiovoice/finalverdictadministered.wav",
 	"npc/overwatch/radiovoice/sociostabilizationrestored.wav",
 	"npc/overwatch/radiovoice/stabilizationjurisdiction.wav",
-	"npc/overwatch/radiovoice/suspectisnow187.wav",
+	"npc/overwatch/radiovoice/suspectisnow187.wav"
 }
 ENT.SoundTbl_AllyDeath = {
 	"npc/overwatch/radiovoice/assault243.wav",
@@ -106,19 +106,19 @@ ENT.SoundTbl_AllyDeath = {
 	"npc/overwatch/radiovoice/disassociationfromcivic.wav",
 	"npc/overwatch/radiovoice/lostbiosignalforunit.wav",
 	"npc/overwatch/radiovoice/nonsanctionedarson51.wav",
-	"npc/overwatch/radiovoice/unitdeserviced.wav",
+	"npc/overwatch/radiovoice/unitdeserviced.wav"
 }
 ENT.SoundTbl_Death = {
 	"^weapons/explode3.wav",
 	"^weapons/explode4.wav",
-	"^weapons/explode5.wav",
+	"^weapons/explode5.wav"
 }
 
-ENT.SoundTbl_Fire = {"weapons/ar2/fire1.wav"}
-ENT.SoundTbl_FireRocket = {"weapons/stinger_fire1.wav"}
+ENT.SoundTbl_Fire = "weapons/ar2/fire1.wav"
+ENT.SoundTbl_FireRocket = "weapons/stinger_fire1.wav"
 
 -- Tank Base
-ENT.Tank_SoundTbl_DrivingEngine = {"vehicles/apc/apc_firstgear_loop1.wav"}
+ENT.Tank_SoundTbl_DrivingEngine = "vehicles/apc/apc_firstgear_loop1.wav"
 ENT.Tank_SoundTbl_Track = false
 ENT.Tank_DefaultSoundTbl_Track = false
 
@@ -147,7 +147,7 @@ function ENT:Tank_Init()
 	end
 
 	self.APC_DeployedUnits = {}
-	
+
 	self.NextFireT = 0
 	self.NextRocketT = 0
 	self.Ammo = 2
@@ -195,17 +195,17 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 			self.NextRocketT = CurTime() +t +2.5
 			return
 		end
-		
+
 		local rocket = ents.Create("obj_vj_hlr2_rocket")
 		rocket:SetPos(self:GetAttachment(2).Pos)
 		rocket:SetAngles(self:GetAttachment(2).Ang)
 		rocket:SetOwner(self)
 		rocket:Spawn()
-		
+
 		self.Ammo = self.Ammo -1
 		self.NextRocketT = CurTime() +SoundDuration("weapons/stinger_fire1.wav")
 	end
-	
+
 	if CurTime() > self.NextFireT && self.APC_HasLOS && enemy:Visible(self) then
 		local startpos = self:GetAttachment(1).Pos
 		local bullet = {}
@@ -219,9 +219,9 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 		bullet.Damage = 6
 		bullet.AmmoType = "AR2"
 		self:FireBullets(bullet)
-		
+
 		VJ.EmitSound(self, self.SoundTbl_Fire, 90, math.random(100, 110))
-		
+
 		ParticleEffect("vj_rifle_full_blue", startpos, self:GetAngles(), self)
 		local FireLight1 = ents.Create("light_dynamic")
 		FireLight1:SetKeyValue("brightness", "4")
@@ -235,7 +235,7 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 		FireLight1:Fire("TurnOn", "", 0)
 		FireLight1:Fire("Kill", "", 0.07)
 		self:DeleteOnRemove(FireLight1)
-		
+
 		self.NextFireT = CurTime() +0.08
 	end
 end
@@ -245,7 +245,7 @@ function ENT:Tank_OnThink()
 	if self.Tank_Status == 0 && self.APC_DoorOpen == true then
 		self.APC_DoorOpen = false
 	end
-	
+
 	-- Deploy soldiers
 	if self.Tank_Status == 1 && self.APC_HasSpawnedSoldiers == false && self.APC_DoorOpen == false && IsValid(self:GetEnemy()) && ((!self.VJ_IsBeingControlled && math.random(1, 60) == 1) or (self.VJ_IsBeingControlled && self.VJ_TheController:KeyDown(IN_JUMP))) then
 		self.APC_DoorOpen = true

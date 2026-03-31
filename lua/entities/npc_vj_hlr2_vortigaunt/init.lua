@@ -22,7 +22,7 @@ ENT.HasOnPlayerSight = true
 ENT.BecomeEnemyToPlayer = 2
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.BloodParticle = {"blood_impact_yellow_01"}
+ENT.BloodParticle = "blood_impact_yellow_01"
 
 ENT.MeleeAttackDamage = 10
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
@@ -80,7 +80,7 @@ ENT.SoundTbl_IdleDialogue = {
 	"vo/npc/vortigaunt/vques07.wav",
 	"vo/npc/vortigaunt/vques08.wav",
 	"vo/npc/vortigaunt/vques09.wav",
-	"vo/npc/vortigaunt/vques10.wav",
+	"vo/npc/vortigaunt/vques10.wav"
 }
 ENT.SoundTbl_IdleDialogueAnswer = {
 	"vj_hlr/src/npc/vort/vo/vort_grp_agree01.wav",
@@ -116,7 +116,7 @@ ENT.SoundTbl_IdleDialogueAnswer = {
 	"vo/npc/vortigaunt/vanswer15.wav",
 	"vo/npc/vortigaunt/vanswer16.wav",
 	"vo/npc/vortigaunt/vanswer17.wav",
-	"vo/npc/vortigaunt/vanswer18.wav",
+	"vo/npc/vortigaunt/vanswer18.wav"
 }
 ENT.SoundTbl_FollowPlayer = {
 	"vo/coast/vgossip_02.wav",
@@ -141,7 +141,7 @@ ENT.SoundTbl_FollowPlayer = {
 	"vj_hlr/src/npc/vort/vo/weclaimyou.wav",
 	"vj_hlr/src/npc/vort/vo/wefollowfm.wav",
 	"vj_hlr/src/npc/vort/vo/wewillhelp.wav",
-	"vj_hlr/src/npc/vort/vo/yesforward.wav",
+	"vj_hlr/src/npc/vort/vo/yesforward.wav"
 }
 ENT.SoundTbl_UnFollowPlayer = {
 	"vj_hlr/src/npc/vort/vo/fmknowsbest.wav",
@@ -151,12 +151,12 @@ ENT.SoundTbl_UnFollowPlayer = {
 	"vj_hlr/src/npc/vort/vo/here.wav",
 	"vj_hlr/src/npc/vort/vo/hold.wav",
 	"vj_hlr/src/npc/vort/vo/mutual.wav",
-	"vj_hlr/src/npc/vort/vo/ourplacehere.wav",
+	"vj_hlr/src/npc/vort/vo/ourplacehere.wav"
 }
 ENT.SoundTbl_YieldToPlayer = {
 	"vj_hlr/src/npc/vort/vo/fmadvance.wav",
 	"vj_hlr/src/npc/vort/vo/fminway.wav",
-	"vj_hlr/src/npc/vort/vo/hastefm.wav",
+	"vj_hlr/src/npc/vort/vo/hastefm.wav"
 }
 ENT.SoundTbl_OnPlayerSight = {
 	"vo/canals/vort_reckoning.wav",
@@ -170,11 +170,11 @@ ENT.SoundTbl_OnPlayerSight = {
 	"vj_hlr/src/npc/vort/vo/honorours.wav",
 	"vj_hlr/src/npc/vort/vo/vort_goodfightwithus.wav",
 	"vj_hlr/src/npc/vort/vo/vort_goodtogether.wav",
-	"vj_hlr/src/npc/vort/vo/wellmet.wav",
+	"vj_hlr/src/npc/vort/vo/wellmet.wav"
 }
 ENT.SoundTbl_LostEnemy = {
 	"vj_hlr/src/npc/vort/vo/thatisall.wav",
-	"vj_hlr/src/npc/vort/vo/vort_skillsformidable.wav",
+	"vj_hlr/src/npc/vort/vo/vort_skillsformidable.wav"
 }
 ENT.SoundTbl_Alert = {
 	"vj_hlr/src/npc/vort/vo/alert.wav",
@@ -196,11 +196,11 @@ ENT.SoundTbl_Alert = {
 	"vj_hlr/src/npc/vort/vo/vortigese07.wav",
 	"vj_hlr/src/npc/vort/vo/vortigese08.wav",
 	"vj_hlr/src/npc/vort/vo/vortigese09.wav",
-	"vj_hlr/src/npc/vort/vo/vortigese13.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese13.wav"
 }
-ENT.SoundTbl_BeforeMeleeAttack = {
-	"vj_hlr/src/npc/vort/vo/vort_attack21.wav",
-}
+ENT.SoundTbl_BeforeMeleeAttack =
+	"vj_hlr/src/npc/vort/vo/vort_attack21.wav"
+
 ENT.SoundTbl_KilledEnemy = {
 	"vj_hlr/src/npc/vort/vo/allfornow.wav",
 	"vj_hlr/src/npc/vort/vo/allinoneinall.wav",
@@ -210,16 +210,16 @@ ENT.SoundTbl_KilledEnemy = {
 	"vj_hlr/src/npc/vort/vo/satisfaction.wav",
 	"vj_hlr/src/npc/vort/vo/tothevoid.wav",
 	"vj_hlr/src/npc/vort/vo/troubleus.wav",
-	"vj_hlr/src/npc/vort/vo/undeserving.wav",
+	"vj_hlr/src/npc/vort/vo/undeserving.wav"
 }
 ENT.SoundTbl_AllyDeath = {
 	"vj_hlr/src/npc/vort/vo/regrettable.wav",
-	"vj_hlr/src/npc/vort/vo/returnvoid.wav",
+	"vj_hlr/src/npc/vort/vo/returnvoid.wav"
 }
 ENT.SoundTbl_Pain = {
 	"vo/npc/vortigaunt/vortigese03.wav",
 	"vo/npc/vortigaunt/vortigese05.wav",
-	"vo/npc/vortigaunt/vortigese07.wav",
+	"vo/npc/vortigaunt/vortigese07.wav"
 }
 
 /*
@@ -349,7 +349,7 @@ function ENT:OnAnimEvent(ev, evTime, evCycle, evType, evOptions)
 
 		effects.BeamRingPoint(self:GetPos(), 0.2, 12, 500, 64, 0, Color(44, 255, 139), {material="sprites/lgtning.vmt", framerate=2, flags=0, speed=0, delay=0, spread=0})
 		effects.BeamRingPoint(self:GetPos(), 0.2, 12, 500, 64, 0, Color(44, 255, 139), {material="sprites/lgtning.vmt", framerate=2, flags=0, speed=0, delay=0, spread=0})
-	
+
 		local light = ents.Create("light_dynamic")
 		light:SetKeyValue("_light", "44 255 139 255")
 		light:SetKeyValue("style", "0")
@@ -375,7 +375,7 @@ function ENT:OnRangeAttackExecute(status, enemy, projectile)
 
 		util.ParticleTracerEx("vortigaunt_beam", startPos, hitPos, false, self:EntIndex(), self:LookupAttachment("leftclaw"))
 		util.ParticleTracerEx("vortigaunt_beam", startPos, hitPos, false, self:EntIndex(), self:LookupAttachment("rightclaw"))
-		
+
 		sound.Play("vj_hlr/src/npc/vort/vort_attack_shoot" .. math.random(3, 4) .. ".wav", hitPos, 75)
 		VJ.ApplyRadiusDamage(self, self, hitPos, 100, 25, bit.bor(DMG_SHOCK, DMG_ENERGYBEAM), true, false, {Force = 90})
 

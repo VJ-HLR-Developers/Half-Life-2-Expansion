@@ -12,16 +12,16 @@ ENT.HullType = HULL_WIDE_HUMAN
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.BloodParticle = {"blood_impact_green_01"}
+ENT.BloodParticle = "blood_impact_green_01"
 
 ENT.MeleeAttackDamage = 15
-ENT.AnimTbl_MeleeAttack = {"FastAttack"}
+ENT.AnimTbl_MeleeAttack = "FastAttack"
 ENT.MeleeAttackDistance = 35
 ENT.MeleeAttackDamageDistance = 75
 ENT.TimeUntilMeleeAttackDamage = false
 
 ENT.DeathLootChance = 10
-ENT.DeathLoot = {"weapon_frag"}
+ENT.DeathLoot = "weapon_frag"
 
 ENT.CanFlinch = true
 ENT.FlinchChance = 8
@@ -95,7 +95,7 @@ function ENT:Init()
 			local hp = self.StartHealth *1.25
 			self:SetHealth(hp)
 			self:SetMaxHealth(hp)
-			self.DeathLoot = {"item_ammo_ar2_altfire"}
+			self.DeathLoot = "item_ammo_ar2_altfire"
 		end
 		self:SetSkin(zType)
 	end
@@ -185,9 +185,9 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, ent)
 		grenent:SetAngles(self:GetAttachment(self:LookupAttachment("grenade_attachment")).Ang)
 		grenent.FuseTime = (oldEnt.CurFuss -CurTime())
 		grenent:Spawn()
-		grenent.SoundTbl_Idle = {"weapons/grenade/tick1.wav"}
+		grenent.SoundTbl_Idle = "weapons/grenade/tick1.wav"
 		grenent.IdleSoundPitch = VJ.SET(100, 100)
-		
+
 		local redGlow = ents.Create("env_sprite")
 		redGlow:SetKeyValue("model", "vj_base/sprites/glow.vmt")
 		redGlow:SetKeyValue("scale", "0.07")
@@ -256,7 +256,7 @@ function ENT:CreateGrenade()
 	grenent.SoundTbl_Idle = {"weapons/grenade/tick1.wav"}
 	grenent.IdleSoundPitch = VJ.SET(100, 100)
 	self:DeleteOnRemove(grenent)
-	
+
 	local redGlow = ents.Create("env_sprite")
 	redGlow:SetKeyValue("model", "vj_base/sprites/glow.vmt")
 	redGlow:SetKeyValue("scale", "0.07")
@@ -276,7 +276,7 @@ function ENT:CreateGrenade()
 	-- 		grenent:SetParent(NULL)
 	-- 	end
 	-- end)
-	
+
 	self.GrenadeEntity = grenent
 	self.GrenadeTime = CurTime() +3.5
 	-- grenent.VJHumanTossingAway = true // Soldiers kept stealing their grenades xD

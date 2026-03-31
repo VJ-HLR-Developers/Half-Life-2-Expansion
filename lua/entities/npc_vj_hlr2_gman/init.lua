@@ -23,16 +23,16 @@ ENT.HasMeleeAttack = false
 
 ENT.DisableFootStepSoundTimer = true
 
--- ENT.SoundTbl_IdleDialogue = {"vo/gman_misc/gman_riseshine.wav"}
+-- ENT.SoundTbl_IdleDialogue = "vo/gman_misc/gman_riseshine.wav"
 -- ENT.SoundTbl_FollowPlayer = {"vo/gman_misc/gman_02.wav", "vo/gman_misc/gman_03.wav"}
--- ENT.SoundTbl_UnFollowPlayer = {"vo/gman_misc/gman_04.wav"}
+-- ENT.SoundTbl_UnFollowPlayer = "vo/gman_misc/gman_04.wav"
 
 ENT.MainSoundPitch = 100
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:AddFlags(FL_NOTARGET)
-	self.AnimTbl_Run = {ACT_WALK}
-	
+	self.AnimTbl_Run = ACT_WALK
+
 	self.NextDialogueTreeT = CurTime()
 	self.NextTeleportT = CurTime() +5
 end

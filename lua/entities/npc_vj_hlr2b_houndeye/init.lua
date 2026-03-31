@@ -11,7 +11,7 @@ ENT.HullType = HULL_WIDE_SHORT
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_XEN"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.BloodParticle = {"vj_hlr_blood_yellow"}
+ENT.BloodParticle = "vj_hlr_blood_yellow"
 ENT.Immune_Sonic = true
 ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = ACT_RANGE_ATTACK1
@@ -27,7 +27,7 @@ ENT.DisableDefaultMeleeAttackDamageCode = true
 ENT.DisableFootStepSoundTimer = true
 
 ENT.CanFlinch = true
-ENT.AnimTbl_Flinch = {"vjseq_flinch_small"}
+ENT.AnimTbl_Flinch = "vjseq_flinch_small"
 
 ENT.ControllerParams = {
     CameraMode = 1,
@@ -41,24 +41,24 @@ ENT.SoundTbl_FootStep = {
 	"npc/zombie/foot2.wav",
 	"npc/zombie/foot3.wav",
 }
-ENT.SoundTbl_CallForHelp = {"vj_hlr/src/npc/houndeye/he_bark_group_attack.wav"}
-ENT.SoundTbl_ReceiveOrder = {"vj_hlr/src/npc/houndeye/he_bark_group_attack_reply.wav"}
-ENT.SoundTbl_AllyDeath = {"vj_hlr/src/npc/houndeye/he_bark_group_retreat.wav"}
+ENT.SoundTbl_CallForHelp = "vj_hlr/src/npc/houndeye/he_bark_group_attack.wav"
+ENT.SoundTbl_ReceiveOrder = "vj_hlr/src/npc/houndeye/he_bark_group_attack_reply.wav"
+ENT.SoundTbl_AllyDeath = "vj_hlr/src/npc/houndeye/he_bark_group_retreat.wav"
 ENT.SoundTbl_Idle = {
 	"vj_hlr/src/npc/houndeye/he_idle1.wav",
 	"vj_hlr/src/npc/houndeye/he_idle2.wav",
 	"vj_hlr/src/npc/houndeye/he_idle3.wav",
-	"vj_hlr/src/npc/houndeye/he_idle4.wav",
+	"vj_hlr/src/npc/houndeye/he_idle4.wav"
 }
 ENT.SoundTbl_Alert = {
 	"vj_hlr/src/npc/houndeye/he_alert1.wav",
 	"vj_hlr/src/npc/houndeye/he_alert2.wav",
-	"vj_hlr/src/npc/houndeye/he_alert3.wav",
+	"vj_hlr/src/npc/houndeye/he_alert3.wav"
 }
 ENT.SoundTbl_BeforeMeleeAttack = {
 	"vj_hlr/src/npc/houndeye/he_attack1.wav",
 	"vj_hlr/src/npc/houndeye/he_attack2.wav",
-	"vj_hlr/src/npc/houndeye/he_attack3.wav",
+	"vj_hlr/src/npc/houndeye/he_attack3.wav"
 }
 ENT.SoundTbl_Pain = {
 	"vj_hlr/src/npc/houndeye/he_pain1.wav",
@@ -71,7 +71,7 @@ ENT.SoundTbl_Pain = {
 ENT.SoundTbl_Death = {
 	"vj_hlr/src/npc/houndeye/he_die1.wav",
 	"vj_hlr/src/npc/houndeye/he_die2.wav",
-	"vj_hlr/src/npc/houndeye/he_die3.wav",
+	"vj_hlr/src/npc/houndeye/he_die3.wav"
 }
 
 ENT.FootstepSoundLevel = 80

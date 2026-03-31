@@ -8,7 +8,7 @@ include("shared.lua")
 ENT.Model = "models/vj_hlr/hl2/antlion_worker.mdl"
 ENT.StartHealth = 60
 
-ENT.BloodParticle = {"vj_acid_impact1_small_splat"}
+ENT.BloodParticle = "vj_acid_impact1_small_splat"
 
 ENT.HasRangeAttack = true
 ENT.AnimTbl_RangeAttack = ACT_RANGE_ATTACK1
@@ -27,7 +27,7 @@ ENT.AnimTbl_Death = "explode"
 ENT.GibOnDeathFilter = false
 ENT.SoundTbl_Death = {
 	"npc/antlion/antlion_preburst_scream1.wav",
-	"npc/antlion/antlion_preburst_scream2.wav",
+	"npc/antlion/antlion_preburst_scream2.wav"
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackProjPos(projectile)

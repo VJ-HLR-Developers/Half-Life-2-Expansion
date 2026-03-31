@@ -17,8 +17,8 @@ ENT.PoseParameterLooking_Names = {pitch={"l_aim_pitch", "r_aim_pitch"}, yaw={"l_
 ENT.MovementType = VJ_MOVETYPE_AERIAL
 ENT.Aerial_FlyingSpeed_Alerted = 350
 ENT.Aerial_FlyingSpeed_Calm = 325
-ENT.Aerial_AnimTbl_Calm = {ACT_IDLE}
-ENT.Aerial_AnimTbl_Alerted = {ACT_IDLE}
+ENT.Aerial_AnimTbl_Calm = ACT_IDLE
+ENT.Aerial_AnimTbl_Alerted = ACT_IDLE
 ENT.AA_GroundLimit = 1200
 ENT.AA_MinWanderDist = 1000
 ENT.AA_MoveAccelerate = 4
@@ -55,9 +55,9 @@ ENT.LimitChaseDistance_Max = 4000
 ENT.LimitChaseDistance_Min = 0
 	-- ====== Sound File Paths ====== --
 -- Leave blank if you don"t want any sounds to play
-ENT.SoundTbl_Alert = {"npc/attack_helicopter/aheli_megabomb_siren1.wav"}
-ENT.SoundTbl_Pain = {"npc/attack_helicopter/aheli_damaged_alarm1.wav"}
-ENT.SoundTbl_Death = {"npc/attack_helicopter/aheli_crash_alert2.wav"}
+ENT.SoundTbl_Alert = "npc/attack_helicopter/aheli_megabomb_siren1.wav"
+ENT.SoundTbl_Pain = "npc/attack_helicopter/aheli_damaged_alarm1.wav"
+ENT.SoundTbl_Death = "npc/attack_helicopter/aheli_crash_alert2.wav"
 
 ENT.AlertSoundLevel = 150
 ENT.PainSoundLevel = 150
@@ -70,17 +70,17 @@ end
 function ENT:Init()
 	self:SetCollisionBounds(Vector(140, 140, 100), Vector(-140, -140, -75))
 	self:SetPos(self:GetPos() +Vector(0, 0, 400))
-	
+
 	self.IdleLP = CreateSound(self, "npc/attack_helicopter/aheli_rotor_loop1.wav")
 	self.IdleLP:SetSoundLevel(115)
 	self.IdleLP:Play()
 	self.IdleLP:ChangeVolume(1)
 	self.IdleLP:ChangePitch(72)
-	
+
 	self.FireLP = CreateSound(self, "weapons/airboat/airboat_gun_loop2.wav")
 	self.FireLP:SetSoundLevel(120)
 	self.FireLP:ChangeVolume(1)
-	
+
 	self.Charged = false
 	self.Charging = false
 	self.NextFireT = 0
@@ -89,9 +89,9 @@ function ENT:Init()
 	self.CarpetBombPos = Vector(0, 0, 0)
 	self.NextCarpetBombT = 0
 	self.NextDropCarpetT = 0
-	
+
 	self.RangeUseAttachmentForPosID = "Damage0"
-	
+
 	self:CreateBoneFollowers()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -120,7 +120,7 @@ function ENT:CreateFakeBullet(att)
 	FakeSpawn:SetNoDraw(true)
 	FakeSpawn:DrawShadow(false)
 	self:DeleteOnRemove(FakeSpawn)
-	
+
 	return FakeSpawn
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -155,7 +155,7 @@ function ENT:FireBullet()
 			dmginfo:SetAttacker(self)
 			dmginfo:SetInflictor(self)
 			dmginfo:SetDamageType(bit.bor(2, 4098, 2147483648))
-			
+
 			util.ScreenShake(tr.HitPos, 16, 100, 0.5, 175)
 			sound.Play("weapons/fx/nearmiss/bulletltor0" .. math.random(3, 9) .. ".wav", tr.HitPos +tr.HitNormal *60, 60, 100, 1)
 			if tr.MatType && VJ.HasValue({MAT_METAL, MAT_GRATE, MAT_CONCRETE, MAT_COMPUTER, MAT_VENT}, tr.MatType) then
@@ -191,7 +191,7 @@ function ENT:FireBullet()
 			dmginfo:SetDamageType(bit.bor(2, 4098, 2147483648))
 			dmginfo:SetAttacker(self)
 			dmginfo:SetInflictor(self)
-			
+
 			util.ScreenShake(tr.HitPos, 16, 100, 0.5, 175)
 			sound.Play("weapons/fx/nearmiss/bulletltor0" .. math.random(3, 9) .. ".wav", tr.HitPos +tr.HitNormal *60, 60, 100, 1)
 			if tr.MatType && VJ.HasValue({MAT_METAL, MAT_GRATE, MAT_CONCRETE, MAT_COMPUTER, MAT_VENT}, tr.MatType) then
@@ -342,12 +342,12 @@ function ENT:OnCreateDeathCorpse(dmginfo, hitgroup, corpse)
 		ParticleEffect("vj_explosion2", corpse:GetPos() +corpse:GetForward()*130, Angle(0, 0, 0), nil)
 		ParticleEffectAttach("fire_large_01", PATTACH_POINT_FOLLOW, corpse, 8)
 		ParticleEffectAttach("smoke_burning_engine_01", PATTACH_POINT_FOLLOW, corpse, 1)
-		
+
 		local explosioneffect = EffectData()
 		explosioneffect:SetOrigin(corpse:GetPos())
 		util.Effect("VJ_Medium_Explosion1", explosioneffect)
 		util.Effect("Explosion", explosioneffect)
-		
+
 		local dusteffect = EffectData()
 		dusteffect:SetOrigin(corpse:GetPos())
 		dusteffect:SetScale(800)

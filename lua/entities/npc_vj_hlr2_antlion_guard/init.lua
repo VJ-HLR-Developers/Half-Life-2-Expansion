@@ -19,7 +19,7 @@ ENT.ControllerParams = {
 
 ENT.VJ_NPC_Class = {"CLASS_ANTLION"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.BloodParticle = {"blood_impact_yellow_01"}
+ENT.BloodParticle = "blood_impact_yellow_01"
 
 ENT.HasMeleeAttack = true
 ENT.AnimTbl_MeleeAttack = ACT_MELEE_ATTACK1
@@ -34,11 +34,11 @@ ENT.FootstepSoundTimerWalk = 0.3
 ENT.HasExtraMeleeAttackSounds = true
 ENT.MainSoundPitch = 100
 
--- ENT.SoundTbl_Breath = {"npc/antlion_guard/growl_idle.wav"}
+-- ENT.SoundTbl_Breath = "npc/antlion_guard/growl_idle.wav"
 ENT.SoundTbl_FootStep = {"npc/antlion_guard/foot_heavy1.wav", "npc/antlion_guard/foot_heavy2.wav", "npc/antlion_guard/foot_light1.wav", "npc/antlion_guard/foot_light2.wav"}
 ENT.SoundTbl_Death = {"npc/antlion_guard/antlion_guard_die1.wav", "npc/antlion_guard/antlion_guard_die2.wav"}
-ENT.SoundTbl_BeforeMeleeAttack = {"npc/antlion_guard/angry1.wav"}
-ENT.SoundTbl_MeleeAttackExtra = {"npc/antlion_guard/shove1.wav"}
+ENT.SoundTbl_BeforeMeleeAttack = "npc/antlion_guard/angry1.wav"
+ENT.SoundTbl_MeleeAttackExtra = "npc/antlion_guard/shove1.wav"
 
 ENT.BreathSoundLevel = 70
 
@@ -475,7 +475,7 @@ function ENT:Controller_Movement(cont, ply, bullseyePos)
 		if self.IsCharging then
 			return
 		end
-		
+
 		if ply:KeyDown(IN_FORWARD) then
 			if self.MovementType == VJ_MOVETYPE_AERIAL or self.MovementType == VJ_MOVETYPE_AQUATIC then
 				self:AA_MoveTo(cont.VJCE_Bullseye, true, gerta_arak and "Alert" or "Calm", {IgnoreGround = true})

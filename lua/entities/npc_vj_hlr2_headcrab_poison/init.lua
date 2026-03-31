@@ -21,7 +21,7 @@ ENT.ControllerParams = {
 ENT.AnimTbl_IdleStand = {ACT_IDLE, "IdleSumo", "IdleSniff"}
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.BloodParticle = {"blood_impact_yellow_01"}
+ENT.BloodParticle = "blood_impact_yellow_01"
 
 ENT.HasMeleeAttack = false
 
@@ -61,7 +61,7 @@ ENT.FootstepSoundTimerWalk = 0.5
 
 ENT.SoundTbl_FootStep = {"npc/headcrab_poison/ph_step1.wav", "npc/headcrab_poison/ph_step2.wav", "npc/headcrab_poison/ph_step3.wav", "npc/headcrab_poison/ph_step4.wav"}
 ENT.SoundTbl_AlertAnim = {"npc/headcrab_poison/ph_warning1.wav", "npc/headcrab_poison/ph_warning2.wav", "npc/headcrab_poison/ph_warning3.wav"}
-ENT.SoundTbl_CombatIdle = {"npc/headcrab_poison/ph_hiss1.wav"}
+ENT.SoundTbl_CombatIdle = "npc/headcrab_poison/ph_hiss1.wav"
 ENT.SoundTbl_BeforeRangeAttack = {"npc/headcrab_poison/ph_scream1.wav", "npc/headcrab_poison/ph_scream2.wav", "npc/headcrab_poison/ph_scream3.wav"}
 ENT.SoundTbl_BeforeLeapAttack = {"npc/headcrab_poison/ph_scream1.wav", "npc/headcrab_poison/ph_scream2.wav", "npc/headcrab_poison/ph_scream3.wav"}
 ENT.SoundTbl_LeapAttackDamage = {"npc/headcrab_poison/ph_poisonbite1.wav", "npc/headcrab_poison/ph_poisonbite2.wav", "npc/headcrab_poison/ph_poisonbite3.wav"}
@@ -71,27 +71,27 @@ ENT.SoundTbl_Death = {"npc/headcrab_poison/ph_rattle1.wav", "npc/headcrab_poison
 ENT.SoundTbl_Idle = {
 	"npc/headcrab_poison/ph_idle1.wav",
 	"npc/headcrab_poison/ph_idle2.wav",
-	"npc/headcrab_poison/ph_idle3.wav",
+	"npc/headcrab_poison/ph_idle3.wav"
 }
 ENT.SoundTbl_IdleDialogue = {
 	"npc/headcrab_poison/ph_talk1.wav",
 	"npc/headcrab_poison/ph_talk2.wav",
-	"npc/headcrab_poison/ph_talk3.wav",
+	"npc/headcrab_poison/ph_talk3.wav"
 }
 ENT.SoundTbl_IdleDialogueAnswer = {
 	"npc/headcrab_poison/ph_talk1.wav",
 	"npc/headcrab_poison/ph_talk2.wav",
-	"npc/headcrab_poison/ph_talk3.wav",
+	"npc/headcrab_poison/ph_talk3.wav"
 }
 ENT.SoundTbl_FollowPlayer = {
 	"npc/headcrab_poison/ph_idle1.wav",
 	"npc/headcrab_poison/ph_idle2.wav",
-	"npc/headcrab_poison/ph_idle3.wav",
+	"npc/headcrab_poison/ph_idle3.wav"
 }
 ENT.SoundTbl_UnFollowPlayer = {
 	"npc/headcrab_poison/ph_talk1.wav",
 	"npc/headcrab_poison/ph_talk2.wav",
-	"npc/headcrab_poison/ph_talk3.wav",
+	"npc/headcrab_poison/ph_talk3.wav"
 }
 
 ENT.MainSoundPitch = 100

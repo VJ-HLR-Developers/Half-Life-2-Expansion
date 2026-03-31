@@ -19,7 +19,7 @@ ENT.ControllerParams = {
 }
 
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.BloodParticle = {"blood_impact_yellow_01"}
+ENT.BloodParticle = "blood_impact_yellow_01"
 
 ENT.HasMeleeAttack = false
 
@@ -43,10 +43,10 @@ ENT.FootstepSoundTimerRun = 0.2
 ENT.FootstepSoundTimerWalk = 0.2
 
 ENT.SoundTbl_FootStep = {"npc/headcrab_poison/ph_step1.wav", "npc/headcrab_poison/ph_step2.wav", "npc/headcrab_poison/ph_step3.wav", "npc/headcrab_poison/ph_step4.wav"}
-ENT.SoundTbl_Alert = {"npc/headcrab/alert1.wav"}
+ENT.SoundTbl_Alert = "npc/headcrab/alert1.wav"
 ENT.SoundTbl_Idle = {"npc/headcrab/idle1.wav", "npc/headcrab/idle2.wav", "npc/headcrab/idle3.wav"}
 ENT.SoundTbl_LeapAttackJump = {"npc/headcrab/attack1.wav", "npc/headcrab/attack2.wav", "npc/headcrab/attack3.wav"}
-ENT.SoundTbl_LeapAttackDamage = {"npc/headcrab/headbite.wav"}
+ENT.SoundTbl_LeapAttackDamage = "npc/headcrab/headbite.wav"
 ENT.SoundTbl_Pain = {"npc/headcrab/pain1.wav", "npc/headcrab/pain2.wav", "npc/headcrab/pain3.wav"}
 ENT.SoundTbl_Death = {"npc/headcrab/die1.wav", "npc/headcrab/die2.wav"}
 ENT.SoundTbl_IdleDialogue = {"npc/headcrab/idle1.wav", "npc/headcrab/idle2.wav", "npc/headcrab/idle3.wav"}

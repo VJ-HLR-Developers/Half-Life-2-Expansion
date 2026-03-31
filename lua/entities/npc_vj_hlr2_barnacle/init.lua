@@ -43,7 +43,7 @@ ENT.HasDeathAnimation = true
 ENT.AnimTbl_Death = ACT_DIESIMPLE
 ENT.DeathCorpseEntityClass = "prop_vj_animatable"
 
-ENT.SoundTbl_Idle = {"vj_hlr/gsrc/npc/barnacle/bcl_tongue1.wav"}
+ENT.SoundTbl_Idle = "vj_hlr/gsrc/npc/barnacle/bcl_tongue1.wav"
 ENT.SoundTbl_MeleeAttack = {"vj_hlr/gsrc/npc/barnacle/bcl_chew1.wav", "vj_hlr/gsrc/npc/barnacle/bcl_chew2.wav", "vj_hlr/gsrc/npc/barnacle/bcl_chew3.wav"}
 ENT.SoundTbl_Death = {"vj_hlr/gsrc/npc/barnacle/bcl_die1.wav", "vj_hlr/gsrc/npc/barnacle/bcl_die3.wav"}
 
@@ -165,11 +165,11 @@ function ENT:OnThinkActive()
 	if calc == true && self.Barnacle_Status != 1 then
 		self.Barnacle_Status = 1
 		self.NextIdleStandTime = 0
-		self.AnimTbl_IdleStand = {ACT_BARNACLE_PULL}
+		self.AnimTbl_IdleStand = ACT_BARNACLE_PULL
 	elseif calc == false && self.Barnacle_Status != 0 then
 		self.Barnacle_Status = 0
 		self.NextIdleStandTime = 0
-		self.AnimTbl_IdleStand = {ACT_IDLE}
+		self.AnimTbl_IdleStand = ACT_IDLE
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -193,7 +193,7 @@ function ENT:HandleGibOnDeath(dmginfo, hitgroup)
 		bloodeffect:SetColor(VJ.Color2Byte(Color(130, 19, 10)))
 		bloodeffect:SetScale(120)
 		util.Effect("VJ_Blood1", bloodeffect)
-		
+
 		local bloodspray = EffectData()
 		bloodspray:SetOrigin(self:GetPos())
 		bloodspray:SetScale(8)
@@ -202,7 +202,7 @@ function ENT:HandleGibOnDeath(dmginfo, hitgroup)
 		util.Effect("bloodspray", bloodspray)
 		util.Effect("bloodspray", bloodspray)
 	end
-	
+
 	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh1.mdl", {CollisionDecal = "VJ_HLR1_Blood_Red", Pos = self:LocalToWorld(Vector(0, 0, -20))})
 	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh2.mdl", {CollisionDecal = "VJ_HLR1_Blood_Red", Pos = self:LocalToWorld(Vector(0, 0, -20))})
 	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh3.mdl", {CollisionDecal = "VJ_HLR1_Blood_Red", Pos = self:LocalToWorld(Vector(0, 0, -20))})
@@ -215,7 +215,7 @@ function ENT:HandleGibOnDeath(dmginfo, hitgroup)
 	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh2.mdl", {CollisionDecal = "VJ_HLR1_Blood_Red", Pos = self:LocalToWorld(Vector(0, 0, -20))})
 	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh3.mdl", {CollisionDecal = "VJ_HLR1_Blood_Red", Pos = self:LocalToWorld(Vector(0, 0, -20))})
 	self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh4.mdl", {CollisionDecal = "VJ_HLR1_Blood_Red", Pos = self:LocalToWorld(Vector(0, 0, -20))})
-	
+
 	self:PlaySoundSystem("Gib", "vj_base/gib/splat.wav")
 	return true, {AllowSound = true}
 end

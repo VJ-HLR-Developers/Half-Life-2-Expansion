@@ -39,19 +39,19 @@ ENT.RangeAttackMinDistance = 1
 ENT.CanFlinch = true
 ENT.FlinchChance = 3
 ENT.FlinchCooldown = 2
-ENT.AnimTbl_Flinch = {"Mortar_Flinch_Front"}
+ENT.AnimTbl_Flinch = "Mortar_Flinch_Front"
 
 ENT.LimitChaseDistance = true
 ENT.LimitChaseDistance_Max = "UseRangeDistance"
 ENT.LimitChaseDistance_Min = "UseRangeDistance"
 
-ENT.SoundTbl_Breath = {"vj_hlr/src/npc/mortarsynth/hover.wav"}
+ENT.SoundTbl_Breath = "vj_hlr/src/npc/mortarsynth/hover.wav"
 ENT.SoundTbl_Idle = {"vj_hlr/src/npc/combot/cbot_battletalk1.wav", "vj_hlr/src/npc/combot/cbot_battletalk2.wav", "vj_hlr/src/npc/combot/cbot_battletalk3.wav", "vj_hlr/src/npc/combot/cbot_battletalk4.wav"}
 ENT.SoundTbl_CombatIdle = {"vj_hlr/src/npc/combot/cbot_scan1.wav", "vj_hlr/src/npc/combot/cbot_scan2.wav"}
-ENT.SoundTbl_Alert = {"vj_hlr/src/npc/combot/cbot_alert1.wav"}
-ENT.SoundTbl_RangeAttack = {"vj_hlr/src/npc/mortarsynth/attack_shoot.wav"}
+ENT.SoundTbl_Alert = "vj_hlr/src/npc/combot/cbot_alert1.wav"
+ENT.SoundTbl_RangeAttack = "vj_hlr/src/npc/mortarsynth/attack_shoot.wav"
 ENT.SoundTbl_Pain = {"vj_hlr/src/npc/combot/cbot_servoscared.wav", "vj_hlr/src/npc/combot/cbot_servosurprise.wav"}
-ENT.SoundTbl_Death = {"vj_hlr/src/npc/waste_scanner/grenade_fire.wav"}
+ENT.SoundTbl_Death = "vj_hlr/src/npc/waste_scanner/grenade_fire.wav"
 
 ENT.BreathSoundLevel = 75
 ENT.AlertSoundLevel = 90

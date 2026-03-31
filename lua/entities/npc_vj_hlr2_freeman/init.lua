@@ -17,19 +17,19 @@ ENT.HullType = HULL_HUMAN
 ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"}
 ENT.AlliedWithPlayerAllies = true
 ENT.BloodColor = VJ.BLOOD_COLOR_RED
-ENT.AnimTbl_MeleeAttack = {"vjseq_MeleeAttack01"}
+ENT.AnimTbl_MeleeAttack = "vjseq_MeleeAttack01"
 ENT.TimeUntilMeleeAttackDamage = 0.7
 
 ENT.HasGrenadeAttack = true
 ENT.GrenadeAttackModel = "models/weapons/w_npcnade.mdl"
-ENT.AnimTbl_GrenadeAttack = {ACT_RANGE_ATTACK_THROW}
+ENT.AnimTbl_GrenadeAttack = ACT_RANGE_ATTACK_THROW
 ENT.GrenadeAttackThrowTime = 0.87
 ENT.GrenadeAttackAttachment = "anim_attachment_RH"
 
 ENT.BecomeEnemyToPlayer = 2
 
-ENT.WeaponInventory_AntiArmorList = {"weapon_vj_hlr2_rpg"}
-ENT.WeaponInventory_MeleeList = {"weapon_vj_crowbar"}
+ENT.WeaponInventory_AntiArmorList = "weapon_vj_hlr2_rpg"
+ENT.WeaponInventory_MeleeList = "weapon_vj_crowbar"
 
 ENT.SoundTbl_FootStep = {"NPC_Citizen.FootstepLeft", "NPC_Citizen.FootstepRight"}
 ENT.SoundTbl_Breath = "player/breathe1.wav"
@@ -41,15 +41,15 @@ ENT.BreathSoundLevel = 40
 ENT.WeaponsList = {
 	["Close"] = {
 		"weapon_vj_spas12",
-		"weapon_vj_9mmpistol",
+		"weapon_vj_9mmpistol"
 	},
 	["Normal"] = {
 		"weapon_vj_357",
 		"weapon_vj_smg1",
-		"weapon_vj_ar2",
+		"weapon_vj_ar2"
 	},
 	["Far"] = {
-		"weapon_vj_crossbow",
+		"weapon_vj_crossbow"
 	},
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------

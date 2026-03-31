@@ -20,15 +20,15 @@ ENT.SoundTbl_Alert = {
 	"vj_hlr/src/npc/vort/vo/vortigese07.wav",
 	"vj_hlr/src/npc/vort/vo/vortigese08.wav",
 	"vj_hlr/src/npc/vort/vo/vortigese09.wav",
-	"vj_hlr/src/npc/vort/vo/vortigese13.wav",
+	"vj_hlr/src/npc/vort/vo/vortigese13.wav"
 }
-ENT.SoundTbl_BeforeMeleeAttack = {
-	"vj_hlr/src/npc/vort/vo/vort_attack21.wav",
-}
+ENT.SoundTbl_BeforeMeleeAttack =
+	"vj_hlr/src/npc/vort/vo/vort_attack21.wav"
+
 ENT.SoundTbl_Pain = {
 	"vo/npc/vortigaunt/vortigese03.wav",
 	"vo/npc/vortigaunt/vortigese05.wav",
-	"vo/npc/vortigaunt/vortigese07.wav",
+	"vo/npc/vortigaunt/vortigese07.wav"
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnCreateSound(sdData, sdFile)

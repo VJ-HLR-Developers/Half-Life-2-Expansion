@@ -42,7 +42,7 @@ ENT.SoundTbl_FootStep = {
 	"npc/fast_zombie/foot1.wav",
 	"npc/fast_zombie/foot2.wav",
 	"npc/fast_zombie/foot3.wav",
-	"npc/fast_zombie/foot4.wav",
+	"npc/fast_zombie/foot4.wav"
 }
 ENT.SoundTbl_Idle = {
 	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_01.wav",
@@ -56,12 +56,12 @@ ENT.SoundTbl_Idle = {
 	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_09.wav",
 	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_10.wav",
 	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_11.wav",
-	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_12.wav",
+	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_12.wav"
 }
 ENT.SoundTbl_BeforeMeleeAttack = {
 	"vj_hlr/src/npc/alienassassin/vox_abandon_gurgle_01.wav",
 	"vj_hlr/src/npc/alienassassin/vox_abandon_gurgle_02.wav",
-	"vj_hlr/src/npc/alienassassin/vox_abandon_gurgle_03.wav",
+	"vj_hlr/src/npc/alienassassin/vox_abandon_gurgle_03.wav"
 }
 ENT.SoundTbl_BeforeRangeAttack = {
 	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_01.wav",
@@ -75,19 +75,19 @@ ENT.SoundTbl_BeforeRangeAttack = {
 	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_09.wav",
 	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_10.wav",
 	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_11.wav",
-	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_12.wav",
+	"vj_hlr/src/npc/alienassassin/vox_grunt_misc_12.wav"
 }
 ENT.SoundTbl_Pain = {
 	"vj_hlr/src/npc/alienassassin/vox_abandon_grunt_01.wav",
 	"vj_hlr/src/npc/alienassassin/vox_abandon_grunt_02.wav",
-	"vj_hlr/src/npc/alienassassin/vox_abandon_grunt_03.wav",
+	"vj_hlr/src/npc/alienassassin/vox_abandon_grunt_03.wav"
 }
 ENT.SoundTbl_Death = {
 	"vj_hlr/src/npc/alienassassin/vox_shockwave_yell_01.wav",
 	"vj_hlr/src/npc/alienassassin/vox_shockwave_yell_02.wav",
 	"vj_hlr/src/npc/alienassassin/vox_shockwave_yell_03.wav",
 	"vj_hlr/src/npc/alienassassin/vox_shockwave_yell_04.wav",
-	"vj_hlr/src/npc/alienassassin/vox_shockwave_yell_05.wav",
+	"vj_hlr/src/npc/alienassassin/vox_shockwave_yell_05.wav"
 }
 
 ENT.Assassin_NextJumpT = 0
@@ -452,7 +452,7 @@ function ENT:OnInput(key, activator, caller, data)
 			if curVelSpeed > 500 then
 				phys:SetVelocity(getVel * 0.9)
 			end
-			
+
 			if curVelSpeed > 100 then
 				proj:PlaySound("OnCollide")
 			end
@@ -460,14 +460,14 @@ function ENT:OnInput(key, activator, caller, data)
 		local defAngle = Angle(0, 0, 0)
 		function proj:OnDestroy()
 			local myPos = proj:GetPos()
-			
+
 			VJ.EmitSound(proj, "vj_hlr/src/npc/alienassassin/ball_zap1.wav", 75)
 			VJ.EmitSound(proj, "vj_hlr/src/npc/alienassassin/ball_shoot1.wav", 75)
 			for i = 1, 5 do
 				ParticleEffect("vj_aurora_shockwave", myPos, defAngle)
 				ParticleEffect("electrical_arc_01_system", myPos, defAngle)
 			end
-		
+
 			local expLight = ents.Create("light_dynamic")
 			expLight:SetKeyValue("brightness", "4")
 			expLight:SetKeyValue("distance", "300")
@@ -479,7 +479,7 @@ function ENT:OnInput(key, activator, caller, data)
 			expLight:Activate()
 			expLight:Fire("TurnOn", "", 0)
 			proj:DeleteOnRemove(expLight)
-			
+
 			proj:DealDamage()
 		end
 		proj:Spawn()

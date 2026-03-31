@@ -45,7 +45,7 @@ ENT.HasExtraMeleeAttackSounds = true
 
 ENT.SoundTbl_FootStep = {
 	"vj_hlr/src/npc/combine_guard/step1.wav",
-	"vj_hlr/src/npc/combine_guard/step2.wav",
+	"vj_hlr/src/npc/combine_guard/step2.wav"
 }
 ENT.SoundTbl_Idle = {}
 ENT.SoundTbl_Alert = {
@@ -58,16 +58,16 @@ ENT.SoundTbl_Alert = {
 	"vj_hlr/src/npc/combine_guard/refind_enemy1.wav",
 	"vj_hlr/src/npc/combine_guard/refind_enemy2.wav",
 	"vj_hlr/src/npc/combine_guard/refind_enemy3.wav",
-	"vj_hlr/src/npc/combine_guard/refind_enemy4.wav",
+	"vj_hlr/src/npc/combine_guard/refind_enemy4.wav"
 }
 ENT.SoundTbl_CallForHelp = {
 	"vj_hlr/src/npc/combine_guard/flank1.wav",
 	"vj_hlr/src/npc/combine_guard/flank2.wav",
-	"vj_hlr/src/npc/combine_guard/flank3.wav",
+	"vj_hlr/src/npc/combine_guard/flank3.wav"
 }
 ENT.SoundTbl_BeforeMeleeAttack = {
 	"vj_hlr/src/npc/combine_guard/kick1.wav",
-	"vj_hlr/src/npc/combine_guard/kick2.wav",
+	"vj_hlr/src/npc/combine_guard/kick2.wav"
 }
 ENT.SoundTbl_BeforeRangeAttack = {
 	"vj_hlr/src/npc/combine_guard/announce1.wav",
@@ -75,17 +75,17 @@ ENT.SoundTbl_BeforeRangeAttack = {
 	"vj_hlr/src/npc/combine_guard/announce3.wav",
 	"vj_hlr/src/npc/combine_guard/throw_grenade1.wav",
 	"vj_hlr/src/npc/combine_guard/throw_grenade2.wav",
-	"vj_hlr/src/npc/combine_guard/throw_grenade3.wav",
+	"vj_hlr/src/npc/combine_guard/throw_grenade3.wav"
 }
 ENT.SoundTbl_AllyDeath = {
 	"vj_hlr/src/npc/combine_guard/man_down1.wav",
 	"vj_hlr/src/npc/combine_guard/man_down2.wav",
-	"vj_hlr/src/npc/combine_guard/man_down3.wav",
+	"vj_hlr/src/npc/combine_guard/man_down3.wav"
 }
 ENT.SoundTbl_KilledEnemy = {
 	"vj_hlr/src/npc/combine_guard/player_dead1.wav",
 	"vj_hlr/src/npc/combine_guard/player_dead2.wav",
-	"vj_hlr/src/npc/combine_guard/player_dead3.wav",
+	"vj_hlr/src/npc/combine_guard/player_dead3.wav"
 }
 ENT.SoundTbl_LostEnemy = {
 	"vj_hlr/src/npc/combine_guard/lost_long1.wav",
@@ -97,16 +97,16 @@ ENT.SoundTbl_LostEnemy = {
 	"vj_hlr/src/npc/combine_guard/lost_long7.wav",
 	"vj_hlr/src/npc/combine_guard/lost_short1.wav",
 	"vj_hlr/src/npc/combine_guard/lost_short2.wav",
-	"vj_hlr/src/npc/combine_guard/lost_short3.wav",
+	"vj_hlr/src/npc/combine_guard/lost_short3.wav"
 }
 ENT.SoundTbl_Pain = {
 	"vj_hlr/src/npc/combine_guard/pain1.wav",
-	"vj_hlr/src/npc/combine_guard/pain2.wav",
+	"vj_hlr/src/npc/combine_guard/pain2.wav"
 }
 ENT.SoundTbl_Death = {
 	"vj_hlr/src/npc/combine_guard/die1.wav",
 	"vj_hlr/src/npc/combine_guard/die2.wav",
-	"vj_hlr/src/npc/combine_guard/die3.wav",
+	"vj_hlr/src/npc/combine_guard/die3.wav"
 }
 ENT.SoundTbl_MeleeAttackExtra = "VJ.Impact.Metal_Crush"
 
@@ -170,7 +170,7 @@ function ENT:OnDamaged(dmginfo, hitgroup, status)
 			dmginfo:ScaleDamage(2)
 			local pos = dmginfo:GetDamagePosition()
 			if pos == defPos then pos = self:GetPos() + self:OBBCenter() end
-			
+
 			local particle = ents.Create("info_particle_system")
 			particle:SetKeyValue("effect_name", "vj_blood_impact_red")
 			particle:SetPos(pos)
@@ -254,7 +254,7 @@ function ENT:WarpCannon(tPos)
 	beam:SetEntity(self)
 	beam:SetAttachment(1)
 	util.Effect("VJ_HLR_StriderBeam", beam)
-	
+
 	local hitTime = 1 /math.min(1, self:GetAttachment(1).Pos:Distance(attackpos) /10000)
 	hitTime = math.Clamp(hitTime, 0, 1) ^0.5
 	timer.Simple(hitTime, function()

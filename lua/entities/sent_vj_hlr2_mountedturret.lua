@@ -13,7 +13,7 @@ local animTbl = {
     ["idle"] = "idle_inactive",
     ["idle_mounted"] = "idle",
     ["mount"] = "activate",
-    ["dismount"] = "retract",
+    ["dismount"] = "retract"
 }
 
 function ENT:Initialize()
@@ -306,7 +306,7 @@ function ENT:UpdatePoseParamTracking(resetPoses)
 		newYaw = math_angDif(eneAng.y, myAng.y) *1.05
 		newRoll = math_angDif(eneAng.z, myAng.z)
 	end
-	
+
 	operator:SetPoseParameter("aim_pitch", math_angApproach(operator:GetPoseParameter("aim_pitch"), newPitch, 10))
 	operator:SetPoseParameter("aim_yaw", math_angApproach(operator:GetPoseParameter("aim_yaw"), newYaw, 10))
 	turret:SetPoseParameter("aim_pitch", math_angApproach(turret:GetPoseParameter("aim_pitch"), newPitch, 10))

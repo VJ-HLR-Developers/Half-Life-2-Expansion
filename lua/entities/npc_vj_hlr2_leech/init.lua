@@ -13,8 +13,8 @@ ENT.TurningUseAllAxis = true
 ENT.MovementType = VJ_MOVETYPE_AQUATIC
 ENT.Aquatic_SwimmingSpeed_Calm = 80
 ENT.Aquatic_SwimmingSpeed_Alerted = 200
-ENT.Aquatic_AnimTbl_Calm = {ACT_IDLE}
-ENT.Aquatic_AnimTbl_Alerted = {ACT_IDLE}
+ENT.Aquatic_AnimTbl_Calm = ACT_IDLE
+ENT.Aquatic_AnimTbl_Alerted = ACT_IDLE
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_XEN"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW

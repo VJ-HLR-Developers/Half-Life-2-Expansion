@@ -44,9 +44,9 @@ ENT.KilledEnemySoundPitch = VJ.SET(65, 70)
 
 ENT.SoundTbl_FootStep = {"vj_hlr/src/npc/cremator/foot1.wav", "vj_hlr/src/npc/cremator/foot2.wav", "vj_hlr/src/npc/cremator/foot3.wav"}
 ENT.SoundTbl_Alert = {"vj_hlr/src/npc/cremator/alert_object.wav", "vj_hlr/src/npc/cremator/alert_player.wav"}
-ENT.SoundTbl_KilledEnemy = {"npc/metropolice/vo/chuckle.wav"}
+ENT.SoundTbl_KilledEnemy = "npc/metropolice/vo/chuckle.wav"
 ENT.SoundTbl_Pain = {"npc/combine_soldier/pain1.wav", "npc/combine_soldier/pain2.wav", "npc/combine_soldier/pain3.wav"}
-ENT.SoundTbl_Death = {"vj_hlr/src/npc/cremator/crem_die.wav"}
+ENT.SoundTbl_Death = "vj_hlr/src/npc/cremator/crem_die.wav"
 
 ENT.Cremator_FlameRange = 370
 ENT.Cremator_FlameDamage = 2
@@ -154,7 +154,7 @@ function ENT:OnThinkActive()
 			elseif ent:IsRagdoll() then
 				ent:Dissolve(0, 1)
 			end
-		end)	
+		end)
 	end
 	-- self.HasRangeAttack = self:GetIdealActivity() == ACT_RUN
 	self.ConstantlyFaceEnemy = self:GetIdealActivity() == ACT_RUN

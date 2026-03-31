@@ -10,7 +10,7 @@ ENT.StartHealth = 80
 
 ENT.VJ_NPC_Class = {"CLASS_XEN"}
 ENT.BloodColor = VJ.BLOOD_COLOR_YELLOW
-ENT.BloodParticle = {"blood_impact_yellow_01"}
+ENT.BloodParticle = "blood_impact_yellow_01"
 ENT.Immune_Toxic = true
 
 ENT.ControllerParams = {
@@ -47,7 +47,7 @@ ENT.LimitChaseDistance = "OnlyRange"
 ENT.LimitChaseDistance_Max = "UseRangeDistance"
 ENT.LimitChaseDistance_Min = "UseRangeDistance"
 
-ENT.SoundTbl_FootStep = {"npc/zombie_poison/pz_left_foot1.wav"}
+ENT.SoundTbl_FootStep = "npc/zombie_poison/pz_left_foot1.wav"
 ENT.SoundTbl_Idle = {
 	"vj_hlr/src/npc/bullsquid/idle1.wav",
 	"vj_hlr/src/npc/bullsquid/idle2.wav",
@@ -56,30 +56,30 @@ ENT.SoundTbl_Idle = {
 	"vj_hlr/src/npc/bullsquid/idle5.wav",
 	"vj_hlr/src/npc/bullsquid/snort1.wav",
 	"vj_hlr/src/npc/bullsquid/snort2.wav",
-	"vj_hlr/src/npc/bullsquid/snort3.wav",
+	"vj_hlr/src/npc/bullsquid/snort3.wav"
 }
-ENT.SoundTbl_Alert = {"vj_hlr/src/npc/bullsquid/excited1.wav"}
+ENT.SoundTbl_Alert = "vj_hlr/src/npc/bullsquid/excited1.wav"
 ENT.SoundTbl_BeforeMeleeAttack = {
 	"vj_hlr/src/npc/bullsquid/attack2.wav",
 	"vj_hlr/src/npc/bullsquid/attackgrowl1.wav",
 	"vj_hlr/src/npc/bullsquid/attackgrowl2.wav",
-	"vj_hlr/src/npc/bullsquid/attackgrowl3.wav",
+	"vj_hlr/src/npc/bullsquid/attackgrowl3.wav"
 }
-ENT.SoundTbl_MeleeAttackMiss = {"vj_hlr/src/npc/bullsquid/tail_whip1.wav"}
+ENT.SoundTbl_MeleeAttackMiss = "vj_hlr/src/npc/bullsquid/tail_whip1.wav"
 ENT.SoundTbl_RangeAttack = {
 	"vj_hlr/src/npc/bullsquid/attack1.wav",
-	"vj_hlr/src/npc/bullsquid/attack3.wav",
+	"vj_hlr/src/npc/bullsquid/attack3.wav"
 }
 ENT.SoundTbl_Pain = {
 	"vj_hlr/src/npc/bullsquid/pain1.wav",
 	"vj_hlr/src/npc/bullsquid/pain2.wav",
 	"vj_hlr/src/npc/bullsquid/pain3.wav",
-	"vj_hlr/src/npc/bullsquid/pain4.wav",
+	"vj_hlr/src/npc/bullsquid/pain4.wav"
 }
 ENT.SoundTbl_Death = {
 	"vj_hlr/src/npc/bullsquid/die1.wav",
 	"vj_hlr/src/npc/bullsquid/die2.wav",
-	"vj_hlr/src/npc/bullsquid/die3.wav",
+	"vj_hlr/src/npc/bullsquid/die3.wav"
 }
 
 ENT.Bullsquid_MoveType = 0 -- 0 = Normal | 1 = Swimming

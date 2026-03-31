@@ -34,33 +34,33 @@ ENT.ControllerParams = {
 ENT.SoundTbl_Alert = {
 	"vj_hlr/src/npc/hydra/hydra_alert1.wav",
 	"vj_hlr/src/npc/hydra/hydra_alert2.wav",
-	"vj_hlr/src/npc/hydra/hydra_alert3.wav",
+	"vj_hlr/src/npc/hydra/hydra_alert3.wav"
 }
 ENT.SoundTbl_CombatIdle = {
 	"vj_hlr/src/npc/hydra/hydra_search5.wav",
 	"vj_hlr/src/npc/hydra/hydra_search6.wav",
 	"vj_hlr/src/npc/hydra/hydra_search7.wav",
-	"vj_hlr/src/npc/hydra/hydra_search8.wav",
+	"vj_hlr/src/npc/hydra/hydra_search8.wav"
 }
 ENT.SoundTbl_BumpWorld = {
 	"vj_hlr/src/npc/hydra/hydra_bump1.wav",
 	"vj_hlr/src/npc/hydra/hydra_bump2.wav",
-	"vj_hlr/src/npc/hydra/hydra_bump3.wav",
+	"vj_hlr/src/npc/hydra/hydra_bump3.wav"
 }
 ENT.SoundTbl_PrepareAttack = {
 	"vj_hlr/src/npc/hydra/hydra_sendtentacle1.wav",
 	"vj_hlr/src/npc/hydra/hydra_sendtentacle2.wav",
-	"vj_hlr/src/npc/hydra/hydra_sendtentacle3.wav",
+	"vj_hlr/src/npc/hydra/hydra_sendtentacle3.wav"
 }
 ENT.SoundTbl_BeforeMeleeAttack = {
 	"vj_hlr/src/npc/hydra/hydra_strike1.wav",
 	"vj_hlr/src/npc/hydra/hydra_strike2.wav",
-	"vj_hlr/src/npc/hydra/hydra_strike3.wav",
+	"vj_hlr/src/npc/hydra/hydra_strike3.wav"
 }
 ENT.SoundTbl_Pain = {
 	"vj_hlr/src/npc/hydra/hydra_pain1.wav",
 	"vj_hlr/src/npc/hydra/hydra_pain2.wav",
-	"vj_hlr/src/npc/hydra/hydra_pain3.wav",
+	"vj_hlr/src/npc/hydra/hydra_pain3.wav"
 }
 
 	-- Enumerations --
@@ -183,7 +183,7 @@ function ENT:OnThink()
 		self.HeartBeat:Play()
 		self.NextHeartBeatT = CurTime() +SoundDuration(self.HeartBeatSnd)
 	end
-	
+
 	self.IdleLength = self.IdleLength or 0
 	local toMax = (self:GetPoseParameter("idle_length") /90)
 	local ent = self:GetEnemy()

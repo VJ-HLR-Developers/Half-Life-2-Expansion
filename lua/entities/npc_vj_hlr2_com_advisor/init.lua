@@ -55,13 +55,13 @@ ENT.LimitChaseDistance = true
 ENT.LimitChaseDistance_Max = 4000
 ENT.LimitChaseDistance_Min = 0
 
-ENT.SoundTbl_Breath = {"ambient/atmosphere/city_beacon_loop1.wav"}
-ENT.SoundTbl_Idle = {
-	"vj_hlr/src/npc/advisor/advisor_speak01.wav",
-}
-ENT.SoundTbl_BeforeMeleeAttack = {"vj_hlr/src/npc/advisor/advisorattack03.wav"}
-ENT.SoundTbl_Pain = {"vj_hlr/src/npc/advisor/pain.wav"}
-ENT.SoundTbl_Death = {"vj_hlr/src/npc/advisor/advisor_scream.wav"}
+ENT.SoundTbl_Breath = "ambient/atmosphere/city_beacon_loop1.wav"
+ENT.SoundTbl_Idle =
+	"vj_hlr/src/npc/advisor/advisor_speak01.wav"
+
+ENT.SoundTbl_BeforeMeleeAttack = "vj_hlr/src/npc/advisor/advisorattack03.wav"
+ENT.SoundTbl_Pain = "vj_hlr/src/npc/advisor/pain.wav"
+ENT.SoundTbl_Death = "vj_hlr/src/npc/advisor/advisor_scream.wav"
 
 ENT.BreathSoundLevel = 60
 
@@ -109,13 +109,13 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Init()
 	self:SetCollisionBounds(Vector(38, 38, 30), Vector(-38, -38, -30))
-	
+
 	self.NextScreenBlastT = CurTime() +math.Rand(3, 8)
 	self.NextSearchForEntitiesT = 0
 	self.tbl_HeldEntities = {}
 	self.NextSpawnT = CurTime()
 	self.NextPsionicAttackT = CurTime() +math.Rand(2, 4)
-	
+
 	self:ShieldCode(true)
 	self:SetNW2Bool("PsionicEffect", false)
 
@@ -371,7 +371,7 @@ function ENT:CreateAlly()
 		ally:Give(VJ.PICK(type.weapons))
 		ally:GetActiveWeapon():Equip(ally)
 	end
-	
+
 	ParticleEffect("vj_aurora_shockwave", ally:GetPos(), Angle(0, 0, 0), nil)
 	ParticleEffect("electrical_arc_01_system", ally:GetPos(), Angle(0, 0, 0), nil)
 	VJ.EmitSound(ally, "ambient/energy/whiteflash.wav", 90)
