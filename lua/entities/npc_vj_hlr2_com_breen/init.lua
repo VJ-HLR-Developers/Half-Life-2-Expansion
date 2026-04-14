@@ -65,9 +65,9 @@ ENT.SoundTbl_OnPlayerSight = {
     "vo/citadel/br_goback.wav",
     "vo/citadel/br_guest_a.wav"
 }
-ENT.SoundTbl_Investigate = {
+ENT.SoundTbl_Investigate =
     "vo/k_lab/br_tele_02.wav"
-}
+
 ENT.SoundTbl_LostEnemy =
     "vo/k_lab/br_significant.wav"
 
@@ -139,8 +139,8 @@ ENT.SoundTbl_Death = {
 "vo/citadel/br_synapse.wav"
 "vo/citadel/br_synapse02.wav"
 "vo/citadel/br_yesjudith.wav"
-"vo/citadel/br_worthit.wav"
-*/
+"vo/citadel/br_worthit.wav"*/
+
 ENT.MainSoundPitch = 100
 
 -- Specific kill sounds
