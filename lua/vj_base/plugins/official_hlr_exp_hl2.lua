@@ -38,6 +38,7 @@ local spawnCategory = "HL Resurgence: Source"
 	-- VJ.AddNPC_HUMAN("Overwatch Soldier (Beta)", "npc_vj_hlr2b_com_soldier", {"weapon_vj_hlr2b_oicw"}, spawnCategory)
 	-- VJ.AddNPC_HUMAN("Overwatch Elite (Beta)", "npc_vj_hlr2b_com_elite", {"weapon_vj_smg1", "weapon_vj_smg1", "weapon_vj_smg1", "weapon_vj_ar2", "weapon_vj_ar2"}, spawnCategory)
 	-- VJ.AddNPC_HUMAN("Civil Protection (Beta)", "npc_vj_hlr2b_com_civilp", {"weapon_vj_9mmpistol", "weapon_vj_smg1"}, spawnCategory)
+	VJ.AddNPC_HUMAN("Wallace Breen", "npc_vj_hlr2_com_breen", {"weapon_vj_ar2"}, spawnCategory)
 	VJ.AddNPC("Overwatch Guard", "npc_vj_hlr2b_com_guard", spawnCategory)
 	VJ.AddNPC("Overwatch Stalker (Beta)", "npc_vj_hlr2b_com_stalker", spawnCategory)
 	VJ.AddNPC("Overwatch Prowler", "npc_vj_hlr2b_com_alienassassin", spawnCategory)
