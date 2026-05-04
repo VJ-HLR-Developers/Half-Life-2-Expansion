@@ -384,14 +384,14 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 				bullet.Num = 1
 				bullet.Src = self:GetAttachment(self:LookupAttachment("MiniGun")).Pos
 				bullet.Dir = (enemy:GetPos() + enemy:OBBCenter()) -self:GetAttachment(self:LookupAttachment("MiniGun")).Pos +Vector(math.random(-self.MinigunSpread, self.MinigunSpread) -self.Shots, math.random(-self.MinigunSpread, self.MinigunSpread) -self.Shots, math.random(-self.MinigunSpread, self.MinigunSpread) -self.Shots)
-				bullet.Spread = self.MinigunSpread -self.Shots
+				bullet.Spread = VectorRand(-self.MinigunSpread - self.Shots, self.MinigunSpread - self.Shots)
 				bullet.Tracer = 1
 				bullet.TracerName = "AR2Tracer"
 				bullet.Force = 3
 				bullet.Damage = 5
 				bullet.AmmoType = "AR2"
 				self:FireBullets(bullet)
-				self.Shots = self.Shots +1
+				self.Shots = self.Shots + 1
 
 				-- VJ.EmitSound(self, {"npc/strider/strider_minigun.wav", "npc/strider/strider_minigun2.wav"}, 110, 100)
 				VJ.EmitSound(self, "NPC_Strider.FireMinigun", 110, 100)
