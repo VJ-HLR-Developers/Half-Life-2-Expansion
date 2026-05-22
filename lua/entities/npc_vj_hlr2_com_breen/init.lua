@@ -170,13 +170,15 @@ function ENT:Init()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
-    if IsValid(self.CombineElite1) && !self.CombineElite1.IsFollowing then
-        self.CombineElite1:Follow(self, true)
-        self.CombineElite1.IsFollowing = true
+    local combineElite1 = self.CombineElite1
+    local combineElite2 = self.CombineElite2
+    if IsValid(combineElite1) && !combineElite1.IsFollowing then
+        combineElite1:Follow(self, true)
+        combineElite1.IsFollowing = true
     end
-    if IsValid(self.CombineElite2) && !self.CombineElite2.IsFollowing then
-        self.CombineElite2:Follow(self, true)
-        self.CombineElite2.IsFollowing = true
+    if IsValid(combineElite2) && !combineElite2.IsFollowing then
+        combineElite2:Follow(self, true)
+        combineElite2.IsFollowing = true
     end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -200,7 +202,9 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
     if !self.Dead then -- Remove Combine Elites if we were removed (Undo, remover tool, etc.)
-        if IsValid(self.CombineElite1) then self.CombineElite1:Remove() end
-        if IsValid(self.CombineElite2) then self.CombineElite2:Remove() end
+        local combineElite1 = self.CombineElite1
+        local combineElite2 = self.CombineElite2
+        if IsValid(combineElite1) then combineElite1:Remove() end
+        if IsValid(combineElite2) then combineElite2:Remove() end
     end
 end
