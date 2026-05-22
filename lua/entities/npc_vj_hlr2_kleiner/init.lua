@@ -194,6 +194,7 @@ ENT.SoundTbl_Death = {
 }
 
 -- Unused
+-- NOTE: Number sounds aren't included here!
 /*"vo/trainyard/kl_intend.wav"
 "vo/trainyard/kl_whatisit01.wav"
 "vo/k_lab/kl_barneyhonor.wav"
@@ -275,16 +276,6 @@ ENT.SoundTbl_Death = {
 "vo/outland_11a/silo/kl_silo_wheredata01.wav"
 "vo/outland_11a/silo/kl_silo_wheredata02.wav"
 "vo/outland_11a/silo/kl_silo_wheredata03.wav"
-"vo/outland_12a/launch/kl_launch_1.wav"
-"vo/outland_12a/launch/kl_launch_10.wav"
-"vo/outland_12a/launch/kl_launch_2.wav"
-"vo/outland_12a/launch/kl_launch_3.wav"
-"vo/outland_12a/launch/kl_launch_4.wav"
-"vo/outland_12a/launch/kl_launch_5.wav"
-"vo/outland_12a/launch/kl_launch_6.wav"
-"vo/outland_12a/launch/kl_launch_7.wav"
-"vo/outland_12a/launch/kl_launch_8.wav"
-"vo/outland_12a/launch/kl_launch_9.wav"
 "vo/outland_12a/launch/kl_launch_anomaly02.wav"
 "vo/outland_12a/launch/kl_launch_check01a.wav"
 "vo/outland_12a/launch/kl_launch_check01b.wav"
