@@ -12,10 +12,10 @@ ENT.HullType = HULL_TINY
 ENT.VJ_NPC_Class = {"CLASS_ZOMBIE"}
 
 ENT.ControllerParams = {
-    CameraMode = 1,
-    ThirdP_Offset = Vector(0, 0, 0),
-    FirstP_Bone = "HCblack.torso",
-    FirstP_Offset = Vector(1, 0, 2),
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, 0),
+	FirstP_Bone = "HCblack.torso",
+	FirstP_Offset = Vector(1, 0, 2),
 }
 
 ENT.AnimTbl_IdleStand = {ACT_IDLE, "IdleSumo", "IdleSniff"}

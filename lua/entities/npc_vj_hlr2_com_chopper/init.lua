@@ -51,10 +51,10 @@ ENT.DeathAnimationTime = false
 ENT.DeathCorpseCollisionType = COLLISION_GROUP_NONE
 
 ENT.ControllerParams = {
-    CameraMode = 1,
-    ThirdP_Offset = Vector(0, 0, 0),
-    FirstP_Bone = "Chopper.Blade_Hull",
-    FirstP_Offset = Vector(140, 0, -45),
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, 0),
+	FirstP_Bone = "Chopper.Blade_Hull",
+	FirstP_Offset = Vector(140, 0, -45),
 }
 
 ENT.ConstantlyFaceEnemy = true

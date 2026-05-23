@@ -30,10 +30,10 @@ ENT.CanFlinch = true
 ENT.AnimTbl_Flinch = "vjseq_flinch_small"
 
 ENT.ControllerParams = {
-    CameraMode = 1,
-    ThirdP_Offset = Vector(0, 0, 0),
-    FirstP_Bone = "HoundEye.Head",
-    FirstP_Offset = Vector(4, 0, 0),
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, 0),
+	FirstP_Bone = "HoundEye.Head",
+	FirstP_Offset = Vector(4, 0, 0),
 }
 
 ENT.SoundTbl_FootStep = {

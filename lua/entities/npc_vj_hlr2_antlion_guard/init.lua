@@ -11,10 +11,10 @@ ENT.HullType = HULL_LARGE
 ENT.VJ_ID_Boss = true
 
 ENT.ControllerParams = {
-    CameraMode = 1,
-    ThirdP_Offset = Vector(0, 0, 0),
-    FirstP_Bone = "Antlion_Guard.head",
-    FirstP_Offset = Vector(5, 0, 3),
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, 0),
+	FirstP_Bone = "Antlion_Guard.head",
+	FirstP_Offset = Vector(5, 0, 3),
 }
 
 ENT.VJ_NPC_Class = {"CLASS_ANTLION"}

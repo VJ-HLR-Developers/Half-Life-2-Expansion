@@ -38,10 +38,10 @@ ENT.HasMeleeAttack = false
 ENT.DeathCorpseCollisionType = COLLISION_GROUP_NONE
 
 ENT.ControllerParams = {
-    CameraMode = 1,
-    ThirdP_Offset = Vector(0, 0, 0),
-    FirstP_Bone = "Chopper.Blade_Hull",
-    FirstP_Offset = Vector(140, 0, -45),
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, 0),
+	FirstP_Bone = "Chopper.Blade_Hull",
+	FirstP_Offset = Vector(140, 0, -45),
 }
 
 ENT.ConstantlyFaceEnemy = true
@@ -116,7 +116,7 @@ function ENT:CreateFakeBullet(att)
 	FakeSpawn:SetPos(startPos)
 	FakeSpawn:SetParent(self)
 	FakeSpawn:Spawn()
-    FakeSpawn:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
+	FakeSpawn:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
 	FakeSpawn:SetNoDraw(true)
 	FakeSpawn:DrawShadow(false)
 	self:DeleteOnRemove(FakeSpawn)

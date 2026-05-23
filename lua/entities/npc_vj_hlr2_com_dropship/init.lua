@@ -392,7 +392,7 @@ function ENT:Flight()
 		self:SetGroundEntity(NULL)
 	end
 
-    local moveDir = self:GetMoveDirection()
+	local moveDir = self:GetMoveDirection()
 	if moveDir && state != LandingState.LANDING_DESCEND then
 		if self.CargoType == CRATE_TYPES.CRATE_NONE then
 			self:SetPoseParameter("body_accel", moveDir.x)

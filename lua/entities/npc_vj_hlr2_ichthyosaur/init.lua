@@ -19,9 +19,9 @@ ENT.Aquatic_AnimTbl_Calm = ACT_GLIDE
 ENT.Aquatic_AnimTbl_Alerted = ACT_SWIM
 
 ENT.ControllerParams = {
-    ThirdP_Offset = Vector(-25, 0, 0),
-    FirstP_Bone = "Bip01 Head",
-    FirstP_Offset = Vector(12, 0, 5),
+	ThirdP_Offset = Vector(-25, 0, 0),
+	FirstP_Bone = "Bip01 Head",
+	FirstP_Offset = Vector(12, 0, 5),
 	FirstP_ShrinkBone = false,
 }
 

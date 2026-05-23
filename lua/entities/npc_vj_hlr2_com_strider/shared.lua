@@ -6,7 +6,7 @@ ENT.Contact 		= "http://steamcommunity.com/groups/vrejgaming"
 ENT.Category		= "Half-Life 2"
 
 /*if CLIENT then
-    function ENT:Initialize()
-       self:SetIK(false)
-    end
+	function ENT:Initialize()
+		self:SetIK(false)
+	end
 end*/

@@ -70,7 +70,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnDestroy(data, phys)
 	util.ScreenShake(data.HitPos, 16, 200, 1, 3000)
-	
+
 	local effectdata = EffectData()
 	effectdata:SetOrigin(data.HitPos)
 	util.Effect( "HelicopterMegaBomb", effectdata )

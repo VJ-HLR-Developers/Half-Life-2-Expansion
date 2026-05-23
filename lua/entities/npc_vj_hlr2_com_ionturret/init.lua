@@ -23,8 +23,8 @@ ENT.GibOnDeathFilter = false
 ENT.GeneratorHealth = 100
 
 ENT.ControllerParams = {
-    FirstP_Bone = "polySurface167",
-    FirstP_Offset = Vector(-5, 1, 20),
+	FirstP_Bone = "polySurface167",
+	FirstP_Offset = Vector(-5, 1, 20),
 	FirstP_ShrinkBone = false,
 }
 
@@ -199,15 +199,15 @@ function ENT:OnRangeAttackExecute(status, enemy, projectile)
 		util.ScreenShake(self:GetPos(), 12, 100, 0.4, 800)
 		sound.Play("weapons/mortar/mortar_explode3.wav", attackpos, 80, 100)
 		VJ.ApplyRadiusDamage(self, self, attackpos, 80, 50, bit.bor(DMG_BLAST, DMG_BURN, DMG_DISSOLVE, DMG_AIRBOAT), true, false, {Force = 150})
-		
+
 		VJ.EmitSound(self, self.Turret_FireSound, 120, math.random(100, 110))
 		self:PlayAnim("vjseq_fire", true, 0.15)
 		local gest = self:AddGestureSequence(self:LookupSequence("fire"))
 		self:SetLayerPriority(gest, 1)
 		self:SetLayerPlaybackRate(gest, 0.5)
-		
+
 		ParticleEffectAttach("vj_rifle_full_blue", PATTACH_POINT_FOLLOW, self, 1)
-		
+
 		local FireLight1 = ents.Create("light_dynamic")
 		FireLight1:SetKeyValue("brightness", "4")
 		FireLight1:SetKeyValue("distance", "120")
@@ -238,7 +238,7 @@ end
 function ENT:OnThink()
 	local parameter = self:GetPoseParameter("aim_yaw")
 	if parameter != self.Turret_CurrentParameter then
-		self.turret_turningsd = CreateSound(self, "ambient/alarms/combine_bank_alarm_loop4.wav") 
+		self.turret_turningsd = CreateSound(self, "ambient/alarms/combine_bank_alarm_loop4.wav")
 		self.turret_turningsd:SetSoundLevel(60)
 		self.turret_turningsd:PlayEx(1, 100)
 	else
@@ -278,10 +278,10 @@ function ENT:OnThinkActive()
 	if IsValid(self:GetEnemy()) or self.Alerted then
 		self.Turret_StandDown = false
 		self.AnimTbl_IdleStand = {"idlealert"}
-		
+
 		local scan = false
 		local pyaw = self:GetPoseParameter("aim_yaw")
-		
+
 		-- Make it scan around if the enemy is behind, which is unreachable for it!
 		if IsValid(self:GetEnemy()) && self.Turret_HasLOS == false && (self:GetForward():Dot((self:GetEnemy():GetPos() - self:GetPos()):GetNormalized()) <= math.cos(math.rad(self.RangeAttackAngleRadius))) then
 			scan = true
@@ -289,7 +289,7 @@ function ENT:OnThinkActive()
 		else
 			self.HasPoseParameterLooking = true
 		end
-		
+
 		 -- Look around randomly when the enemy is not found
 		if !IsValid(self:GetEnemy()) or scan == true then
 			-- Playing a beeping noise

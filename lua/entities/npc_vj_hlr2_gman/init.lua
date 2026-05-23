@@ -130,7 +130,7 @@ function ENT:FindTeleport(pos)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:FindSpawnPos(pos)
-    pos = pos or self:GetPos()
+	pos = pos or self:GetPos()
 
 	local function GetOpenPos(pos)
 		local startPos = pos +Vector(0, 0, 24)
@@ -142,37 +142,37 @@ function ENT:FindSpawnPos(pos)
 		}, self)
 		return not tr.Hit && startPos
 	end
-    local nearestMesh = navmesh.GetNearestNavArea(pos, false, 1024, false, true)
-    local nearest = IsValid(nearestMesh) && nearestMesh:GetClosestPointOnArea(pos)
-    local nearestPos = nearest && GetOpenPos(nearest)
+	local nearestMesh = navmesh.GetNearestNavArea(pos, false, 1024, false, true)
+	local nearest = IsValid(nearestMesh) && nearestMesh:GetClosestPointOnArea(pos)
+	local nearestPos = nearest && GetOpenPos(nearest)
 
-    if nearestPos then
-        return nearestPos
-    else
-        local center = IsValid(nearestMesh) && nearestMesh:GetCenter()
-        local centerPos = center && GetOpenPos(center)
-        if centerPos then
-            return centerPos
-        else
-            local nearestMeshes = navmesh.Find(center or pos, 1024, 64, 64)
-            for k, v in pairs(nearestMeshes) do
-                if nearestMeshes != nearestMesh then
-                    local otherNearest = v:GetClosestPointOnArea(pos)
-                    local otherNearestPos = GetOpenPos(otherNearest)
-                    if otherNearestPos then
-                        return otherNearestPos
-                    else
-                        local otherCenter = v:GetCenter()
-                        local otherCenterPos = GetOpenPos(otherCenter)
-                        if otherCenterPos then
-                            return otherCenter
-                        end
-                    end
-                end
-            end
-        end
-    end
-    return pos
+	if nearestPos then
+		return nearestPos
+	else
+		local center = IsValid(nearestMesh) && nearestMesh:GetCenter()
+		local centerPos = center && GetOpenPos(center)
+		if centerPos then
+			return centerPos
+		else
+			local nearestMeshes = navmesh.Find(center or pos, 1024, 64, 64)
+			for k, v in pairs(nearestMeshes) do
+				if nearestMeshes != nearestMesh then
+					local otherNearest = v:GetClosestPointOnArea(pos)
+					local otherNearestPos = GetOpenPos(otherNearest)
+					if otherNearestPos then
+						return otherNearestPos
+					else
+						local otherCenter = v:GetCenter()
+						local otherCenterPos = GetOpenPos(otherCenter)
+						if otherCenterPos then
+							return otherCenter
+						end
+					end
+				end
+			end
+		end
+	end
+	return pos
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()

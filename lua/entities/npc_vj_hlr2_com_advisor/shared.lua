@@ -46,7 +46,7 @@ local math_random = math.random
 net.Receive("VJ_HLR_AdvisorScreenFX", function()
 	local ply = net.ReadEntity()
 	local dist = net.ReadFloat()
-	
+
 	ply.VJ_HLR_AdvisorScreenDist = dist -- Do something with this at some point
 	ply.VJ_HLR_AdvisorScreenT = CurTime() +5
 	local snd = CreateSound(ply, "vj_hlr/src/npc/advisor/advisorheadvx0" .. math_random(1, 6) .. ".wav")

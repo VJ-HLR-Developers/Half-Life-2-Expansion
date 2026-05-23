@@ -14,10 +14,10 @@ ENT.BloodParticle = "blood_impact_yellow_01"
 ENT.Immune_Toxic = true
 
 ENT.ControllerParams = {
-    CameraMode = 1,
-    ThirdP_Offset = Vector(0, 0, 0),
-    FirstP_Bone = "Bullsquid.Head_Bone1",
-    FirstP_Offset = Vector(8, 0, 5),
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, 0),
+	FirstP_Bone = "Bullsquid.Head_Bone1",
+	FirstP_Offset = Vector(8, 0, 5),
 }
 
 ENT.HasMeleeAttack = true

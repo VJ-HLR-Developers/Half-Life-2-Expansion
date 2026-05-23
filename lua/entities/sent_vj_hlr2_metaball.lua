@@ -44,7 +44,7 @@ function ENT:Initialize()
 	self.SineAmplitude = 0
 
 	self:SetModelScale(self.Scale)
-	
+
 	local phys = self:GetPhysicsObject()
 	if phys and IsValid(phys) then
 		phys:Wake()
@@ -99,7 +99,7 @@ function ENT:ModifyVelocityForSurface(flInterval, flSpeed)
 			filter = self,
 			collisiongroup = COLLISION_GROUP_NONE,
 		})
-		
+
 		tr.HitPos.z = tr.HitPos.z +0.0625
 	else
 		onWall = true

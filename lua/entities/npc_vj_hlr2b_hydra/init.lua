@@ -25,10 +25,10 @@ ENT.MeleeAttackDamage = 60
 ENT.HasDeathCorpse = false
 
 ENT.ControllerParams = {
-    CameraMode = 1,
-    ThirdP_Offset = Vector(0, 0, 0),
-    FirstP_Bone = "Bone47",
-    FirstP_Offset = Vector(10, 0, 5),
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, 0),
+	FirstP_Bone = "Bone47",
+	FirstP_Offset = Vector(10, 0, 5),
 }
 
 ENT.SoundTbl_Alert = {

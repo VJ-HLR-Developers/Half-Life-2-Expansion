@@ -8,10 +8,10 @@ include("shared.lua")
 ENT.Model = "models/headcrab.mdl"
 
 ENT.ControllerParams = {
-    CameraMode = 1,
-    ThirdP_Offset = Vector(0, 0, 0),
-    FirstP_Bone = "HCFast.Chest",
-    FirstP_Offset = Vector(1, 0, 2),
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, 0),
+	FirstP_Bone = "HCFast.Chest",
+	FirstP_Offset = Vector(1, 0, 2),
 }
 
 ENT.FootstepSoundTimerRun = 0.1

@@ -22,10 +22,10 @@ ENT.HasDeathAnimation = false
 ENT.HasDeathCorpse = false
 
 ENT.ControllerParams = {
-    CameraMode = 1,
-    ThirdP_Offset = Vector(0, 0, 0),
-    FirstP_Bone = "Chopper.Blade_Hull",
-    FirstP_Offset = Vector(140, 0, -45),
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, 0),
+	FirstP_Bone = "Chopper.Blade_Hull",
+	FirstP_Offset = Vector(140, 0, -45),
 }
 
 ENT.SoundTbl_Idle = {"npc/combine_gunship/ping_patrol.wav", "npc/combine_gunship/ping_search.wav", "npc/combine_gunship/gunship_ping_search.wav"}

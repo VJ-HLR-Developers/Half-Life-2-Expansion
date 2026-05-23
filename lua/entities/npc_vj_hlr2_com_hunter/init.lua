@@ -37,10 +37,10 @@ ENT.HasDeathAnimation = true
 ENT.AnimTbl_Death = ACT_DIESIMPLE
 
 ENT.ControllerParams = {
-    CameraMode = 1,
-    ThirdP_Offset = Vector(0, 0, 0),
-    FirstP_Bone = "MiniStrider.body_joint",
-    FirstP_Offset = Vector(18, 0, -5),
+	CameraMode = 1,
+	ThirdP_Offset = Vector(0, 0, 0),
+	FirstP_Bone = "MiniStrider.body_joint",
+	FirstP_Offset = Vector(18, 0, -5),
 }
 
 ENT.DisableFootStepSoundTimer = true

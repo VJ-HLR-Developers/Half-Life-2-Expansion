@@ -112,7 +112,7 @@ function ENT:DoBlobBatchedAI(iStart, iEnd)
 	// element a unique insect-like undulation along an axis perpendicular to their path,
 	// which makes the entire group look far less orderly
 	if IsValid(self:GetEnemy()) then
-		// If I have an enemy, the right-hand vector is perpendicular to a straight line 
+		// If I have an enemy, the right-hand vector is perpendicular to a straight line
 		// from the group's centroid to the enemy's origin.
 		vecForward = self:GetEnemy():GetPos() -self.CentroidPos
 		vecForward:Normalize()
@@ -135,8 +135,8 @@ function ENT:DoBlobBatchedAI(iStart, iEnd)
 		// Initial movement
 		//--
 		// Start out with bEnforceSpeedLimit set to false. This is because an element
-		// can't overspeed if it's moving undisturbed towards its target entity or 
-		// target location. An element can only under or overspeed when it is repelled 
+		// can't overspeed if it's moving undisturbed towards its target entity or
+		// target location. An element can only under or overspeed when it is repelled
 		// by multiple other elements in the group. See "Relative Positions" below.
 		//
 		// Initialize some 'defaults' that may be changed for each iteration of this loop
@@ -146,7 +146,7 @@ function ENT:DoBlobBatchedAI(iStart, iEnd)
 		flSpeed = flBlobSpeed
 
 		metaball.MoveType = self.Blob_State
-		
+
 		if metaball.MoveType == 3 then
 			metaball:SetVel(Vector(0, 0, 0))
 			local vecOrigin = metaball:GetPos()
@@ -187,7 +187,7 @@ function ENT:DoBlobBatchedAI(iStart, iEnd)
 		//--
 		// Check this element against ALL other elements. If the two elements are closer
 		// than the allowed minimum distance, repel this element away. (The other element
-		// will repel when its AI runs). A single element can be repelled by many other 
+		// will repel when its AI runs). A single element can be repelled by many other
 		// elements. This is why bEnforceSpeedLimit is set to true if any of the repelling
 		// code runs for this element. Multiple attempts to repel an element in the same
 		// direction will cause overspeed. Conflicting attempts to repel an element in opposite
@@ -199,7 +199,7 @@ function ENT:DoBlobBatchedAI(iStart, iEnd)
 				// This is the innermost loop! We should optimize here, if anywhere.
 
 				// If this element is on the wall, then don't be repelled by anyone. Repelling
-				// elements that are trying to climb a wall usually make them look like they 
+				// elements that are trying to climb a wall usually make them look like they
 				// fall off the wall a few times while climbing.
 				if metaball.OnWall then
 					continue
@@ -218,7 +218,7 @@ function ENT:DoBlobBatchedAI(iStart, iEnd)
 						metaball:AddVel(vecRepelDir *flRepelSpeed)
 
 						// Since we altered this element's velocity after it was initially set, there's a chance
-						// that the sums of multiple vectors will cause the element to over or underspeed, so 
+						// that the sums of multiple vectors will cause the element to over or underspeed, so
 						// mark it for speed limit enforcement
 						bEnforceSpeedLimit = true
 					end
@@ -248,7 +248,7 @@ function ENT:DoBlobBatchedAI(iStart, iEnd)
 		metaball:ModifyVelocityForSurface(flInterval, flSpeed)
 
 		// For identifying stuck elements.
-		metaball.PrevOrigin = metaball:GetPos() 
+		metaball.PrevOrigin = metaball:GetPos()
 		metaball.DistFromCentroidSqr = metaball.PrevOrigin:DistToSqr(self.CentroidPos)
 
 		if bDoOrientation then
