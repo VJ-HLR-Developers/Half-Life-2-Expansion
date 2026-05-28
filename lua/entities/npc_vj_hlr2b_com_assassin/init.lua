@@ -110,8 +110,7 @@ function ENT:OnInput(key, activator, caller, data)
 	if key == "Foot" then
 		VJ.EmitSound(self, "npc/footsteps/hardboot_generic2.wav", 72, 100)
 		VJ.EmitSound(self, {"npc/stalker/stalker_footstep_left1.wav", "npc/stalker/stalker_footstep_left2.wav", "npc/stalker/stalker_footstep_right1.wav", "npc/stalker/stalker_footstep_right2.wav"}, 75)
-	end
-	if key == "left" or key == "right" then
+	elseif key == "left" or key == "right" then
 		local wep = self:GetActiveWeapon()
 		if IsValid(wep) then
 			wep.CurrentMuzzle = key

@@ -174,36 +174,27 @@ function ENT:OnInput(key, activator, caller, data)
 	if key == "melee" then
 		self.MeleeAttackDamage = self.DefaultDamage
 		self:ExecuteMeleeAttack()
-	end
-	if key == "melee_pounce" then
+	elseif key == "melee_pounce" then
 		self.MeleeAttackDamage = self.DefaultDamage *1.5
 		self:ExecuteMeleeAttack()
-	end
-	if key == "step" || key == "step_light" then
+	elseif key == "step" || key == "step_light" then
 		self:PlayFootstepSound()
-	end
-	if key == "scream" then
+	elseif key == "scream" then
 		VJ.EmitSound(self, "npc/antlion/antlion_preburst_scream" .. math.random(1, 2) .. ".wav", 75, 100)
-	end
-	if key == "explode" then
+	elseif key == "explode" then
 		VJ.EmitSound(self, "npc/antlion/antlion_burst" .. math.random(1, 2) .. ".wav", 75, 100)
-	end
-	if key == "range" then
+	elseif key == "range" then
 		for i = 1, math.random(2, 4) do
 			self:ExecuteRangeAttack()
 		end
-	end
-	if key == "step_heavy" then
+	elseif key == "step_heavy" then
 		VJ.EmitSound(self, "npc/antlion/shell_impact" .. math.random(1, 4) .. ".wav", 75, 100)
-	end
-	if key == 78 then
+	elseif key == 78 then
 		VJ.EmitSound(self, "npc/antlion/attack_double" .. math.random(1, 3) .. ".wav", 75, 100)
-	end
-	if key == "on" then
+	elseif key == "on" then
 		self:SetBodygroup(1, 1)
 		self.FlyLoop:Play()
-	end
-	if key == "off" then
+	elseif key == "off" then
 		self:SetBodygroup(1, 0)
 		self.FlyLoop:Stop()
 		VJ.EmitSound(self, "npc/antlion/land1.wav", 75, 100)

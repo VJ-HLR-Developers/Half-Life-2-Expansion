@@ -72,8 +72,7 @@ function ENT:OnInput(key, activator, caller, data)
 	//print(key)
 	if key == "melee_attack" then
 		self:ExecuteMeleeAttack()
-	end
-	if key == "death_gibs" then
+	elseif key == "death_gibs" then
 		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh1.mdl", {CollisionDecal = "VJ_HLR1_Blood_Red", Pos = self:LocalToWorld(Vector(0, 0, -25))})
 		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh2.mdl", {CollisionDecal = "VJ_HLR1_Blood_Red", Pos = self:LocalToWorld(Vector(0, 0, -25))})
 		self:CreateGibEntity("obj_vj_gib", "models/vj_hlr/gibs/flesh3.mdl", {CollisionDecal = "VJ_HLR1_Blood_Red", Pos = self:LocalToWorld(Vector(0, 0, -25))})

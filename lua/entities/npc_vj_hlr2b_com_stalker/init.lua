@@ -95,8 +95,7 @@ end
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:PlayFootstepSound()
-	end
-	if key == "melee" then
+	elseif key == "melee" then
 		self:ExecuteMeleeAttack()
 	end
 end

@@ -85,8 +85,7 @@ end
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:PlayFootstepSound()
-	end
-	if key == "hunt" then
+	elseif key == "hunt" then
 		VJ.EmitSound(self, "vj_hlr/src/npc/houndeye/he_hunt" .. math.random(1, 4) .. ".wav")
 	end
 end

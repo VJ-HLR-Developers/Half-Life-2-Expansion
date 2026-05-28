@@ -111,12 +111,10 @@ end
 function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:PlayFootstepSound()
-	end
-	if key == "attack" then
+	elseif key == "attack" then
 		self:ExecuteMeleeAttack()
-	end
-	if key == "range" then
-		for i = 1, math.random(2, 4) do
+	elseif key == "range" then
+		for _ = 1, math.random(2, 4) do
 			self:ExecuteRangeAttack()
 		end
 	end

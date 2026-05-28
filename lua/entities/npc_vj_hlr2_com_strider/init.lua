@@ -135,8 +135,7 @@ function ENT:OnInput(key, activator, caller, data)
 	if key == "step" then
 		self:PlayFootstepSound()
 		util.ScreenShake(self:GetPos(), 14, 200, 0.6, 1024)
-	end
-	if key == "melee" then
+	elseif key == "melee" then
 		self:ExecuteMeleeAttack()
 	end
 end
