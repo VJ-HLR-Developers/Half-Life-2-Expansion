@@ -78,8 +78,7 @@ ENT.SoundTbl_Alert = {
 	"npc/strider/striderx_alert5.wav",
 	"npc/strider/striderx_alert6.wav"
 }
-ENT.SoundTbl_IdleCombat =
-	"NPC_Strider.Hunt"
+ENT.SoundTbl_CombatIdle = "NPC_Strider.Hunt"
 
 ENT.SoundTbl_BeforeMeleeAttack = {
 	-- "NPC_Strider.Creak"

@@ -90,7 +90,9 @@ function ENT:OnThink()
 		if freeman:GetPos():Distance(self:GetPos()) <= 300 then
 			self:SetTurnTarget(freeman)
 			self:SetState(VJ_STATE_ONLY_ANIMATION)
+			self:SetEyeTarget(freeman:EyePos())
 		else
+			self:SetTurnTarget(vector_origin)
 			self:SetState()
 			self:SetTarget(freeman)
 			self:SCHEDULE_GOTO_TARGET("TASK_WALK_PATH", function(y) y.TurnData = {Type = VJ.FACE_ENEMY} end)
@@ -98,22 +100,13 @@ function ENT:OnThink()
 	else
 		if self:GetState() == VJ_STATE_ONLY_ANIMATION then
 			self:SetState()
+			self:SetTurnTarget(vector_origin)
 		end
 	end
-	if CurTime() > self.NextTeleportT && IsValid(self.Freeman) then
-		if game.GetGlobalState("gordon_precriminal") == 1 then return end
-		local tpPos = self:FindTeleport()
-		local canTP = true
-		for _, v in ipairs(ents.GetAll()) do
-			if (v:IsNPC() && v != self or (v:IsPlayer() && !VJ_CVAR_IGNOREPLAYERS)) && !v:IsFlagSet(FL_NOTARGET) then
-				-- print(v:Visible(self), v:VisibleVec(tpPos))
-				if v:Visible(self) or v:VisibleVec(tpPos) then
-					canTP = false
-					break
-				end
-			end
-		end
-		if !canTP then return end
+	if CurTime() > self.NextTeleportT && !IsValid(self.Freeman) && game.GetGlobalState("gordon_precriminal") == 0 then
+		local tpPos = self:FindSpawnPos(self:GetPos())
+		if #tpPos == 0 then return end
+		tpPos = tpPos[math.random(1,#tpPos)]
 		self:ClearGoal()
 		self:ClearSchedule()
 		self:SetPos(tpPos)
@@ -121,58 +114,26 @@ function ENT:OnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:FindTeleport(pos)
-	local dist = math.random(1024, 2048)
-	local ang = Angle(0, math.random(0, 360), 0)
-	pos = pos or self:GetPos() +ang:Forward() *dist
-	local spawnPos = self:FindSpawnPos(pos)
-	return spawnPos
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:FindSpawnPos(pos)
-	pos = pos or self:GetPos()
-
-	local function GetOpenPos(pos)
-		local startPos = pos +Vector(0, 0, 24)
-		local tr = util.TraceEntity({
-			start = startPos,
-			endpos = startPos,
-			filter = self,
-			mask = MASK_NPCSOLID
-		}, self)
-		return not tr.Hit && startPos
-	end
-	local nearestMesh = navmesh.GetNearestNavArea(pos, false, 1024, false, true)
-	local nearest = IsValid(nearestMesh) && nearestMesh:GetClosestPointOnArea(pos)
-	local nearestPos = nearest && GetOpenPos(nearest)
-
-	if nearestPos then
-		return nearestPos
-	else
-		local center = IsValid(nearestMesh) && nearestMesh:GetCenter()
-		local centerPos = center && GetOpenPos(center)
-		if centerPos then
-			return centerPos
-		else
-			local nearestMeshes = navmesh.Find(center or pos, 1024, 64, 64)
-			for k, v in pairs(nearestMeshes) do
-				if nearestMeshes != nearestMesh then
-					local otherNearest = v:GetClosestPointOnArea(pos)
-					local otherNearestPos = GetOpenPos(otherNearest)
-					if otherNearestPos then
-						return otherNearestPos
-					else
-						local otherCenter = v:GetCenter()
-						local otherCenterPos = GetOpenPos(otherCenter)
-						if otherCenterPos then
-							return otherCenter
-						end
+ 	local goodPositions = {}
+	local nodes = (VJ_Nodegraph && VJ_Nodegraph.Data && VJ_Nodegraph.Data.Nodes) or {}
+	for _, node in ipairs(nodes) do
+		if node.pos:Distance(pos) <= 4096 && node.pos:Distance(pos) >= 1024 then
+			local isValid = true
+			for _, v in ipairs(ents.GetAll()) do
+				if (v:IsNPC() && v != self or (v:IsPlayer() && !VJ_CVAR_IGNOREPLAYERS)) && !v:IsFlagSet(FL_NOTARGET) then
+					if v:VisibleVec(node.pos) or self:Visible(v) then
+						isValid = false
+						break
 					end
 				end
 			end
+			if isValid then
+				table.insert(goodPositions, node.pos)
+			end
 		end
 	end
-	return pos
+	return goodPositions
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
