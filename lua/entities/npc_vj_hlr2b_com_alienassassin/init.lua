@@ -191,7 +191,7 @@ end
 function ENT:OnInput(key, activator, caller, data)
 	-- print(key)
 	if key == "step" then
-		self:FootStepSoundCode()
+		self:PlayFootstepSound()
 	elseif key == "attack" then
 		self:ExecuteMeleeAttack()
 	elseif key == "draw_knife" then
