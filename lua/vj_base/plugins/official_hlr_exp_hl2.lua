@@ -53,6 +53,7 @@ local spawnCategory = "HL Resurgence: Source"
 	VJ.AddNPC("Overwatch Shield Scanner", "npc_vj_hlr2_com_scanner_shield", spawnCategory)
 	VJ.AddNPC("Overwatch Hunter Synth", "npc_vj_hlr2_com_hunter", spawnCategory)
 	VJ.AddNPC("Overwatch APC", "npc_vj_hlr2_com_apc", spawnCategory)
+	VJ.AddNPC("Overwatch APC (Meme)", "npc_vj_hlr2_com_apc_meme", spawnCategory)
 	VJ.AddNPC("Overwatch Strider Synth", "npc_vj_hlr2_com_strider", spawnCategory)
 	VJ.AddNPC("Overwatch Advisor", "npc_vj_hlr2_com_advisor", spawnCategory)
 	VJ.AddNPC("Overwatch Mortar Synth", "npc_vj_hlr2_com_mortar", spawnCategory)

@@ -5,12 +5,12 @@ include("shared.lua")
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = "models/vj_hlr/hl2/apc.mdl"
+ENT.Model = "models/vj_hlr/hl2/overwatch_apc.mdl"
 ENT.StartHealth = 750
 ENT.ControllerParams = {
 	ThirdP_Offset = Vector(0, 40, -20),
 	FirstP_Bone = "APC.Gun_Base",
-	FirstP_Offset = Vector(0, 0, 20),
+	FirstP_Offset = Vector(0, 0, 50),
 	FirstP_ShrinkBone = false,
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -119,13 +119,14 @@ ENT.SoundTbl_FireRocket = "weapons/stinger_fire1.wav"
 
 -- Tank Base
 ENT.Tank_SoundTbl_DrivingEngine = "vehicles/apc/apc_firstgear_loop1.wav"
-ENT.Tank_SoundTbl_Track = "common/null.wav"
+ENT.Tank_SoundTbl_Track = false
+ENT.Tank_DefaultSoundTbl_Track = false
 
 ENT.Tank_DriveAwayDistance = 500 -- If the enemy is closer than this number, than move by either running over them or moving away for the gunner to fire
 ENT.Tank_DriveTowardsDistance = 2000 -- If the enemy is higher than this number, than move towards the enemy
 ENT.Tank_RanOverDistance = 400
 ENT.Tank_TurningSpeed = 5 -- How fast the chassis moves as it's driving
-ENT.Tank_DrivingSpeed = 400 -- How fast the tank drives
+ENT.Tank_DrivingSpeed = 800 -- How fast the tank drives
 
 ENT.Tank_CollisionBoundSize = 90
 ENT.Tank_CollisionBoundUp = 130
@@ -143,7 +144,6 @@ function ENT:Tank_Init()
 	if IsValid(phys) then
 		phys:Wake()
 		phys:SetMass(80000)
-		phys:SetBuoyancyRatio(0)
 	end
 
 	self.APC_DeployedUnits = {}
@@ -154,7 +154,7 @@ function ENT:Tank_Init()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnCreateSound(sdData, sdFile)
-	if VJ.HasValue(self.SoundTbl_Fire, sdFile) or VJ.HasValue(self.SoundTbl_FireRocket, sdFile) or VJ.HasValue(self.SoundTbl_Breath, sdFile) or VJ.HasValue(self.Tank_SoundTbl_DrivingEngine, sdFile) or VJ.HasValue(self.Tank_SoundTbl_Track, sdFile) or sdFile == "vj_base/vehicles/armored/chassis_tracks.wav" then return end
+	if VJ.HasValue(self.SoundTbl_Fire, sdFile) or VJ.HasValue(self.SoundTbl_FireRocket, sdFile) or VJ.HasValue(self.SoundTbl_Breath, sdFile) or VJ.HasValue(self.Tank_SoundTbl_DrivingEngine, sdFile) or VJ.HasValue(self.Tank_SoundTbl_Track, sdFile) then return end
 	VJ.EmitSound(self, "npc/overwatch/radiovoice/on3.wav")
 	timer.Simple(SoundDuration(sdFile), function() if IsValid(self) && sdData:IsPlaying() then VJ.EmitSound(self, "npc/overwatch/radiovoice/off2.wav") end end)
 end
@@ -167,9 +167,9 @@ function ENT:Tank_UpdateMoveParticles()
 	local effectData = EffectData()
 	effectData:SetScale(1)
 	effectData:SetEntity(self)
-	effectData:SetOrigin(self:GetPos() +self:GetRight() *-58)
+	effectData:SetOrigin(self:GetPos() + self:GetRight() * -130 + self:GetForward() * 58)
 	util.Effect("VJ_VehicleMove", effectData, true, true)
-	effectData:SetOrigin(self:GetPos() +self:GetRight() *58)
+	effectData:SetOrigin(self:GetPos() + self:GetRight() * -130 + self:GetForward() * -58)
 	util.Effect("VJ_VehicleMove", effectData, true, true)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -219,21 +219,9 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 		bullet.Force = 5
 		bullet.Damage = 6
 		bullet.AmmoType = "AR2"
-		bullet.Attacker = self
-		bullet.Callback = function(att, tr, dmginfo)
-			local effectdata = EffectData()
-			effectdata:SetOrigin(tr.HitPos)
-			effectdata:SetScale(1)
-			util.Effect("AR2Impact",effectdata)
-		end
 		self:FireBullets(bullet)
 
 		VJ.EmitSound(self, self.SoundTbl_Fire, 90, math.random(100, 110))
-
-		local phys = self:GetPhysicsObject()
-		if IsValid(phys) then
-			phys:SetVelocity(phys:GetVelocity() +(-bullet.Dir *10))
-		end
 
 		ParticleEffect("vj_rifle_full_blue", startpos, self:GetAngles(), self)
 		local FireLight1 = ents.Create("light_dynamic")
@@ -253,63 +241,10 @@ function ENT:OnThinkAttack(isAttacking, enemy)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:AntiFlip()
-	local phys = self:GetPhysicsObject()
-	if !IsValid(phys) then return end
-
-	local upDot = self:GetUp():Dot(vector_up)
-	local curTime = CurTime()
-	if upDot > 0.55 then
-		self.NextForceUprightT = nil
-		local angVel = phys:GetAngleVelocity()
-		phys:AddAngleVelocity(Vector(-angVel.x *0.08,-angVel.y *0.08,-angVel.z *0.02))
-		local rightDot = self:GetRight():Dot(vector_up)
-		local forwardDot = self:GetForward():Dot(vector_up)
-		phys:ApplyForceOffset(vector_up *-rightDot *900000, self:GetPos() +self:GetRight() *100)
-		phys:ApplyForceOffset(vector_up * rightDot *900000, self:GetPos() -self:GetRight() *100)
-		phys:ApplyForceOffset(vector_up *-forwardDot *900000 *0.6, self:GetPos() +self:GetForward() *140)
-		phys:ApplyForceOffset(vector_up * forwardDot *900000 *0.6, self:GetPos() -self:GetForward() *140)
-		return
-	end
-
-	self.NextForceUprightT = self.NextForceUprightT or (curTime +1.25)
-	if curTime < self.NextForceUprightT or self.LastForceUprightT && curTime < self.LastForceUprightT +2 then return end
-	self:SetPos(self:GetPos() +Vector(0,0,35))
-	self:SetAngles(Angle(0,self:GetAngles().y,0))
-	phys:Wake()
-	phys:SetVelocity(vector_origin)
-	phys:SetAngleVelocity(vector_origin)
-	self.LastForceUprightT = curTime
-	self.NextForceUprightT = nil
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Tank_OnThink()
-	self:AntiFlip()
-
-	local phys = self:GetPhysicsObject()
-	self:SetDriverYaw(self:GetPoseParameter("aim_yaw"))
-	self:SetDriverPitch(self:GetPoseParameter("aim_pitch"))
-	self:SetDriving(self.Tank_IsMoving)
-	if IsValid(phys) then
-		self:SetDriveSpeed(phys:GetVelocity():Length())
-		self:SetDrivingForward(phys:GetVelocity():Dot(self:GetForward()) > 0)
-	end
-
 	-- If moving then close the door
 	if self.Tank_Status == 0 && self.APC_DoorOpen == true then
 		self.APC_DoorOpen = false
-	end
-
-	if !self.Tank_IsMoving && phys:GetVelocity():Length() > 10 then
-		local tr = util.TraceLine({
-			start = self:GetPos(),
-			endpos = self:GetPos() -Vector(0, 0, 40),
-			filter = self,
-			mask = MASK_SOLID_BRUSHONLY
-		})
-		if tr.Hit then
-			phys:SetVelocity(phys:GetVelocity() *0.25)
-		end
 	end
 
 	-- Deploy soldiers
